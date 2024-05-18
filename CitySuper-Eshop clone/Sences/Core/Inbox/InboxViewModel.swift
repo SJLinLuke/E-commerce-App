@@ -1,0 +1,63 @@
+//
+//  InboxViewModel.swift
+//  CitySuper-Eshop clone
+//
+//  Created by LukeLin on 2024/5/16.
+//
+
+import Foundation
+
+@MainActor final class InboxViewModel: ObservableObject {
+    
+    static let shared = InboxViewModel()
+    
+    @Published var isLoading    : Bool = false
+    @Published var isHasMore    : Bool = true
+    @Published var inBoxMessages: [InboxMessage] = []
+    @Published var unreadNumber : Int = 0
+
+    private var currentPage: Int = 1
+    
+    func fetchInbox() {
+        
+        guard !isLoading else { return }
+        
+        DispatchQueue.main.async {
+            Task {
+                do {
+                    self.isLoading = true
+                    let inboxMessages = try await NetworkManager.shared.fetchNotification(self.currentPage)
+                    
+                    if (self.currentPage != inboxMessages.last_page) {
+                        self.currentPage += 1
+                    } else {
+                        self.isHasMore = false
+                    }
+                    
+                    self.inBoxMessages.append(contentsOf: inboxMessages.data)
+                    
+                    self.isLoading = false
+                    
+                } catch {
+                    self.isLoading = false
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func fetchUnreadNumber() {
+        
+        DispatchQueue.main.async {
+            Task {
+                do {
+                    self.unreadNumber = try await NetworkManager.shared.fetchUnreadNumber()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+}
+
