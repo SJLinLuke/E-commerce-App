@@ -51,6 +51,9 @@ extension Storefront.OrderConnectionQuery {
                     .amount()
                     .currencyCode()
                 }
+                .processedAt()
+                .financialStatus()
+                .fulfillmentStatus()
             }
         }
     }
