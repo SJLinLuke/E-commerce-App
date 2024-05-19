@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct Progress: View {
-    
-    @EnvironmentObject var userEnv: UserEnviroment
-    
+        
     @State private var progress: CGFloat = 0.0
     
     var height      : CGFloat
     var figureTarget: CGFloat
+    var color       : Color
 
     let timer = Timer.publish(every: 0.02, on: .main, in: .common).autoconnect()
 
@@ -28,7 +27,7 @@ struct Progress: View {
 
          Rectangle()
            .frame(width: progress * figureTarget, height: height)
-           .foregroundColor(userEnv.isGoldMember ? .vipGold : .themeGreen)
+           .foregroundColor(color)
            .animation(.easeInOut, value: progress)
            .cornerRadius(10)
        }
@@ -41,6 +40,6 @@ struct Progress: View {
 }
 
 #Preview {
-    Progress(height: 10, figureTarget: 150)
-        .environmentObject(UserEnviroment())
+    Progress(height: 10, 
+             figureTarget: 150, color: .themeGreen)
 }

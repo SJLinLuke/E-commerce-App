@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C2EE4344708A5BE7F615CF3 /* Pods_CitySuper_Eshop_clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648E8A9F6D8F99E408490679 /* Pods_CitySuper_Eshop_clone.framework */; };
 		400C03A82BF86A5F00493ACA /* QRcodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C03A72BF86A5F00493ACA /* QRcodeModel.swift */; };
 		400C03AB2BF8A32900493ACA /* MoreCollectionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C03AA2BF8A32900493ACA /* MoreCollectionsListView.swift */; };
 		400C03AE2BF8A3D900493ACA /* ShoppingCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C03AD2BF8A3D900493ACA /* ShoppingCartView.swift */; };
+		400C03B32BF9B29600493ACA /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C03B22BF9B29600493ACA /* Client.swift */; };
 		406612CF2BF7A2270037C4D8 /* InboxEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */; };
 		406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */; };
 		406612D42BF836290037C4D8 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D32BF836290037C4D8 /* FavouriteModel.swift */; };
@@ -79,6 +81,7 @@
 		400C03A72BF86A5F00493ACA /* QRcodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeModel.swift; sourceTree = "<group>"; };
 		400C03AA2BF8A32900493ACA /* MoreCollectionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionsListView.swift; sourceTree = "<group>"; };
 		400C03AD2BF8A3D900493ACA /* ShoppingCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartView.swift; sourceTree = "<group>"; };
+		400C03B22BF9B29600493ACA /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEmptyView.swift; sourceTree = "<group>"; };
 		406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesEmptyView.swift; sourceTree = "<group>"; };
 		406612D32BF836290037C4D8 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
@@ -125,6 +128,9 @@
 		40E522CF2BF246EF0046C3AA /* PlainCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainCollectionItem.swift; sourceTree = "<group>"; };
 		40E522D32BF24E130046C3AA /* ProductVGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVGridView.swift; sourceTree = "<group>"; };
 		40E522D72BF271420046C3AA /* BackToTopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackToTopButton.swift; sourceTree = "<group>"; };
+		4F9F286C04BA46682386FA73 /* Pods-CitySuper-Eshop clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.debug.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.debug.xcconfig"; sourceTree = "<group>"; };
+		648E8A9F6D8F99E408490679 /* Pods_CitySuper_Eshop_clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CitySuper_Eshop_clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF8ED33EFAEF42CD30691397 /* Pods-CitySuper-Eshop clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.release.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.release.xcconfig"; sourceTree = "<group>"; };
 		C5776E272BF5B915007D5653 /* ProfileListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileListView.swift; sourceTree = "<group>"; };
 		C5776E292BF5B915007D5653 /* ProfileInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		C5776E2D2BF5B939007D5653 /* Progress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
@@ -151,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2EE4344708A5BE7F615CF3 /* Pods_CitySuper_Eshop_clone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +178,14 @@
 				400C03AD2BF8A3D900493ACA /* ShoppingCartView.swift */,
 			);
 			path = ShoppingCart;
+			sourceTree = "<group>";
+		};
+		400C03B12BF9B26E00493ACA /* StoreFront */ = {
+			isa = PBXGroup;
+			children = (
+				400C03B22BF9B29600493ACA /* Client.swift */,
+			);
+			path = StoreFront;
 			sourceTree = "<group>";
 		};
 		406612D22BF8360F0037C4D8 /* FavouriteModel */ = {
@@ -203,6 +218,8 @@
 			children = (
 				40E5225D2BED05590046C3AA /* CitySuper-Eshop clone */,
 				40E5225C2BED05590046C3AA /* Products */,
+				60CD7B7AB602F3949B37FA4A /* Pods */,
+				FBCFC0AE35CBE0C48F016933 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -299,6 +316,7 @@
 		40E5227D2BED21230046C3AA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				40E522872BEE87D10046C3AA /* Modifier */,
 				40E522D52BF26BBA0046C3AA /* Common */,
 				40E522822BEE6FAE0046C3AA /* Cell */,
 				40E522D12BF24C970046C3AA /* HomeGroup */,
@@ -332,7 +350,7 @@
 				40E522B62BEF69610046C3AA /* Extension */,
 				40E522B12BEF475B0046C3AA /* Alert */,
 				40E522952BEF3E5D0046C3AA /* Manager */,
-				40E522872BEE87D10046C3AA /* Modifier */,
+				400C03B12BF9B26E00493ACA /* StoreFront */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -574,6 +592,15 @@
 			path = BackToTopButton;
 			sourceTree = "<group>";
 		};
+		60CD7B7AB602F3949B37FA4A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4F9F286C04BA46682386FA73 /* Pods-CitySuper-Eshop clone.debug.xcconfig */,
+				BF8ED33EFAEF42CD30691397 /* Pods-CitySuper-Eshop clone.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		C5776E282BF5B915007D5653 /* ProfileListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +722,14 @@
 			path = ProfileGroup;
 			sourceTree = "<group>";
 		};
+		FBCFC0AE35CBE0C48F016933 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				648E8A9F6D8F99E408490679 /* Pods_CitySuper_Eshop_clone.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -702,9 +737,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40E5226A2BED055C0046C3AA /* Build configuration list for PBXNativeTarget "CitySuper-Eshop clone" */;
 			buildPhases = (
+				EE199ABC681DF00F6A4F06CB /* [CP] Check Pods Manifest.lock */,
 				40E522572BED05590046C3AA /* Sources */,
 				40E522582BED05590046C3AA /* Frameworks */,
 				40E522592BED05590046C3AA /* Resources */,
+				DF5B49E7D01C57FB6DAB7363 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -759,6 +796,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DF5B49E7D01C57FB6DAB7363 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE199ABC681DF00F6A4F06CB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CitySuper-Eshop clone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		40E522572BED05590046C3AA /* Sources */ = {
@@ -823,6 +902,7 @@
 				40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */,
 				C5EA79932BF4B5A70042FEF0 /* ProfileViewModel.swift in Sources */,
 				40E522B02BEF46CE0046C3AA /* ProductVariantModel.swift in Sources */,
+				400C03B32BF9B29600493ACA /* Client.swift in Sources */,
 				40E522D42BF24E130046C3AA /* ProductVGridView.swift in Sources */,
 				40E522C52BF0703F0046C3AA /* RemoteImageView.swift in Sources */,
 				40E522BA2BEF952F0046C3AA /* Color+Extension.swift in Sources */,
@@ -872,7 +952,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -933,7 +1013,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -951,6 +1031,7 @@
 		};
 		40E5226B2BED055C0046C3AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F9F286C04BA46682386FA73 /* Pods-CitySuper-Eshop clone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -990,6 +1071,7 @@
 		};
 		40E5226C2BED055C0046C3AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF8ED33EFAEF42CD30691397 /* Pods-CitySuper-Eshop clone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
