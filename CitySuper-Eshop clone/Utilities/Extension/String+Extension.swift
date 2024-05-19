@@ -27,6 +27,17 @@ extension String {
         return self.enumerated().map { $0.offset % 4 == 0 && $0.offset != 0 && $0.offset != count-1 || $0.offset == count-2 && count % 4 != 0 ? "-\($0.element)" : "\($0.element)" }.joined()
     }
     
+    var shopifyIdEncode: String {
+        
+        if self.contains("gid:") {
+            if let data = self.data(using: .utf8) {
+                return data.base64EncodedString()
+            }
+        }
+        
+        return self
+    }
+    
     func isExpired() -> Bool {
         let today: Date = Date()
         let dateFormat = DateFormatter()

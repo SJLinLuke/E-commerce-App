@@ -9,9 +9,9 @@ import SwiftUI
 
 @MainActor final class LoginViewModel: ObservableObject {
     
-    @Published var isLoading: Bool = false
     @Published var userEnv  : UserEnviroment? = nil
-    
+    @Published var isLoading: Bool = false
+   
     func loginSever(loginData: LoginBody, complete: @escaping (Bool) -> Void) {
         
         guard !isLoading else { return }

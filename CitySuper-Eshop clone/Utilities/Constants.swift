@@ -19,12 +19,14 @@ struct Constants {
         locale: Locale.current
     )
     
-    static let host         = "https://mobileapiuat.citysuper.com.hk/public/"
-    
-    static let homepage     = "api/eshop/homepage?version=2"
-    static let login        = "api/members/login"
-    static let notification = "api/eshop/notifications?page="
-    static let favourite    = "api/members/favouritedProducts?page="
-    static let qrcode       = "api/members/qrcode?version=2"
-    static let unread       = "api/eshop/notifications/unreadCount"
+    static let host           = "https://mobileapiuat.citysuper.com.hk/public/"
+      
+    static let homepage       = "api/eshop/homepage?version=2"
+    static let login          = "api/members/login"
+    static let notification   = "api/eshop/notifications?page="
+    static let favourite      = "api/members/favouritedProducts?page="
+    static let qrcode         = "api/members/qrcode?version=2"
+    static let unread         = "api/eshop/notifications/unreadCount"
+    static let multipassToken = "api/members/multipassToken"
+    static let orderInfos     = "api/eshop/order/orders"
 }

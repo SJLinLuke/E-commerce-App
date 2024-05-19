@@ -56,6 +56,45 @@ final class NetworkManager: ObservableObject {
         }
     }
     
+    // MARK: MultipassToken
+    func getMultipassToken() async throws -> String {
+        
+        var request = generateURLRequest(host + Constants.multipassToken)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(MutipassTokenResponse.self, from: data).data {
+                return data.multipass_token
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: OrderHistoryInfo
+    func fetchOrderHistoryInfo(_ params: [String: [String]]) async throws -> [OrderData] {
+        
+        var request = generateURLRequest(host + Constants.orderInfos)
+        
+        //找出加入params的方式
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(OrderResponse.self, from: data).data {
+                return data
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error)
+            throw CSAlert.inValidData
+        }
+    }
+    
     // MARK: Notification
     func fetchNotification(_ page: Int) async throws -> InboxMessageData {
         
@@ -130,10 +169,22 @@ final class NetworkManager: ObservableObject {
 }
 
 extension NetworkManager {
-    func generateURLRequest(_ url: String, method: HttpRequestMethodType? = nil) -> URLRequest {
+    func generateURLRequest(_ url: String, method: HttpRequestMethodType? = nil, params: [String:[String]]? = nil) -> URLRequest {
         
         if let url = URL(string: url) {
-            var request = URLRequest(url: url)
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+            
+            if let params = params {
+                var queryItems: [URLQueryItem] = []
+                for (key, values) in params {
+                    for value in values {
+                        queryItems.append(URLQueryItem(name: key, value: value))
+                    }
+                }
+                urlComponents.queryItems = queryItems
+            }
+            
+            var request = URLRequest(url: urlComponents.url ?? url)
                 request.setValue("en", forHTTPHeaderField: "locale")
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.setValue("iOS", forHTTPHeaderField: "Platform")

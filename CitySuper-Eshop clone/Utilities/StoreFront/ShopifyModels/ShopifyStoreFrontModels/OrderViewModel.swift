@@ -27,7 +27,7 @@
 import Foundation
 import MobileBuySDK
 
-final class OrderViewModel: ViewModel {
+final class OrderViewModel: ViewModel, Identifiable, Equatable {
     
     typealias ModelType = Storefront.OrderEdge
     
@@ -54,6 +54,20 @@ final class OrderViewModel: ViewModel {
         self.currentTotalDuties  = model.node.currentTotalDuties?.amount
         self.originalTotalDuties = model.node.originalTotalDuties?.amount
         self.totalPrice          = model.node.totalPrice.amount
+    }
+    
+    // ----------------------------------
+    //  MARK: - Equatable -
+    //
+    static func == (lhs: OrderViewModel, rhs: OrderViewModel) -> Bool {
+        return lhs.model.node.id.rawValue == rhs.model.node.id.rawValue &&
+        lhs.cursor == rhs.cursor &&
+        lhs.id == rhs.id &&
+        lhs.number == rhs.number &&
+        lhs.email == rhs.email &&
+        lhs.currentTotalDuties == rhs.currentTotalDuties &&
+        lhs.originalTotalDuties == rhs.originalTotalDuties &&
+        lhs.totalPrice == rhs.totalPrice
     }
 }
 

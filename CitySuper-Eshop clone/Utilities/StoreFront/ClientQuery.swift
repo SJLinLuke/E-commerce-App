@@ -34,6 +34,24 @@ final class ClientQuery {
     // ----------------------------------
     //  MARK: - Customers -
     //
+    
+    static func mutationForAccessToken(multipasstoken: String) -> Storefront.MutationQuery{
+        
+        return Storefront.buildMutation{$0
+            .customerAccessTokenCreateWithMultipass(multipassToken: multipasstoken){$0
+                .customerAccessToken{$0
+                    .accessToken()
+                    .expiresAt()
+                }
+                .customerUserErrors { $0
+                    .field()
+                    .message()
+                }
+            }
+        }
+        
+    }
+    
     static func mutationForLogin(email: String, password: String) -> Storefront.MutationQuery {
         let input = Storefront.CustomerAccessTokenCreateInput(email: email, password: password)
         return Storefront.buildMutation { $0

@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct MutipassTokenResponse: Decodable {
+    let success      : Bool
+    let error_message: String?
+    let data         : MutipassTokenData?
+}
+
+struct MutipassTokenData: Decodable {
+    let multipass_token: String
+}
+
 struct LoginBody: Encodable {
     let username: String
     let password: String

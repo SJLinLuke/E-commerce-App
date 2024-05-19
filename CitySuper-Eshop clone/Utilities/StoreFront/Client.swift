@@ -49,6 +49,24 @@ final class Client {
     //  MARK: - Customers -
     //
     @discardableResult
+    func getCustomerAccessToken(with multipasstoken:String, completion: @escaping (String?) -> Void) -> Task {
+        
+        
+        let mutation = ClientQuery.mutationForAccessToken(multipasstoken: multipasstoken)
+        
+        let task = self.client.mutateGraphWith(mutation) { mutation, error in
+            error.debugPrint()
+            
+            if let _mutation = mutation {
+                completion(_mutation.customerAccessTokenCreateWithMultipass?.customerAccessToken?.accessToken)
+            }
+            
+        }
+        
+        task.resume()
+        return task
+    }
+    @discardableResult
     func login(email: String, password: String, completion: @escaping (String?) -> Void) -> Task {
         
         let mutation = ClientQuery.mutationForLogin(email: email, password: password)
@@ -89,7 +107,7 @@ final class Client {
     }
     
     @discardableResult
-    func fetchCustomerAndOrders(limit: Int = 25, after cursor: String? = nil, accessToken: String, completion: @escaping ((customer: CustomerViewModel, orders: PageableArray<OrderViewModel>)?) -> Void) -> Task {
+    func fetchCustomerAndOrders(limit: Int = 10, after cursor: String? = nil, accessToken: String, completion: @escaping ((customer: CustomerViewModel, orders: PageableArray<OrderViewModel>)?) -> Void) -> Task {
         
         let query = ClientQuery.queryForCustomer(limit: limit, after: cursor, accessToken: accessToken)
         let task  = self.client.queryGraphWith(query) { (query, error) in

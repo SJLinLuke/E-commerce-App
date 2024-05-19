@@ -15,6 +15,7 @@ struct OrderHistoryView: View {
     
     @State var isShowingLoginModal: Bool = false
 
+    @StateObject var VM = OrderHistoryViewModel()
     
     var body: some View {
         NavigationStack {
@@ -22,27 +23,37 @@ struct OrderHistoryView: View {
                 
                 SearchBarView()
                 
-                List() {
-                    OrderHistoryCell()
-                    OrderHistoryCell()
+                List(VM.orderHistorys.indices, id: \.self) { index in
+                    OrderHistoryCell(orderHistory: VM.orderHistorys[index], orderInfo: VM.ordersInfo[index])
+                        .onAppear {
+                            if VM.orderHistorys.count - 1 == index {
+                                VM.fetchOrder()
+                            }
+                        }
                 }
+                
                 .listStyle(.plain)
                 .padding(.top, -8)
-                
                 
                 Spacer()
             }
             .navigationTitle("Order History")
             .navigationBarTitleDisplayMode(.inline)
         }
-//        .overlay {
-//            if(VM.isLoading) {
-//                LoadingIndicatiorView()
-//            }
-//        }
+        .overlay {
+            if VM.isLoading {
+                LoadingIndicatiorView()
+            }
+        }
         .onAppear {
             DispatchQueue.main.async {
                 self.isShowingLoginModal = !userEnv.isLogin
+                self.VM.userEnv = userEnv
+            }
+        }
+        .task {
+            if userEnv.isLogin {
+                VM.fetchOrder()
             }
         }
 //        .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
@@ -61,39 +72,6 @@ struct OrderHistoryView: View {
         .environmentObject(UserEnviroment())
 }
 
-struct OrderHistoryCell: View {
-    var body: some View {
-        ZStack{
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Order# 10515")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text("Processing")
-                        .fontWeight(.bold)
-                        .foregroundColor(.themeGreen2)
-                }
-                Text("2024/05/16 16:44:56")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                Progress(height: 7, figureTarget: 180, color: .themeGreen2)
-                
-                Spacer()
-                    .frame(height: 45)
-                
-                Text("Amount: HK$660.48")
-            }
-            .padding(8)
-            .background(.white)
-            .cornerRadius(10)
-            .shadow(color: .secondary, radius: 3, x: 1, y: 1)
-        }
-        .padding(.horizontal, -13)
-        .padding(.bottom, 9)
-        .listRowSeparator(.hidden, edges: .all)
-    }
-}
 
 struct SearchBarView: View {
     
