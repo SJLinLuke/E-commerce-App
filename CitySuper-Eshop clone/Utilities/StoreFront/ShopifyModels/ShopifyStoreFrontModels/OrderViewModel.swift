@@ -40,6 +40,9 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     let currentTotalDuties:     Decimal?
     let originalTotalDuties:    Decimal?
     let totalPrice:             Decimal
+    let fulfillmentStatus:      String
+    let financialStatus:        String
+    let processedAt:            String
     
     // ----------------------------------
     //  MARK: - Init -
@@ -54,6 +57,9 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.currentTotalDuties  = model.node.currentTotalDuties?.amount
         self.originalTotalDuties = model.node.originalTotalDuties?.amount
         self.totalPrice          = model.node.totalPrice.amount
+        self.fulfillmentStatus   = model.node.fulfillmentStatus.rawValue
+        self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
+        self.processedAt         = "\(model.node.processedAt)"
     }
     
     // ----------------------------------
@@ -67,7 +73,10 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         lhs.email == rhs.email &&
         lhs.currentTotalDuties == rhs.currentTotalDuties &&
         lhs.originalTotalDuties == rhs.originalTotalDuties &&
-        lhs.totalPrice == rhs.totalPrice
+        lhs.totalPrice == rhs.totalPrice &&
+        lhs.fulfillmentStatus == rhs.fulfillmentStatus &&
+        lhs.financialStatus == rhs.financialStatus &&
+        lhs.processedAt == rhs.processedAt
     }
 }
 
