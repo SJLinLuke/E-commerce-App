@@ -1,5 +1,5 @@
 //
-//  ProductModel.swift
+//  ProductBodyModel.swift
 //  CitySuper-Eshop clone
 //
 //  Created by LukeLin on 2024/5/11.

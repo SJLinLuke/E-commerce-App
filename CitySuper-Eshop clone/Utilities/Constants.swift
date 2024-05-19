@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import MobileBuySDK
 
 struct Constants {
+    
+    static let shopDomain = "citysuper-mobile-dev.myshopify.com"
+    static let apiKey = "d8984700447109bdeddf144b5eabbe26"
+    
+    static let client = Graph.Client(
+        shopDomain: shopDomain,
+        apiKey: apiKey,
+        locale: Locale.current
+    )
+    
     static let host         = "https://mobileapiuat.citysuper.com.hk/public/"
     
     static let homepage     = "api/eshop/homepage?version=2"
