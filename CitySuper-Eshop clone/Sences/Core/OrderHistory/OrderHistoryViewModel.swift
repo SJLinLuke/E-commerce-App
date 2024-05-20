@@ -54,7 +54,7 @@ import Foundation
                 
                 do {
                     let ordersInfo = try await NetworkManager.shared.fetchOrderHistoryInfo(params)
-                    self.insertOrderInfo(orderHistorys: orders,orderInfos: ordersInfo)
+                    self.insertOrderInfoAndSetupOrderStatus(orderHistorys: orders,orderInfos: ordersInfo)
                 } catch {
                     self.isLoading = false
                     print(error.localizedDescription)
@@ -63,16 +63,73 @@ import Foundation
         }
     }
     
-    private func insertOrderInfo(orderHistorys: [OrderViewModel], orderInfos: [OrderData]) {
+    private func insertOrderInfoAndSetupOrderStatus(orderHistorys: [OrderViewModel], orderInfos: [OrderData]) {
         DispatchQueue.main.async {
             for index in orderHistorys.indices {
                 if orderInfos.indices.contains(index) {
                     orderHistorys[index].orderInfo = orderInfos[index]
                 }
+                orderHistorys[index].orderStatus = self.setupOrderStatus(fulfillment: orderHistorys[index].fulfillmentStatus,
+                                                                         financialStatus: orderHistorys[index].financialStatus)
             }
             self.orderHistorys.append(contentsOf: orderHistorys)
             self.isLoading = false
         }
+    }
+    
+    func customLabelText(_ orderHistory: OrderViewModel) -> String {
+        
+        var labelText: String = "Web Order"
+        let isAppOrder = orderHistory.orderInfo.shopify_order_id.shopifyIdDecode == orderHistory.id.shopifyIdEncode.shopifyIdDecode
+        if isAppOrder {
+            if let custom_attributes = orderHistory.orderInfo.custom_attributes{
+                
+                for custom_attribute in custom_attributes{
+                    
+                    if let name = custom_attribute["name"], let date = custom_attribute["value"]{
+                        
+                        if name == "Delivery Date"{
+                            labelText = "Estimate delivery on \(date.convertDataFormat(fromFormat: "yyyy-MM-dd", toFormat: "yyyy/MM/dd"))"
+                        }
+                        
+                        if name == "Pickup Date"{
+                            labelText = "Estimate pickup on \(date.convertDataFormat(fromFormat: "yyyy-MM-dd", toFormat: "yyyy/MM/dd"))"
+                        }
+                    }
+                }
+            }
+        }
+        return labelText
+    }
+    
+    func setupOrderStatus(fulfillment: String, financialStatus: String) -> OrderStaus{
+        
+        if financialStatus == "PENDING"{
+            return OrderStaus(status: "Payment Pending", progress: 0.2, color: .themeGreen2)
+        }
+        
+        if fulfillment == "UNFULFILLED" {
+            if financialStatus == "PAID"{
+                return OrderStaus(status: "Processing", progress: 0.65, color: .themeGreen2)
+            }
+            
+            if financialStatus == "PARTIALLY_REFUNDED" || financialStatus == "REFUNDED" {
+                return OrderStaus(status: "Refunded" , progress: 0.65, color: .gray)
+            }
+        }
+        
+        if fulfillment == "FULFILLED"{
+            if financialStatus == "PAID"{
+                return OrderStaus(status: "Completed", progress: 1.0, color: .gray)
+            }
+            
+            if financialStatus == "PARTIALLY_REFUNDED" || financialStatus == "REFUNDED" {
+                return OrderStaus(status: "Refunded", progress: 1.0, color: .gray)
+            }
+        }
+        
+        
+        return OrderStaus(status: "Processing", progress: 0.65, color: .themeGreen2)
     }
     
 }

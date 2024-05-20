@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct OrderResponse: Decodable {
     let success: Bool
@@ -30,3 +31,8 @@ struct PaymentCard: Decodable, Equatable {
     let brand: String
 }
 
+struct OrderStaus: Equatable {
+    let status       : String
+    let progress     : CGFloat
+    let color: Color
+}

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 extension String {
     func convertDataFormat(fromFormat: String, toFormat: String) -> String {
         let sourceDateFormatter = DateFormatter()
@@ -38,6 +39,25 @@ extension String {
         return self
     }
     
+    var shopifyIdDecode: String {
+        do {
+            if(!self.isEmpty){
+                let decodedId = try Base64Decoder().decode(self)
+                let gidSprs    : [String] = decodedId.components(separatedBy: Constants.shopifyOrderIdHexFormat)
+                let gidSpr     : String   = gidSprs.count == 0 ? "" : gidSprs[1]
+                let orderIdSprs: [String] = gidSpr.components(separatedBy: "?key")
+                let orderId    : String?  = orderIdSprs.count == 0 ? "" : orderIdSprs[0]
+                if let _orderId = orderId {
+                    return _orderId
+                }
+            }
+        } catch {
+            print("Unable to Decode Base64 Encoded String \(error)")
+        }
+        
+        return self
+    }
+    
     func isExpired() -> Bool {
         let today: Date = Date()
         let dateFormat = DateFormatter()
@@ -48,4 +68,23 @@ extension String {
         let jsonInterval: TimeInterval = jsonDate.timeIntervalSince1970
         return (jsonInterval - today.timeIntervalSince1970) <= 0
     }
+}
+
+struct Base64Decoder {
+    enum DecodingError: Swift.Error {
+        case invalidData
+    }
+
+    func decode(_ base64EncodedString: String) throws -> String {
+        guard
+            let base64EncodedData = base64EncodedString.data(using: .utf8),
+            let data = Data(base64Encoded: base64EncodedData),
+            let result = String(data: data, encoding: .utf8)
+        else {
+            throw DecodingError.invalidData
+        }
+
+        return result
+    }
+
 }

@@ -31,7 +31,6 @@ struct OrderHistoryView: View {
                             }
                         }
                 }
-                
                 .listStyle(.plain)
                 .padding(.top, -8)
                 
@@ -84,7 +83,7 @@ struct SearchBarView: View {
             Image("search_icon")
                 .padding(.trailing, 10)
             
-            TextField("Order History", text: $searchText)
+            TextField("Search by order number", text: $searchText)
                 .font(.callout)
             
             Rectangle()
@@ -97,7 +96,7 @@ struct SearchBarView: View {
             }
             
         }
-        .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .overlay(alignment: .bottom) {
             RoundedRectangle(cornerRadius: 0)
                 .fill(Color(hex: "E2E2E2"))

@@ -45,6 +45,7 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     let processedAt:            String
     
     var orderInfo:              OrderData
+    var orderStatus:            OrderStaus
     
     // ----------------------------------
     //  MARK: - Init -
@@ -63,6 +64,7 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
         self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", toFormat: "yyyy/MM/dd HH:mm:ss")
         self.orderInfo           = OrderData(shopify_order_id: "", note: nil, custom_attributes: nil, payment_method: nil)
+        self.orderStatus         = OrderStaus(status: "", progress: 0, color: .clear)
     }
     
     // ----------------------------------
@@ -80,7 +82,8 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         lhs.fulfillmentStatus   == rhs.fulfillmentStatus &&
         lhs.financialStatus     == rhs.financialStatus &&
         lhs.processedAt         == rhs.processedAt &&
-        lhs.orderInfo           == rhs.orderInfo
+        lhs.orderInfo           == rhs.orderInfo &&
+        lhs.orderStatus         == rhs.orderStatus
     }
 }
 

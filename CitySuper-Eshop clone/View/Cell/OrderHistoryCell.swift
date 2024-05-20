@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OrderHistoryCell: View {
     
+    @StateObject var VM = OrderHistoryViewModel.shared
+    
     let orderHistory: OrderViewModel
     
     var body: some View {
@@ -18,18 +20,29 @@ struct OrderHistoryCell: View {
                     Text("Order# \(String(orderHistory.number))")
                         .fontWeight(.bold)
                     Spacer()
-                    Text("Processing")
+                    Text(orderHistory.orderStatus.status)
                         .fontWeight(.bold)
-                        .foregroundColor(.themeGreen2)
+                        .foregroundColor(orderHistory.orderStatus.color)
                 }
-                Text(orderHistory.processedAt)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                Progress(height: 7, figureTarget: 180, color: .themeGreen2)
                 
                 Spacer()
-                    .frame(height: 45)
+                    .frame(height: 2)
+                
+                Text(orderHistory.processedAt)
+                    .font(.system(size: 13))
+                    .foregroundColor(.secondary)
+                
+                Progress(height: 7, 
+                         figureTarget: orderHistory.orderStatus.progress,
+                         color: orderHistory.orderStatus.color)
+                
+                Text(VM.customLabelText(orderHistory))
+                    .font(.system(size: 13))
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                    .frame(height: 30)
+                
                 Text("Amount: HK$\(orderHistory.totalPrice.formattedPrice)")
             }
             .padding(8)
@@ -38,7 +51,7 @@ struct OrderHistoryCell: View {
             .shadow(color: .secondary, radius: 3, x: 1, y: 1)
         }
         .padding(.horizontal, -13)
-        .padding(.bottom, 9)
+        .padding(.bottom, 6.5)
         .listRowSeparator(.hidden, edges: .all)
     }
 }
