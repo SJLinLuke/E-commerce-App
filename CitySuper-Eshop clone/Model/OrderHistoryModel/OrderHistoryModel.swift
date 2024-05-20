@@ -13,19 +13,19 @@ struct OrderResponse: Decodable {
     let data: [OrderData]?
 }
 
-struct OrderData: Decodable {
+struct OrderData: Decodable, Equatable {
     let shopify_order_id : String
     let note             : String?
     let custom_attributes: [[String: String]]?
     let payment_method   : PaymentMethod?
 }
 
-struct PaymentMethod: Decodable {
+struct PaymentMethod: Decodable, Equatable {
     let type: String
     let card: PaymentCard
 }
 
-struct PaymentCard: Decodable {
+struct PaymentCard: Decodable, Equatable {
     let last4: String
     let brand: String
 }

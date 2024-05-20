@@ -44,6 +44,8 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     let financialStatus:        String
     let processedAt:            String
     
+    var orderInfo:              OrderData
+    
     // ----------------------------------
     //  MARK: - Init -
     //
@@ -60,6 +62,7 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.fulfillmentStatus   = model.node.fulfillmentStatus.rawValue
         self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
         self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", toFormat: "yyyy/MM/dd HH:mm:ss")
+        self.orderInfo           = OrderData(shopify_order_id: "", note: nil, custom_attributes: nil, payment_method: nil)
     }
     
     // ----------------------------------
@@ -67,16 +70,17 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     //
     static func == (lhs: OrderViewModel, rhs: OrderViewModel) -> Bool {
         return lhs.model.node.id.rawValue == rhs.model.node.id.rawValue &&
-        lhs.cursor == rhs.cursor &&
-        lhs.id == rhs.id &&
-        lhs.number == rhs.number &&
-        lhs.email == rhs.email &&
-        lhs.currentTotalDuties == rhs.currentTotalDuties &&
+        lhs.cursor              == rhs.cursor &&
+        lhs.id                  == rhs.id &&
+        lhs.number              == rhs.number &&
+        lhs.email               == rhs.email &&
+        lhs.currentTotalDuties  == rhs.currentTotalDuties &&
         lhs.originalTotalDuties == rhs.originalTotalDuties &&
-        lhs.totalPrice == rhs.totalPrice &&
-        lhs.fulfillmentStatus == rhs.fulfillmentStatus &&
-        lhs.financialStatus == rhs.financialStatus &&
-        lhs.processedAt == rhs.processedAt
+        lhs.totalPrice          == rhs.totalPrice &&
+        lhs.fulfillmentStatus   == rhs.fulfillmentStatus &&
+        lhs.financialStatus     == rhs.financialStatus &&
+        lhs.processedAt         == rhs.processedAt &&
+        lhs.orderInfo           == rhs.orderInfo
     }
 }
 

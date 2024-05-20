@@ -15,7 +15,7 @@ struct OrderHistoryView: View {
     
     @State var isShowingLoginModal: Bool = false
 
-    @StateObject var VM = OrderHistoryViewModel()
+    @StateObject var VM = OrderHistoryViewModel.shared
     
     var body: some View {
         NavigationStack {
@@ -60,6 +60,7 @@ struct OrderHistoryView: View {
 //            if !userEnv.isLogin {
 //                selectIndex = 4
 //            }
+//            VM.fetchOrder()
 //        }, content: {
 //            LoginView(isShowingModal: $isShowingLoginModal)
 //        })
