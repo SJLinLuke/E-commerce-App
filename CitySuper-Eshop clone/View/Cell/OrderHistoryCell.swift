@@ -10,7 +10,6 @@ import SwiftUI
 struct OrderHistoryCell: View {
     
     let orderHistory: OrderViewModel
-    let orderInfo   : OrderData
     
     var body: some View {
         ZStack{
@@ -23,7 +22,7 @@ struct OrderHistoryCell: View {
                         .fontWeight(.bold)
                         .foregroundColor(.themeGreen2)
                 }
-                Text("2024/05/16 16:44:56")
+                Text(orderHistory.processedAt)
                     .font(.caption)
                     .foregroundColor(.secondary)
                 

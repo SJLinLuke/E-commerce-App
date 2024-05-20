@@ -15,7 +15,7 @@ extension String {
         let convertDateFormatter = DateFormatter()
             convertDateFormatter.dateFormat = toFormat
         
-        if let sourceDate = sourceDateFormatter.date(from: self), fromFormat.count == self.count {
+        if let sourceDate = sourceDateFormatter.date(from: self) {
             return convertDateFormatter.string(from: sourceDate)
         }
         

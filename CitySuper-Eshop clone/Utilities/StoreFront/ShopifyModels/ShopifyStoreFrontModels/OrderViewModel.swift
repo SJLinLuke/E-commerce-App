@@ -59,7 +59,7 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.totalPrice          = model.node.totalPrice.amount
         self.fulfillmentStatus   = model.node.fulfillmentStatus.rawValue
         self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
-        self.processedAt         = "\(model.node.processedAt)"
+        self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", toFormat: "yyyy/MM/dd HH:mm:ss")
     }
     
     // ----------------------------------

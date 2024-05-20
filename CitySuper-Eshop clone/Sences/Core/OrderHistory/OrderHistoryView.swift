@@ -23,10 +23,10 @@ struct OrderHistoryView: View {
                 
                 SearchBarView()
                 
-                List(VM.orderHistorys.indices, id: \.self) { index in
-                    OrderHistoryCell(orderHistory: VM.orderHistorys[index], orderInfo: VM.ordersInfo[index])
+                List(VM.orderHistorys) { orderHistory in
+                    OrderHistoryCell(orderHistory: orderHistory)
                         .onAppear {
-                            if VM.orderHistorys.count - 1 == index {
+                            if VM.orderHistorys.last == orderHistory {
                                 VM.fetchOrder()
                             }
                         }

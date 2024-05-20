@@ -91,7 +91,7 @@ final class ClientQuery {
                 .lastName()
                 .phone()
                 .updatedAt()
-                .orders(first: Int32(limit), after: cursor) { $0
+                .orders(first: Int32(limit), after: cursor, reverse: true) { $0
                     .fragmentForStandardOrder()
                 }
             }
