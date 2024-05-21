@@ -34,7 +34,8 @@ struct OrderHistoryCell: View {
                 
                 Progress(height: 7, 
                          figureTarget: orderHistory.orderStatus.progress,
-                         color: orderHistory.orderStatus.color)
+                         color: orderHistory.orderStatus.color,
+                         isAnimated: false)
                 
                 Text(VM.customLabelText(orderHistory))
                     .font(.system(size: 13))

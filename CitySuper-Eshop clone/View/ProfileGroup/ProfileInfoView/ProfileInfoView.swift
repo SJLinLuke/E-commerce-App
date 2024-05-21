@@ -58,7 +58,7 @@ struct ProfileInfoView: View {
                     }
                 }
                 
-                Progress(height: 7, figureTarget: 300, color: userEnv.isGoldMember ? .vipGold : .themeGreen)
+                Progress(height: 7, figureTarget: 0.8, color: userEnv.isGoldMember ? .vipGold : .themeGreen)
                     .padding(.top, -8)
                     
                 Text("Spend HK$ 30,000.00 more in current anniversary year to renew to super e-gold membership")
