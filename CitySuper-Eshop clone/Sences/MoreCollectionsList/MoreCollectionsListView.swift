@@ -16,7 +16,7 @@ struct MoreCollectionsListView: View {
             ZStack {
                 Text("MoreCollectionsListView")
             }
-            .modifier(NavigationModifier.shared)
+            .modifier(NavigationModifier())
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden()
         }

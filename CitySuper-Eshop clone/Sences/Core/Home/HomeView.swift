@@ -41,7 +41,7 @@ struct HomeView: View {
                             }
                             
                             if let collectionNormalLayout = VM.collectionNormalLayout_Normal {
-                                CollectionNormalLayoutView_Normal(collectionNormalLayout: collectionNormalLayout)
+                                CollectionNormalLayoutView_Normal(collectionNormalLayout: collectionNormalLayout, itemWidth: 150, itemHeight: 250, isRelatedSimilar: false)
                             }
                             
                             if (VM.banners.indices.contains(2)) {
@@ -95,7 +95,7 @@ struct HomeView: View {
                 .task {
                     VM.fetchHomepage()
                 }
-                .modifier(NavigationModifier.shared)
+                .modifier(NavigationModifier())
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
             .overlay(alignment: .bottomTrailing) {

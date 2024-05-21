@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct NavigationModifier: ViewModifier {
-    
-    static let shared = NavigationModifier()
-    
+        
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
+    
+    var isHideCollectionsList: Bool = false
     
     func body(content: Content) -> some View {
         content
@@ -24,13 +24,17 @@ struct NavigationModifier: ViewModifier {
                         .scaledToFit()
                         .frame(width: 110, height: 100)
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        isPushToCollectionsList.toggle()
-                    } label: {
-                        Image("bar_category_icon")
+        
+                if !isHideCollectionsList {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            isPushToCollectionsList.toggle()
+                        } label: {
+                            Image("bar_category_icon")
+                        }
                     }
                 }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingShoppingCart.toggle()

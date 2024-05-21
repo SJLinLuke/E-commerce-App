@@ -34,7 +34,7 @@ struct ProductItem: View {
                     .frame(width: width - 3, height: 1)
                     .overlay(alignment: .trailing) {
                         if (!isNeedDelete) {
-                            FavouritesButton(isFavourite: VM.product?.is_favourite ?? false)
+                            FavouriteButton(isFavourite: VM.product?.is_favourite ?? false, width: 30, height: 30)
                         }
                     }
                 
@@ -63,9 +63,9 @@ struct ProductItem: View {
                     Spacer()
                     
                     if VM.isSoldOut {
-                        SoldOutButton()
+                        SoldOutButton(width: 53, height: 25)
                     } else {
-                        CartButton()
+                        CartButton(width: 25, height: 25)
                     }
                 }
                 .padding(5)
@@ -90,62 +90,6 @@ struct ProductItem: View {
 }
 
 #Preview {
-    ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil), width: 150, height: 240, isNeedDelete: true)
+    ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil), width: 150, height: 240, isNeedDelete: false)
 }
-
-struct FavouritesButton: View {
-    
-    @State var isFavourite: Bool
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(.clear)
-                .frame(width: 30, height: 30)
-                .shadow(color: .gray, radius: 0.5, x: 0, y: 0.5)
-            
-            if isFavourite {
-                Image("favourites_icon_on")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-            } else {
-                Image("favourites_icon")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-            }
-        }
-        .onTapGesture {
-            isFavourite = !isFavourite
-        }
-    }
-}
-
-struct CartButton: View {
-    var body: some View {
-        Button {
-            
-        } label: {
-            Image("cart_icon")
-                .resizable()
-                .frame(width: 25, height: 25)
-        }
-    }
-}
-
-struct SoldOutButton: View {
-    var body: some View {
-        Button {
-            
-        } label: {
-            Text("Sold out")
-                .font(.caption)
-                .foregroundColor(.white)
-                .frame(width: 53, height: 25)
-                .background(Color(hex: "#AAAAAA"))
-                .cornerRadius(5)
-        }
-    }
-}
-
-
 
