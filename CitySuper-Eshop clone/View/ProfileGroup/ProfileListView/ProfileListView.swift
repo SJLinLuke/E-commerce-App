@@ -12,7 +12,8 @@ struct ProfileListView: View {
     @EnvironmentObject var userEnv: UserEnviroment
     @StateObject var VM = ProfileViewModel()
     
-    @State var isShowingModal: Bool = false
+    @State var isShowingModal       : Bool = false
+    @State var isShowingOrderHistory: Bool = false
     
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
@@ -31,14 +32,18 @@ struct ProfileListView: View {
         .fullScreenCover(isPresented: $isShowingModal) {
             LoginView(isShowingModal: $isShowingModal)
         }
+        .navigationDestination(isPresented: $isShowingOrderHistory) {
+            OrderHistoryView(selectIndex: .constant(1))
+        }
     }
     
     func tapCell(_ rowData: ProfileRowModel) {
-        switch rowData.title {
+        DispatchQueue.main.async {
+            switch rowData.title {
             case "E-Shop Coupon":
                 print(rowData.title)
             case "Order History":
-                print(rowData.title)
+                isShowingOrderHistory.toggle()
             case "Delivery Address":
                 print(rowData.title)
             case "Wallet":
@@ -46,14 +51,14 @@ struct ProfileListView: View {
             case "More":
                 print(rowData.title)
             case "Login":
-                DispatchQueue.main.async {
-                    isShowingModal.toggle()
-                }
+                isShowingModal.toggle()
             case "Logout":
                 print(rowData.title)
                 userEnv.removeUser()
             default:
                 break
+            }
+            
         }
     }
 }
