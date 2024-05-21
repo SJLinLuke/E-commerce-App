@@ -31,4 +31,5 @@ struct Constants {
     static let unread         = "api/eshop/notifications/unreadCount"
     static let multipassToken = "api/members/multipassToken"
     static let orderInfos     = "api/eshop/order/orders"
+    static let product        = "api/eshop/products/"
 }

@@ -176,6 +176,21 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    // MARK: Product
+    func fetchProduct(_ shopifyID: String) async throws -> ProductBody {
+        
+        let request = generateURLRequest(host + Constants.product + shopifyID)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(ProductResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

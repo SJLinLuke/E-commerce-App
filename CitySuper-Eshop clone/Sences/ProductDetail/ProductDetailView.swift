@@ -33,10 +33,11 @@ struct ProductDetailView: View {
                     })
                     
                     HStack(alignment: .top) {
-                        Text("French Chilled Chicken Girrzzard (1pack)")
-                            .font(.title3)
+                        Text(VM.product.title)
+                            .font(.system(size: 18))
                             .fontWeight(.bold)
-                            .lineLimit(2)
+                        
+                        Spacer()
                         
                         Button {
                             print("tap share!")
@@ -46,7 +47,7 @@ struct ProductDetailView: View {
                         .padding(.leading, 20)
                         
                     }
-                    .padding(.top, 15)
+                    .padding(EdgeInsets(top: 15, leading: 10, bottom: 0, trailing: 20))
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -125,6 +126,14 @@ struct ProductDetailView: View {
                     
                     CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Similar Product", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
                         .background(Color(hex: "F2F2F2"))
+                }
+                .onAppear {
+                    VM.fetchProduct(shopifyID: shopifyID)
+                }
+            }
+            .overlay {
+                if VM.isLoading {
+                    LoadingIndicatiorView()
                 }
             }
             .modifier(NavigationModifier(isHideCollectionsList: true))

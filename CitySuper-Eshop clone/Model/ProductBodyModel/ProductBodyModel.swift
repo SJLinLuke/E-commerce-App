@@ -7,16 +7,10 @@
 
 import Foundation
 
-struct ProductOption: Codable, Equatable, Hashable {
-    let shopify_product_option_id: Int?
-    let name                     : String?
-    let values                   : [String]?
-}
-
-struct LogisticTag: Codable, Equatable, Hashable {
-    let bullet_point: String?
-    let tag_name    : String
-    let type        : String
+struct ProductResponse: Decodable {
+    let success: Bool
+    let error_message: String?
+    let data: ProductBody
 }
 
 struct ProductBody: Decodable, Equatable, Hashable {
@@ -68,6 +62,18 @@ struct ProductBody: Decodable, Equatable, Hashable {
     //
     //        return nil
     //    }
+}
+
+struct ProductOption: Codable, Equatable, Hashable {
+    let shopify_product_option_id: Int?
+    let name                     : String?
+    let values                   : [String]?
+}
+
+struct LogisticTag: Codable, Equatable, Hashable {
+    let bullet_point: String?
+    let tag_name    : String
+    let type        : String
 }
 
 struct ProductImage: Codable, Equatable, Hashable {
