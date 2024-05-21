@@ -53,6 +53,11 @@ struct MainTabbarView: View {
                 inboxVM.fetchUnreadNumber()
             }
         }
+        .onChange(of: selectIndex) {
+            if (userEnv.isLogin) {
+                inboxVM.fetchUnreadNumber()
+            }
+        }
     }
     
     init() {

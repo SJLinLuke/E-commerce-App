@@ -19,8 +19,9 @@ struct InboxListCell: View {
             
             VStack(alignment: .leading) {
                 Text(message.title)
-                    .font(.caption)
+                    .font(.system(size: 13))
                     .fontWeight(.bold)
+                
                 Text(message.content ?? "")
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -31,6 +32,7 @@ struct InboxListCell: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
+            .padding(.vertical, 3)
         }
         .frame(height: 100)
         .padding(.horizontal, 15)
