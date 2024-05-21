@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    @StateObject var VM = ProductDetailViewModel()
+    @StateObject var VM = ProductDetailViewModel.shared
     
     @State var searchText: String = ""
     
@@ -32,80 +32,22 @@ struct ProductDetailView: View {
                             .padding(.top, -8)
                     })
                     
-                    HStack(alignment: .top) {
-                        Text(VM.product.title)
-                            .font(.system(size: 18))
-                            .fontWeight(.bold)
-                        
-                        Spacer()
-                        
-                        Button {
-                            print("tap share!")
-                        } label: {
-                            Image("share_icon")
-                        }
-                        .padding(.leading, 20)
-                        
-                    }
-                    .padding(EdgeInsets(top: 15, leading: 10, bottom: 0, trailing: 20))
+                    ProductDetailTitleView()
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            Image("deliveryonly_icon")
-                                .resizable()
-                                .frame(width: 20, height: 15)
-                            
-                            Text("Dekivery Only")
-                                .font(.subheadline)
-                                .foregroundColor(.themeGreen2)
-                        }
-                        .padding(.horizontal, 10)
-                        .frame(height: 30)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.themeGreen2, lineWidth: 1.5)
-                        }
-                    }
-                    .padding(.leading)
-                    .padding(.bottom, -10)
+                    ProductDetailTagsView()
                     
                     VStack(alignment: .leading) {
                         Rectangle()
                             .fill(.secondary)
                             .frame(height: 0.5)
                         
-                        HStack {
-                            Text("$100,000.00")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                            //compare price
-                            Text("$999")
-                                .font(.caption)
-                                .strikethrough()
-                                .foregroundColor(.secondary)
-                            
-                            Spacer()
-                            
-                            SoldOutButton(width: 53, height: 30)
-                        }
-                        .padding(.vertical, 5)
+                        ProductDetailPriceView()
                         
                         Rectangle()
                             .fill(.secondary)
                             .frame(height: 0.5)
                         
-                        VStack {
-                            HStack {
-                                Image("deliveryonly_icon")
-                                    .resizable()
-                                    .frame(width: 20, height: 15)
-                                
-                                Text("Only avaliable for delivery")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.vertical)
-                        }
+                        ProductDetailBulletPointsView()
                                                 
                         Rectangle()
                             .fill(.secondary)
@@ -118,13 +60,13 @@ struct ProductDetailView: View {
                     }
                     .padding()
                     
-                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Related Product", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
+                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Related Product", layout: "", products: VM.product.products ?? [], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
                         .background(Color(hex: "F2F2F2"))
                     
                     Spacer()
                         .frame(height: 0)
                     
-                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Similar Product", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
+                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Similar Product", layout: "", products: VM.product.similar_products ?? [], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
                         .background(Color(hex: "F2F2F2"))
                 }
                 .onAppear {
