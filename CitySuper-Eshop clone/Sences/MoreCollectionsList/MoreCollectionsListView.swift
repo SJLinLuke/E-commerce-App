@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct MoreCollectionsListView: View {
+    
+    @State var searchText: String = ""
+    
     var body: some View {
-        Text("MoreCollectionsListView")
+        NavigationStack {
+            ZStack {
+                Text("MoreCollectionsListView")
+            }
+            .modifier(NavigationModifier.shared)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .navigationBarBackButtonHidden()
+        }
+        
     }
 }
 

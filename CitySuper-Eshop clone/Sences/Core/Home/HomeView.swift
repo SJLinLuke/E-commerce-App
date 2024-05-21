@@ -95,7 +95,7 @@ struct HomeView: View {
                 .task {
                     VM.fetchHomepage()
                 }
-                .modifier(NavigationModifier())
+                .modifier(NavigationModifier.shared)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
             .overlay(alignment: .bottomTrailing) {

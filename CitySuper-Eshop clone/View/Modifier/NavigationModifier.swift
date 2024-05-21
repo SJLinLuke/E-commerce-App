@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NavigationModifier: ViewModifier {
     
+    static let shared = NavigationModifier()
+    
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
     

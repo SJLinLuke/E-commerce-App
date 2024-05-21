@@ -29,7 +29,7 @@ struct FavouritesView: View {
                     }
                 }
             }
-            .modifier(NavigationModifier())
+            .modifier(NavigationModifier.shared)
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
         .overlay {
