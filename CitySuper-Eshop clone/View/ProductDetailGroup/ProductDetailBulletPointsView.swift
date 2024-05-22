@@ -13,7 +13,7 @@ struct ProductDetailBulletPointsView: View {
     
     var body: some View {
         VStack {
-            ForEach(VM.product.logistic_tags ?? [], id: \.self) { tag in
+            ForEach(VM.product?.logistic_tags ?? [], id: \.self) { tag in
                 HStack {
                     Image(VM.logisticTypeImage(type: tag.type))
                         .resizable()

@@ -13,7 +13,7 @@ struct ProductDetailTagsView: View {
         
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            ForEach(VM.product.logistic_tags ?? [], id: \.self) { tag in
+            ForEach(VM.product?.logistic_tags ?? [], id: \.self) { tag in
                 HStack {
                     Image(VM.logisticTypeImage(type: tag.type))
                         .resizable()

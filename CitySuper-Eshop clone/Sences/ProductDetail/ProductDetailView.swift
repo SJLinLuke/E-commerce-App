@@ -20,8 +20,7 @@ struct ProductDetailView: View {
             ScrollView {
                 VStack {
                     
-                    Rectangle()
-                        .frame(height: 400)
+                    ProductDetailImageGalleryView(images: VM.product?.images ?? [])
                     
                     GeometryReader(content: { geometry in
                         Spacer()
@@ -48,7 +47,7 @@ struct ProductDetailView: View {
                             .frame(height: 0.5)
                         
                         ProductDetailBulletPointsView()
-                                                
+                        
                         Rectangle()
                             .fill(.secondary)
                             .frame(height: 0.5)
@@ -63,17 +62,17 @@ struct ProductDetailView: View {
                     ProductDetailMoreProductsView(title: "Related Products",
                                                   products: VM.relatedProducts,
                                                   meetLast: {
-                                                    VM.fetchRelatedProduct(shopifyID: shopifyID)
-                                                  })
+                        VM.fetchRelatedProduct(shopifyID: shopifyID)
+                    })
                     
                     Spacer()
                         .frame(height: 0)
                     
-                    ProductDetailMoreProductsView(title: "Similar Products", 
+                    ProductDetailMoreProductsView(title: "Similar Products",
                                                   products: VM.similarProducts,
                                                   meetLast: {
-                                                    VM.fetchSimilarProduct(shopifyID: shopifyID)
-                                                  })
+                        VM.fetchSimilarProduct(shopifyID: shopifyID)
+                    })
                 }
                 .onAppear {
                     VM.fetchProduct(shopifyID: shopifyID)
@@ -95,7 +94,7 @@ struct ProductDetailView: View {
 }
 
 struct ProductDetailMoreProductsView: View {
-        
+    
     let title: String
     let products: [ProductBody]
     let meetLast: () -> Void
@@ -110,7 +109,7 @@ struct ProductDetailMoreProductsView: View {
                                                                     itemWidth: 175,
                                                                     itemHeight: 270,
                                                                     isRelatedSimilar: true, meetLast: {meetLast()})
-                .background(Color(hex: "F2F2F2"))
+            .background(Color(hex: "F2F2F2"))
         }
     }
 }

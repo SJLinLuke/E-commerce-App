@@ -13,7 +13,7 @@ struct ProductDetailTitleView: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            Text(VM.product.title)
+            Text(VM.product?.title ?? "")
                 .font(.system(size: 18))
                 .fontWeight(.bold)
             
