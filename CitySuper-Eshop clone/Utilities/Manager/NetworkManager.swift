@@ -191,6 +191,36 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    // MARK: Product-Similar
+    func fetchSimilarProduct(_ shopifyID: String, page: Int) async throws -> [ProductBody] {
+        
+        let request = generateURLRequest(host + Constants.productSimilar + shopifyID + "?page=\(page)")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SimilarRelatedProductResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: Product-Related
+    func fetchRelatedProduct(_ shopifyID: String, page: Int) async throws -> [ProductBody] {
+        
+        let request = generateURLRequest(host + Constants.productRelated + shopifyID + "?page=\(page)")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SimilarRelatedProductResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

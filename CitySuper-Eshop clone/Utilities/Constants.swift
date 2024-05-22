@@ -32,4 +32,6 @@ struct Constants {
     static let multipassToken = "api/members/multipassToken"
     static let orderInfos     = "api/eshop/order/orders"
     static let product        = "api/eshop/products/"
+    static let productSimilar = "api/eshop/similarProducts/"
+    static let productRelated = "api/eshop/relatedProducts/"
 }

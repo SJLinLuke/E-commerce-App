@@ -41,7 +41,7 @@ struct HomeView: View {
                             }
                             
                             if let collectionNormalLayout = VM.collectionNormalLayout_Normal {
-                                CollectionNormalLayoutView_Normal(collectionNormalLayout: collectionNormalLayout, itemWidth: 150, itemHeight: 250, isRelatedSimilar: false)
+                                CollectionNormalLayoutView_Normal(collectionNormalLayout: collectionNormalLayout, itemWidth: 150, itemHeight: 250, isRelatedSimilar: false, meetLast: {})
                             }
                             
                             if (VM.banners.indices.contains(2)) {

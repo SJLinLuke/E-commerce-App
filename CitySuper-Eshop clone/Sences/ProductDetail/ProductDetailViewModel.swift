@@ -13,8 +13,16 @@ import Foundation
     
     @Published var isLoading: Bool = false
     @Published var product: ProductBody = ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)
+    @Published var relatedProducts: [ProductBody] = []
+    @Published var similarProducts: [ProductBody] = []
     
-    var isCompareWithPrice: Bool {        
+    private var isRelatedHasMore: Bool = true
+    private var isSimilarHasMore: Bool = true
+    
+    private var relatedPage: Int = 1
+    private var similarPage: Int = 1
+    
+    var isCompareWithPrice: Bool {
         return product.compare_at_price != nil
     }
     
@@ -26,10 +34,56 @@ import Foundation
                 do {
                     self.isLoading = true
                     self.product = try await NetworkManager.shared.fetchProduct(shopifyID)
+                    self.fetchSimilarProduct(shopifyID: shopifyID)
+                    self.fetchRelatedProduct(shopifyID: shopifyID)
                     self.isLoading = false
                 } catch {
                     print(error.localizedDescription)
                     self.isLoading = false
+                }
+            }
+        }
+    }
+    
+    func fetchSimilarProduct(shopifyID: String) {
+        
+        guard isSimilarHasMore else { return }
+        
+        DispatchQueue.main.async {
+            Task {
+                do {
+                    let similarProductData = try await NetworkManager.shared.fetchSimilarProduct(shopifyID, page: self.similarPage)
+                    
+                    if similarProductData.count > 0 {
+                        self.similarProducts.append(contentsOf: similarProductData)
+                        self.similarPage += 1
+                    } else {
+                        self.isSimilarHasMore = false
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func fetchRelatedProduct(shopifyID: String) {
+        
+        guard isRelatedHasMore else { return }
+        
+        DispatchQueue.main.async {
+            Task {
+                do {
+                    let relatedProductData = try await NetworkManager.shared.fetchRelatedProduct(shopifyID, page: self.relatedPage)
+                    
+                    if relatedProductData.count > 0 {
+                        self.relatedProducts.append(contentsOf: relatedProductData)
+                        self.relatedPage += 1
+                    } else {
+                        self.isRelatedHasMore = false
+                    }
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
         }

@@ -60,14 +60,20 @@ struct ProductDetailView: View {
                     }
                     .padding()
                     
-                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Related Product", layout: "", products: VM.product.products ?? [], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
-                        .background(Color(hex: "F2F2F2"))
+                    ProductDetailMoreProductsView(title: "Related Products",
+                                                  products: VM.relatedProducts,
+                                                  meetLast: {
+                                                    VM.fetchRelatedProduct(shopifyID: shopifyID)
+                                                  })
                     
                     Spacer()
                         .frame(height: 0)
                     
-                    CollectionNormalLayoutView_Normal( collectionNormalLayout: CollectionNormalLayoutModel(title: "Similar Product", layout: "", products: VM.product.similar_products ?? [], shopify_collection_id: ""), itemWidth: 175, itemHeight: 270, isRelatedSimilar: true)
-                        .background(Color(hex: "F2F2F2"))
+                    ProductDetailMoreProductsView(title: "Similar Products", 
+                                                  products: VM.similarProducts,
+                                                  meetLast: {
+                                                    VM.fetchSimilarProduct(shopifyID: shopifyID)
+                                                  })
                 }
                 .onAppear {
                     VM.fetchProduct(shopifyID: shopifyID)
@@ -86,4 +92,25 @@ struct ProductDetailView: View {
 
 #Preview {
     ProductDetailView(shopifyID: "")
+}
+
+struct ProductDetailMoreProductsView: View {
+        
+    let title: String
+    let products: [ProductBody]
+    let meetLast: () -> Void
+    
+    var body: some View {
+        ZStack {
+            CollectionNormalLayoutView_Normal(
+                collectionNormalLayout: CollectionNormalLayoutModel(title: title,
+                                                                    layout: "",
+                                                                    products: products,
+                                                                    shopify_collection_id: ""),
+                                                                    itemWidth: 175,
+                                                                    itemHeight: 270,
+                                                                    isRelatedSimilar: true, meetLast: {meetLast()})
+                .background(Color(hex: "F2F2F2"))
+        }
+    }
 }

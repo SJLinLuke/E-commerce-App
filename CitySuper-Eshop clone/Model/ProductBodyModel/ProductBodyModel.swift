@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct SimilarRelatedProductResponse: Decodable {
+    let success: Bool
+    let error_message: String?
+    let data: [ProductBody]
+}
+
 struct ProductResponse: Decodable {
     let success: Bool
     let error_message: String?
@@ -31,9 +37,9 @@ struct ProductBody: Decodable, Equatable, Hashable {
     
     let images            : [ProductImage]?
     
-    /// related products
-    let products          : [ProductBody]?
-    let similar_products  : [ProductBody]?
+    /// these are not for using now (fetch by api/eshop/similarProducts/ and api/eshop/relatedProducts/)
+    var products          : [ProductBody]? /// related products
+    var similar_products  : [ProductBody]? /// similar products
         
     //    func convertToProductViewModel() -> ProductViewModel? {
     //

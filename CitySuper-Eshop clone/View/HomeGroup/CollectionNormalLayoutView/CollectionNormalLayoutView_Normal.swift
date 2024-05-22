@@ -16,12 +16,7 @@ struct CollectionNormalLayoutView_Normal: View {
     let itemHeight: CGFloat
     var isRelatedSimilar: Bool = false
     
-    init(collectionNormalLayout: CollectionNormalLayoutModel, itemWidth: CGFloat, itemHeight: CGFloat, isRelatedSimilar: Bool) {
-        self.collectionNormalLayout = collectionNormalLayout
-        self.itemWidth = itemWidth
-        self.itemHeight = itemHeight
-        self.isRelatedSimilar = isRelatedSimilar
-    }
+    var meetLast: () -> Void
     
     var body: some View {
         VStack {
@@ -47,6 +42,11 @@ struct CollectionNormalLayoutView_Normal: View {
                 LazyHGrid(rows: rows) {
                     ForEach(collectionNormalLayout.products, id: \.self) { product in
                         ProductItem(product: product, width: itemWidth, height: itemHeight, isNeedDelete: false)
+                            .onAppear {
+                                if collectionNormalLayout.products.last == product {
+                                    meetLast()
+                                }
+                            }
                     }
                 }
                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 5))
@@ -56,5 +56,5 @@ struct CollectionNormalLayoutView_Normal: View {
 }
 
 #Preview {
-    CollectionNormalLayoutView_Normal(collectionNormalLayout: CollectionNormalLayoutModel(title: "Beef Sliced", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 150, itemHeight: 250, isRelatedSimilar: false)
+    CollectionNormalLayoutView_Normal(collectionNormalLayout: CollectionNormalLayoutModel(title: "Beef Sliced", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 150, itemHeight: 250, isRelatedSimilar: false, meetLast: {print("meetLast")})
 }

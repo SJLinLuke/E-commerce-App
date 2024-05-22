@@ -36,5 +36,5 @@ struct ProductVGridView: View {
 
 
 #Preview {
-    ProductVGridView(products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "Beef", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: "100", price: "69.00", images: nil, products: nil, similar_products: nil)], isNeedDelete: false, meetLast: {print("123")} )
+    ProductVGridView(products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "Beef", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: "100", price: "69.00", images: nil, products: nil, similar_products: nil)], isNeedDelete: false, meetLast: {print("meetLast")} )
 }
