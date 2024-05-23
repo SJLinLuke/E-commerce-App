@@ -60,19 +60,19 @@ struct HomePageModule: Decodable {
         switch self.type {
             
         case "SplashAd":
-            self.splashAd = try values.decode(SplashAd.self, forKey: .splashAd)
+            self.splashAd = try values.decodeIfPresent(SplashAd.self, forKey: .splashAd)
             
         case "Marquee":
-            self.marquee = try values.decode([MarqueeModel].self, forKey: .marquee)
+            self.marquee = try values.decodeIfPresent([MarqueeModel].self, forKey: .marquee)
             
         case "PopularCategories":
-            self.popularCategory = try values.decode(PopularCategoryModel.self, forKey: .popularCategory)
+            self.popularCategory = try values.decodeIfPresent(PopularCategoryModel.self, forKey: .popularCategory)
             
         case "BannerSet":
-            self.bannerSets = try values.decode([BannerSetModel].self, forKey: .bannerSets)
+            self.bannerSets = try values.decodeIfPresent([BannerSetModel].self, forKey: .bannerSets)
             
         case "Collection":
-            self.collectionNormalLayout = try values.decode(CollectionNormalLayoutModel.self, forKey: .collectionNormalLayout)
+            self.collectionNormalLayout = try values.decodeIfPresent(CollectionNormalLayoutModel.self, forKey: .collectionNormalLayout)
             
         default:
             break

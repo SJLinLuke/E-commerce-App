@@ -19,7 +19,6 @@ struct ProductDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    
                     ProductDetailImageGalleryView(images: VM.product?.images ?? [])
                     
                     GeometryReader(content: { geometry in
@@ -52,10 +51,9 @@ struct ProductDetailView: View {
                             .fill(.secondary)
                             .frame(height: 0.5)
                         
-                        Text("Keep refrigerated \n *Photo for reference only.")
+                        HTMLView(htmlString: VM.product?.description_html ?? "")
                             .padding()
-                            .lineSpacing(10)
-                        
+                            .frame(height: 400)
                     }
                     .padding()
                     
@@ -76,6 +74,9 @@ struct ProductDetailView: View {
                 }
                 .onAppear {
                     VM.fetchProduct(shopifyID: shopifyID)
+                }
+                .onDisappear {
+                    VM.product = nil
                 }
             }
             .overlay {
@@ -112,4 +113,47 @@ struct ProductDetailMoreProductsView: View {
             .background(Color(hex: "F2F2F2"))
         }
     }
+}
+import WebKit
+struct HTMLView: UIViewRepresentable {
+    typealias UIViewType = WKWebView
+ 
+    // 4
+    // Access the `homepage.html` file that is stored in the app bundle
+    var fileURL: URL {
+        guard let url = Bundle.main.url(forResource: "homepage", withExtension: "html") else {
+            fatalError("path does not exist")
+        }
+        return url
+    }
+ 
+    /// Accepts a user HTML string e.g <p>SwiftUI is <b>awesome</b></p>
+    var htmlString: String?
+ 
+    func makeUIView(context: Context) -> WKWebView {
+        // 5
+        // Configure the WKWebView
+        let config = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        // 6
+        // Part of the configuration is to allow for back-and-forth navigation between web pages.
+        webView.allowsBackForwardNavigationGestures = true
+        return webView
+    }
+ 
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        guard let htmlString else {
+            // 7
+            // Load the `homepage.html` page (has CSS styling), refer to `styles.css`
+            uiView.loadFileURL(fileURL, allowingReadAccessTo: fileURL)
+            return
+        }
+        // 8
+        // If the user passes an HTML string this page will be rendered
+        let source = "<header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header><style> img {max-width:100%;height:auto !important;width:auto !important;} * {font-family: Helvetica} iframe{width: 100% !important;height: auto !important;}</style>"
+        uiView.loadHTMLString("\(source)\(htmlString)", baseURL: nil)
+        uiView.scrollView.isScrollEnabled = false
+    }
+    
+
 }

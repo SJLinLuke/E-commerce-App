@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SplashAd: Decodable{
+struct SplashAd: Decodable {
     let id          : Int
     let image_src   : String?
     let link_type   : String?

@@ -17,7 +17,7 @@ struct ProductDetailBulletPointsView: View {
                 HStack {
                     Image(VM.logisticTypeImage(type: tag.type))
                         .resizable()
-                        .frame(width: 20, height: 15)
+                        .frame(width: 20, height: 20)        
                     
                     Text(tag.bullet_point ?? "")
                         .font(.subheadline)
