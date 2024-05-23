@@ -186,7 +186,6 @@
 		400C055A2BFE30B000493ACA /* ProductDetailImageGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailImageGalleryView.swift; sourceTree = "<group>"; };
 		400C055D2BFF7C6900493ACA /* HTMLLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLLoaderView.swift; sourceTree = "<group>"; };
 		400C05652BFF7D4200493ACA /* ProductDetailMoreProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailMoreProductsView.swift; sourceTree = "<group>"; };
-		400C05672BFF82F200493ACA /* CitySuper-Eshop-clone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CitySuper-Eshop-clone-Info.plist"; sourceTree = SOURCE_ROOT; };
 		400C05682BFF8AE700493ACA /* ProductDetailIGalleryImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailIGalleryImageDetailView.swift; sourceTree = "<group>"; };
 		406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEmptyView.swift; sourceTree = "<group>"; };
 		406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesEmptyView.swift; sourceTree = "<group>"; };
@@ -525,7 +524,6 @@
 		40E5225D2BED05590046C3AA /* CitySuper-Eshop clone */ = {
 			isa = PBXGroup;
 			children = (
-				400C05672BFF82F200493ACA /* CitySuper-Eshop-clone-Info.plist */,
 				40E522982BEF41F40046C3AA /* Model */,
 				40E522862BEE879F0046C3AA /* Utilities */,
 				40E5227D2BED21230046C3AA /* View */,
