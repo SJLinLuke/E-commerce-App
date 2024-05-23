@@ -14,7 +14,6 @@ struct FastCollectionView: View {
     @State private var currentIndex: Int = 0
     
     var body: some View {
-        
         VStack {
             ZStack {
                 ScrollViewReader { scrollView in

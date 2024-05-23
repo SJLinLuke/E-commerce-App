@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductDetailImageGalleryView: View {
     
     @State var selectedIndex: Int = 0
-    @State var height: Double = 0
+    @State var height: Double = 400
     
     var images: [ProductImage]
     
