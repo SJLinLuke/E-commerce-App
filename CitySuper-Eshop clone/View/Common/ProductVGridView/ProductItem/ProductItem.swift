@@ -89,9 +89,6 @@ struct ProductItem: View {
                 }
             }
         }
-        
-        
-        
     }
 }
 

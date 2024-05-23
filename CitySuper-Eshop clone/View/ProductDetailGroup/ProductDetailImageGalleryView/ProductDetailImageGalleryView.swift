@@ -12,6 +12,8 @@ struct ProductDetailImageGalleryView: View {
     @State var selectedIndex: Int = 0
     @State var height: Double = 400
     
+    @Binding var isGalleryDetailShow: Bool
+    
     var images: [ProductImage]
     
     var body: some View {
@@ -24,19 +26,28 @@ struct ProductDetailImageGalleryView: View {
                 GeometryReader(content: { geometry in
                     RemoteImageView(url: images[index].src ?? "",
                                     placeholder: .common)
-                        .tag(index)
-                        .onAppear {
-                            self.height = geometry.size.width
-                        }
+                    .tag(index)
+                    .onAppear {
+                        self.height = geometry.size.width
+                    }
+                    .onTapGesture {
+                        isGalleryDetailShow = true
+                    }
                 })
                 
             }
         }
         .frame(height: self.height)
         .tabViewStyle(.page(indexDisplayMode: .always))
+        .fullScreenCover(isPresented: $isGalleryDetailShow){
+            ProductDetailIGalleryImageDetailView(selectedIndex: $selectedIndex, 
+                                                 isGalleryDetailShow: $isGalleryDetailShow,
+                                                 images: images)
+                .background(.black)
+        }
     }
 }
 
 #Preview {
-    ProductDetailImageGalleryView(images: [ProductImage(src: "", width: 0, height: 0)])
+    ProductDetailImageGalleryView(isGalleryDetailShow: .constant(false), images: [ProductImage(src: "", width: 0, height: 0)])
 }

@@ -11,8 +11,9 @@ struct ProductDetailView: View {
     
     @StateObject var VM = ProductDetailViewModel.shared
     
-    @State var searchText: String = ""
-    @State var htmlFrameHeight: CGFloat = .zero
+    @State var searchText: String        = ""
+    @State var htmlFrameHeight: CGFloat  = .zero
+    @State var isGalleryDetailShow: Bool = false
     
     var shopifyID: String
     
@@ -20,7 +21,7 @@ struct ProductDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    ProductDetailImageGalleryView(images: VM.product?.images ?? [])
+                    ProductDetailImageGalleryView(isGalleryDetailShow: $isGalleryDetailShow, images: VM.product?.images ?? [])
                     
                     GeometryReader(content: { geometry in
                         Spacer()
@@ -54,7 +55,7 @@ struct ProductDetailView: View {
                         
                         HTMLLoaderView(htmlFrameHeight: $htmlFrameHeight,
                                        htmlString: VM.product?.description_html ?? "")
-                            .frame(height: htmlFrameHeight)
+                        .frame(height: htmlFrameHeight)
                     }
                     .padding()
                     
