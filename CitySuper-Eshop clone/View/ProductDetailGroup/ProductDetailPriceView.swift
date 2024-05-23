@@ -13,13 +13,13 @@ struct ProductDetailPriceView: View {
     
     var body: some View {
         HStack {
-            Text("$100,000.00")
+            Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundColor(VM.isCompareWithPrice ? .red : .black)
             
             if VM.isCompareWithPrice {
-                Text("$999")
+                Text("\(Currency.stringFrom(Decimal(string: VM.product?.compare_at_price ?? "0") ?? 0.0))")
                     .font(.caption)
                     .strikethrough()
                     .foregroundColor(.secondary)

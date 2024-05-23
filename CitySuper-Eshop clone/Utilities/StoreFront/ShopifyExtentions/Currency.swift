@@ -31,6 +31,10 @@ struct Currency {
     private static let formatter: NumberFormatter = {
         let formatter         = NumberFormatter()
         formatter.numberStyle = .currency
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.usesGroupingSeparator = true
+        formatter.groupingSeparator = ","
         return formatter
     }()
     

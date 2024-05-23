@@ -52,13 +52,13 @@ struct ProductItem: View {
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
                             if (VM.isCompareWithPrice) {
-                                Text("$\(VM.product?.compare_at_price ?? "")")
+                                Text("\(Currency.stringFrom(Decimal(string: VM.product?.compare_at_price ?? "0") ?? 0.0))")
                                     .font(.caption)
                                     .strikethrough()
                                     .foregroundColor(.secondary)
                             }
 
-                            Text("$\(VM.product?.price ?? "0")")
+                            Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
                                 .font(.caption)
                                 .foregroundColor(VM.isCompareWithPrice ? .red : .black )
                         }
