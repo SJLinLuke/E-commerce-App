@@ -63,6 +63,8 @@
 		400C05662BFF7D4200493ACA /* ProductDetailMoreProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C05652BFF7D4200493ACA /* ProductDetailMoreProductsView.swift */; };
 		400C05692BFF8AE700493ACA /* ProductDetailIGalleryImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C05682BFF8AE700493ACA /* ProductDetailIGalleryImageDetailView.swift */; };
 		400C056B2BFF8D4700493ACA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 400C056A2BFF8D4700493ACA /* LaunchScreen.storyboard */; };
+		400C056E2BFF917E00493ACA /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400C056D2BFF917E00493ACA /* AVPlayerView.swift */; };
+		400C05712BFF971F00493ACA /* CS_SplashVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 400C05702BFF971F00493ACA /* CS_SplashVideo.mp4 */; };
 		406612CF2BF7A2270037C4D8 /* InboxEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */; };
 		406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */; };
 		406612D42BF836290037C4D8 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D32BF836290037C4D8 /* FavouriteModel.swift */; };
@@ -189,6 +191,8 @@
 		400C05652BFF7D4200493ACA /* ProductDetailMoreProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailMoreProductsView.swift; sourceTree = "<group>"; };
 		400C05682BFF8AE700493ACA /* ProductDetailIGalleryImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailIGalleryImageDetailView.swift; sourceTree = "<group>"; };
 		400C056A2BFF8D4700493ACA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		400C056D2BFF917E00493ACA /* AVPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerView.swift; sourceTree = "<group>"; };
+		400C05702BFF971F00493ACA /* CS_SplashVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = CS_SplashVideo.mp4; sourceTree = "<group>"; };
 		406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEmptyView.swift; sourceTree = "<group>"; };
 		406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesEmptyView.swift; sourceTree = "<group>"; };
 		406612D32BF836290037C4D8 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
@@ -480,6 +484,14 @@
 			path = ProductDetailMoreProductsView;
 			sourceTree = "<group>";
 		};
+		400C056C2BFF916C00493ACA /* AVPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				400C056D2BFF917E00493ACA /* AVPlayerView.swift */,
+			);
+			path = AVPlayerView;
+			sourceTree = "<group>";
+		};
 		406612D22BF8360F0037C4D8 /* FavouriteModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -532,6 +544,7 @@
 				40E522772BED14FB0046C3AA /* Sences */,
 				40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */,
 				40E522642BED055C0046C3AA /* CitySuper_Eshop_clone.entitlements */,
+				400C05702BFF971F00493ACA /* CS_SplashVideo.mp4 */,
 				40E522622BED055C0046C3AA /* Assets.xcassets */,
 				40E522652BED055C0046C3AA /* Preview Content */,
 			);
@@ -874,6 +887,7 @@
 		40E522D52BF26BBA0046C3AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				400C056C2BFF916C00493ACA /* AVPlayerView */,
 				400C055C2BFF7C4500493ACA /* HTMLLoaderView */,
 				C5776E2E2BF5B939007D5653 /* ProgressView */,
 				C5EA79892BF4530B0042FEF0 /* LoadingIndicatorView */,
@@ -1126,6 +1140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400C05712BFF971F00493ACA /* CS_SplashVideo.mp4 in Resources */,
 				400C056B2BFF8D4700493ACA /* LaunchScreen.storyboard in Resources */,
 				40E522672BED055C0046C3AA /* Preview Assets.xcassets in Resources */,
 				40E522632BED055C0046C3AA /* Assets.xcassets in Resources */,
@@ -1236,6 +1251,7 @@
 				40E5229B2BEF421D0046C3AA /* HomeModel.swift in Sources */,
 				400C03AE2BF8A3D900493ACA /* ShoppingCartView.swift in Sources */,
 				40E522922BEF37F70046C3AA /* PopularCategoryItem.swift in Sources */,
+				400C056E2BFF917E00493ACA /* AVPlayerView.swift in Sources */,
 				400C054D2BFA053F00493ACA /* Demical+Extension.swift in Sources */,
 				400C053E2BF9EB1400493ACA /* ManualCodeViewModel.swift in Sources */,
 				40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */,

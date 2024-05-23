@@ -14,7 +14,8 @@ struct MainTabbarView: View {
     
     @StateObject private var inboxVM = InboxViewModel.shared
     
-    @State private var selectIndex = 0
+    @State private var selectIndex:Int = 0
+    @State private var isShowingIntoVideo: Bool = false
     
     var body: some View {
         TabView(selection: $selectIndex) {
@@ -48,15 +49,21 @@ struct MainTabbarView: View {
         }
         .tint(Color(.themeGreen))
         .onAppear {
-            NetworkManager.shared.userEnv = userEnv
-            if (userEnv.isLogin) {
-                inboxVM.fetchUnreadNumber()
+            DispatchQueue.main.async {
+                isShowingIntoVideo = true
+                NetworkManager.shared.userEnv = userEnv
+                if (userEnv.isLogin) {
+                    inboxVM.fetchUnreadNumber()
+                }
             }
         }
         .onChange(of: selectIndex) {
             if (userEnv.isLogin) {
                 inboxVM.fetchUnreadNumber()
             }
+        }
+        .fullScreenCover(isPresented: $isShowingIntoVideo) {
+            AVPlayerView(isShowingIntoVideo: $isShowingIntoVideo)
         }
     }
     
