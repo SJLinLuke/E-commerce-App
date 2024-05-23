@@ -21,7 +21,7 @@ struct FavouritesView: View {
             VStack {
                 if (VM.favourites.isEmpty) { FavouritesEmptyView() } else {
                     ScrollView {
-                        ProductVGridView(products: VM.favourites, isNeedDelete: true, meetLast: {
+                        ProductVGridView(products: VM.favourites, isNeedDelete: true, itemWidth: 182, itemHeight: 270, meetLast: {
                             if (VM.isHasMore && !VM.favourites.isEmpty) {
                                 VM.fetchFavourite()
                             }

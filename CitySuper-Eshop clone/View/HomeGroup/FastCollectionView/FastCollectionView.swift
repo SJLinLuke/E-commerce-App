@@ -51,7 +51,7 @@ struct FastCollectionView: View {
             TabView(selection: $currentIndex) {
                 ForEach(popularCategories.indices, id: \.self) { index in
                     if let products = popularCategories[index].products {
-                        ProductVGridView(products: products, isNeedDelete: false, meetLast: {})
+                        ProductVGridView(products: products, isNeedDelete: false, itemWidth: 180, itemHeight: 280, meetLast: {})
                     }
                 }
             }
