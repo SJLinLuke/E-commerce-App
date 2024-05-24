@@ -95,33 +95,4 @@ import Foundation
         }
     }
     
-    func logisticTypeImage(type: String) -> String{
-        
-        var path: String = "store_icon"
-        
-        switch type {
-            case "PickupOption":
-                path = "pickuponly_icon"
-            
-            case "PickupOptionGeneral" :
-                path = "pickuponly_icon"
-            
-            case "LeadtimeOption":
-                path = "leadtime_icon"
-            
-            case "DeliveryOption":
-                path = "deliveryonly_icon"
-            
-            case "ShipmentOption":
-                path = "period_icon"
-            
-            case "ShipmentOptionGeneral":
-                path = "period_icon"
-            
-            default:
-                path = "store_icon"
-        }
-        return path
-    }
-    
 }

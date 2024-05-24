@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct ProductDetailBulletPointsView: View {
-    
-    @StateObject var VM = ProductDetailViewModel.shared
-    
+        
     let tags: [LogisticTag]
     
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(tags, id: \.self) { tag in
                 HStack {
-                    Image(VM.logisticTypeImage(type: tag.type))
+                    Image(tag.typeImage)
                         .resizable()
                         .frame(width: 20, height: 20)        
                     

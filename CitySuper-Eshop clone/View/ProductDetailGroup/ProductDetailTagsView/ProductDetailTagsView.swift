@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ProductDetailTagsView: View {
-    
-    @StateObject var VM = ProductDetailViewModel.shared
-    
+        
     let tags: [LogisticTag]
         
     var body: some View {
@@ -18,9 +16,9 @@ struct ProductDetailTagsView: View {
             HStack {
                 ForEach(tags, id: \.self) { tag in
                     HStack {
-                        Image(VM.logisticTypeImage(type: tag.type))
+                        Image(tag.typeImage)
                             .resizable()
-                            .frame(width: 20, height: 15)
+                            .frame(width: 15, height: 15)
                         
                         Text(tag.tag_name)
                             .font(.subheadline)
