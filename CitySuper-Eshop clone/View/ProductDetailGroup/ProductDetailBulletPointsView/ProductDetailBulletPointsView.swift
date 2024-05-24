@@ -12,7 +12,7 @@ struct ProductDetailBulletPointsView: View {
     @StateObject var VM = ProductDetailViewModel.shared
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ForEach(VM.product?.logistic_tags ?? [], id: \.self) { tag in
                 HStack {
                     Image(VM.logisticTypeImage(type: tag.type))
