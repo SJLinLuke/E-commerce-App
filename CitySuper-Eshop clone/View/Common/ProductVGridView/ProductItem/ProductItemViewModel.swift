@@ -20,4 +20,10 @@ final class ProductItemViewModel: ObservableObject {
         
         return true
     }
+    
+    func getProductImageSrc() -> String {
+        guard let images = self.product?.images, images.count > 0 else { return "" }
+        
+        return images[0].src ?? ""
+    }
 }

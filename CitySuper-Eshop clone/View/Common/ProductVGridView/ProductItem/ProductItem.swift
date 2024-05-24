@@ -27,7 +27,7 @@ struct ProductItem: View {
             ZStack {
                 Color(hex: "#F2F2F2")
                 VStack(alignment: .leading) {
-                    RemoteImageView(url: VM.product?.image_src ?? "",
+                    RemoteImageView(url: VM.getProductImageSrc(),
                                     placeholder: .common)
                     .frame(height: height / 1.6)
                     
