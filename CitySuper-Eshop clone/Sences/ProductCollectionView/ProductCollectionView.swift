@@ -14,6 +14,7 @@ struct ProductCollectionView: View {
     @State var searchText: String = ""
     
     var collectionID: String
+    var navTitle    : String
     
     var body: some View {
         NavigationStack {
@@ -79,7 +80,7 @@ struct ProductCollectionView: View {
                     VM.fetchCollectionProducts(collectionID: collectionID)
                 }
                 .background(Color(hex:"F7F7F7"))
-                .modifier(NavigationModifier(title: "Pork", isHideCollectionsList: true))
+                .modifier(NavigationModifier(title: navTitle, isHideCollectionsList: true))
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
         }
@@ -92,5 +93,5 @@ struct ProductCollectionView: View {
 }
 
 #Preview {
-    ProductCollectionView(collectionID: "")
+    ProductCollectionView(collectionID: "", navTitle: "Pork")
 }
