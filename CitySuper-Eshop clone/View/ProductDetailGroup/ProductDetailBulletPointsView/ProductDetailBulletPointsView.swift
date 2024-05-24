@@ -11,9 +11,11 @@ struct ProductDetailBulletPointsView: View {
     
     @StateObject var VM = ProductDetailViewModel.shared
     
+    let tags: [LogisticTag]
+    
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(VM.product?.logistic_tags ?? [], id: \.self) { tag in
+            ForEach(tags, id: \.self) { tag in
                 HStack {
                     Image(VM.logisticTypeImage(type: tag.type))
                         .resizable()
@@ -30,5 +32,5 @@ struct ProductDetailBulletPointsView: View {
 }
 
 #Preview {
-    ProductDetailBulletPointsView()
+    ProductDetailBulletPointsView(tags: [LogisticTag(bullet_point: "test_bullet_point", tag_name: "test_tag_name", type: "")])
 }

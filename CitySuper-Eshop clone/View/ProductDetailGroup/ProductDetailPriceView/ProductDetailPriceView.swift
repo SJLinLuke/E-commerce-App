@@ -11,9 +11,11 @@ struct ProductDetailPriceView: View {
     
     @StateObject var VM = ProductDetailViewModel.shared
     
+    let price: String
+    
     var body: some View {
         HStack {
-            Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
+            Text("\(Currency.stringFrom(Decimal(string: price) ?? 0.0))")
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundColor(VM.isCompareWithPrice ? .red : .black)
@@ -39,5 +41,5 @@ struct ProductDetailPriceView: View {
 }
 
 #Preview {
-    ProductDetailPriceView()
+    ProductDetailPriceView(price: "0")
 }

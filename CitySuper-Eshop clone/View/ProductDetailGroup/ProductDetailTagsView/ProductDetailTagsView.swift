@@ -10,11 +10,13 @@ import SwiftUI
 struct ProductDetailTagsView: View {
     
     @StateObject var VM = ProductDetailViewModel.shared
+    
+    let tags: [LogisticTag]
         
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(VM.product?.logistic_tags ?? [], id: \.self) { tag in
+                ForEach(tags, id: \.self) { tag in
                     HStack {
                         Image(VM.logisticTypeImage(type: tag.type))
                             .resizable()
@@ -39,5 +41,5 @@ struct ProductDetailTagsView: View {
 }
 
 #Preview {
-    ProductDetailTagsView()
+    ProductDetailTagsView(tags: [LogisticTag(bullet_point: "test_bullet_point", tag_name: "test_tag_name", type: "")])
 }

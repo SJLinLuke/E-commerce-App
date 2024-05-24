@@ -30,7 +30,15 @@ import Foundation
         product?.inventory_quantity == 0
     }
     
+    init() {
+        self.isRelatedHasMore = true
+        self.isSimilarHasMore = true
+        self.relatedPage = 1
+        self.similarPage = 1
+    }
+    
     func fetchProduct(shopifyID: String) {
+        
         guard !isLoading else { return }
         
         Task {

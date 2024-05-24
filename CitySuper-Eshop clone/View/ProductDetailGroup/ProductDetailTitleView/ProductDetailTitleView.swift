@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ProductDetailTitleView: View {
     
-    @StateObject var VM = ProductDetailViewModel.shared
+    let title: String
     
     var body: some View {
         HStack(alignment: .top) {
-            Text(VM.product?.title ?? "")
+            Text(title)
                 .font(.system(size: 18))
                 .fontWeight(.bold)
             
@@ -32,5 +32,5 @@ struct ProductDetailTitleView: View {
 }
 
 #Preview {
-    ProductDetailTitleView()
+    ProductDetailTitleView(title: "Pork")
 }

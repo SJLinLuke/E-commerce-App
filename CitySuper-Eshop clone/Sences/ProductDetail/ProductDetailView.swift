@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    @StateObject var VM = ProductDetailViewModel.shared
+    @StateObject var VM = ProductDetailViewModel()
     
     @State var searchText: String        = ""
     @State var htmlFrameHeight: CGFloat  = .zero
@@ -32,22 +32,22 @@ struct ProductDetailView: View {
                             .padding(.top, -8)
                     })
                     
-                    ProductDetailTitleView()
+                    ProductDetailTitleView(title: VM.product?.title ?? "")
                     
-                    ProductDetailTagsView()
+                    ProductDetailTagsView(tags: VM.product?.logistic_tags ?? [])
                     
                     VStack(alignment: .leading) {
                         Rectangle()
                             .fill(.secondary)
                             .frame(height: 0.3)
                         
-                        ProductDetailPriceView()
+                        ProductDetailPriceView(price: VM.product?.price ?? "0")
                         
                         Rectangle()
                             .fill(.secondary)
                             .frame(height: 0.3)
                         
-                        ProductDetailBulletPointsView()
+                        ProductDetailBulletPointsView(tags: VM.product?.logistic_tags ?? [])
                         
                         Rectangle()
                             .fill(.secondary)
@@ -59,20 +59,25 @@ struct ProductDetailView: View {
                     }
                     .padding()
                     
-                    ProductDetailMoreProductsView(title: "Related Products",
-                                                  products: VM.relatedProducts,
-                                                  meetLast: {
-                        VM.fetchRelatedProduct(shopifyID: shopifyID)
-                    })
+                    if !VM.relatedProducts.isEmpty {
+                        ProductDetailMoreProductsView(title: "Related Products",
+                                                      products: VM.relatedProducts,
+                                                      meetLast: {
+                            VM.fetchRelatedProduct(shopifyID: shopifyID)
+                        })
+                        
+                    }
                     
                     Spacer()
                         .frame(height: 0)
                     
-                    ProductDetailMoreProductsView(title: "Similar Products",
-                                                  products: VM.similarProducts,
-                                                  meetLast: {
-                        VM.fetchSimilarProduct(shopifyID: shopifyID)
-                    })
+                    if !VM.similarProducts.isEmpty {
+                        ProductDetailMoreProductsView(title: "Similar Products",
+                                                      products: VM.similarProducts,
+                                                      meetLast: {
+                            VM.fetchSimilarProduct(shopifyID: shopifyID)
+                        })
+                    }
                 }
                 .onAppear {
                     VM.fetchProduct(shopifyID: shopifyID)
