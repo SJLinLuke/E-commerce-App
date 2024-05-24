@@ -39,19 +39,19 @@ struct ProductDetailView: View {
                     VStack(alignment: .leading) {
                         Rectangle()
                             .fill(.secondary)
-                            .frame(height: 0.5)
+                            .frame(height: 0.3)
                         
                         ProductDetailPriceView()
                         
                         Rectangle()
                             .fill(.secondary)
-                            .frame(height: 0.5)
+                            .frame(height: 0.3)
                         
                         ProductDetailBulletPointsView()
                         
                         Rectangle()
                             .fill(.secondary)
-                            .frame(height: 0.5)
+                            .frame(height: 0.3)
                         
                         HTMLLoaderView(htmlFrameHeight: $htmlFrameHeight,
                                        htmlString: VM.product?.description_html ?? "")

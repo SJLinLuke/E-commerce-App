@@ -12,19 +12,23 @@ struct NavigationModifier: ViewModifier {
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
     
+    var title: String?
     var isHideCollectionsList: Bool = false
     
     func body(content: Content) -> some View {
         content
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle((title != nil ? title : "") ?? "")
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Image("bar_logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 110, height: 100)
+                if title == nil {
+                    ToolbarItem(placement: .principal) {
+                        Image("bar_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 110, height: 100)
+                    }
                 }
-        
+               
                 if !isHideCollectionsList {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
