@@ -9,18 +9,18 @@ import Foundation
 
 @MainActor final class ProductCollectionViewModel: ObservableObject {
     
-    @Published var isLoading            : Bool = false
-    @Published var collectionInfo       : ProductCollectionData? = nil
-    @Published var collectionProductData: CollectionProductsData? = nil
+    @Published var isLoading         : Bool = false
+    @Published var collectionInfo    : ProductCollectionData? = nil
+    @Published var collectionProducts: [ProductBody] = []
+    @Published var productsTotal     : Int = 0
     
     private var highLightProduct: ProductBody? = nil
     private var page            : Int = 1
-    private var isHasMore       : Bool = false
+    private var isHasMore       : Bool = true
     private var sortKet         : ProductCollectionSortKeys = .manual
     private var sortOrder       : HttpSortOrderKey = .ASC
     
     func fetchCollection(collectionID: String) {
-
         Task {
             do {
                 self.collectionInfo = try await NetworkManager.shared.fetchCollectionInfo(collectionID)
@@ -32,14 +32,25 @@ import Foundation
     
     func fetchCollectionProducts(collectionID: String) {
         
-        guard !isLoading else { return }
+        guard !isLoading && isHasMore else { return }
         
         Task {
             do {
                 self.isLoading = true
-                self.collectionProductData = try await NetworkManager.shared.fetchCollectionProduct(collectionID,
-                                                                                                 page: page, sortKey: self.sortKet, sortOrder: self.sortOrder)
-                self.retriveHighLightProduct()
+                let collectionProductData = try await NetworkManager.shared.fetchCollectionProduct(collectionID,
+                                                                                                   page: page, sortKey: self.sortKet, sortOrder: self.sortOrder)
+                if let products = collectionProductData.data, !products.isEmpty {
+                    self.retriveHighLightProduct(products) { productsWithoutHighLight in
+                        self.collectionProducts.append(contentsOf: productsWithoutHighLight)
+                        self.page += 1
+                    }
+                } else {
+                    self.isHasMore = false
+                    self.isLoading = false
+                }
+                
+                self.productsTotal = collectionProductData.total ?? 0
+                
             } catch {
                 self.isLoading = false
                 print(error)
@@ -47,19 +58,22 @@ import Foundation
         }
     }
 
-    private func retriveHighLightProduct() {
+    private func retriveHighLightProduct(_ products: [ProductBody], complete: @escaping ([ProductBody]) -> Void){
         
-        guard var collectionProducts = self.collectionProductData?.data, collectionProducts.count > 0 else {
+        guard self.highLightProduct == nil else {
             self.isLoading = false
+            complete(products)
             return
         }
         
-        self.highLightProduct = collectionProducts[0]
-        collectionProducts.removeFirst()
+        var _products = products
         
-        self.collectionProductData?.data = collectionProducts
+        self.highLightProduct = _products[0]
+        _products.removeFirst()
         
         self.isLoading = false
+        
+        complete(_products)
     }
     
     func getHighLightProduct() -> ProductBody {

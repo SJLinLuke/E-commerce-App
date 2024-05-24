@@ -38,7 +38,7 @@ struct ProductCollectionView: View {
                     .frame(height: 500)
                     
                     HStack {
-                        Text("31 results")
+                        Text("\(VM.productsTotal) results")
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .foregroundColor(.secondary)
@@ -68,7 +68,9 @@ struct ProductCollectionView: View {
                     }
                     .background(Color(hex: "F2F2F8"))
 
-                    ProductVGridView(products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Beef (privious forzen) (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil),ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "Itailian Beef (privious forzen) (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil),ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "Itailian ef (privious forzen) (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil),ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "Itai Beef (privious forzen) (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil)], isNeedDelete: false, itemWidth: 180, itemHeight: 280, meetLast: {print("meet")})
+                    ProductVGridView(products: VM.collectionProducts, isNeedDelete: false, itemWidth: 180, itemHeight: 280, meetLast: {
+                        VM.fetchCollectionProducts(collectionID: collectionID)
+                    })
                     
                     Spacer()
                 }
