@@ -27,7 +27,12 @@ struct ProductDetailPriceView: View {
             
             Spacer()
             
-            SoldOutButton(width: 53, height: 30)
+            if VM.isSoldOut {
+                SoldOutButton(width: 53, height: 30)
+            } else {
+                CartButton(width: 30, height: 30)
+            }
+            
         }
         .padding(.vertical, 5)
     }

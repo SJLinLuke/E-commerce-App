@@ -23,7 +23,11 @@ import Foundation
     private var similarPage: Int = 1
     
     var isCompareWithPrice: Bool {
-        return product?.compare_at_price != nil
+        product?.compare_at_price != nil
+    }
+    
+    var isSoldOut: Bool {
+        product?.inventory_quantity == 0
     }
     
     func fetchProduct(shopifyID: String) {
