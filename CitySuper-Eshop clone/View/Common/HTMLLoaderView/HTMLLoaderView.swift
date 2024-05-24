@@ -47,10 +47,11 @@ struct HTMLLoaderView: UIViewRepresentable {
         }
        
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (result, error) in
+            webView.evaluateJavaScript("document.body.offsetHeight", completionHandler: { (result, error) in
                 if let height = result as? CGFloat {
                     DispatchQueue.main.async {
-                        self.parent.htmlFrameHeight = height
+                        let fixedFrameHeight: CGFloat = CGFloat(5)
+                        self.parent.htmlFrameHeight = height + fixedFrameHeight
                     }
                 } else if let error = error {
                     print("Failed to evaluate JavaScript: \(error.localizedDescription)")
