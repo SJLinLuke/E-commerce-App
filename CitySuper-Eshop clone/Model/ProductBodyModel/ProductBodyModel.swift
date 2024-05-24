@@ -8,15 +8,15 @@
 import Foundation
 
 struct SimilarRelatedProductResponse: Decodable {
-    let success: Bool
+    let success      : Bool
     let error_message: String?
-    let data: [ProductBody]
+    let data         : [ProductBody]
 }
 
 struct ProductResponse: Decodable {
-    let success: Bool
+    let success      : Bool
     let error_message: String?
-    let data: ProductBody
+    let data         : ProductBody
 }
 
 struct ProductBody: Decodable, Equatable, Hashable {

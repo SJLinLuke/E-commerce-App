@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 struct OrderResponse: Decodable {
-    let success: Bool
+    let success      : Bool
     let error_message: String?
-    let data: [OrderData]?
+    let data         : [OrderData]?
 }
 
 struct OrderData: Decodable, Equatable {
@@ -32,7 +32,7 @@ struct PaymentCard: Decodable, Equatable {
 }
 
 struct OrderStaus: Equatable {
-    let status       : String
-    let progress     : CGFloat
-    let color: Color
+    let status  : String
+    let progress: CGFloat
+    let color   : Color
 }

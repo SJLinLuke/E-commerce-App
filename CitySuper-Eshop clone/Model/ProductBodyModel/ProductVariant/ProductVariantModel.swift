@@ -16,9 +16,9 @@ struct ProductVariant: Codable, Equatable, Hashable {
     let option3: String?
     
     let shopify_product_variant_id: String
-    let title: String
-    let price: String?
-    let compare_at_price: String?
+    let title             : String
+    let price             : String?
+    let compare_at_price  : String?
     let inventory_quantity: Int?
     let shopify_product_id: String?
     
@@ -61,12 +61,12 @@ struct ProductVariant: Codable, Equatable, Hashable {
     
 }
 
-extension Decimal {
-    var formattedAmount: String? {
-        let formatter = NumberFormatter()
-        formatter.generatesDecimalNumbers = true
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: self as NSDecimalNumber)
-    }
-}
+//extension Decimal {
+//    var formattedAmount: String? {
+//        let formatter = NumberFormatter()
+//        formatter.generatesDecimalNumbers = true
+//        formatter.minimumFractionDigits = 2
+//        formatter.maximumFractionDigits = 2
+//        return formatter.string(from: self as NSDecimalNumber)
+//    }
+//}

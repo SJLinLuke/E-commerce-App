@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import MobileBuySDK
 
 final class NetworkManager: ObservableObject {
     
@@ -177,6 +178,46 @@ final class NetworkManager: ObservableObject {
         }
     }
     
+    // MARK: CollectionInfo
+    func fetchCollectionInfo(_ collectionID: String) async throws -> ProductCollectionData {
+        
+        let request = generateURLRequest(host + Constants.collection + collectionID)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(ProductCollectionResponse.self, from: data).data {
+                return data
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: Collection-Products
+    func fetchCollectionProduct(_ collectionID: String,
+                                page: Int, sortKey: ProductCollectionSortKeys, sortOrder: HttpSortOrderKey) async throws -> CollectionProductsData {
+    
+        let request = generateURLRequest(host + Constants.collectionProducts + collectionID + "/products?page=\(page)&sortKey=\(sortKey.rawValue)&sortOrder=\(sortOrder.rawValue)")
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(CollectionProductsResponse.self, from: data).data {
+                return data
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    
     // MARK: Product
     func fetchProduct(_ shopifyID: String) async throws -> ProductBody {
         
@@ -252,4 +293,39 @@ extension NetworkManager {
 
 enum HttpRequestMethodType: String {
     case post = "POST"
+}
+
+enum HttpSortOrderKey: String {
+    case ASC = "ASC"
+    case DESC = "DESC"
+}
+
+enum ProductCollectionSortKeys: String {
+    /// Sort by the `best-selling` value.
+    case bestSelling = "BEST_SELLING"
+
+    /// Sort by the `collection-default` value.
+    case collectionDefault = "COLLECTION_DEFAULT"
+
+    /// Sort by the `created` value.
+    case created = "CREATED"
+
+    /// Sort by the `id` value.
+    case id = "ID"
+
+    /// Sort by the `manual` value.
+    case manual = "MANUAL"
+
+    /// Sort by the `price` value.
+    case price = "PRICE"
+
+    /// Sort by relevance to the search terms when the `query` parameter is
+    /// specified on the connection. Don't use this sort key when no search query
+    /// is specified.
+    case relevance = "RELEVANCE"
+
+    /// Sort by the `title` value.
+    case title = "TITLE"
+
+    case unknownValue = ""
 }
