@@ -26,12 +26,12 @@ struct ProductCollectionView: View {
                     
                     ZStack(alignment: .top) {
                         
-                        Image("bg_hightLight")
+                        Image("bg_highLight")
                             .resizable()
                             .frame(height: 300)
                             .padding(.top, 5)
                         
-                        ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.99", images: nil, products: nil, similar_products: nil), width: 320, height: 480, isNeedDelete: false)
+                        ProductItem(product: VM.getHighLightProduct(), width: 320, height: 480, isNeedDelete: false)
                             .padding(.top, -20)
                         
                     }
@@ -79,6 +79,11 @@ struct ProductCollectionView: View {
                 .background(Color(hex:"F7F7F7"))
                 .modifier(NavigationModifier(title: "Pork", isHideCollectionsList: true))
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            }
+        }
+        .overlay {
+            if VM.isLoading {
+                LoadingIndicatiorView()
             }
         }
     }

@@ -35,5 +35,5 @@ struct CollectionProductsResponse: Decodable {
 
 struct CollectionProductsData: Decodable {
     let total: Int?
-    let data : [ProductBody]?
+    var data : [ProductBody]?
 }
