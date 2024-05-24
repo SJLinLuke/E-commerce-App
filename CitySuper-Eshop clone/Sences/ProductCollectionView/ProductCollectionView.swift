@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ProductCollectionView: View {
     
+    @StateObject var VM = ProductCollectionViewModel()
+    
     @State var searchText: String = ""
+    
+    var collectionID: String
     
     var body: some View {
         NavigationStack {
@@ -68,6 +72,10 @@ struct ProductCollectionView: View {
                     
                     Spacer()
                 }
+                .onAppear {
+                    VM.fetchCollection(collectionID: collectionID)
+                    VM.fetchCollectionProducts(collectionID: collectionID)
+                }
                 .background(Color(hex:"F7F7F7"))
                 .modifier(NavigationModifier(title: "Pork", isHideCollectionsList: true))
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
@@ -77,5 +85,5 @@ struct ProductCollectionView: View {
 }
 
 #Preview {
-    ProductCollectionView()
+    ProductCollectionView(collectionID: "")
 }
