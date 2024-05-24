@@ -77,9 +77,6 @@ struct ProductDetailView: View {
                 .onAppear {
                     VM.fetchProduct(shopifyID: shopifyID)
                 }
-                .onDisappear {
-                    VM.product = nil
-                }
             }
             .overlay {
                 if VM.isLoading {
