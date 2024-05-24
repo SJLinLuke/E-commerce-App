@@ -60,6 +60,7 @@ struct ProductItem: View {
                             Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
                                 .font(.caption)
                                 .foregroundColor(VM.isCompareWithPrice ? .red : .black )
+                                .padding(2)
                         }
                         
                         Spacer()
