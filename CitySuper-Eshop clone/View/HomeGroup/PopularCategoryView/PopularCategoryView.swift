@@ -21,7 +21,9 @@ struct PopularCategoryView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: rows, spacing: 30, content: {
                     ForEach(popularCategories, id: \.self) { category in
-                        PopularCategoryItem(imageSrc: category.image_src ?? "", title: category.title)
+                        NavigationLink { ProductCollectionView(collectionID: category.shopify_collection_id) } label: {
+                            PopularCategoryItem(imageSrc: category.image_src ?? "", title: category.title)
+                        }
                     }
                 })
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))

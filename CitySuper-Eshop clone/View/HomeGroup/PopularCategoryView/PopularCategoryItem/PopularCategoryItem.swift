@@ -23,6 +23,7 @@ struct PopularCategoryItem: View {
             
             Text(title)
                 .font(.system(size: 10))
+                .foregroundColor(.black)
         }
         .padding(.top, 10)
     }
