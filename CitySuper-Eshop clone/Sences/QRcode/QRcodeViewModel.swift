@@ -18,22 +18,20 @@ import CoreImage.CIFilterBuiltins
     
     func fetchQRcode() {
         
-        DispatchQueue.main.async {
-            guard let storedQRCode = self.storage_qrcode else {
-                self.loadNewQRCode()
-                return
-            }
+        guard let storedQRCode = self.storage_qrcode else {
+            self.loadNewQRCode()
+            return
+        }
         
-            do {
-                let qrcodeData = try JSONDecoder().decode(QRcodeData.self, from: storedQRCode)
-                if (!qrcodeData.expiry_date.isExpired()) {
-                    self.qrcode = qrcodeData.qrcode
-                } else {
-                    self.loadNewQRCode()
-                }
-            } catch {
+        do {
+            let qrcodeData = try JSONDecoder().decode(QRcodeData.self, from: storedQRCode)
+            if (!qrcodeData.expiry_date.isExpired()) {
+                self.qrcode = qrcodeData.qrcode
+            } else {
                 self.loadNewQRCode()
             }
+        } catch {
+            self.loadNewQRCode()
         }
     }
     

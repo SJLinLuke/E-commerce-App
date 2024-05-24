@@ -19,26 +19,24 @@ import Foundation
         
         guard !isLoading else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    self.isLoading = true
-                    
-                    let favouriteData = try await NetworkManager.shared.fetchFavourites(self.currentPage)
-                    
-                    if (self.currentPage != favouriteData.last_page) {
-                        self.currentPage += 1
-                    } else {
-                        self.isHasMore = false
-                    }
-       
-                    self.favourites.append(contentsOf: favouriteData.data)
-                    
-                    self.isLoading = false
-                } catch {
-                    self.isLoading = false
-                    print(error.localizedDescription)
+        Task {
+            do {
+                self.isLoading = true
+                
+                let favouriteData = try await NetworkManager.shared.fetchFavourites(self.currentPage)
+                
+                if (self.currentPage != favouriteData.last_page) {
+                    self.currentPage += 1
+                } else {
+                    self.isHasMore = false
                 }
+                
+                self.favourites.append(contentsOf: favouriteData.data)
+                
+                self.isLoading = false
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
             }
         }
     }

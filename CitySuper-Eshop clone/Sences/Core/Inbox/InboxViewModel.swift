@@ -22,39 +22,34 @@ import Foundation
         
         guard !isLoading else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    self.isLoading = true
-                    let inboxMessages = try await NetworkManager.shared.fetchNotification(self.currentPage)
-                    
-                    if (self.currentPage != inboxMessages.last_page) {
-                        self.currentPage += 1
-                    } else {
-                        self.isHasMore = false
-                    }
-                    
-                    self.inBoxMessages.append(contentsOf: inboxMessages.data)
-                    
-                    self.isLoading = false
-                    
-                } catch {
-                    self.isLoading = false
-                    print(error.localizedDescription)
+        Task {
+            do {
+                self.isLoading = true
+                let inboxMessages = try await NetworkManager.shared.fetchNotification(self.currentPage)
+                
+                if (self.currentPage != inboxMessages.last_page) {
+                    self.currentPage += 1
+                } else {
+                    self.isHasMore = false
                 }
+                
+                self.inBoxMessages.append(contentsOf: inboxMessages.data)
+                
+                self.isLoading = false
+                
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
             }
         }
     }
     
     func fetchUnreadNumber() {
-        
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    self.unreadNumber = try await NetworkManager.shared.fetchUnreadNumber()
-                } catch {
-                    print(error.localizedDescription)
-                }
+        Task {
+            do {
+                self.unreadNumber = try await NetworkManager.shared.fetchUnreadNumber()
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }

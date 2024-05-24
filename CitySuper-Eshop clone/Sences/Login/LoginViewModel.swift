@@ -16,21 +16,19 @@ import SwiftUI
         
         guard !isLoading else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    self.isLoading = true
-                    let userData = try await NetworkManager.shared.login(loginData: loginData)
-                    
-                    self.isLoading = false
-                    self.userEnv?.setupUser(userData)
-                } catch {
-                    self.isLoading = false
-                    print(error.localizedDescription)
-                }
+        Task {
+            do {
+                self.isLoading = true
+                let userData = try await NetworkManager.shared.login(loginData: loginData)
                 
-                complete(self.userEnv?.isLogin ?? false)
+                self.isLoading = false
+                self.userEnv?.setupUser(userData)
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
             }
+            
+            complete(self.userEnv?.isLogin ?? false)
         }
     }
 }

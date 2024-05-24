@@ -22,26 +22,24 @@ import Foundation
         
         guard !isLoading && isHasNextPage else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                self.isLoading = true
-                let mutipassToken = try await NetworkManager.shared.getMultipassToken()
-                
-                Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                    if let access_token = access_token{
-                        Client.shared.fetchCustomerAndOrders(after: self.nextCursor ?? nil, accessToken: access_token) { orders in
-                            if let orders = orders?.orders {
-                                self.fetchOrderStatus(orders.items)
-                                
-                                self.isHasNextPage = orders.hasNextPage
-                                self.nextCursor    = orders.items.last?.cursor
-                            } else {
-                                self.isLoading  = false
-                            }
+        Task {
+            self.isLoading = true
+            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
+            
+            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
+                if let access_token = access_token{
+                    Client.shared.fetchCustomerAndOrders(after: self.nextCursor ?? nil, accessToken: access_token) { orders in
+                        if let orders = orders?.orders {
+                            self.fetchOrderStatus(orders.items)
+                            
+                            self.isHasNextPage = orders.hasNextPage
+                            self.nextCursor    = orders.items.last?.cursor
+                        } else {
+                            self.isLoading  = false
                         }
-                    } else {
-                        self.isLoading = false
                     }
+                } else {
+                    self.isLoading = false
                 }
             }
         }

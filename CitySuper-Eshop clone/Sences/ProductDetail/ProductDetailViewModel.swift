@@ -33,18 +33,16 @@ import Foundation
     func fetchProduct(shopifyID: String) {
         guard !isLoading else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    self.isLoading = true
-                    self.product = try await NetworkManager.shared.fetchProduct(shopifyID)
-                    self.fetchSimilarProduct(shopifyID: shopifyID)
-                    self.fetchRelatedProduct(shopifyID: shopifyID)
-                    self.isLoading = false
-                } catch {
-                    print(error.localizedDescription)
-                    self.isLoading = false
-                }
+        Task {
+            do {
+                self.isLoading = true
+                self.product = try await NetworkManager.shared.fetchProduct(shopifyID)
+                self.fetchSimilarProduct(shopifyID: shopifyID)
+                self.fetchRelatedProduct(shopifyID: shopifyID)
+                self.isLoading = false
+            } catch {
+                print(error.localizedDescription)
+                self.isLoading = false
             }
         }
     }
@@ -53,20 +51,18 @@ import Foundation
         
         guard isSimilarHasMore else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    let similarProductData = try await NetworkManager.shared.fetchSimilarProduct(shopifyID, page: self.similarPage)
-                    
-                    if similarProductData.count > 0 {
-                        self.similarProducts.append(contentsOf: similarProductData)
-                        self.similarPage += 1
-                    } else {
-                        self.isSimilarHasMore = false
-                    }
-                } catch {
-                    print(error.localizedDescription)
+        Task {
+            do {
+                let similarProductData = try await NetworkManager.shared.fetchSimilarProduct(shopifyID, page: self.similarPage)
+                
+                if similarProductData.count > 0 {
+                    self.similarProducts.append(contentsOf: similarProductData)
+                    self.similarPage += 1
+                } else {
+                    self.isSimilarHasMore = false
                 }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
@@ -75,20 +71,18 @@ import Foundation
         
         guard isRelatedHasMore else { return }
         
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    let relatedProductData = try await NetworkManager.shared.fetchRelatedProduct(shopifyID, page: self.relatedPage)
-                    
-                    if relatedProductData.count > 0 {
-                        self.relatedProducts.append(contentsOf: relatedProductData)
-                        self.relatedPage += 1
-                    } else {
-                        self.isRelatedHasMore = false
-                    }
-                } catch {
-                    print(error.localizedDescription)
+        Task {
+            do {
+                let relatedProductData = try await NetworkManager.shared.fetchRelatedProduct(shopifyID, page: self.relatedPage)
+                
+                if relatedProductData.count > 0 {
+                    self.relatedProducts.append(contentsOf: relatedProductData)
+                    self.relatedPage += 1
+                } else {
+                    self.isRelatedHasMore = false
                 }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
