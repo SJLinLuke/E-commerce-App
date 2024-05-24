@@ -60,8 +60,8 @@ struct ProductItem: View {
                             Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
                                 .font(.caption)
                                 .foregroundColor(VM.isCompareWithPrice ? .red : .black )
-                                .padding(2)
                         }
+                        .padding(EdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 0))
                         
                         Spacer()
                         
@@ -94,6 +94,6 @@ struct ProductItem: View {
 }
 
 #Preview {
-    ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil), width: 150, height: 240, isNeedDelete: false)
+    ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.99", images: nil, products: nil, similar_products: nil), width: 150, height: 240, isNeedDelete: false)
 }
 
