@@ -50,7 +50,7 @@ struct HTMLLoaderView: UIViewRepresentable {
             webView.evaluateJavaScript("document.body.offsetHeight", completionHandler: { (result, error) in
                 if let height = result as? CGFloat {
                     DispatchQueue.main.async {
-                        let fixedFrameHeight: CGFloat = CGFloat(5)
+                        let fixedFrameHeight: CGFloat = CGFloat(8)
                         self.parent.htmlFrameHeight = height + fixedFrameHeight
                     }
                 } else if let error = error {
