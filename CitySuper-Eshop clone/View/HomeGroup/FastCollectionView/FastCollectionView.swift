@@ -42,6 +42,11 @@ struct FastCollectionView: View {
                             }
                         }
                     }
+                    .onChange(of: currentIndex) { 
+                        withAnimation {
+                            scrollView.scrollTo(scrollIndex(currentIndex))
+                        }
+                    }
                 }
                 .padding(.horizontal, 5)
             }
@@ -59,9 +64,10 @@ struct FastCollectionView: View {
             
             Spacer()
             
-            Button {
-                
-            }label: {
+            NavigationLink {
+                ProductCollectionView(collectionID: popularCategories[currentIndex].shopify_collection_id,
+                                      navTitle: popularCategories[currentIndex].title)
+            } label: {
                 AllButton()
                     .padding(.vertical)
             }

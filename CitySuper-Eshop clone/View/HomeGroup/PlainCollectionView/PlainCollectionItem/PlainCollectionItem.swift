@@ -24,6 +24,7 @@ struct PlainCollectionItem: View {
                 Text(category.title)
                     .font(.system(size: 14))
                     .lineLimit(1)
+                    .foregroundColor(.black)
                 
                 Spacer()
                 

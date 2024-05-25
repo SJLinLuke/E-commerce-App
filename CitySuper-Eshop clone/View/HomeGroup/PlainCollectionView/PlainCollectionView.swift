@@ -16,7 +16,11 @@ struct PlainCollectionView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: rows, spacing: 10) {
                 ForEach(popularCategories, id: \.self) { category in
-                    PlainCollectionItem(category: category)
+                    NavigationLink {
+                        ProductCollectionView(collectionID: category.shopify_collection_id, navTitle: category.title)
+                    } label: {
+                        PlainCollectionItem(category: category)
+                    }
                 }
             }
             .frame(height: 420)

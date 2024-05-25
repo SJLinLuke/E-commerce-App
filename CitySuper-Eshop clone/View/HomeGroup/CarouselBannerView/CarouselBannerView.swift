@@ -18,9 +18,17 @@ struct CarouselBannerView: View {
     var body: some View {
         TabView(selection: $index) {
             ForEach(bannerSets.indices, id: \.self) { index in
-                RemoteImageView(url: bannerSets[index].image_src ?? "",
-                                placeholder: .common)
-                    .tag(index)
+                if let view = routeToView(bannerSets[index]) {
+                    NavigationLink { view } label: {
+                        RemoteImageView(url: bannerSets[index].image_src ?? "",
+                                        placeholder: .common)
+                            .tag(index)
+                    }
+                } else {
+                    RemoteImageView(url: bannerSets[index].image_src ?? "",
+                                    placeholder: .common)
+                        .tag(index)
+                }
             }
         }
         .tabViewStyle(.page(indexDisplayMode: indexDisplayMode ?? .always))
@@ -37,8 +45,36 @@ struct CarouselBannerView: View {
             }
         }
     }
+    
+    func routeToView(_ bannerSetModel: BannerSetModel) -> AnyView? {
+        switch bannerSetModel.link_type {
+        case LinkType.PRODUCT.rawValue:
+            if let id = bannerSetModel.related_id {
+                return AnyView(ProductDetailView(shopifyID: id))
+            }
+        case LinkType.COLLECTION.rawValue:
+            if let id = bannerSetModel.related_id {
+                return AnyView(ProductCollectionView(collectionID: id, navTitle: ""))
+            }
+//        case LinkType.EXTERNAL_LINK.rawValue:
+//            if let url = URL(string: bannerSetModel.external_url ?? "") {
+//                return AnyView(SafariView(url: url))
+//            } else {
+//                return nil
+//            }
+        default:
+            return nil
+        }
+        return nil
+    }
 }
 
 #Preview {
     CarouselBannerView(bannerSets: [BannerSetModel(id: 0, image_src: "", link_type: "", related_id: "", youtube_id: "", banner_name: "", external_url: ""), BannerSetModel(id: 1, image_src: "", link_type: "", related_id: "", youtube_id: "", banner_name: "", external_url: "")])
+}
+
+enum LinkType: String {
+    case PRODUCT       = "Product"
+    case COLLECTION    = "Collection"
+    case EXTERNAL_LINK = "ExternalLink"
 }

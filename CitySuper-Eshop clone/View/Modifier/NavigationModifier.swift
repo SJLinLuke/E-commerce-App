@@ -18,9 +18,9 @@ struct NavigationModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle((title != nil ? title : "") ?? "")
+            .navigationTitle((title != nil ? title : nil) ?? "")
             .toolbar {
-                if title == nil {
+                if title == nil || title?.isEmpty ?? true {
                     ToolbarItem(placement: .principal) {
                         Image("bar_logo")
                             .resizable()

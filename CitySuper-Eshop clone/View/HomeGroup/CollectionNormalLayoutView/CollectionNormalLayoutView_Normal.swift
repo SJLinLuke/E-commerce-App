@@ -28,8 +28,10 @@ struct CollectionNormalLayoutView_Normal: View {
                 
                 Spacer()
                 
-                Button {
-                    
+                
+                NavigationLink {
+                    ProductCollectionView(collectionID: collectionNormalLayout.shopify_collection_id,
+                                          navTitle: collectionNormalLayout.title)
                 } label: {
                     AllButton()
                         .padding(.trailing, 8)
