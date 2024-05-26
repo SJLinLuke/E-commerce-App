@@ -14,6 +14,7 @@ struct NavigationModifier: ViewModifier {
     
     var title: String?
     var isHideCollectionsList: Bool = false
+    var isHideShoppingCart: Bool = false
     
     func body(content: Content) -> some View {
         content
@@ -39,11 +40,13 @@ struct NavigationModifier: ViewModifier {
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowingShoppingCart.toggle()
-                    } label: {
-                        Image("bar_shoppingcart_icon")
+                if !isHideShoppingCart {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isShowingShoppingCart.toggle()
+                        } label: {
+                            Image("bar_shoppingcart_icon")
+                        }
                     }
                 }
             }
