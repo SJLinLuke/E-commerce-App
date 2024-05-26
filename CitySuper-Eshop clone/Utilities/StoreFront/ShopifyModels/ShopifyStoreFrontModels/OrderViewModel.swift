@@ -43,6 +43,8 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     let fulfillmentStatus:      String
     let financialStatus:        String
     let processedAt:            String
+    let lineItems:              [Storefront.OrderLineItem]
+    let lineItemsTotalPrice:    Decimal
     
     var orderInfo:              OrderData
     var orderStatus:            OrderStaus
@@ -62,7 +64,12 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.totalPrice          = model.node.totalPrice.amount
         self.fulfillmentStatus   = model.node.fulfillmentStatus.rawValue
         self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
-        self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", toFormat: "yyyy/MM/dd HH:mm:ss")
+        self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", 
+                                                                                 toFormat: "yyyy/MM/dd HH:mm:ss")
+        
+        self.lineItems           = model.node.lineItems.nodes
+        self.lineItemsTotalPrice = self.lineItems.reduce(0){ $0 + $1.originalTotalPrice.amount}
+        
         self.orderInfo           = OrderData(shopify_order_id: "", note: nil, custom_attributes: nil, payment_method: nil)
         self.orderStatus         = OrderStaus(status: "", progress: 0, color: .clear)
     }

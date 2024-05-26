@@ -54,6 +54,36 @@ extension Storefront.OrderConnectionQuery {
                 .processedAt()
                 .financialStatus()
                 .fulfillmentStatus()
+                .lineItems(first: 25) { $0
+                    .nodes { $0
+                        .title()
+                        .quantity()
+                        .currentQuantity()
+                        .originalTotalPrice {
+                            $0.amount()
+                        }
+                        .variant { $0
+                            .id()
+                            .title()
+                            .image { $0
+                                .url()
+                            }
+                            .compareAtPrice{ $0
+                                .amount()
+                            }
+                            .quantityAvailable()
+                            .price { $0
+                                .amount()
+                                .currencyCode()
+                            }
+                            .product{ $0
+                                .id()
+                                .title()
+                            }
+                            
+                        }
+                    }
+                }
             }
         }
     }
