@@ -58,14 +58,10 @@ struct ProductCollectionView: View {
                     }
                     .padding(8)
                     .overlay(alignment: .top) {
-                        Rectangle()
-                            .fill(.secondary)
-                            .frame(height: 0.3)
+                        SeperateLineView()
                     }
                     .overlay(alignment: .bottom) {
-                        Rectangle()
-                            .fill(.secondary)
-                            .frame(height: 0.3)
+                        SeperateLineView()
                     }
                     .background(Color(hex: "F2F2F8"))
 

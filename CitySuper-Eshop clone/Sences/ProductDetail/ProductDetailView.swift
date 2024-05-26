@@ -37,21 +37,16 @@ struct ProductDetailView: View {
                     ProductDetailTagsView(tags: VM.product?.logistic_tags ?? [])
                     
                     VStack(alignment: .leading) {
-                        Rectangle()
-                            .fill(.secondary)
-                            .frame(height: 0.3)
+                        
+                        SeperateLineView()
                         
                         ProductDetailPriceView(price: VM.product?.price ?? "0")
                         
-                        Rectangle()
-                            .fill(.secondary)
-                            .frame(height: 0.3)
+                        SeperateLineView()
                         
                         ProductDetailBulletPointsView(tags: VM.product?.logistic_tags ?? [])
                         
-                        Rectangle()
-                            .fill(.secondary)
-                            .frame(height: 0.3)
+                        SeperateLineView()
                         
                         HTMLLoaderView(htmlFrameHeight: $htmlFrameHeight,
                                        htmlString: VM.product?.description_html ?? "")

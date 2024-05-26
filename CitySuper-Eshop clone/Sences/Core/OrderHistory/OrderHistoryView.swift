@@ -20,21 +20,24 @@ struct OrderHistoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                
                 SearchBarView()
                 
-                List(VM.orderHistorys) { orderHistory in
-                    OrderHistoryCell(orderHistory: orderHistory)
-                        .onAppear {
-                            if VM.orderHistorys.last == orderHistory {
-                                VM.fetchOrder()
+                ScrollView {
+                    LazyVGrid(columns: [GridItem()]) {
+                        ForEach(VM.orderHistorys) { orderHistory in
+                            NavigationLink { OrderHistoryDetailView(orderHistory: orderHistory) } label: {
+                                OrderHistoryCell(orderHistory: orderHistory)
+                                    .onAppear {
+                                        if VM.orderHistorys.last == orderHistory {
+                                            VM.fetchOrder()
+                                        }
+                                    }
+                                    .padding(.horizontal, 20)
                             }
                         }
+                    }
+                    .padding(.top, 10)
                 }
-                .listStyle(.plain)
-                .padding(.top, -8)
-                
-                Spacer()
             }
             .navigationTitle("Order History")
             .navigationBarTitleDisplayMode(.inline)
@@ -85,8 +88,7 @@ struct SearchBarView: View {
             TextField("Search by order number", text: $searchText)
                 .font(.callout)
             
-            Rectangle()
-                .frame(width: 1, height: 25)
+            SeperateLineView(color: .black, height: 25, width: 1)
             
             Button {
                 isSorting.toggle()

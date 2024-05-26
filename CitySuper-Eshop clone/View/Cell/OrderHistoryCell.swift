@@ -19,6 +19,7 @@ struct OrderHistoryCell: View {
                 HStack {
                     Text("Order# \(String(orderHistory.number))")
                         .fontWeight(.bold)
+                        .foregroundColor(.black)
                     Spacer()
                     Text(orderHistory.orderStatus.status)
                         .fontWeight(.bold)
@@ -45,6 +46,7 @@ struct OrderHistoryCell: View {
                     .frame(height: 30)
                 
                 Text("Amount: HK$\(orderHistory.totalPrice.formattedPrice)")
+                    .foregroundColor(.black)
             }
             .padding(8)
             .background(.white)

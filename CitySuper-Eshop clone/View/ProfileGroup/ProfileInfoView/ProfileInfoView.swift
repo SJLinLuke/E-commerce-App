@@ -28,8 +28,9 @@ struct ProfileInfoView: View {
                     Text("Loyalty Point: \(userEnv.loyaltyPoints) pts")
                         .font(.caption2)
                         .padding(.bottom, -5)
-                    Rectangle()
-                        .frame(height: 1)
+                    
+                    SeperateLineView(color: .black, height: 1)
+                    
                     Text("as of \(userEnv.asOfDate)")
                         .font(.caption2)
                         .padding(.top, -5)
