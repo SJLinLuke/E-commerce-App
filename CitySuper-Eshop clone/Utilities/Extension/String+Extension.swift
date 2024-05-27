@@ -6,9 +6,10 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 extension String {
+    // Date formatter
     func convertDataFormat(fromFormat: String, toFormat: String) -> String {
         let sourceDateFormatter = DateFormatter()
             sourceDateFormatter.dateFormat = fromFormat
@@ -23,12 +24,13 @@ extension String {
         return self
     }
     
+    // This customFormat is for account number (eg. 1234-5678-9876-5432)
     var customFormat: String {
         let count = self.count
         return self.enumerated().map { $0.offset % 4 == 0 && $0.offset != 0 && $0.offset != count-1 || $0.offset == count-2 && count % 4 != 0 ? "-\($0.element)" : "\($0.element)" }.joined()
     }
     
-    var shopifyIdEncode: String {
+    var shopifyIDEncode: String {
         
         if self.contains("gid:") {
             if let data = self.data(using: .utf8) {
@@ -39,7 +41,7 @@ extension String {
         return self
     }
     
-    var shopifyIdDecode: String {
+    var shopifyIDDecode: String {
         do {
             if(!self.isEmpty){
                 let decodedId = try Base64Decoder().decode(self)
@@ -58,6 +60,7 @@ extension String {
         return self
     }
     
+    // Date expired check handling
     func isExpired() -> Bool {
         let today: Date = Date()
         let dateFormat = DateFormatter()

@@ -35,16 +35,21 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
     let cursor:                 String
     
     let id:                     String
+    var orderMethodInfo:        OrderMethodInfo
+    let shippingAddress:        AddressViewModel?
     let number:                 Int
     let email:                  String?
     let currentTotalDuties:     Decimal?
     let originalTotalDuties:    Decimal?
     let totalPrice:             Decimal
+    let totalShippingPrice:     Decimal
     let fulfillmentStatus:      String
     let financialStatus:        String
     let processedAt:            String
     let lineItems:              [Storefront.OrderLineItem]
     let lineItemsTotalPrice:    Decimal
+    
+    let discountApplication:    [DiscountApplication]?
     
     var orderInfo:              OrderData
     var orderStatus:            OrderStaus
@@ -57,11 +62,14 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         self.cursor              = model.cursor
         
         self.id                  = model.node.id.rawValue
+        self.orderMethodInfo     = OrderMethodInfo(orderMethod: "", orderCompleteDate: "", orderMethodWithDate: "")
+        self.shippingAddress     = model.node.shippingAddress?.viewModel
         self.number              = Int(model.node.orderNumber)
         self.email               = model.node.email
         self.currentTotalDuties  = model.node.currentTotalDuties?.amount
         self.originalTotalDuties = model.node.originalTotalDuties?.amount
         self.totalPrice          = model.node.totalPrice.amount
+        self.totalShippingPrice  = model.node.totalShippingPrice.amount
         self.fulfillmentStatus   = model.node.fulfillmentStatus.rawValue
         self.financialStatus     = model.node.financialStatus?.rawValue ?? ""
         self.processedAt         = "\(model.node.processedAt)".convertDataFormat(fromFormat: "yyyy-MM-dd HH:mm:ss Z", 
@@ -72,6 +80,15 @@ final class OrderViewModel: ViewModel, Identifiable, Equatable {
         
         self.orderInfo           = OrderData(shopify_order_id: "", note: nil, custom_attributes: nil, payment_method: nil)
         self.orderStatus         = OrderStaus(status: "", progress: 0, color: .clear)
+        
+        let discountApplication_edge = model.node.discountApplications.edges
+        
+        if !discountApplication_edge.isEmpty {
+            self.discountApplication = model.node.discountApplications.edges.map { $0.node.resolvedViewModel }
+        } else {
+            self.discountApplication = []
+        }
+
     }
     
     // ----------------------------------

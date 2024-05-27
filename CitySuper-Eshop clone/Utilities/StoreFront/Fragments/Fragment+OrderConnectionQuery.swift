@@ -51,6 +51,23 @@ extension Storefront.OrderConnectionQuery {
                     .amount()
                     .currencyCode()
                 }
+                .totalShippingPrice({ $0
+                    .amount()
+                    .currencyCode()
+                })
+                .shippingAddress({ $0
+                    .firstName()
+                    .lastName()
+                    .phone()
+                    .address1()
+                    .address2()
+                    .city()
+                    .country()
+                    .countryCodeV2()
+                    .province()
+                    .provinceCode()
+                    .zip()
+                })
                 .processedAt()
                 .financialStatus()
                 .fulfillmentStatus()
@@ -81,6 +98,13 @@ extension Storefront.OrderConnectionQuery {
                                 .title()
                             }
                             
+                        }
+                    }
+                }
+                .discountApplications(first: 250) { $0
+                    .edges { $0
+                        .node { $0
+                            .fragmentForDiscountApplication()
                         }
                     }
                 }

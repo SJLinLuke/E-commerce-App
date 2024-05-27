@@ -33,17 +33,21 @@ final class AddressViewModel: ViewModel {
     
     let model:  ModelType
     
-    let firstName:   String?
-    let lastName:    String?
-    let phone:       String?
+    let firstName:   String
+    let lastName:    String
+    let phone:       String
+
+    let address1:    String
+    let address2:    String
+    let city:        String
+    let country:     String
+    let countryCode: String
+    let province:    String
+    let zip:         String
     
-    let address1:    String?
-    let address2:    String?
-    let city:        String?
-    let country:     String?
-    let countryCode: String?
-    let province:    String?
-    let zip:         String?
+    var fullAddress: String {
+        return "\(self.firstName) \(self.lastName),\n \(self.address1) \(self.address2),\n  \(self.phone)"
+    }
     
     // ----------------------------------
     //  MARK: - Init -
@@ -51,17 +55,17 @@ final class AddressViewModel: ViewModel {
     required init(from model: ModelType) {
         self.model       = model
         
-        self.firstName   = model.firstName
-        self.lastName    = model.lastName
-        self.phone       = model.phone
+        self.firstName   = model.firstName ?? ""
+        self.lastName    = model.lastName ?? ""
+        self.phone       = model.phone ?? ""
         
-        self.address1    = model.address1
-        self.address2    = model.address2
-        self.city        = model.city
-        self.country     = model.country
-        self.countryCode = model.countryCodeV2?.rawValue
-        self.province    = model.province
-        self.zip         = model.zip
+        self.address1    = model.address1 ?? ""
+        self.address2    = model.address2 ?? ""
+        self.city        = model.city ?? "Hong Kong"
+        self.country     = model.country ?? "Hong Kong"
+        self.countryCode = model.countryCodeV2?.rawValue ?? "HK"
+        self.province    = model.province ?? "Hong Kong"
+        self.zip         = model.zip ?? "00000"
     }
 }
 

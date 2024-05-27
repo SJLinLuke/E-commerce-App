@@ -36,3 +36,9 @@ struct OrderStaus: Equatable {
     let progress: CGFloat
     let color   : Color
 }
+
+struct OrderMethodInfo {
+    let orderMethod        : String
+    let orderCompleteDate  : String
+    let orderMethodWithDate: String
+}

@@ -16,8 +16,8 @@ struct OrderHistoryDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    OrderHistoryCell1()
-                        .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
+                    OrderHistoryCell(orderHistory: orderHistory)
+                        .padding(EdgeInsets(top: 10, leading: 20, bottom: -5, trailing: 20))
                     
                     OrderHistoryDetailSectionHeader(title: "Order Detail")
                     
@@ -27,29 +27,35 @@ struct OrderHistoryDetailView: View {
                         VStack(spacing: 7) {
                             SeperateLineView()
                             
-                            OrderHistoryDetailTextItem(leadingText: "Item Subtotal", trailingText: "$400.00")
+                            OrderHistoryDetailTextItem(leadingText: "Items Subtotal", trailingText: "$\(orderHistory.lineItemsTotalPrice.formattedPrice)")
                             
-                            OrderHistoryDetailTextItem(leadingText: "PORK10  / \nVC100 / \nSHIPFREE", trailingText: "-$140.00")
+                            let totalDiscount = orderHistory.lineItemsTotalPrice - orderHistory.totalPrice + orderHistory.totalShippingPrice
+                            OrderHistoryDetailTextItem(leadingText: orderHistory.discountApplication?.textViewFormat ?? "", 
+                                                       trailingText: "-$\(totalDiscount.formattedPrice)")
                                 .lineSpacing(7)
                             
-                            OrderHistoryDetailTextItem(leadingText: "Shipping charges", trailingText: "-$0.00")
+                            OrderHistoryDetailTextItem(leadingText: "Shipping charges", trailingText: "$\(orderHistory.totalShippingPrice.formattedPrice)")
                             
                             SeperateLineView()
                         }
                         
-                        OrderHistoryDetailTextItem(leadingText: "Total", trailingText: "$260.00")
-                            .padding(.vertical, 5)
+                        OrderHistoryDetailTextItem(font: .system(size: 18), leadingText: "Total", trailingText: "$\(orderHistory.totalPrice.formattedPrice)")
+                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
+                            .fontWeight(.bold)
 
                     }
                     .padding(.horizontal, 5)
                     
-                    OrderHistoryDetailSectionHeader(title: "Pickup")
+                    OrderHistoryDetailSectionHeader(title: orderHistory.orderMethodInfo.orderMethod)
                     
-                    VStack(spacing: 5) {
+                    VStack(spacing: 8) {
                        
-                        OrderHistoryDetailTextItem(leadingText: "Pickup Date", trailingText: "2024/05/26")
+                        OrderHistoryDetailTextItem(leadingText: "\(orderHistory.orderMethodInfo.orderMethod) Date",
+                                                   trailingText: orderHistory.orderMethodInfo.orderCompleteDate)
                         
-                        OrderHistoryDetailTextItem(alignment: .top, leadingText: "Pickup Store", trailingText: "city'super 國際金融中心分店 Citysiper,\n國際金融中心商場一樓1041-1049號舖,")
+                        OrderHistoryDetailTextItem(alignment: .top,
+                                                   leadingText: orderHistory.orderMethodInfo.orderMethod == "Delivery" ? "Delivery Address" : "Pickup Store",
+                                                   trailingText: orderHistory.shippingAddress?.fullAddress ?? "")
 
                     }
                     .padding(.horizontal, 5)
@@ -57,16 +63,30 @@ struct OrderHistoryDetailView: View {
                     OrderHistoryDetailSectionHeader(title: "Note")
                     
                     HStack {
-                        Text("note")
+                        Text(orderHistory.orderInfo.note ?? "")
                             .frame(height: 100)
                         Spacer()
                     }
                     .padding(.horizontal, 5)
                     
                     OrderHistoryDetailSectionHeader(title: "Payment")
-
+                    
+                    var cardText: AttributedString {
+                        var result: AttributedString = ""
+                        if let payment_method = orderHistory.orderInfo.payment_method {
+                            let brand = AttributedString("\(payment_method.card.brand) ")
+                            let last4 = AttributedString(" \(payment_method.card.last4)")
+                            var ending = AttributedString("ending")
+                                ending.foregroundColor = .lightGray
+                            
+                            result = brand + ending + last4
+                            return result
+                        }
+                        return result
+                    }
+                    
                     HStack {
-                        Text("visa ending 4242")
+                        Text(cardText)
                         Spacer()
                     }
                     .padding(.horizontal, 5)
@@ -78,6 +98,7 @@ struct OrderHistoryDetailView: View {
                     } label: {
                          ThemeButton(title: "Re-order")
                     }
+                    .padding(.vertical)
                 }
                 .modifier(NavigationModifier(title: "Order History", isHideCollectionsList: true, isHideShoppingCart: true))
             }
@@ -91,6 +112,7 @@ struct OrderHistoryDetailView: View {
 
 struct OrderHistoryDetailTextItem: View {
     
+    var font: Font                   = .system(size: 16)
     var alignment: VerticalAlignment = .center
     let leadingText: String
     let trailingText: String
@@ -102,6 +124,7 @@ struct OrderHistoryDetailTextItem: View {
             Text(trailingText)
                 .multilineTextAlignment(.trailing)
         }
+        .font(font)
     }
 }
 
@@ -113,13 +136,18 @@ struct OrderHistoryProductsView: View {
         LazyVGrid(columns: [GridItem()]){
             ForEach(lineItems.indices, id: \.self) { index in
                 HStack(spacing: 8) {
-                    RemoteImageView(url: lineItems[index].variant?.image?.url.absoluteString ?? "", placeholder: .common)
+                    RemoteImageView(url: lineItems[index].variant?.image?.url.absoluteString ?? "",
+                                    placeholder: .common)
                         .frame(width: 130, height: 130)
                     
                     VStack(alignment: .leading) {
                         Text(lineItems[index].title)
+                            .fontWeight(.bold)
+                            .lineLimit(3)
+                        
                         Text("QTY: \(lineItems[index].quantity)")
-                            .padding(.top, 5)
+                            .font(.subheadline)
+                            .padding(.top, 2)
                         
                         Spacer()
                         
@@ -127,8 +155,10 @@ struct OrderHistoryProductsView: View {
                             Spacer()
                             
                             Text("$\(lineItems[index].originalTotalPrice.amount.formattedPrice)")
+                                .foregroundColor(Color(hex: "E85321"))
                         }
                     }
+                    .font(.subheadline)
                 }
             }
         }
@@ -149,51 +179,5 @@ struct OrderHistoryDetailSectionHeader: View {
             Spacer()
         }
         .background(Color(hex: "F7F7F7"))
-    }
-}
-
-struct OrderHistoryCell1: View {
-
-    var body: some View {
-        ZStack{
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Order# 123")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text("proccessing")
-                        .fontWeight(.bold)
-                        .foregroundColor(.themeGreen2)
-                }
-                
-                Spacer()
-                    .frame(height: 2)
-                
-                Text("2024/10/15")
-                    .font(.system(size: 13))
-                    .foregroundColor(.secondary)
-                
-                Progress(height: 7,
-                         figureTarget: 0.5,
-                         color: .themeGreen2,
-                         isAnimated: false)
-                
-                Text("VM.customLabelText(orderHistory)")
-                    .font(.system(size: 13))
-                    .foregroundColor(.secondary)
-                
-                Spacer()
-                    .frame(height: 30)
-                
-                Text("Amount: HK$100")
-            }
-            .padding(8)
-            .background(.white)
-            .cornerRadius(10)
-            .shadow(color: .secondary, radius: 3, x: 1, y: 1)
-        }
-        .padding(.horizontal, -13)
-        .padding(.bottom, 6.5)
-        .listRowSeparator(.hidden, edges: .all)
     }
 }

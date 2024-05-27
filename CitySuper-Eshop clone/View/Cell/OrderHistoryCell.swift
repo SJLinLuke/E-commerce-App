@@ -38,7 +38,7 @@ struct OrderHistoryCell: View {
                          color: orderHistory.orderStatus.color,
                          isAnimated: false)
                 
-                Text(VM.customLabelText(orderHistory))
+                Text(orderHistory.orderMethodInfo.orderMethodWithDate)
                     .font(.system(size: 13))
                     .foregroundColor(.secondary)
                 

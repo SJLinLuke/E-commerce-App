@@ -48,7 +48,7 @@ import Foundation
     private func fetchOrderStatus(_ orders: [OrderViewModel]) {
         DispatchQueue.main.async {
             Task {
-                let params: [String: [String]] = ["shopify_order_ids" : orders.map{ $0.id.shopifyIdEncode }]
+                let params: [String: [String]] = ["shopify_order_ids" : orders.map{ $0.id.shopifyIDEncode }]
                 
                 do {
                     let ordersInfo = try await NetworkManager.shared.fetchOrderHistoryInfo(params)
@@ -69,35 +69,36 @@ import Foundation
                 }
                 orderHistorys[index].orderStatus = self.setupOrderStatus(fulfillment: orderHistorys[index].fulfillmentStatus,
                                                                          financialStatus: orderHistorys[index].financialStatus)
+                orderHistorys[index].orderMethodInfo = self.setupOrderMethodInfo(orderHistorys[index])
             }
             self.orderHistorys.append(contentsOf: orderHistorys)
             self.isLoading = false
         }
     }
     
-    func customLabelText(_ orderHistory: OrderViewModel) -> String {
-        
-        var labelText: String = "Web Order"
-        let isAppOrder = orderHistory.orderInfo.shopify_order_id.shopifyIdDecode == orderHistory.id.shopifyIdEncode.shopifyIdDecode
+    func setupOrderMethodInfo(_ orderHistory: OrderViewModel) -> OrderMethodInfo {
+        let isAppOrder = orderHistory.orderInfo.shopify_order_id.shopifyIDDecode == orderHistory.id.shopifyIDEncode.shopifyIDDecode
         if isAppOrder {
             if let custom_attributes = orderHistory.orderInfo.custom_attributes{
                 
                 for custom_attribute in custom_attributes{
                     
-                    if let name = custom_attribute["name"], let date = custom_attribute["value"]{
+                    if let name = custom_attribute["name"], let date = custom_attribute["value"] {
+                        
+                        let date = date.convertDataFormat(fromFormat: "yyyy-MM-dd", toFormat: "yyyy/MM/dd")
                         
                         if name == "Delivery Date"{
-                            labelText = "Estimate delivery on \(date.convertDataFormat(fromFormat: "yyyy-MM-dd", toFormat: "yyyy/MM/dd"))"
+                            return OrderMethodInfo(orderMethod: "Delivery", orderCompleteDate: date, orderMethodWithDate: "Estimate delivery on \(date)")
                         }
                         
                         if name == "Pickup Date"{
-                            labelText = "Estimate pickup on \(date.convertDataFormat(fromFormat: "yyyy-MM-dd", toFormat: "yyyy/MM/dd"))"
+                            return OrderMethodInfo(orderMethod: "Pickup", orderCompleteDate: date, orderMethodWithDate: "Estimate pickup on \(date)")
                         }
                     }
                 }
             }
         }
-        return labelText
+        return OrderMethodInfo(orderMethod: "", orderCompleteDate: "", orderMethodWithDate: "")
     }
     
     func setupOrderStatus(fulfillment: String, financialStatus: String) -> OrderStaus{
