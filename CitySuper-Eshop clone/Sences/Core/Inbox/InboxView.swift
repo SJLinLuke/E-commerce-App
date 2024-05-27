@@ -23,19 +23,21 @@ struct InboxView: View {
                 if (VM.inBoxMessages.isEmpty) {
                     InboxEmptyView()
                 } else {
-                    List(VM.inBoxMessages.indices, id: \.self) { index in
-                        InboxListCell(message: VM.inBoxMessages[index])
-                            .onAppear {
-                                if (VM.inBoxMessages.last == VM.inBoxMessages[index] && VM.isHasMore) {
-                                    VM.fetchInbox()
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem()]) {
+                            ForEach(VM.inBoxMessages) { inboxMessage in
+                                NavigationLink { InboxDetailView(inboxMessage: inboxMessage) } label: {
+                                    InboxListCell(message: inboxMessage)
+                                        .onAppear {
+                                            if (VM.inBoxMessages.last == inboxMessage && VM.isHasMore) {
+                                                VM.fetchInbox()
+                                            }
+                                        }
                                 }
+                                SeperateLineView()
                             }
-                            .onTapGesture {
-                                VM.inBoxMessages[index].read = true
-                                // should go to inboxDetail and call api then updateCountnumber
-                            }
+                        }
                     }
-                    .listStyle(.plain)
                 }
             }
             .navigationTitle("Inbox")
@@ -56,15 +58,15 @@ struct InboxView: View {
                 self.isShowingLoginModal = !userEnv.isLogin
             }
         }
-        .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
-            if !userEnv.isLogin {
-                selectIndex = 4
-            } else {
-                VM.fetchInbox()
-            }
-        }, content: {
-            LoginView(isShowingModal: $isShowingLoginModal)
-        })
+//        .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
+//            if !userEnv.isLogin {
+//                selectIndex = 4
+//            } else {
+//                VM.fetchInbox()
+//            }
+//        }, content: {
+//            LoginView(isShowingModal: $isShowingLoginModal)
+//        })
     }
 }
 

@@ -36,4 +36,11 @@ struct Constants {
     static let product            = "api/eshop/products/"
     static let productSimilar     = "api/eshop/similarProducts/"
     static let productRelated     = "api/eshop/relatedProducts/"
+    
+    static let productDetail_html_source = """
+        <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>
+        <style> img {max-width:100%;height:auto !important;width:auto !important;} * {font-family: Helvetica} iframe{width: 100% !important;height: auto !important;}</style>
+        """
+    
+    static let inboxDetail_html_source = "<header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header><style> img {max-width:50%;height:auto !important;width:50% !important;} * {font-family: Helvetica} iframe{width: 100% !important;height: auto !important;}</style>"
 }

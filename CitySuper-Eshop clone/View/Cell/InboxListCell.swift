@@ -21,10 +21,12 @@ struct InboxListCell: View {
                 Text(message.title)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
+                    .foregroundColor(.black)
                 
                 Text(message.content ?? "")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
                 
                 Spacer()
                 
@@ -35,13 +37,14 @@ struct InboxListCell: View {
             .padding(.vertical, 3)
         }
         .frame(height: 100)
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 8)
         .overlay(alignment: .topLeading) {
             if !message.read {
                 Image("readDot_icon")
                     .resizable()
                     .frame(width: 10, height: 10)
-                    .padding(.top, 2)
+                    .padding(.top, 10)
             }
         }
     }

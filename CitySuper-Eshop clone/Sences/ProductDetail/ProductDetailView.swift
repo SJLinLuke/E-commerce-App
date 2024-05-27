@@ -49,7 +49,8 @@ struct ProductDetailView: View {
                         SeperateLineView()
                         
                         HTMLLoaderView(htmlFrameHeight: $htmlFrameHeight,
-                                       htmlString: VM.product?.description_html ?? "")
+                                       htmlString: VM.product?.description_html ?? "",
+                                       source: Constants.productDetail_html_source)
                         .frame(height: htmlFrameHeight)
                     }
                     .padding()
