@@ -14,7 +14,7 @@ struct SeperateLineView: View {
     var width: Double = .infinity
     
     var body: some View {
-        Rectangle().fill(color).frame(width: width, height: height)
+        Rectangle().fill(color).frame(maxWidth: width, maxHeight: height)
     }
 }
 
