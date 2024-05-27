@@ -117,6 +117,9 @@
 		C5776E312BF5BCA1007D5653 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E302BF5BCA1007D5653 /* InboxViewModel.swift */; };
 		C5776E342BF5BDA2007D5653 /* InboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E332BF5BDA2007D5653 /* InboxModel.swift */; };
 		C58274662C0439BD00A84CDD /* Shopify+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58274652C0439BD00A84CDD /* Shopify+Extension.swift */; };
+		C58274692C047FD000A84CDD /* OrderHistoryDetailTextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58274682C047FD000A84CDD /* OrderHistoryDetailTextItem.swift */; };
+		C582746B2C04802200A84CDD /* OrderHistoryDetailProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C582746A2C04802200A84CDD /* OrderHistoryDetailProductsView.swift */; };
+		C582746D2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C582746C2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift */; };
 		C588E5CD2BFC7C4200E4C58D /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588E5CC2BFC7C4200E4C58D /* ProductDetailView.swift */; };
 		C588E5D02BFC8C9C00E4C58D /* FavouriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588E5CF2BFC8C9C00E4C58D /* FavouriteButton.swift */; };
 		C588E5D42BFC8D5900E4C58D /* CartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588E5D32BFC8D5900E4C58D /* CartButton.swift */; };
@@ -256,6 +259,9 @@
 		C5776E302BF5BCA1007D5653 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
 		C5776E332BF5BDA2007D5653 /* InboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxModel.swift; sourceTree = "<group>"; };
 		C58274652C0439BD00A84CDD /* Shopify+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shopify+Extension.swift"; sourceTree = "<group>"; };
+		C58274682C047FD000A84CDD /* OrderHistoryDetailTextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryDetailTextItem.swift; sourceTree = "<group>"; };
+		C582746A2C04802200A84CDD /* OrderHistoryDetailProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryDetailProductsView.swift; sourceTree = "<group>"; };
+		C582746C2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryDetailSectionHeader.swift; sourceTree = "<group>"; };
 		C588E5CC2BFC7C4200E4C58D /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		C588E5CF2BFC8C9C00E4C58D /* FavouriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteButton.swift; sourceTree = "<group>"; };
 		C588E5D32BFC8D5900E4C58D /* CartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartButton.swift; sourceTree = "<group>"; };
@@ -653,6 +659,7 @@
 				40E522D12BF24C970046C3AA /* HomeGroup */,
 				C5EA798F2BF49B3B0042FEF0 /* ProfileGroup */,
 				400C05512BFCF55100493ACA /* ProductDetailGroup */,
+				C58274672C047FAB00A84CDD /* OrderHistoryDetailGroup */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -972,6 +979,16 @@
 			path = InboxModel;
 			sourceTree = "<group>";
 		};
+		C58274672C047FAB00A84CDD /* OrderHistoryDetailGroup */ = {
+			isa = PBXGroup;
+			children = (
+				C58274682C047FD000A84CDD /* OrderHistoryDetailTextItem.swift */,
+				C582746A2C04802200A84CDD /* OrderHistoryDetailProductsView.swift */,
+				C582746C2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift */,
+			);
+			path = OrderHistoryDetailGroup;
+			sourceTree = "<group>";
+		};
 		C588E5CB2BFC7C2100E4C58D /* ProductDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1253,6 +1270,7 @@
 				400C050D2BF9EA3500493ACA /* Fragment+PaymentQuery.swift in Sources */,
 				400C053C2BF9EB1400493ACA /* ScriptCodeViewModel.swift in Sources */,
 				400C051F2BF9EADB00493ACA /* CollectionViewModel.swift in Sources */,
+				C582746B2C04802200A84CDD /* OrderHistoryDetailProductsView.swift in Sources */,
 				4062BF152C0192E300FF7184 /* OrderHistoryDetailView.swift in Sources */,
 				40E5228C2BEF1A600046C3AA /* CarouselBannerView.swift in Sources */,
 				40E522B32BEF47690046C3AA /* CSAlert.swift in Sources */,
@@ -1284,6 +1302,7 @@
 				40E522892BEE87EA0046C3AA /* MaqureeModifier.swift in Sources */,
 				C5EA79872BF452E30042FEF0 /* ThemeButton.swift in Sources */,
 				C59AEBEE2BF353A9001541BE /* LoginView.swift in Sources */,
+				C582746D2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift in Sources */,
 				C59AEBF12BF367AA001541BE /* XDismissButton.swift in Sources */,
 				400C05132BF9EA3500493ACA /* Fragment+OrderConnectionQuery.swift in Sources */,
 				40E522812BED28470046C3AA /* InboxListCell.swift in Sources */,
@@ -1334,6 +1353,7 @@
 				C5EA79842BF452B10042FEF0 /* ProfileModel.swift in Sources */,
 				400C04FE2BF9E9CE00493ACA /* ClientQuery.swift in Sources */,
 				400C05232BF9EADB00493ACA /* VariantViewModel.swift in Sources */,
+				C58274692C047FD000A84CDD /* OrderHistoryDetailTextItem.swift in Sources */,
 				400C03AB2BF8A32900493ACA /* MoreCollectionsListView.swift in Sources */,
 				400C055E2BFF7C6900493ACA /* HTMLLoaderView.swift in Sources */,
 				40E522D82BF271420046C3AA /* BackToTopButton.swift in Sources */,

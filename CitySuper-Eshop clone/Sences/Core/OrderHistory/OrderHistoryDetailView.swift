@@ -22,7 +22,7 @@ struct OrderHistoryDetailView: View {
                     OrderHistoryDetailSectionHeader(title: "Order Detail")
                     
                     VStack {
-                        OrderHistoryProductsView(lineItems: orderHistory.lineItems)
+                        OrderHistoryDetailProductsView(lineItems: orderHistory.lineItems)
                         
                         VStack(spacing: 7) {
                             SeperateLineView()
@@ -110,74 +110,3 @@ struct OrderHistoryDetailView: View {
 //    OrderHistoryDetailView()
 //}
 
-struct OrderHistoryDetailTextItem: View {
-    
-    var font: Font                   = .system(size: 16)
-    var alignment: VerticalAlignment = .center
-    let leadingText: String
-    let trailingText: String
-    
-    var body: some View {
-        HStack(alignment: alignment) {
-            Text(leadingText)
-            Spacer()
-            Text(trailingText)
-                .multilineTextAlignment(.trailing)
-        }
-        .font(font)
-    }
-}
-
-struct OrderHistoryProductsView: View {
-    
-    let lineItems: [Storefront.OrderLineItem]
-    
-    var body: some View {
-        LazyVGrid(columns: [GridItem()]){
-            ForEach(lineItems.indices, id: \.self) { index in
-                HStack(spacing: 8) {
-                    RemoteImageView(url: lineItems[index].variant?.image?.url.absoluteString ?? "",
-                                    placeholder: .common)
-                        .frame(width: 130, height: 130)
-                    
-                    VStack(alignment: .leading) {
-                        Text(lineItems[index].title)
-                            .fontWeight(.bold)
-                            .lineLimit(3)
-                        
-                        Text("QTY: \(lineItems[index].quantity)")
-                            .font(.subheadline)
-                            .padding(.top, 2)
-                        
-                        Spacer()
-                        
-                        HStack {
-                            Spacer()
-                            
-                            Text("$\(lineItems[index].originalTotalPrice.amount.formattedPrice)")
-                                .foregroundColor(Color(hex: "E85321"))
-                        }
-                    }
-                    .font(.subheadline)
-                }
-            }
-        }
-    }
-}
-
-struct OrderHistoryDetailSectionHeader: View {
-    
-    let title: String
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .fontWeight(.bold)
-                .padding(.vertical)
-                .padding(.leading, 5)
-            
-            Spacer()
-        }
-        .background(Color(hex: "F7F7F7"))
-    }
-}
