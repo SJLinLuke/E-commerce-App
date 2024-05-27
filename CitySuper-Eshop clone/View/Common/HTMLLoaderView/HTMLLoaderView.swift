@@ -61,5 +61,5 @@ struct HTMLLoaderView: UIViewRepresentable {
 }
 
 #Preview {
-    HTMLLoaderView(htmlFrameHeight: .constant(100), source: Constants.productDetail_html_source)
+    HTMLLoaderView(htmlFrameHeight: .constant(0), source: Constants.productDetail_html_source)
 }

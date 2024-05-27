@@ -7,7 +7,27 @@
 
 import Foundation
 
-struct MessageResponse: Decodable {
+struct MessageDetailResponse: Decodable {
+    let success: Bool
+    let error_message: String?
+    let data: MessageDetailData?
+}
+
+struct MessageDetailData: Decodable {
+    let id             : Int
+    let read           : Bool
+    let title          : String
+    let content        : String
+    let images_src     : [String]?
+    let link_type      : String?
+    let link_related_id: String?
+    let external_url   : String?
+    let publish_time   : String
+    let expired        : Bool
+    let button_text    : String?
+}
+
+struct InboxMessageResponse: Decodable {
     let success      : Bool
     let error_message: String?
     let data         : InboxMessageData?

@@ -37,14 +37,14 @@ struct InboxListCell: View {
             .padding(.vertical, 3)
         }
         .frame(height: 100)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 8)
+        .padding(EdgeInsets(top: 8, leading: 20, bottom: 8, trailing: 5))
         .overlay(alignment: .topLeading) {
             if !message.read {
                 Image("readDot_icon")
                     .resizable()
                     .frame(width: 10, height: 10)
                     .padding(.top, 10)
+                    .padding(.leading, 5)
             }
         }
     }

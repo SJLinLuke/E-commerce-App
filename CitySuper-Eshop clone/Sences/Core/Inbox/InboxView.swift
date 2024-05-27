@@ -24,9 +24,9 @@ struct InboxView: View {
                     InboxEmptyView()
                 } else {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem()]) {
+                        LazyVGrid(columns: [GridItem()], alignment: .leading) {
                             ForEach(VM.inBoxMessages) { inboxMessage in
-                                NavigationLink { InboxDetailView(inboxMessage: inboxMessage) } label: {
+                                NavigationLink { InboxDetailView(notificationID: inboxMessage.id) } label: {
                                     InboxListCell(message: inboxMessage)
                                         .onAppear {
                                             if (VM.inBoxMessages.last == inboxMessage && VM.isHasMore) {

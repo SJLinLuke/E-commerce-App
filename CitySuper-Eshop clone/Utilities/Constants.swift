@@ -26,6 +26,7 @@ struct Constants {
     static let homepage           = "api/eshop/homepage?version=2"
     static let login              = "api/members/login"
     static let notification       = "api/eshop/notifications?page="
+    static let notificationDetail = "api/eshop/notifications/"
     static let favourite          = "api/members/favouritedProducts?page="
     static let qrcode             = "api/members/qrcode?version=2"
     static let unread             = "api/eshop/notifications/unreadCount"

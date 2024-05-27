@@ -114,7 +114,26 @@ final class NetworkManager: ObservableObject {
         let (data, _) = try await URLSession.shared.data(for: request)
         
         do {
-            if let data = try decoder.decode(MessageResponse.self, from: data).data {
+            if let data = try decoder.decode(InboxMessageResponse.self, from: data).data {
+                return data
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: NotificationDetail
+    func fetchNotificationDetail(_ id: Int) async throws -> MessageDetailData {
+        
+        let request = generateURLRequest(host + Constants.notificationDetail + "\(id)")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(MessageDetailResponse.self, from: data).data {
                 return data
             } else {
                 throw CSAlert.inValidData
