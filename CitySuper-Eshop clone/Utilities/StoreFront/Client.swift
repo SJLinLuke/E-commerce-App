@@ -135,7 +135,6 @@ final class Client {
         
         let query = ClientQuery.queryForOrder(of: GraphQL.ID(rawValue: order_id))
         let task = self.client.queryGraphWith(query){ (query, error) in
-            
             error.debugPrint()
             
             if  let query = query,
