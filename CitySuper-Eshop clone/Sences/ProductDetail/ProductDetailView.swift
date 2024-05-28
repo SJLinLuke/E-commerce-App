@@ -57,6 +57,7 @@ struct ProductDetailView: View {
                     
                     if !VM.relatedProducts.isEmpty {
                         ProductDetailMoreProductsView(title: "Related Products",
+                                                      shopifyID: shopifyID,
                                                       products: VM.relatedProducts,
                                                       meetLast: {
                             VM.fetchRelatedProduct(shopifyID: shopifyID)
@@ -68,7 +69,8 @@ struct ProductDetailView: View {
                         .frame(height: 0)
                     
                     if !VM.similarProducts.isEmpty {
-                        ProductDetailMoreProductsView(title: "Similar Products",
+                        ProductDetailMoreProductsView(title: "Similar Products", 
+                                                      shopifyID: shopifyID,
                                                       products: VM.similarProducts,
                                                       meetLast: {
                             VM.fetchSimilarProduct(shopifyID: shopifyID)

@@ -30,8 +30,13 @@ struct CollectionNormalLayoutView_Normal: View {
                 
                 
                 NavigationLink {
-                    ProductCollectionView(collectionID: collectionNormalLayout.shopify_collection_id,
-                                          navTitle: collectionNormalLayout.title)
+                    if isRelatedSimilar {
+                        ProductDetailMoreProductsVGirdView(navTitle: collectionNormalLayout.title ,
+                                                           shopifyID: collectionNormalLayout.shopify_collection_id)
+                    } else {
+                        ProductCollectionView(collectionID: collectionNormalLayout.shopify_collection_id,
+                                              navTitle: collectionNormalLayout.title)
+                    }
                 } label: {
                     AllButton()
                         .padding(.trailing, 8)
