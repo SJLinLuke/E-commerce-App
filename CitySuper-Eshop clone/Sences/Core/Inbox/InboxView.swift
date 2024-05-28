@@ -25,15 +25,19 @@ struct InboxView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                            ForEach(VM.inBoxMessages) { inboxMessage in
-                                NavigationLink { InboxDetailView(notificationID: inboxMessage.id) } label: {
-                                    InboxListCell(message: inboxMessage)
+                            ForEach(VM.inBoxMessages.indices, id: \.self) { index in
+                                NavigationLink { InboxDetailView(notificationID: VM.inBoxMessages[index].id) } label: {
+                                    InboxListCell(message: VM.inBoxMessages[index])
                                         .onAppear {
-                                            if (VM.inBoxMessages.last == inboxMessage && VM.isHasMore) {
+                                            if (VM.inBoxMessages.last == VM.inBoxMessages[index] && VM.isHasMore) {
                                                 VM.fetchInbox()
                                             }
                                         }
                                 }
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    VM.inBoxMessages[index].read = true
+                                    VM.unreadNumber -= 1
+                                })
                                 SeperateLineView()
                             }
                         }

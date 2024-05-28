@@ -77,4 +77,5 @@ enum LinkType: String {
     case PRODUCT       = "Product"
     case COLLECTION    = "Collection"
     case EXTERNAL_LINK = "ExternalLink"
+    case ORDER         = "Order"
 }

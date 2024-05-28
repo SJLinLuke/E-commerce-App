@@ -9,6 +9,8 @@ import Foundation
 
 @MainActor final class InboxDetailViewModel: ObservableObject {
     
+    let InboxVM = InboxViewModel.shared
+    
     @Published var isLoading: Bool = false
     @Published var inboxMessageDetail: MessageDetailData?
     
@@ -59,6 +61,7 @@ import Foundation
             do {
                 self.isLoading = true
                 self.inboxMessageDetail = try await NetworkManager.shared.fetchNotificationDetail(id)
+                self.InboxVM.fetchUnreadNumber()
                 self.isLoading = false
             } catch {
                 self.isLoading = false
