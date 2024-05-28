@@ -81,6 +81,23 @@ final class ClientQuery {
         }
     }
     
+    static func queryForAddress(limit: Int, after cursor: String? = nil, accessToken: String) -> Storefront.QueryRootQuery {
+        return Storefront.buildQuery { $0
+            .customer(customerAccessToken: accessToken) { $0
+                .id()
+                .displayName()
+                .email()
+                .firstName()
+                .lastName()
+                .phone()
+                .updatedAt()
+                .addresses(first: 50){$0
+                    .fragmentForStandardAddress()
+                }
+            }
+        }
+    }
+    
     static func queryForCustomer(limit: Int, after cursor: String? = nil, accessToken: String) -> Storefront.QueryRootQuery {
         return Storefront.buildQuery { $0
             .customer(customerAccessToken: accessToken) { $0

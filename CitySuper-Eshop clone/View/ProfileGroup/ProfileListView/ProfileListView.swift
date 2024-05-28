@@ -12,8 +12,9 @@ struct ProfileListView: View {
     @EnvironmentObject var userEnv: UserEnviroment
     @StateObject var VM = ProfileViewModel()
     
-    @State var isShowingModal       : Bool = false
-    @State var isShowingOrderHistory: Bool = false
+    @State var isShowingLoginModal     : Bool = false
+    @State var isShowingOrderHistory   : Bool = false
+    @State var isShowingDeliveryAddress: Bool = false
     
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
@@ -29,11 +30,14 @@ struct ProfileListView: View {
         .listSectionSeparator(.hidden, edges: .all)
         .environment(\.defaultMinListRowHeight, 55)
         .padding(.top, -3)
-        .fullScreenCover(isPresented: $isShowingModal) {
-            LoginView(isShowingModal: $isShowingModal)
+        .fullScreenCover(isPresented: $isShowingLoginModal) {
+            LoginView(isShowingModal: $isShowingLoginModal)
         }
         .navigationDestination(isPresented: $isShowingOrderHistory) {
             OrderHistoryView(selectIndex: .constant(1))
+        }
+        .navigationDestination(isPresented: $isShowingDeliveryAddress) {
+            DeliveryAddressView()
         }
     }
     
@@ -45,13 +49,13 @@ struct ProfileListView: View {
             case "Order History":
                 isShowingOrderHistory.toggle()
             case "Delivery Address":
-                print(rowData.title)
+                isShowingDeliveryAddress.toggle()
             case "Wallet":
                 print(rowData.title)
             case "More":
                 print(rowData.title)
             case "Login":
-                isShowingModal.toggle()
+                isShowingLoginModal.toggle()
             case "Logout":
                 print(rowData.title)
                 userEnv.removeUser()

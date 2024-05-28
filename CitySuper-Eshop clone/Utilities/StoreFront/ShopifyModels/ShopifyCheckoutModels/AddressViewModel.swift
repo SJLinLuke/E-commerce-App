@@ -27,11 +27,11 @@
 import Foundation
 import MobileBuySDK
 
-final class AddressViewModel: ViewModel {
+final class AddressViewModel: ViewModel, Identifiable, Equatable {
     
     typealias ModelType = Storefront.MailingAddress
     
-    let model:  ModelType
+    let model: ModelType
     
     let firstName:   String
     let lastName:    String
@@ -46,7 +46,7 @@ final class AddressViewModel: ViewModel {
     let zip:         String
     
     var fullAddress: String {
-        return "\(self.firstName) \(self.lastName),\n \(self.address1) \(self.address2),\n  \(self.phone)"
+        return " \(self.firstName) \(self.lastName),\n \(self.address1) \(self.address2),\n \(self.phone)"
     }
     
     // ----------------------------------
@@ -66,6 +66,20 @@ final class AddressViewModel: ViewModel {
         self.countryCode = model.countryCodeV2?.rawValue ?? "HK"
         self.province    = model.province ?? "Hong Kong"
         self.zip         = model.zip ?? "00000"
+    }
+    
+    static func == (lhs: AddressViewModel, rhs: AddressViewModel) -> Bool {
+        lhs.model.viewModel == rhs.model.viewModel &&
+        lhs.firstName       == rhs.firstName &&
+        lhs.lastName        == rhs.lastName &&
+        lhs.phone           == rhs.phone &&
+        lhs.address1        == rhs.address1 &&
+        lhs.address2        == rhs.address2 &&
+        lhs.city            == rhs.city &&
+        lhs.country         == rhs.country &&
+        lhs.countryCode     == rhs.countryCode &&
+        lhs.province        == rhs.province &&
+        lhs.zip             == rhs.zip
     }
 }
 

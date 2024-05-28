@@ -66,6 +66,7 @@ final class Client {
         task.resume()
         return task
     }
+    
     @discardableResult
     func login(email: String, password: String, completion: @escaping (String?) -> Void) -> Task {
         
@@ -105,6 +106,31 @@ final class Client {
         task.resume()
         return task
     }
+    
+    @discardableResult
+    func fetchCustomerAddresses( accessToken: String, completion: @escaping ((customer: CustomerViewModel, addresses: PageableArray<AddressViewModel>)?) -> Void) -> Task {
+        
+        let query = ClientQuery.queryForAddress(limit: 25, accessToken: accessToken)
+        let task  = self.client.queryGraphWith(query) { (query, error) in
+            error.debugPrint()
+            
+            if let customer = query?.customer {
+                let viewModel   = customer.viewModel
+                let collections = PageableArray(
+                    with:     customer.addresses.nodes,
+                    pageInfo: customer.addresses.pageInfo
+                )
+                completion((viewModel, collections))
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    // ----------------------------------
+    //  MARK: - Order -
+    //
     
     @discardableResult
     func fetchCustomerAndOrders(limit: Int = 10, after cursor: String? = nil, accessToken: String, completion: @escaping ((customer: CustomerViewModel, orders: PageableArray<OrderViewModel>)?) -> Void) -> Task {

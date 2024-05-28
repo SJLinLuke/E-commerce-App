@@ -27,7 +27,7 @@ import Foundation
             let mutipassToken = try await NetworkManager.shared.getMultipassToken()
             
             Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token{
+                if let access_token = access_token {
                     Client.shared.fetchCustomerAndOrders(after: self.nextCursor ?? nil, accessToken: access_token) { orders in
                         if let orders = orders?.orders {
                             self.fetchOrderStatus(orders.items)
