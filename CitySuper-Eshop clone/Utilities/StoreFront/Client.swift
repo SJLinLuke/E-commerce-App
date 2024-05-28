@@ -130,6 +130,27 @@ final class Client {
         return task
     }
     
+    @discardableResult
+    func fetchOrder(of order_id: String, completion: @escaping (OrderViewModel?) -> Void) -> Task{
+        
+        let query = ClientQuery.queryForOrder(of: GraphQL.ID(rawValue: order_id))
+        let task = self.client.queryGraphWith(query){ (query, error) in
+            
+            error.debugPrint()
+            
+            if  let query = query,
+                let order = query.node as? Storefront.Order {
+                completion(order.viewModel.convertToViewModel())
+            } else {
+                print("Failed to fetch shop name: \(String(describing: error))")
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
     // ----------------------------------
     //  MARK: - Shop -
     //

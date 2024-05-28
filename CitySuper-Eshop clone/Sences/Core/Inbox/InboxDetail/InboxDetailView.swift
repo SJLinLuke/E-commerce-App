@@ -46,12 +46,18 @@ struct InboxDetailView: View {
                         .padding(-10)
                         
                         if VM.isShowButton {
-                            Button {
-                                
+                            NavigationLink {
+                                OrderHistoryDetailView(orderID: VM.orderID)
                             } label: {
-                                ThemeButton(title: VM.buttonTitle)
+//                                Button {
+//                                    
+//                                } label: {
+                                    ThemeButton(title: VM.buttonTitle)
+//                                }
+                                .padding(.vertical)
                             }
-                            .padding(.vertical)
+
+                            
                         }
                         
                         Spacer()

@@ -47,6 +47,10 @@ import Foundation
         }
     }
     
+    var orderID: String {
+        inboxMessageDetail?.link_related_id ?? ""
+    }
+    
     func fetchInboxMessageDetail(id: Int) {
         
         guard !isLoading else { return }

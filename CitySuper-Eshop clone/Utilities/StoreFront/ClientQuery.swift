@@ -160,6 +160,17 @@ final class ClientQuery {
         }
     }
     
+    static func queryForOrder(of order_id: GraphQL.ID) -> Storefront.QueryRootQuery{
+        
+        return Storefront.buildQuery { $0
+            .node(id: order_id) { $0
+                .onOrder { $0
+                    .fragmentForStandardOrderNode()
+                }
+            }
+        }
+    }
+    
     // ----------------------------------
     //  MARK: - Discounts -
     //

@@ -18,7 +18,7 @@ import Foundation
     private var isHasNextPage: Bool = true
     private var nextCursor   : String? = nil
     
-    func fetchOrder() {
+    func fetchOrders() {
         
         guard !isLoading && isHasNextPage else { return }
         

@@ -29,7 +29,7 @@ struct OrderHistoryView: View {
                                 OrderHistoryCell(orderHistory: orderHistory)
                                     .onAppear {
                                         if VM.orderHistorys.last == orderHistory {
-                                            VM.fetchOrder()
+                                            VM.fetchOrders()
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -55,14 +55,14 @@ struct OrderHistoryView: View {
         }
         .task {
             if userEnv.isLogin {
-                VM.fetchOrder()
+                VM.fetchOrders()
             }
         }
         .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
             if !userEnv.isLogin {
                 selectIndex = 4
             }
-            VM.fetchOrder()
+            VM.fetchOrders()
         }, content: {
             LoginView(isShowingModal: $isShowingLoginModal)
         })
