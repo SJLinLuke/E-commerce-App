@@ -37,6 +37,7 @@ final class Client {
     static let shared = Client()
     
     private let client: Graph.Client = Constants.client
+    private var customerAccessToken: String = ""
     
     // ----------------------------------
     //  MARK: - Init -
@@ -50,7 +51,11 @@ final class Client {
     //
     @discardableResult
     func getCustomerAccessToken(with multipasstoken:String, completion: @escaping (String?) -> Void) -> Task {
-        
+
+//        guard self.customerAccessToken.isEmpty else {
+//            completion(self.customerAccessToken)
+//            return nil
+//        }
         
         let mutation = ClientQuery.mutationForAccessToken(multipasstoken: multipasstoken)
         
@@ -58,6 +63,7 @@ final class Client {
             error.debugPrint()
             
             if let _mutation = mutation {
+//                self.customerAccessToken = _mutation.customerAccessTokenCreateWithMultipass?.customerAccessToken?.accessToken ?? ""
                 completion(_mutation.customerAccessTokenCreateWithMultipass?.customerAccessToken?.accessToken)
             }
             
@@ -121,6 +127,25 @@ final class Client {
                     pageInfo: customer.addresses.pageInfo
                 )
                 completion((viewModel, collections))
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
+    func deleteAddress(_ address_id: String, with token:String, completion: @escaping () -> ()) -> Task {
+        
+        let mutation = ClientQuery.mutationForDeleteAddress(GraphQL.ID(rawValue: address_id), token: token)
+        let task = self.client.mutateGraphWith(mutation){ response, error in
+            error.debugPrint()
+            
+            if let _ = response {
+                completion()
+            } else {
+                print("Failed to delete address: \(String(describing: error))")
+                completion()
             }
         }
         

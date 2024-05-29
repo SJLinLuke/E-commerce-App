@@ -27,16 +27,18 @@
 import Foundation
 import MobileBuySDK
 
-final class AddressViewModel: ViewModel, Identifiable, Equatable {
+final class AddressViewModel: ViewModel, Identifiable {
     
     typealias ModelType = Storefront.MailingAddress
     
     let model: ModelType
     
+    let addressID:   String
     let firstName:   String
     let lastName:    String
     let phone:       String
-
+    let company:     String
+    
     let address1:    String
     let address2:    String
     let city:        String
@@ -55,9 +57,11 @@ final class AddressViewModel: ViewModel, Identifiable, Equatable {
     required init(from model: ModelType) {
         self.model       = model
         
+        self.addressID   = model.id.rawValue
         self.firstName   = model.firstName ?? ""
         self.lastName    = model.lastName ?? ""
         self.phone       = model.phone ?? ""
+        self.company     = model.company ?? ""
         
         self.address1    = model.address1 ?? ""
         self.address2    = model.address2 ?? ""
@@ -68,19 +72,6 @@ final class AddressViewModel: ViewModel, Identifiable, Equatable {
         self.zip         = model.zip ?? "00000"
     }
     
-    static func == (lhs: AddressViewModel, rhs: AddressViewModel) -> Bool {
-        lhs.model.viewModel == rhs.model.viewModel &&
-        lhs.firstName       == rhs.firstName &&
-        lhs.lastName        == rhs.lastName &&
-        lhs.phone           == rhs.phone &&
-        lhs.address1        == rhs.address1 &&
-        lhs.address2        == rhs.address2 &&
-        lhs.city            == rhs.city &&
-        lhs.country         == rhs.country &&
-        lhs.countryCode     == rhs.countryCode &&
-        lhs.province        == rhs.province &&
-        lhs.zip             == rhs.zip
-    }
 }
 
 extension Storefront.MailingAddress: ViewModeling {

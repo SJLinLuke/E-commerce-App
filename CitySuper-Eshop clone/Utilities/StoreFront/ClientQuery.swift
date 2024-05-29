@@ -91,8 +91,20 @@ final class ClientQuery {
                 .lastName()
                 .phone()
                 .updatedAt()
-                .addresses(first: 50){$0
+                .addresses(first: 50){ $0
                     .fragmentForStandardAddress()
+                }
+            }
+        }
+    }
+    
+    static func mutationForDeleteAddress(_ address_id: GraphQL.ID, token: String) -> Storefront.MutationQuery{
+        return Storefront.buildMutation{ $0
+            .customerAddressDelete(id: address_id, customerAccessToken: token) {$0
+                .customerUserErrors{ $0
+                    .code()
+                    .field()
+                    .message()
                 }
             }
         }

@@ -9,7 +9,10 @@ import Foundation
 
 @MainActor final class DeliveryAddressViewModel: ObservableObject {
     
+    static let shared = DeliveryAddressViewModel()
+    
     @Published var isLoading: Bool = false
+    @Published var alertItem: AlertItem?
     @Published var addresses: [AddressViewModel] = []
     
     func fetchAddresses() {
@@ -33,4 +36,23 @@ import Foundation
             }
         }
     }
+    
+    func deleteAddress(_ addressID: String) {
+        
+        guard !isLoading else { return }
+        
+        Task {
+            self.isLoading = true
+            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
+            
+            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
+                if let access_token = access_token {
+                    Client.shared.deleteAddress(addressID, with: access_token) {
+                        self.isLoading = false
+                    }
+                }
+            }
+        }
+    }
+    
 }
