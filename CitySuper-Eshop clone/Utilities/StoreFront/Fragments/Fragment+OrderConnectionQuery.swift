@@ -56,6 +56,7 @@ extension Storefront.OrderConnectionQuery {
                     .currencyCode()
                 })
                 .shippingAddress({ $0
+                    .id()
                     .firstName()
                     .lastName()
                     .phone()

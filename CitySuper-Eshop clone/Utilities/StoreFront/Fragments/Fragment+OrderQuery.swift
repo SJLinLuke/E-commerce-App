@@ -32,6 +32,7 @@ extension Storefront.OrderQuery {
                 .currencyCode()
             })
             .shippingAddress({ $0
+                .id()
                 .firstName()
                 .lastName()
                 .phone()

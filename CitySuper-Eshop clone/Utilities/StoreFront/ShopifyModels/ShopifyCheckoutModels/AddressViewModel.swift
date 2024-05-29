@@ -37,7 +37,6 @@ final class AddressViewModel: ViewModel, Identifiable {
     let firstName:   String
     let lastName:    String
     let phone:       String
-    let company:     String
     
     let address1:    String
     let address2:    String
@@ -61,7 +60,6 @@ final class AddressViewModel: ViewModel, Identifiable {
         self.firstName   = model.firstName ?? ""
         self.lastName    = model.lastName ?? ""
         self.phone       = model.phone ?? ""
-        self.company     = model.company ?? ""
         
         self.address1    = model.address1 ?? ""
         self.address2    = model.address2 ?? ""
