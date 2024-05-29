@@ -32,8 +32,8 @@ struct LoginView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Email Address")
                 
-                customTextField(placeHolder: "city'super membership login email",
-                                isSecureField: false,
+                CustomTextField(placeHolder: "city'super membership login email", 
+                                color: Color(hex: "F2F2F7"),
                                 text: $account)
             }
             .padding(.top, 15)
@@ -53,8 +53,9 @@ struct LoginView: View {
                     }
                 }
                 
-                customTextField(placeHolder: "Password",
+                CustomTextField(placeHolder: "Password",
                                 isSecureField: true,
+                                color: Color(hex: "F2F2F7"),
                                 text: $password)
             }
             
@@ -101,53 +102,4 @@ struct LoginView: View {
 #Preview {
     LoginView(isShowingModal: .constant(true))
         .environmentObject(UserEnviroment())
-}
-
-struct customTextField: View {
-    
-    let placeHolder: String
-    let isSecureField: Bool
-    
-    @State var isHide: Bool = false
-    @Binding var text: String
-    
-    var body: some View {
-        if isSecureField && !isHide {
-            SecureField(placeHolder, text: $text)
-                .padding(.horizontal, 10)
-                .font(.subheadline)
-                .frame(height: 35)
-                .background(Color(hex: "F2F2F7"))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 0.3)
-                }
-                .overlay(alignment: .trailing) {
-                    Image(isHide ? "password_icon_on" : "password_icon")
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            isHide = !isHide
-                        }
-                }
-        } else {
-            TextField(placeHolder, text: $text)
-                .padding(.horizontal, 10)
-                .font(.subheadline)
-                .frame(height: 35)
-                .background(Color(hex: "F2F2F7"))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 0.3)
-                }
-                .overlay(alignment: .trailing) {
-                    if isSecureField {
-                        Image("password_icon_on")
-                            .padding(.trailing, 8)
-                            .onTapGesture {
-                                isHide = !isHide
-                            }
-                    }
-                }
-        }
-    }
 }

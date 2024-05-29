@@ -26,12 +26,10 @@ struct DeliveryAddressView: View {
                 VM.fetchAddresses()
             }
             
-            Button {
-                
-            } label: {
+            NavigationLink { AddDeliveryAddressView() } label: {
                 ThemeButton(title: "Add New Address")
+                    .padding(.bottom)
             }
-            .padding(.bottom)
         }
         .overlay {
             if VM.isLoading {
