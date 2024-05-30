@@ -45,16 +45,18 @@ struct AddDeliveryAddressView: View {
                 Spacer()
                 
                 Button {
-                    Task {
-                        if buttonTitle == "Add" {
-                            await VM.addAddress()
-                        } else {
-                            await VM.saveAddress(id: adderssInfo?.addressID ?? "")
-                        }
-                        VM.printData()
+                    if buttonTitle == "Add" {
+                        VM.addAddress()
+                    } else {
+                        VM.saveAddress(id: adderssInfo?.addressID ?? "")
                     }
                 } label: {
                      ThemeButton(title: buttonTitle)
+                }
+            }
+            .overlay {
+                if VM.isLoading {
+                    LoadingIndicatiorView()
                 }
             }
             .padding()

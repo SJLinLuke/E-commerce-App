@@ -6,5 +6,5 @@ target 'CitySuper-Eshop clone' do
   use_frameworks! :linkage => :dynamic
 
   # Pods for CitySuper-Eshop clone
-  pod "Mobile-Buy-SDK", '= 10.1.0'
+  pod "Mobile-Buy-SDK", '= 12.0.0'
 end

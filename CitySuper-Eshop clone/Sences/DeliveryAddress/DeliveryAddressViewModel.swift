@@ -20,21 +20,23 @@ import Foundation
         guard !isLoading else { return }
         
         Task {
-            self.isLoading = true
-            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
-            
-            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token {
-                    Client.shared.fetchCustomerAddresses(accessToken: access_token) { container in
-                        if let container = container {
-                            let rawAddresses = container.addresses.items
-                            self.addresses = rawAddresses
-                            self.isLoading = false
-                        }
+            do {
+                self.isLoading = true
+                let accessToken = try await NetworkManager.shared.getAccessToken()
+                
+                Client.shared.fetchCustomerAddresses(accessToken: accessToken) { container in
+                    if let container = container {
+                        let rawAddresses = container.addresses.items
+                        self.addresses = rawAddresses
+                        self.isLoading = false
                     }
                 }
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
             }
         }
+        
     }
     
     func deleteAddress(_ addressID: String) {
@@ -42,16 +44,19 @@ import Foundation
         guard !isLoading else { return }
         
         Task {
-            self.isLoading = true
-            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
-            
-            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token {
-                    Client.shared.deleteAddress(addressID, with: access_token) {
-                        self.isLoading = false
-                    }
+            do {
+                self.isLoading = true
+                
+                let accessToken = try await NetworkManager.shared.getAccessToken()
+                
+                Client.shared.deleteAddress(addressID, with: accessToken) {
+                    self.isLoading = false
                 }
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
             }
+            
         }
     }
     

@@ -24,22 +24,16 @@ import Foundation
         
         Task {
             self.isLoading = true
-            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
+            let accessToken = try await NetworkManager.shared.getAccessToken()
             
-            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token {
-                    Client.shared.fetchCustomerAndOrders(after: self.nextCursor ?? nil, accessToken: access_token) { orders in
-                        if let orders = orders?.orders {
-                            self.fetchOrderStatus(orders.items)
-                            
-                            self.isHasNextPage = orders.hasNextPage
-                            self.nextCursor    = orders.items.last?.cursor
-                        } else {
-                            self.isLoading  = false
-                        }
-                    }
+            Client.shared.fetchCustomerAndOrders(after: self.nextCursor ?? nil, accessToken: accessToken) { orders in
+                if let orders = orders?.orders {
+                    self.fetchOrderStatus(orders.items)
+                    
+                    self.isHasNextPage = orders.hasNextPage
+                    self.nextCursor    = orders.items.last?.cursor
                 } else {
-                    self.isLoading = false
+                    self.isLoading  = false
                 }
             }
         }

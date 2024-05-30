@@ -12,11 +12,12 @@ final class UserEnviroment: ObservableObject {
     @AppStorage("userData") private var storage_userData: Data?
     @AppStorage("qrcode") private var storage_qrcode    : Data?
     
-    @Published var isLogin    : Bool   = false
-    @Published var VAID       : String = ""
-    @Published var token      : String = ""
-    @Published var checkoutID : String = ""
-    @Published var profile    : ProfileData?
+    @Published var isLogin             : Bool   = false
+    @Published var VAID                : String = ""
+    @Published var token               : String = ""
+    @Published var checkoutID          : String = ""
+    @Published private var profile     : ProfileData?
+    @Published var shopify_access_token: String = ""
     
     init() {
         if let storedUserData = storage_userData {
@@ -49,13 +50,18 @@ final class UserEnviroment: ObservableObject {
         
         saveUser(userData)
     }
+    
+    func storeShopifyAccessToken(_ token: String) {
+        shopify_access_token = token
+    }
         
     func removeUser() {
-        isLogin    = false
-        VAID       = ""
-        token      = ""
-        checkoutID = ""
-        profile    = nil
+        isLogin              = false
+        VAID                 = ""
+        token                = ""
+        checkoutID           = ""
+        profile              = nil
+        shopify_access_token = ""
         
         storage_userData = nil
         storage_qrcode   = nil

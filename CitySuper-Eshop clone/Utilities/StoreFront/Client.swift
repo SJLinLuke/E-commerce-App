@@ -37,7 +37,6 @@ final class Client {
     static let shared = Client()
     
     private let client: Graph.Client = Constants.client
-    private var customerAccessToken: String = ""
     
     // ----------------------------------
     //  MARK: - Init -
@@ -51,11 +50,6 @@ final class Client {
     //
     @discardableResult
     func getCustomerAccessToken(with multipasstoken:String, completion: @escaping (String?) -> Void) -> Task {
-
-//        guard self.customerAccessToken.isEmpty else {
-//            completion(self.customerAccessToken)
-//            return nil
-//        }
         
         let mutation = ClientQuery.mutationForAccessToken(multipasstoken: multipasstoken)
         
@@ -63,10 +57,10 @@ final class Client {
             error.debugPrint()
             
             if let _mutation = mutation {
-//                self.customerAccessToken = _mutation.customerAccessTokenCreateWithMultipass?.customerAccessToken?.accessToken ?? ""
                 completion(_mutation.customerAccessTokenCreateWithMultipass?.customerAccessToken?.accessToken)
+            } else {
+                completion(nil)
             }
-            
         }
         
         task.resume()

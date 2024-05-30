@@ -10,6 +10,8 @@ import MobileBuySDK
 
 @MainActor final class AddDeliveryAddressViewModel: ObservableObject {
     
+    typealias Task = _Concurrency.Task
+    
     @Published var isLoading: Bool = false
     
     @Published var firstName: String = ""
@@ -21,56 +23,48 @@ import MobileBuySDK
     @Published var region   : String = ""
     @Published var phone    : String = ""
     
-    func addAddress() async {
+    func addAddress() {
         
         guard !isLoading else { return }
         
         guard let input = self.creatInput() else { return } // alert : fill up form
         
-        do {
-            self.isLoading = true
-            
-            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
-            
-            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token {
-                    Client.shared.createAddress(input, with: access_token) {
-                        print("success")
-                        self.isLoading = false
-                    }
-                } else {
+        Task {
+            do {
+                self.isLoading = true
+                
+                let accessToken = try await NetworkManager.shared.getAccessToken()
+                
+                Client.shared.createAddress(input, with: accessToken) {
                     self.isLoading = false
                 }
+            } catch {
+                print(error.localizedDescription)
+                self.isLoading = false
             }
-        } catch {
-            print(error.localizedDescription)
-            self.isLoading = false
         }
+        
     }
     
-    func saveAddress(id: String) async {
+    func saveAddress(id: String) {
         
         guard !isLoading else { return }
         
         guard let input = self.creatInput() else { return } // alert : fill up form
         
-        do {
-            self.isLoading = true
-            
-            let mutipassToken = try await NetworkManager.shared.getMultipassToken()
-            
-            Client.shared.getCustomerAccessToken(with: mutipassToken) { access_token in
-                if let access_token = access_token {
-                    Client.shared.udpateAddress(input, address_id: id, with: access_token) {
-                        print("success")
-                    }
-                } else {
+        Task {
+            do {
+                self.isLoading = true
+                
+                let accessToken = try await NetworkManager.shared.getAccessToken()
+                
+                Client.shared.udpateAddress(input, address_id: id, with: accessToken) {
                     self.isLoading = false
                 }
+            } catch {
+                print(error.localizedDescription)
+                self.isLoading = false
             }
-        } catch {
-            print(error.localizedDescription)
-            self.isLoading = false
         }
     }
     

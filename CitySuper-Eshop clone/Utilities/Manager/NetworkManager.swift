@@ -58,7 +58,9 @@ final class NetworkManager: ObservableObject {
     }
     
     // MARK: MultipassToken
-    func getMultipassToken() async throws -> String {
+    func getAccessToken() async throws -> String {
+        
+        guard let accessToken = self.userEnv?.shopify_access_token, accessToken.isEmpty else { return self.userEnv?.shopify_access_token ?? ""}
         
         let request = generateURLRequest(host + Constants.multipassToken)
         
@@ -66,7 +68,16 @@ final class NetworkManager: ObservableObject {
         
         do {
             if let data = try decoder.decode(MutipassTokenResponse.self, from: data).data {
-                return data.multipass_token
+                return try await withCheckedThrowingContinuation { continuation in
+                                Client.shared.getCustomerAccessToken(with: data.multipass_token) { accessToken in
+                                    if let accessToken = accessToken {
+                                        self.userEnv?.storeShopifyAccessToken(accessToken)
+                                        continuation.resume(returning: accessToken)
+                                    } else {
+                                        continuation.resume(throwing: CSAlert.inValidData)
+                                    }
+                                }
+                            }
             } else {
                 throw CSAlert.inValidData
             }
