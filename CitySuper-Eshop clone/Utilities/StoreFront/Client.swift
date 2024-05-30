@@ -135,6 +135,44 @@ final class Client {
     }
     
     @discardableResult
+    func createAddress(_ address: Storefront.MailingAddressInput, with token:String, completion: @escaping () -> ()) -> Task {
+        
+        let mutation = ClientQuery.mutationForCreateAddress(address, token: token)
+        let task = self.client.mutateGraphWith(mutation){ response, error in
+            error.debugPrint()
+
+            if let _ = response {
+                completion()
+            } else {
+                print("Failed to delete address: \(String(describing: error))")
+                completion()
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
+    func udpateAddress(_ address: Storefront.MailingAddressInput, address_id: String, with token:String, completion: @escaping () -> ()) -> Task {
+        
+        let mutation = ClientQuery.mutationForUpdateAddress( address,address_id: GraphQL.ID(rawValue: address_id), token: token)
+        let task = self.client.mutateGraphWith(mutation){ response, error in
+            error.debugPrint()
+            
+            if let _response = response {
+                completion()
+            } else {
+                print("Failed to update address: \(String(describing: error))")
+                completion()
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
     func deleteAddress(_ address_id: String, with token:String, completion: @escaping () -> ()) -> Task {
         
         let mutation = ClientQuery.mutationForDeleteAddress(GraphQL.ID(rawValue: address_id), token: token)

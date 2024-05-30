@@ -41,6 +41,7 @@ final class AddressViewModel: ViewModel, Identifiable {
     let address1:    String
     let address2:    String
     let city:        String
+    let company:     String
     let country:     String
     let countryCode: String
     let province:    String
@@ -64,6 +65,7 @@ final class AddressViewModel: ViewModel, Identifiable {
         self.address1    = model.address1 ?? ""
         self.address2    = model.address2 ?? ""
         self.city        = model.city ?? "Hong Kong"
+        self.company     = model.company ?? ""
         self.country     = model.country ?? "Hong Kong"
         self.countryCode = model.countryCodeV2?.rawValue ?? "HK"
         self.province    = model.province ?? "Hong Kong"

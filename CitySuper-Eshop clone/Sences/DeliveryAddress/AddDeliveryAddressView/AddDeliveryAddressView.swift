@@ -1,0 +1,76 @@
+//
+//  AddDeliveryAddressView.swift
+//  CitySuper-Eshop clone
+//
+//  Created by LukeLin on 2024/5/29.
+//
+
+import SwiftUI
+
+struct AddDeliveryAddressView: View {
+    
+    @State private var buttonTitle: String = "Add"
+    
+    @StateObject private var VM = AddDeliveryAddressViewModel()
+    
+    var adderssInfo: AddressViewModel? = nil
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                CustomTextField(placeHolder: "Your first name", text: $VM.firstName)
+                
+                CustomTextField(placeHolder: "Your last name", text: $VM.lastName)
+
+                CustomTextField(placeHolder: "Company(Optional)", text: $VM.company)
+
+                CustomTextField(placeHolder: "Address", text: $VM.address)
+
+                CustomTextField(placeHolder: "District", text: $VM.district)
+             
+                HStack {
+                    CustomTextField(placeHolder: "Country/Reggion", 
+                                    isDropDown: true,
+                                    dropDownItem: ["HongKong"], text: $VM.country)
+                    
+                    CustomTextField(placeHolder: "Region", 
+                                    isDropDown: true,
+                                    dropDownItem: ["Hong Kong Island", "New Territories", "Kowloon"],
+                                    text: $VM.region)
+                }
+                
+                CustomTextField(placeHolder: "Your phone number", text: $VM.phone)
+                    .keyboardType(.namePhonePad)
+                
+                Spacer()
+                
+                Button {
+                    Task {
+                        if buttonTitle == "Add" {
+                            await VM.addAddress()
+                        } else {
+                            await VM.saveAddress(id: adderssInfo?.addressID ?? "")
+                        }
+                        VM.printData()
+                    }
+                } label: {
+                     ThemeButton(title: buttonTitle)
+                }
+            }
+            .padding()
+            .navigationTitle("Delivery Address")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                if let adderssInfo = self.adderssInfo {
+                    VM.setupAddressInfo(info: adderssInfo)
+                    self.buttonTitle = "Save"
+                }
+            }
+        }
+        
+    }
+}
+//
+//#Preview {
+//    AddDeliveryAddressView()
+//}

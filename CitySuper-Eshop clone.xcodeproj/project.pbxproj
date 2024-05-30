@@ -71,6 +71,7 @@
 		4062BF1E2C060AEC00FF7184 /* DeliveryAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062BF1D2C060AEC00FF7184 /* DeliveryAddressView.swift */; };
 		4062BF202C06188300FF7184 /* DeliveryAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062BF1F2C06188300FF7184 /* DeliveryAddressViewModel.swift */; };
 		4062BF222C0619EC00FF7184 /* Fragment+MailingAddressConnectionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062BF212C0619EC00FF7184 /* Fragment+MailingAddressConnectionQuery.swift */; };
+		4062BF272C076F6400FF7184 /* AddDeliveryAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062BF262C076F6400FF7184 /* AddDeliveryAddressViewModel.swift */; };
 		406612CF2BF7A2270037C4D8 /* InboxEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */; };
 		406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */; };
 		406612D42BF836290037C4D8 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D32BF836290037C4D8 /* FavouriteModel.swift */; };
@@ -222,6 +223,7 @@
 		4062BF1D2C060AEC00FF7184 /* DeliveryAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressView.swift; sourceTree = "<group>"; };
 		4062BF1F2C06188300FF7184 /* DeliveryAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressViewModel.swift; sourceTree = "<group>"; };
 		4062BF212C0619EC00FF7184 /* Fragment+MailingAddressConnectionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fragment+MailingAddressConnectionQuery.swift"; sourceTree = "<group>"; };
+		4062BF262C076F6400FF7184 /* AddDeliveryAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeliveryAddressViewModel.swift; sourceTree = "<group>"; };
 		406612CE2BF7A2270037C4D8 /* InboxEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEmptyView.swift; sourceTree = "<group>"; };
 		406612D02BF7B0390037C4D8 /* FavouritesEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesEmptyView.swift; sourceTree = "<group>"; };
 		406612D32BF836290037C4D8 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
@@ -563,11 +565,20 @@
 		4062BF1C2C060AC700FF7184 /* DeliveryAddress */ = {
 			isa = PBXGroup;
 			children = (
+				4062BF232C076F1100FF7184 /* AddDeliveryAddressView */,
 				4062BF1D2C060AEC00FF7184 /* DeliveryAddressView.swift */,
 				4062BF1F2C06188300FF7184 /* DeliveryAddressViewModel.swift */,
-				C593F1AE2C071B8C00DBB028 /* AddDeliveryAddressView.swift */,
 			);
 			path = DeliveryAddress;
+			sourceTree = "<group>";
+		};
+		4062BF232C076F1100FF7184 /* AddDeliveryAddressView */ = {
+			isa = PBXGroup;
+			children = (
+				C593F1AE2C071B8C00DBB028 /* AddDeliveryAddressView.swift */,
+				4062BF262C076F6400FF7184 /* AddDeliveryAddressViewModel.swift */,
+			);
+			path = AddDeliveryAddressView;
 			sourceTree = "<group>";
 		};
 		406612D22BF8360F0037C4D8 /* FavouriteModel */ = {
@@ -1474,6 +1485,7 @@
 				40E522C52BF0703F0046C3AA /* RemoteImageView.swift in Sources */,
 				40E522BA2BEF952F0046C3AA /* Color+Extension.swift in Sources */,
 				400C05102BF9EA3500493ACA /* Fragment+DiscountAllocation.swift in Sources */,
+				4062BF272C076F6400FF7184 /* AddDeliveryAddressViewModel.swift in Sources */,
 				400C05302BF9EAF800493ACA /* AddressViewModel.swift in Sources */,
 				40E522D02BF246EF0046C3AA /* PlainCollectionItem.swift in Sources */,
 				40E522BD2BEFA4D40046C3AA /* CollectionNormalLayoutView_Normal.swift in Sources */,

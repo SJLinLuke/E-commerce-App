@@ -40,6 +40,7 @@ extension Storefront.OrderQuery {
                 .address2()
                 .city()
                 .country()
+                .company()
                 .countryCodeV2()
                 .province()
                 .provinceCode()

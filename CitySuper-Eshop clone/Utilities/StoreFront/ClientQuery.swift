@@ -81,6 +81,35 @@ final class ClientQuery {
         }
     }
     
+    static func mutationForUpdateAddress(_ address: Storefront.MailingAddressInput ,address_id: GraphQL.ID, token: String) -> Storefront.MutationQuery{
+        
+        return Storefront.buildMutation{ $0
+            .customerAddressUpdate(customerAccessToken: token, id: address_id, address: address) { $0
+                .customerUserErrors{ $0
+                    .code()
+                    .field()
+                    .message()
+                }
+            }
+        }
+    }
+    
+    static func mutationForCreateAddress(_ addressInput: Storefront.MailingAddressInput, token: String) -> Storefront.MutationQuery{
+        
+        return Storefront.buildMutation{$0
+            .customerAddressCreate(customerAccessToken: token, address: addressInput){$0
+                .customerAddress{$0
+                    .id()
+                }
+                .customerUserErrors{$0
+                    .code()
+                    .field()
+                    .message()
+                }
+            }
+        }
+    }
+    
     static func queryForAddress(limit: Int, after cursor: String? = nil, accessToken: String) -> Storefront.QueryRootQuery {
         return Storefront.buildQuery { $0
             .customer(customerAccessToken: accessToken) { $0
