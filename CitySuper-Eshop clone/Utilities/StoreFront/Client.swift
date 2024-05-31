@@ -42,7 +42,7 @@ final class Client {
     //  MARK: - Init -
     //
     private init() {
-        self.client.cachePolicy = .cacheFirst(expireIn: 3600)
+        self.client.cachePolicy = .networkFirst(expireIn: 3600)
     }
     
     // ----------------------------------
