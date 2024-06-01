@@ -75,15 +75,7 @@ struct AddDeliveryAddressView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
-            .alert(VM.alertItem?.title ?? "", isPresented: $VM.isAlertShow, actions: {
-                if let buttons = VM.alertItem?.buttons {
-                    ForEach(buttons) { button in
-                        Button(button.title, role: button.role, action: button.action)
-                    }
-                }
-            }, message: {
-                VM.alertItem?.message ?? Text("")
-            })
+            .modifier(AlertModifier(alertItem: VM.alertItem, isAlertShow: $VM.isAlertShow))
         }
         
     }

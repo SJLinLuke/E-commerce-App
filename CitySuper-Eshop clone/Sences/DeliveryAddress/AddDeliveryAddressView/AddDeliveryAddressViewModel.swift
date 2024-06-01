@@ -12,13 +12,11 @@ import Combine
 @MainActor final class AddDeliveryAddressViewModel: ObservableObject {
     typealias Task = _Concurrency.Task
     
-    @Published var alertItem  : AlertItem? {
-        didSet {
-            self.isAlertShow = true
-        }
-    }
-    @Published var isAlertShow: Bool = false
     @Published var isLoading  : Bool = false
+    @Published var isAlertShow: Bool = false
+    @Published var alertItem  : AlertItem? {
+        didSet { self.isAlertShow = true }
+    }
     
     @Published var firstName: String = ""
     @Published var lastName : String = ""

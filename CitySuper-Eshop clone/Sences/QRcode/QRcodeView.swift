@@ -57,6 +57,7 @@ struct QRcodeView: View {
             XDismissButton(isShowing: $isShowingQRcode, color: .white)
                 .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 25))
         }
+        .modifier(AlertModifier(alertItem: VM.alertItem, isAlertShow: $VM.isAlertShow))
     }
 }
 

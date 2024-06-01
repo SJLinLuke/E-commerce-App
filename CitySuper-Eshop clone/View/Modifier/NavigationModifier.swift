@@ -56,8 +56,6 @@ struct NavigationModifier: ViewModifier {
             .fullScreenCover(isPresented: $isShowingShoppingCart) {
                 ShoppingCartView(isShowingModal: $isShowingShoppingCart)
             }
-            
-
     }
     
 }

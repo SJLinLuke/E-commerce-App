@@ -13,8 +13,13 @@ import CoreImage.CIFilterBuiltins
         
     @AppStorage("qrcode") private var storage_qrcode: Data?
     
-    @Published var isLoading: Bool = false
-    @Published var qrcode   : String = ""
+    @Published var isLoading  : Bool = false
+    @Published var isAlertShow: Bool = false
+    @Published var alertItem  : AlertItem? {
+        didSet { self.isAlertShow = true }
+    }
+    
+    @Published var qrcode     : String = ""
     
     func loadQRcode() {
         
@@ -48,6 +53,12 @@ import CoreImage.CIFilterBuiltins
                 self.isLoading = false
             } catch {
                 print(error.localizedDescription)
+                switch error {
+                    case CSAlert.inValidData:
+                        alertItem = AlertContext.inValidData
+                    default:
+                        break
+                }
                 self.isLoading = false
             }
         }
