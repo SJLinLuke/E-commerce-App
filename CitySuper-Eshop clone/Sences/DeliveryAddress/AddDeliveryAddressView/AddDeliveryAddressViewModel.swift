@@ -12,13 +12,6 @@ import Combine
 @MainActor final class AddDeliveryAddressViewModel: ObservableObject {
     typealias Task = _Concurrency.Task
     
-    var viewDismissPublisher = PassthroughSubject<Bool, Never>()
-    private var shouldDismissView = false {
-        didSet {
-            viewDismissPublisher.send(shouldDismissView)
-        }
-    }
-    
     @Published var alertItem  : AlertItem? {
         didSet {
             self.isAlertShow = true
@@ -35,6 +28,14 @@ import Combine
     @Published var country  : String = ""
     @Published var region   : String = ""
     @Published var phone    : String = ""
+    
+    var viewDismissPublisher = PassthroughSubject<Bool, Never>()
+    private var shouldDismissView = false {
+        didSet {
+            viewDismissPublisher.send(shouldDismissView)
+        }
+    }
+    
     
     func addAddress() {
         
