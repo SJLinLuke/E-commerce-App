@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeliveryAddressView: View {
         
-    @StateObject var VM = DeliveryAddressViewModel()
+    @StateObject var VM = DeliveryAddressViewModel.shared
     
     var body: some View {
         NavigationStack {
