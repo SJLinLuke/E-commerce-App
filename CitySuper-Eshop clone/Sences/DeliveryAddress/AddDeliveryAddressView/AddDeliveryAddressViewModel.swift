@@ -7,12 +7,25 @@
 
 import Foundation
 import MobileBuySDK
+import Combine
 
 @MainActor final class AddDeliveryAddressViewModel: ObservableObject {
-    
     typealias Task = _Concurrency.Task
     
-    @Published var isLoading: Bool = false
+    var viewDismissPublisher = PassthroughSubject<Bool, Never>()
+    private var shouldDismissView = false {
+        didSet {
+            viewDismissPublisher.send(shouldDismissView)
+        }
+    }
+    
+    @Published var alertItem  : AlertItem? {
+        didSet {
+            self.isAlertShow = true
+        }
+    }
+    @Published var isAlertShow: Bool = false
+    @Published var isLoading  : Bool = false
     
     @Published var firstName: String = ""
     @Published var lastName : String = ""
@@ -27,7 +40,10 @@ import MobileBuySDK
         
         guard !isLoading else { return }
         
-        guard let input = self.creatInput() else { return } // alert : fill up form
+        guard let input = self.creatInput() else {
+            alertItem = AlertContext.deliveryAddress_fillForm
+            return
+        }
         
         Task {
             do {
@@ -37,6 +53,7 @@ import MobileBuySDK
                 
                 Client.shared.createAddress(input, with: accessToken) {
                     self.isLoading = false
+                    self.shouldDismissView = true
                 }
             } catch {
                 print(error.localizedDescription)
@@ -50,7 +67,10 @@ import MobileBuySDK
         
         guard !isLoading else { return }
         
-        guard let input = self.creatInput() else { return } // alert : fill up form
+        guard let input = self.creatInput() else {
+            alertItem = AlertContext.deliveryAddress_fillForm
+            return
+        }
         
         Task {
             do {
@@ -60,6 +80,7 @@ import MobileBuySDK
                 
                 Client.shared.udpateAddress(input, address_id: id, with: accessToken) {
                     self.isLoading = false
+                    self.shouldDismissView = true
                 }
             } catch {
                 print(error.localizedDescription)
@@ -77,7 +98,7 @@ import MobileBuySDK
                     address2: .value(district),
                     city: .value(region),
                     company: .value(company),
-                    country: .value(country),
+                    country: .value("Hong Kong"),
                     firstName: .value(firstName),
                     lastName: .value(lastName),
                     phone: .value(phone),
@@ -95,16 +116,5 @@ import MobileBuySDK
         self.country   = info.country
         self.region    = info.city
         self.phone     = info.phone
-    }
-    
-    func printData() {
-        print(firstName)
-        print(lastName)
-        print(company)
-        print(address)
-        print(district)
-        print(country)
-        print(region)
-        print(phone)
     }
 }

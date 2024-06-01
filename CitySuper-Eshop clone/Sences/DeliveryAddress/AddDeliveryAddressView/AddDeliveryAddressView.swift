@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AddDeliveryAddressView: View {
     
+    @Environment(\.presentationMode) private var presentationMode
+        
     @State private var buttonTitle: String = "Add"
     
     @StateObject private var VM = AddDeliveryAddressViewModel()
@@ -31,7 +33,7 @@ struct AddDeliveryAddressView: View {
                 HStack {
                     CustomTextField(placeHolder: "Country/Reggion", 
                                     isDropDown: true,
-                                    dropDownItem: ["HongKong"], text: $VM.country)
+                                    dropDownItem: ["Hong Kong"], text: $VM.country)
                     
                     CustomTextField(placeHolder: "Region", 
                                     isDropDown: true,
@@ -68,6 +70,20 @@ struct AddDeliveryAddressView: View {
                     self.buttonTitle = "Save"
                 }
             }
+            .onReceive(VM.viewDismissPublisher) { shouldDismiss in
+                if shouldDismiss {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
+            .alert(VM.alertItem?.title ?? "", isPresented: $VM.isAlertShow, actions: {
+                if let buttons = VM.alertItem?.buttons {
+                    ForEach(buttons) { button in
+                        Button(button.title, role: button.role, action: button.action)
+                    }
+                }
+            }, message: {
+                VM.alertItem?.message ?? Text("")
+            })
         }
         
     }

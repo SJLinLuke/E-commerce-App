@@ -129,7 +129,7 @@ final class Client {
     }
     
     @discardableResult
-    func createAddress(_ address: Storefront.MailingAddressInput, with token:String, completion: @escaping () -> ()) -> Task {
+    func createAddress(_ address: Storefront.MailingAddressInput, with token: String, completion: @escaping () -> ()) -> Task {
         
         let mutation = ClientQuery.mutationForCreateAddress(address, token: token)
         let task = self.client.mutateGraphWith(mutation){ response, error in
@@ -138,7 +138,7 @@ final class Client {
             if let _ = response {
                 completion()
             } else {
-                print("Failed to delete address: \(String(describing: error))")
+                print("Failed to add address: \(String(describing: error))")
                 completion()
             }
         }

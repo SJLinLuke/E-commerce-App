@@ -32,10 +32,10 @@ struct DeliveryAddressCell: View {
                 
                 Button {
                     VM.alertItem = AlertContext.deliveryAddress_delete
-                    VM.alertItem?.dismissButton = .default(Text("Ok"), action: {
+                    VM.alertItem?.buttons.append(
+                        AlertButton(title: "Delete",role: .destructive , action: {
                         VM.deleteAddress(address.addressID)
-                        print(address.addressID)
-                    })
+                    }))
                 } label: {
                     Text("Delete")
                         .foregroundColor(.gray)
@@ -51,10 +51,14 @@ struct DeliveryAddressCell: View {
         .cornerRadius(8)
         .shadow(color: .secondary, radius: 3, x: 0, y: 0)
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 5, trailing: 20))
-        .alert(item: $VM.alertItem, content: { alert in
-            Alert(title: alert.title,
-                  message: alert.message,
-                  dismissButton: alert.dismissButton)
+        .alert(VM.alertItem?.title ?? "", isPresented: $VM.isAlertShow, actions: {
+            if let buttons = VM.alertItem?.buttons {
+                ForEach(buttons) { button in
+                    Button(button.title, role: button.role, action: button.action)
+                }
+            }
+        }, message: {
+            VM.alertItem?.message ?? Text("")
         })
     }
 }

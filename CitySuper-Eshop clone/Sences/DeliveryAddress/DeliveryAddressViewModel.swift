@@ -11,8 +11,14 @@ import Foundation
     
     static let shared = DeliveryAddressViewModel()
     
-    @Published var isLoading: Bool = false
-    @Published var alertItem: AlertItem?
+    @Published var alertItem  : AlertItem? {
+        didSet {
+            self.isAlertShow = true
+        }
+    }
+    @Published var isAlertShow: Bool = false
+    @Published var isLoading  : Bool = false
+
     @Published var addresses: [AddressViewModel] = []
     
     func fetchAddresses() {
@@ -50,6 +56,7 @@ import Foundation
                 let accessToken = try await NetworkManager.shared.getAccessToken()
                 
                 Client.shared.deleteAddress(addressID, with: accessToken) {
+                    self.removeAddress(addressID)
                     self.isLoading = false
                 }
             } catch {
@@ -60,4 +67,9 @@ import Foundation
         }
     }
     
+    private func removeAddress(_ addressID: String) {
+        self.addresses = self.addresses.filter({ address in
+            address.addressID != addressID
+        })
+    }
 }
