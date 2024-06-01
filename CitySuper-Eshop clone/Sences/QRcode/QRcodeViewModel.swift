@@ -16,10 +16,10 @@ import CoreImage.CIFilterBuiltins
     @Published var isLoading: Bool = false
     @Published var qrcode   : String = ""
     
-    func fetchQRcode() {
+    func loadQRcode() {
         
         guard let storedQRCode = self.storage_qrcode else {
-            self.loadNewQRCode()
+            self.fetchNewQRCode()
             return
         }
         
@@ -28,14 +28,14 @@ import CoreImage.CIFilterBuiltins
             if (!qrcodeData.expiry_date.isExpired()) {
                 self.qrcode = qrcodeData.qrcode
             } else {
-                self.loadNewQRCode()
+                self.fetchNewQRCode()
             }
         } catch {
-            self.loadNewQRCode()
+            self.fetchNewQRCode()
         }
     }
     
-    private func loadNewQRCode() {
+    private func fetchNewQRCode() {
         
         Task {
             do {

@@ -45,7 +45,7 @@ struct QRcodeView: View {
         }
         .task {
             if userEnv.isLogin {
-                VM.fetchQRcode()
+                VM.loadQRcode()
             }
         }
         .overlay(content: {
