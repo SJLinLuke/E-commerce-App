@@ -15,6 +15,7 @@ struct ProfileListView: View {
     @State var isShowingLoginModal     : Bool = false
     @State var isShowingOrderHistory   : Bool = false
     @State var isShowingDeliveryAddress: Bool = false
+    @State var isShowingMoreList       : Bool = false
     
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
@@ -39,6 +40,9 @@ struct ProfileListView: View {
         .navigationDestination(isPresented: $isShowingDeliveryAddress) {
             DeliveryAddressView()
         }
+        .navigationDestination(isPresented: $isShowingMoreList) {
+            MoreListView()
+        }
     }
     
     func tapCell(_ rowData: ProfileRowModel) {
@@ -53,11 +57,10 @@ struct ProfileListView: View {
             case "Wallet":
                 print(rowData.title)
             case "More":
-                print(rowData.title)
+                isShowingMoreList.toggle()
             case "Login":
                 isShowingLoginModal.toggle()
             case "Logout":
-                print(rowData.title)
                 userEnv.removeUser()
             default:
                 break

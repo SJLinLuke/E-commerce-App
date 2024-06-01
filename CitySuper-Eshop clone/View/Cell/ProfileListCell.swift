@@ -13,7 +13,7 @@ struct ProfileListCell: View {
     @State var isLoginOrLogout: Bool = false
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text(rowData.title)
                     .foregroundColor(isLoginOrLogout ? .themeGreen : .black
@@ -25,7 +25,7 @@ struct ProfileListCell: View {
                 }
             }
         }
-        .listRowSeparator(rowData.seperatType ? .automatic : .hidden)
+        .listRowSeparator(rowData.seperateType ? .automatic : .hidden)
         .padding(.top, isLoginOrLogout ? 25 : 0)
         .overlay(alignment: .top) {
             if isLoginOrLogout {
@@ -42,5 +42,5 @@ struct ProfileListCell: View {
 }
 
 #Preview {
-    ProfileListCell(rowData: ProfileRowModel(title: "Test", icon: "coupon_icon", seperatType: true))
+    ProfileListCell(rowData: ProfileRowModel(title: "Test", icon: "coupon_icon", seperateType: true))
 }

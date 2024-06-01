@@ -16,17 +16,17 @@ import SwiftUI
     func getProfileData() -> [ProfileRowModel] {
         return userEnv?.isLogin ?? false ?
         [
-          ProfileRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperatType: true),
-          ProfileRowModel(title: "Order History", icon: "tab_history", seperatType: true),
-          ProfileRowModel(title: "Delivery Address", icon: "address_icon", seperatType: true),
-          ProfileRowModel(title: "Wallet", icon: "wallet_icon", seperatType: true),
-          ProfileRowModel(title: "More", icon: "more_icon", seperatType: true),
-          ProfileRowModel(title: "Logout", icon: "", seperatType: false)
+          ProfileRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true),
+          ProfileRowModel(title: "Order History", icon: "tab_history", seperateType: true),
+          ProfileRowModel(title: "Delivery Address", icon: "address_icon", seperateType: true),
+          ProfileRowModel(title: "Wallet", icon: "wallet_icon", seperateType: true),
+          ProfileRowModel(title: "More", icon: "more_icon", seperateType: true),
+          ProfileRowModel(title: "Logout", icon: "", seperateType: false)
         ]
         :
         [ 
-          ProfileRowModel(title: "More", icon: "more_icon", seperatType: true),
-          ProfileRowModel(title: "Login", icon: "", seperatType: false)
+          ProfileRowModel(title: "More", icon: "more_icon", seperateType: true),
+          ProfileRowModel(title: "Login", icon: "", seperateType: false)
         ]
         
         

@@ -292,6 +292,21 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    // MARK: StaticPage
+    func fetchStaticPage(_ pageName: String) async throws -> StaticPageData {
+        
+        let request = generateURLRequest(host + Constants.staticPage + pageName)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(StaticPageResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

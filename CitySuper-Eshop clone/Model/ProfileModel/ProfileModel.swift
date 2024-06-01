@@ -51,10 +51,10 @@ struct ProfileData: Codable {
     let changePassword  : Bool?
 }
 
-struct ProfileRowModel: Identifiable {
+struct ProfileRowModel: Identifiable, Equatable {
     let id = UUID()
     
-    let title       : String
-    let icon        : String
-    let seperatType : Bool
+    let title        : String
+    let icon         : String
+    let seperateType : Bool
 }
