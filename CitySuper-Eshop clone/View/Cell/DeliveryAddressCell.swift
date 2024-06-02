@@ -25,7 +25,7 @@ struct DeliveryAddressCell: View {
             VStack {
                 NavigationLink { AddDeliveryAddressView(adderssInfo: address) } label: {
                     Text("Edit")
-                        .foregroundColor(.themeGreen2)
+                        .foregroundColor(.themeDarkGreen)
                 }
                 
                 Spacer()

@@ -18,7 +18,7 @@ struct ThemeButton: View {
             .font(.headline)
             .fontWeight(.bold)
             .frame(width: width, height: height)
-            .background(Color.themeGreen2)
+            .background(Color.themeDarkGreen)
             .cornerRadius(10)
             .foregroundColor(.white)
     }

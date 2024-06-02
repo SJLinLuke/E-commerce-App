@@ -98,12 +98,12 @@ import Foundation
     func setupOrderStatus(fulfillment: String, financialStatus: String) -> OrderStaus{
         
         if financialStatus == "PENDING"{
-            return OrderStaus(status: "Payment Pending", progress: 0.2, color: .themeGreen2)
+            return OrderStaus(status: "Payment Pending", progress: 0.2, color: .themeDarkGreen)
         }
         
         if fulfillment == "UNFULFILLED" {
             if financialStatus == "PAID"{
-                return OrderStaus(status: "Processing", progress: 0.65, color: .themeGreen2)
+                return OrderStaus(status: "Processing", progress: 0.65, color: .themeDarkGreen)
             }
             
             if financialStatus == "PARTIALLY_REFUNDED" || financialStatus == "REFUNDED" {
@@ -122,7 +122,7 @@ import Foundation
         }
         
         
-        return OrderStaus(status: "Processing", progress: 0.65, color: .themeGreen2)
+        return OrderStaus(status: "Processing", progress: 0.65, color: .themeDarkGreen)
     }
     
 }

@@ -22,13 +22,13 @@ struct ProductDetailTagsView: View {
                         
                         Text(tag.tag_name)
                             .font(.subheadline)
-                            .foregroundColor(.themeGreen2)
+                            .foregroundColor(.themeDarkGreen)
                     }
                     .padding(.horizontal, 10)
                     .frame(height: 30)
                     .overlay {
                         RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.themeGreen2, lineWidth: 1.5)
+                            .stroke(Color.themeDarkGreen, lineWidth: 1.5)
                     }
                 }
             }
