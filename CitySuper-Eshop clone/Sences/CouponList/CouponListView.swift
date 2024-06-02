@@ -13,99 +13,39 @@ struct CouponListView: View {
     
     @State private var isVoucher: Bool = false
     
+    let isRedeemable: Bool
+    
     var body: some View {
         NavigationStack {
             VStack {
-                CouponTermsView()
+                CouponHintsView()
                 
-                    GeometryReader(content: { geometry in
-                        ScrollView {
-                            LazyVGrid(columns: [GridItem()]) {
-                                ForEach(VM.coupons, id: \.self) { coupon in
-                                    ZStack {
-                                        Image("bg_coupon")
-                                            .renderingMode(.template)
-                                            .foregroundColor(.themeLightGreen)
-                                            .overlay(alignment: .topLeading) {
-                                                Text("New")
-                                                    .frame(width: 48, height: 19)
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: 12))
-                                                    .background(Color(hex: "E85321"))
-                                                    .cornerRadius(13)
-                                                    .padding(.leading, 10)
-                                            }
-                                        
-                                        HStack {
-                                            VStack(alignment: .leading) {
-                                                Text("testing20210309 (no expired date)")
-                                                    .font(.title3)
-                                                    .fontWeight(.bold)
-                                                Text("Desc")
-                                                    .font(.caption)
-                                                
-                                                Spacer()
-                                                
-                                                Text("Valid Until: 31/12/2024")
-                                                    .font(.caption)
-                                                
-                                                if isVoucher {
-                                                    Text("Number: **********1234")
-                                                        .font(.caption)
-                                                } else {
-                                                    Button {
-                                                        
-                                                    } label: {
-                                                        Text("Terms of use")
-                                                            .font(.caption)
-                                                            .underline()
-                                                    }
-                                                }
-                                                
-                                            }
-                                            .frame(maxWidth: geometry.size.width * 0.7, alignment: .leading)
-                                            .padding(.top, 5)
-                                            .padding()
-                                            .foregroundColor(.themeDarkGreen)
-                                            
-                                            Spacer()
-                                            
-                                            VStack {
-                                                Text("HK$100")
-                                                    .fontWeight(.bold)
-                                                    .foregroundColor(.themeDarkGreen)
-                                                
-                                                Spacer()
-                                                Button {
-                                                    
-                                                } label: {
-                                                    Text("Use")
-                                                        .font(.system(size: 12))
-                                                        .foregroundColor(.white)
-                                                        .frame(width: 60, height: 27)
-                                                        .background(.themeDarkGreen)
-                                                        .cornerRadius(13)
-                                                }
-                                                
-                                                
-                                            }
-                                            .frame(maxWidth: geometry.size.width * 0.25)
-                                            .padding(.vertical)
-                                            
-                                            
-                                            Spacer()
-                                        }
-                                    }
-                                }
-                                
+                ScrollView {
+                    LazyVGrid(columns: [GridItem()]) {
+                        
+                        if isRedeemable {
+                            NavigationLink { CouponListRedeemView() } label: {
+                                CouponRedeemCell()
                             }
                         }
-                    })
+                        
+                        ForEach(VM.coupons, id: \.self) { coupon in
+                            CouponListCell(coupon: coupon, isRedeemable: isRedeemable)
+                        }
+                    }
+                }
                 
                 Spacer()
             }
+            .overlay {
+                if VM.isLoading {
+                    LoadingIndicatiorView()
+                }
+            }
             .onAppear {
-                VM.fetchCoupon()
+                if VM.coupons.isEmpty {
+                    VM.fetchCoupon()
+                }
             }
             .navigationTitle("My Coupon")
             .navigationBarTitleDisplayMode(.inline)
@@ -114,10 +54,37 @@ struct CouponListView: View {
 }
 
 #Preview {
-    CouponListView()
+    CouponListView(isRedeemable: true)
 }
 
-struct CouponTermsView: View {
+struct CouponRedeemCell: View {
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 35) {
+                Text("Redeem Discount")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                
+                HStack {
+                    Text("Use your discount on E-Shop APP")
+                        .font(.caption)
+                    Image("arrow_right_green_icon")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+            }
+            .foregroundColor(.themeDarkGreen)
+            .padding(12)
+            
+            Spacer()
+        }
+        .background(.themeLightGreen)
+        .cornerRadius(10)
+        .padding(.horizontal, 5)
+    }
+}
+
+struct CouponHintsView: View {
     
     @State private var isShowTerms: Bool = true
 
@@ -138,8 +105,6 @@ struct CouponTermsView: View {
             }
             .background(.themeDarkGreen)
             .padding(.top, 0.5)
-
-            
         }
     }
 }

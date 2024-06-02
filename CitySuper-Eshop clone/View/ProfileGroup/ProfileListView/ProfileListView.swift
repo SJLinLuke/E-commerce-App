@@ -45,7 +45,7 @@ struct ProfileListView: View {
             MoreListView()
         }
         .navigationDestination(isPresented: $isShowingCouponList) {
-            CouponListView()
+            CouponListView(isRedeemable: false)
         }
     }
     
