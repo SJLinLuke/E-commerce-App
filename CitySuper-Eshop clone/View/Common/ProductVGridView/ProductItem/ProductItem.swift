@@ -59,7 +59,7 @@ struct ProductItem: View {
                             
                             Text("\(Currency.stringFrom(Decimal(string: VM.product?.price ?? "0") ?? 0.0))")
                                 .font(.caption)
-                                .foregroundColor(VM.isCompareWithPrice ? .red : .black )
+                                .foregroundColor(VM.isCompareWithPrice ? Color(hex: "E85321") : .black )
                         }
                         .padding(EdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 0))
                         

@@ -24,6 +24,15 @@ struct CouponListView: View {
                                 Image("bg_coupon")
                                     .renderingMode(.template)
                                     .foregroundColor(.themeLightGreen)
+                                    .overlay(alignment: .topLeading) {
+                                        Text("New")
+                                            .frame(width: 48, height: 19)
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 12))
+                                            .background(Color(hex: "E85321"))
+                                            .cornerRadius(13)
+                                            .padding(.leading, 10)
+                                    }
                                 
                                 HStack {
                                     VStack(alignment: .leading) {
@@ -53,6 +62,7 @@ struct CouponListView: View {
                                         
                                     }
                                     .frame(maxWidth: geometry.size.width * 0.7, alignment: .leading)
+                                    .padding(.top, 5)
                                     .padding()
                                     .foregroundColor(.themeDarkGreen)
                                     
