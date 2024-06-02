@@ -11,21 +11,19 @@ struct XDismissButton: View {
     
     @Binding var isShowing: Bool
     
-    let color: Color
+    let color : Color
+    var width : CGFloat = 20
+    var height: CGFloat = 20
     
     var body: some View {
-        HStack {
-            Spacer()
-            Button {
-                isShowing = false
-            } label: {
-                 Image("close_icon")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 20, height: 20)
-//                    .colorMultiply(color)
-                    .foregroundColor(color)
-            }
+        Button {
+            isShowing = false
+        } label: {
+            Image("close_icon")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: width, height: height)
+                .foregroundColor(color)
         }
     }
 }

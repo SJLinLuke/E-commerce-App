@@ -20,7 +20,11 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            XDismissButton(isShowing: $isShowingModal, color: .black)
+            HStack {
+                Spacer()
+                XDismissButton(isShowing: $isShowingModal, color: .black)
+            }
+            
             
             Spacer()
                 .frame(height: 75)
