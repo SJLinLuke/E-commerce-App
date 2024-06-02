@@ -10,7 +10,9 @@ import SwiftUI
 @main
 struct CitySuper_Eshop_cloneApp: App {
     
-    @State var userEnv = UserEnviroment()
+    // init
+    @State private var userEnv = UserEnviroment()
+    @StateObject private var couponListVM = CouponListViewModel()
     
     var body: some Scene {
         WindowGroup {

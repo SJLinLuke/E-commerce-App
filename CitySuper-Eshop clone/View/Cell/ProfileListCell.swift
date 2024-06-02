@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ProfileListCell: View {
     
-    let rowData: ProfileRowModel
+    @StateObject var couponListVM = CouponListViewModel.shared
+    
     @State var isLoginOrLogout: Bool = false
+    
+    let rowData: ProfileRowModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,6 +21,17 @@ struct ProfileListCell: View {
                 Text(rowData.title)
                     .foregroundColor(isLoginOrLogout ? .themeGreen : .black
                     )
+                
+                if (rowData.title == "E-Shop Coupon" && couponListVM.couponsCount > 0) {
+                    Circle()
+                        .frame(width: 30)
+                        .foregroundColor(.themeDarkGreen)
+                        .overlay {
+                            Text("\(couponListVM.couponsCount)")
+                                .foregroundColor(.white)
+                        }
+                }
+                
                 Spacer()
                 
                 if (!rowData.icon.isEmpty) {
@@ -42,5 +56,5 @@ struct ProfileListCell: View {
 }
 
 #Preview {
-    ProfileListCell(rowData: ProfileRowModel(title: "Test", icon: "coupon_icon", seperateType: true))
+    ProfileListCell(rowData: ProfileRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true))
 }
