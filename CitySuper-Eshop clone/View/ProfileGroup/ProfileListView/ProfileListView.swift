@@ -16,6 +16,7 @@ struct ProfileListView: View {
     @State var isShowingOrderHistory   : Bool = false
     @State var isShowingDeliveryAddress: Bool = false
     @State var isShowingMoreList       : Bool = false
+    @State var isShowingCouponList     : Bool = false
     
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
@@ -43,13 +44,16 @@ struct ProfileListView: View {
         .navigationDestination(isPresented: $isShowingMoreList) {
             MoreListView()
         }
+        .navigationDestination(isPresented: $isShowingCouponList) {
+            CouponListView()
+        }
     }
     
     func tapCell(_ rowData: ProfileRowModel) {
         DispatchQueue.main.async {
             switch rowData.title {
             case "E-Shop Coupon":
-                print(rowData.title)
+                isShowingCouponList.toggle()
             case "Order History":
                 isShowingOrderHistory.toggle()
             case "Delivery Address":
