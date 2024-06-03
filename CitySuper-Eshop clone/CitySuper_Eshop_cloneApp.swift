@@ -12,7 +12,7 @@ struct CitySuper_Eshop_cloneApp: App {
     
     // init
     @State private var userEnv = UserEnviroment()
-    @StateObject private var couponListVM = CouponListViewModel()
+    @StateObject private var couponListVM = CouponListViewModel.shared
     
     var body: some Scene {
         WindowGroup {
