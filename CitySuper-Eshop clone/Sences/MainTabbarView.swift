@@ -51,10 +51,6 @@ struct MainTabbarView: View {
         .onAppear {
             DispatchQueue.main.async {
                 isShowingIntoVideo = true
-                NetworkManager.shared.userEnv = userEnv
-                if (userEnv.isLogin) {
-                    inboxVM.fetchUnreadNumber()
-                }
             }
         }
         .onChange(of: selectIndex) {

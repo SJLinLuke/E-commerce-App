@@ -20,10 +20,6 @@ import Foundation
         }
     }
     
-    init() {
-        fetchCoupon()
-    }
-    
     func fetchCoupon() {
         
         guard !isLoading else { return }

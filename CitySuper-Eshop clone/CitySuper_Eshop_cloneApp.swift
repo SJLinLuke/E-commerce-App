@@ -10,14 +10,22 @@ import SwiftUI
 @main
 struct CitySuper_Eshop_cloneApp: App {
     
-    // init
     @State private var userEnv = UserEnviroment()
+    
     @StateObject private var couponListVM = CouponListViewModel.shared
+    @StateObject private var inboxVM      = InboxViewModel.shared
+    private var networkManager            = NetworkManager.shared
     
     var body: some Scene {
         WindowGroup {
             MainTabbarView()
                 .environmentObject(userEnv)
+                .onAppear {
+                    // init
+                    couponListVM.fetchCoupon()
+                    inboxVM.fetchUnreadNumber()
+                    networkManager.userEnv = userEnv
+                }
         }
     }
 }
