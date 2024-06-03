@@ -25,19 +25,15 @@ struct InboxView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                            ForEach(VM.inBoxMessages.indices, id: \.self) { index in
-                                NavigationLink { InboxDetailView(notificationID: VM.inBoxMessages[index].id) } label: {
-                                    InboxListCell(message: VM.inBoxMessages[index])
+                            ForEach(VM.inBoxMessages, id: \.self) { inboxMessage in
+                                NavigationLink { InboxDetailView(notificationID: inboxMessage.id) } label: {
+                                    InboxListCell(message: inboxMessage)
                                         .onAppear {
-                                            if (VM.inBoxMessages.last == VM.inBoxMessages[index] && VM.isHasMore) {
+                                            if (VM.inBoxMessages.last == inboxMessage && VM.isHasMore) {
                                                 VM.fetchInbox()
                                             }
                                         }
                                 }
-                                .simultaneousGesture(TapGesture().onEnded{
-                                    VM.inBoxMessages[index].read = true
-                                    VM.unreadNumber -= 1
-                                })
                                 SeperateLineView()
                             }
                         }
@@ -62,15 +58,15 @@ struct InboxView: View {
                 self.isShowingLoginModal = !userEnv.isLogin
             }
         }
-//        .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
-//            if !userEnv.isLogin {
-//                selectIndex = 4
-//            } else {
-//                VM.fetchInbox()
-//            }
-//        }, content: {
-//            LoginView(isShowingModal: $isShowingLoginModal)
-//        })
+        .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
+            if !userEnv.isLogin {
+                selectIndex = 4
+            } else {
+                VM.fetchInbox()
+            }
+        }, content: {
+            LoginView(isShowingModal: $isShowingLoginModal)
+        })
     }
 }
 

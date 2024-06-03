@@ -9,6 +9,8 @@ import Foundation
 
 @MainActor final class FavouriteViewModel: ObservableObject {
     
+    static let shared = FavouriteViewModel()
+    
     @Published var isLoading : Bool = false
     @Published var isHasMore : Bool = true
     @Published var favourites: [ProductBody] = []
@@ -41,4 +43,10 @@ import Foundation
         }
     }
     
+    func initFavourites() {
+        self.favourites  = []
+        self.isLoading   = false
+        self.isHasMore   = true
+        self.currentPage = 1
+    }
 }

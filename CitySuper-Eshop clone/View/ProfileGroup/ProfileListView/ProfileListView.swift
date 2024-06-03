@@ -66,6 +66,9 @@ struct ProfileListView: View {
                 isShowingLoginModal.toggle()
             case "Logout":
                 userEnv.removeUser()
+                OrderHistoryViewModel.shared.initHistorys()
+                InboxViewModel.shared.initInboxMessages()
+                FavouriteViewModel.shared.initFavourites()
             default:
                 break
             }

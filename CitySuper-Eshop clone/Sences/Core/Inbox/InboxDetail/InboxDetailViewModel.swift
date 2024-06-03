@@ -62,6 +62,7 @@ import Foundation
                 self.isLoading = true
                 self.inboxMessageDetail = try await NetworkManager.shared.fetchNotificationDetail(id)
                 self.InboxVM.fetchUnreadNumber()
+                self.InboxVM.readInboxMessage(id)
                 self.isLoading = false
             } catch {
                 self.isLoading = false

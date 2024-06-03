@@ -11,7 +11,7 @@ struct FavouritesView: View {
     
     @EnvironmentObject var userEnv: UserEnviroment
     
-    @StateObject var VM = FavouriteViewModel()
+    @StateObject var VM = FavouriteViewModel.shared
     
     @State var isShowingLoginModal: Bool = false
     @State var searchText: String = ""

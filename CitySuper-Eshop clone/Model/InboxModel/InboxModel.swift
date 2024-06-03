@@ -43,7 +43,7 @@ struct InboxMessageData: Decodable {
     let total         : Int
 }
 
-struct InboxMessage: Decodable, Identifiable, Equatable {
+struct InboxMessage: Decodable, Identifiable, Equatable, Hashable {
     let id             : Int
     let publish_time   : String
     let title          : String

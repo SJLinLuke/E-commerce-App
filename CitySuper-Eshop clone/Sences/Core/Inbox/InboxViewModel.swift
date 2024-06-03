@@ -54,5 +54,22 @@ import Foundation
         }
     }
     
+    func readInboxMessage(_ id: Int) {
+        guard !self.inBoxMessages.isEmpty else { return }
+        
+        for (index, inBoxMessage) in inBoxMessages.enumerated() {
+            if inBoxMessage.id == id {
+                self.inBoxMessages[index].read = true
+                self.unreadNumber -= 1
+            }
+        }
+    }
+    
+    func initInboxMessages() {
+        self.inBoxMessages = []
+        self.currentPage   = 1
+        self.isHasMore     = true
+        self.isLoading     = false
+    }
 }
 

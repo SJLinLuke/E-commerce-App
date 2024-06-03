@@ -64,7 +64,7 @@ struct InboxDetailView: View {
                 LoadingIndicatiorView()
             }
         }
-        .onAppear {
+        .task {
             VM.fetchInboxMessageDetail(id: notificationID)
         }
     }

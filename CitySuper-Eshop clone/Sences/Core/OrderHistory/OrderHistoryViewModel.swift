@@ -125,4 +125,10 @@ import Foundation
         return OrderStaus(status: "Processing", progress: 0.65, color: .themeDarkGreen)
     }
     
+    func initHistorys() {
+        self.orderHistorys = []
+        self.isHasNextPage = true
+        self.nextCursor    = nil
+        self.isLoading     = false
+    }
 }
