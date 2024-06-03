@@ -11,6 +11,7 @@ import SwiftUI
 struct CitySuper_Eshop_cloneApp: App {
     
     @State private var userEnv = UserEnviroment()
+    @State private var isShowingIntroVideo: Bool = false
     
     @StateObject private var couponListVM = CouponListViewModel.shared
     @StateObject private var inboxVM      = InboxViewModel.shared
@@ -25,6 +26,11 @@ struct CitySuper_Eshop_cloneApp: App {
                     couponListVM.fetchCoupon()
                     inboxVM.fetchUnreadNumber()
                     networkManager.userEnv = userEnv
+                    
+                    self.isShowingIntroVideo = true
+                }
+                .fullScreenCover(isPresented: $isShowingIntroVideo) {
+                    AVPlayerView(isShowingIntoVideo: $isShowingIntroVideo)
                 }
         }
     }

@@ -27,6 +27,7 @@ struct AVPlayerView: View {
                 }
                 .background(.white)
                 .aspectRatio(contentMode: .fill)
+                .disabled(true)
         }
     }
     
