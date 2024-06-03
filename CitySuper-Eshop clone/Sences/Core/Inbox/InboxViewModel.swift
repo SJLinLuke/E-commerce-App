@@ -70,6 +70,7 @@ import Foundation
         self.currentPage   = 1
         self.isHasMore     = true
         self.isLoading     = false
+        self.unreadNumber  = 0
     }
 }
 

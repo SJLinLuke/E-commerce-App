@@ -12,6 +12,8 @@ import SwiftUI
     @Published var userEnv  : UserEnviroment? = nil
     @Published var isLoading: Bool = false
    
+    private var InboxVM = InboxViewModel.shared
+    
     func loginSever(loginData: LoginBody, complete: @escaping (Bool) -> Void) {
         
         guard !isLoading else { return }
@@ -23,6 +25,7 @@ import SwiftUI
                 
                 self.isLoading = false
                 self.userEnv?.setupUser(userData)
+                self.InboxVM.fetchUnreadNumber()
             } catch {
                 self.isLoading = false
                 print(error.localizedDescription)
