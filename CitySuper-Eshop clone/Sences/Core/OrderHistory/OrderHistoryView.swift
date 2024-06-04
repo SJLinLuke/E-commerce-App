@@ -61,8 +61,9 @@ struct OrderHistoryView: View {
         .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
             if !userEnv.isLogin {
                 selectIndex = 4
+            } else {
+                VM.fetchOrders()
             }
-            VM.fetchOrders()
         }, content: {
             LoginView(isShowingModal: $isShowingLoginModal)
         })
