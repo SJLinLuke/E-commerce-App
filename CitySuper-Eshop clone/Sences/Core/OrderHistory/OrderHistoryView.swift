@@ -13,6 +13,7 @@ struct OrderHistoryView: View {
     
     @Binding var selectIndex: Int
     
+    @State var searchText         : String = ""
     @State var isShowingLoginModal: Bool = false
 
     @StateObject var VM = OrderHistoryViewModel.shared
@@ -20,16 +21,16 @@ struct OrderHistoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                SearchBarView()
+                SearchBarView(searchText: $searchText)
                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem()]) {
-                        ForEach(VM.orderHistorys) { orderHistory in
+                        ForEach(VM.getHistorys(searchText)) { orderHistory in
                             NavigationLink { OrderHistoryDetailView(orderHistory: orderHistory) } label: {
                                 OrderHistoryCell(orderHistory: orderHistory)
                                     .onAppear {
-                                        if VM.orderHistorys.last == orderHistory {
-                                            VM.fetchOrders()
+                                        if VM.getHistorys(searchText).last == orderHistory {
+                                            VM.fetchOrderHistories()
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -55,14 +56,14 @@ struct OrderHistoryView: View {
         }
         .task {
             if userEnv.isLogin {
-                VM.fetchOrders()
+                VM.fetchOrderHistories()
             }
         }
         .fullScreenCover(isPresented: $isShowingLoginModal, onDismiss: {
             if !userEnv.isLogin {
                 selectIndex = 4
             } else {
-                VM.fetchOrders()
+                VM.fetchOrderHistories()
             }
         }, content: {
             LoginView(isShowingModal: $isShowingLoginModal)
@@ -78,8 +79,9 @@ struct OrderHistoryView: View {
 
 struct SearchBarView: View {
     
-    @State var searchText: String = ""
     @State var isSorting : Bool = false
+       
+    @Binding var searchText: String
     
     var body: some View {
         HStack {

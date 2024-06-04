@@ -11,14 +11,14 @@ import Foundation
     
     static let shared = OrderHistoryViewModel()
     
-    @Published var userEnv      : UserEnviroment?
-    @Published var isLoading    : Bool = false
-    @Published var orderHistorys: [OrderViewModel] = []
+    @Published var userEnv               : UserEnviroment?
+    @Published var isLoading             : Bool = false
+    @Published private var orderHistories: [OrderViewModel] = []
     
     private var isHasNextPage: Bool = true
     private var nextCursor   : String? = nil
     
-    func fetchOrders() {
+    func fetchOrderHistories() {
         
         guard !isLoading && isHasNextPage else { return }
         
@@ -65,7 +65,7 @@ import Foundation
                                                                          financialStatus: orderHistorys[index].financialStatus)
                 orderHistorys[index].orderMethodInfo = self.setupOrderMethodInfo(orderHistorys[index])
             }
-            self.orderHistorys.append(contentsOf: orderHistorys)
+            self.orderHistories.append(contentsOf: orderHistorys)
             self.isLoading = false
         }
     }
@@ -125,8 +125,19 @@ import Foundation
         return OrderStaus(status: "Processing", progress: 0.65, color: .themeDarkGreen)
     }
     
+    func getHistorys(_ text: String) -> [OrderViewModel] {
+        if text.isEmpty {
+            return self.orderHistories
+        } else {
+            return self.orderHistories.filter({ orderHistory in
+                let match = "\(orderHistory.number)".range(of: text)
+                return match != nil ? true : false
+            })
+        }
+    }
+    
     func initHistorys() {
-        self.orderHistorys = []
+        self.orderHistories = []
         self.isHasNextPage = true
         self.nextCursor    = nil
         self.isLoading     = false
