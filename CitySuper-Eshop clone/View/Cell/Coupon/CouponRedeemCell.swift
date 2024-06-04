@@ -31,6 +31,7 @@ struct CouponRedeemCell: View {
         .background(.themeLightGreen)
         .cornerRadius(10)
         .padding(.horizontal, 5)
+        .shadow(radius: 2, x: 1, y: 1)
     }
 }
 

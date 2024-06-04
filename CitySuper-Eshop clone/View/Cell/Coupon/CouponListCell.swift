@@ -28,6 +28,7 @@ struct CouponListCell: View {
                             .padding(.leading, 10)
                     }
                 }
+                .shadow(radius: 2, x: 1, y: 1)
             
             GeometryReader{ geometry in
                 HStack {
