@@ -25,21 +25,25 @@ struct OrderHistoryView: View {
                 SearchBarView(currentSortKey: $currentSortKey, 
                               searchText: $searchText)
                 
-                ScrollView {
-                    LazyVGrid(columns: [GridItem()]) {
-                        ForEach(VM.getHistorys(searchText, sort: currentSortKey)) { orderHistory in
-                            NavigationLink { OrderHistoryDetailView(orderHistory: orderHistory) } label: {
-                                OrderHistoryCell(orderHistory: orderHistory)
-                                    .onAppear {
-                                        if VM.getHistorys(searchText, sort: currentSortKey).last == orderHistory {
-                                            VM.fetchOrderHistories()
+                if VM.getHistorys(searchText, sort: currentSortKey).isEmpty {
+                    OrderHistoryEmptyView()
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem()]) {
+                            ForEach(VM.getHistorys(searchText, sort: currentSortKey)) { orderHistory in
+                                NavigationLink { OrderHistoryDetailView(orderHistory: orderHistory) } label: {
+                                    OrderHistoryCell(orderHistory: orderHistory)
+                                        .onAppear {
+                                            if VM.getHistorys(searchText, sort: currentSortKey).last == orderHistory {
+                                                VM.fetchOrderHistories()
+                                            }
                                         }
-                                    }
-                                    .padding(.horizontal, 20)
+                                        .padding(.horizontal, 20)
+                                }
                             }
                         }
+                        .padding(.top, 10)
                     }
-                    .padding(.top, 10)
                 }
             }
             .navigationTitle("Order History")

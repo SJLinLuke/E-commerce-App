@@ -90,6 +90,7 @@
 		40BC654F2C0C35A600EA5067 /* CouponListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC654E2C0C35A600EA5067 /* CouponListCell.swift */; };
 		40BC65512C0C3CB300EA5067 /* CouponListTNCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65502C0C3CB300EA5067 /* CouponListTNCView.swift */; };
 		40BC65532C0C980200EA5067 /* CouponListRedeemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65522C0C980200EA5067 /* CouponListRedeemView.swift */; };
+		40BC65552C10C15500EA5067 /* OrderHistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65542C10C15500EA5067 /* OrderHistoryEmptyView.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -255,6 +256,7 @@
 		40BC654E2C0C35A600EA5067 /* CouponListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListCell.swift; sourceTree = "<group>"; };
 		40BC65502C0C3CB300EA5067 /* CouponListTNCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListTNCView.swift; sourceTree = "<group>"; };
 		40BC65522C0C980200EA5067 /* CouponListRedeemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListRedeemView.swift; sourceTree = "<group>"; };
+		40BC65542C10C15500EA5067 /* OrderHistoryEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryEmptyView.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				C58505C92C05A2160055B844 /* OrderHistoryDetail */,
 				40E5226F2BED14650046C3AA /* OrderHistoryView.swift */,
 				400C05482BF9EE2D00493ACA /* OrderHistoryViewModel.swift */,
+				40BC65542C10C15500EA5067 /* OrderHistoryEmptyView.swift */,
 			);
 			path = OrderHistory;
 			sourceTree = "<group>";
@@ -1492,6 +1495,7 @@
 				406612DC2BF855200037C4D8 /* QRcodeView.swift in Sources */,
 				C593F1A92C06C4F400DBB028 /* AlertContext.swift in Sources */,
 				40BC65532C0C980200EA5067 /* CouponListRedeemView.swift in Sources */,
+				40BC65552C10C15500EA5067 /* OrderHistoryEmptyView.swift in Sources */,
 				C5EA79812BF452940042FEF0 /* Constants.swift in Sources */,
 				40E522702BED14650046C3AA /* OrderHistoryView.swift in Sources */,
 				406612D62BF837760037C4D8 /* FavouriteViewModel.swift in Sources */,
