@@ -11,25 +11,27 @@ struct OrderHistoryView: View {
     
     @EnvironmentObject var userEnv: UserEnviroment
     
-    @Binding var selectIndex: Int
+    @StateObject var VM = OrderHistoryViewModel.shared
     
     @State var searchText         : String = ""
+    @State var currentSortKey     : String = "ALL"
     @State var isShowingLoginModal: Bool = false
 
-    @StateObject var VM = OrderHistoryViewModel.shared
+    @Binding var selectIndex: Int
     
     var body: some View {
         NavigationStack {
             VStack {
-                SearchBarView(searchText: $searchText)
+                SearchBarView(currentSortKey: $currentSortKey, 
+                              searchText: $searchText)
                 
                 ScrollView {
                     LazyVGrid(columns: [GridItem()]) {
-                        ForEach(VM.getHistorys(searchText)) { orderHistory in
+                        ForEach(VM.getHistorys(searchText, sort: currentSortKey)) { orderHistory in
                             NavigationLink { OrderHistoryDetailView(orderHistory: orderHistory) } label: {
                                 OrderHistoryCell(orderHistory: orderHistory)
                                     .onAppear {
-                                        if VM.getHistorys(searchText).last == orderHistory {
+                                        if VM.getHistorys(searchText, sort: currentSortKey).last == orderHistory {
                                             VM.fetchOrderHistories()
                                         }
                                     }
@@ -79,10 +81,13 @@ struct OrderHistoryView: View {
 
 struct SearchBarView: View {
     
-    @State var isSorting : Bool = true
-    @State var isSelected : String = "ALL"
-    @Binding var searchText: String
-    var arr = ["Payment Pending", "Processing", "Refunded", "Completed", "ALL"]
+    @State var isShowSort: Bool = false
+    
+    @Binding var currentSortKey: String
+    @Binding var searchText    : String
+    
+    let sortKeys = ["Payment Pending", "Processing", "Refunded", "Completed", "ALL"]
+    
     var body: some View {
         HStack {
             Image("search_icon")
@@ -94,9 +99,9 @@ struct SearchBarView: View {
             SeperateLineView(color: .black, height: 25, width: 1)
             
             Button {
-                isSorting.toggle()
+                isShowSort.toggle()
             } label: {
-                Image(isSelected == "ALL" ? "sort_icon" : "sort_icon_on")
+                Image(currentSortKey == "ALL" ? "sort_icon" : "sort_icon_on")
             }
             
         }
@@ -106,7 +111,7 @@ struct SearchBarView: View {
                 .fill(Color(hex: "E2E2E2"))
                 .frame(height: 1)
         }
-        .sheet(isPresented: $isSorting) {
+        .sheet(isPresented: $isShowSort) {
             VStack {
                 HStack {
                     Text("Filter by")
@@ -126,20 +131,20 @@ struct SearchBarView: View {
                 
                 GeometryReader(content: { geometry in
                     LazyVGrid(columns: [GridItem(), GridItem()], spacing: 25, content: {
-                        ForEach(arr, id: \.self) { item in
+                        ForEach(sortKeys, id: \.self) { sortkey in
                             Button {
-                                isSelected = item
-                                isSorting = false
+                                currentSortKey = sortkey
+                                isShowSort = false
                             } label: {
-                                Text(item)
+                                Text(sortkey)
                                     .frame(width: geometry.size.width * 0.48, height: 25)
                                     .font(.caption)
-                                    .fontWeight(item == isSelected ? .regular : .medium)
-                                    .foregroundColor(item == isSelected ? .themeGreen : .gray)
-                                    .background(item == isSelected ? .white : Color(hex: "F2F2F2"))
+                                    .fontWeight(sortkey == currentSortKey ? .regular : .medium)
+                                    .foregroundColor(sortkey == currentSortKey ? .themeGreen : .gray)
+                                    .background(sortkey == currentSortKey ? .white : Color(hex: "F2F2F2"))
                                     .cornerRadius(5)
                                     .overlay {
-                                        if item == isSelected {
+                                        if sortkey == currentSortKey {
                                             RoundedRectangle(cornerRadius: 5)
                                                 .stroke(
                                                     LinearGradient(

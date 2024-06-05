@@ -125,14 +125,29 @@ import Foundation
         return OrderStaus(status: "Processing", progress: 0.65, color: .themeDarkGreen)
     }
     
-    func getHistorys(_ text: String) -> [OrderViewModel] {
-        if text.isEmpty {
-            return self.orderHistories
+    func getHistorys(_ orderNumber: String, sort: String) -> [OrderViewModel] {
+        if orderNumber.isEmpty {
+            if sort == "ALL" {
+                return self.orderHistories
+            } else {
+                return self.orderHistories.filter({ orderHistory in
+                    let match = orderHistory.orderStatus.status == sort
+                    return match ? true : false
+                })
+            }
         } else {
-            return self.orderHistories.filter({ orderHistory in
-                let match = "\(orderHistory.number)".range(of: text)
-                return match != nil ? true : false
-            })
+            if sort == "ALL" {
+                return self.orderHistories.filter({ orderHistory in
+                    let match = "\(orderHistory.number)".range(of: orderNumber) != nil
+                    return match ? true : false
+                })
+            } else {
+                return self.orderHistories.filter({ orderHistory in
+                    let match = ("\(orderHistory.number)".range(of: orderNumber) != nil) && orderHistory.orderStatus.status == sort
+                    return match ? true : false
+                })
+            }
+            
         }
     }
     
