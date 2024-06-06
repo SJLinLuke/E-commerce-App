@@ -89,9 +89,7 @@ struct SearchBarView: View {
     
     @Binding var currentSortKey: String
     @Binding var searchText    : String
-    
-    let sortKeys = ["Payment Pending", "Processing", "Refunded", "Completed", "ALL"]
-    
+        
     var body: some View {
         HStack {
             Image("search_icon")
@@ -116,60 +114,7 @@ struct SearchBarView: View {
                 .frame(height: 1)
         }
         .sheet(isPresented: $isShowSort) {
-            VStack {
-                HStack {
-                    Text("Filter by")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                    Spacer()
-                }
-                SeperateLineView(color: .gray, height: 1)
-
-                HStack {
-                    Text("Status")
-                        .font(.caption)
-                        .fontWeight(.medium)
-                    Spacer()
-                }
-                .padding(EdgeInsets(top: 2, leading: 0, bottom: 10, trailing: 0))
-                
-                GeometryReader(content: { geometry in
-                    LazyVGrid(columns: [GridItem(), GridItem()], spacing: 25, content: {
-                        ForEach(sortKeys, id: \.self) { sortkey in
-                            Button {
-                                currentSortKey = sortkey
-                                isShowSort = false
-                            } label: {
-                                Text(sortkey)
-                                    .frame(width: geometry.size.width * 0.48, height: 25)
-                                    .font(.caption)
-                                    .fontWeight(sortkey == currentSortKey ? .regular : .medium)
-                                    .foregroundColor(sortkey == currentSortKey ? .themeGreen : .gray)
-                                    .background(sortkey == currentSortKey ? .white : Color(hex: "F2F2F2"))
-                                    .cornerRadius(5)
-                                    .overlay {
-                                        if sortkey == currentSortKey {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(
-                                                    LinearGradient(
-                                                        colors: [
-                                                                Color(hex: "20741B"),
-                                                                Color(hex: "7DE489")],
-                                                        startPoint: .bottomTrailing,
-                                                        endPoint: .topLeading))
-                                        }
-                                    }
-                            }
-                        }
-                    })
-                })
-                
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 40, leading: 10, bottom: 0, trailing: 10))
-            .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 3.2)])
-            .presentationBackgroundInteraction(.disabled)
-            .presentationCornerRadius(20)
+            OrderHistorySortButtonSheet(isShowSort: $isShowSort, currentSortKey: $currentSortKey)
         }
     }
 }
