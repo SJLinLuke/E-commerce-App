@@ -11,8 +11,8 @@ struct OrderHistorySortButtonSheet: View {
     
     private let sortKeys = ["Payment Pending", "Processing", "Refunded", "Completed", "ALL"]
     
-    @Binding var isShowSort    : Bool
-    @Binding var currentSortKey: String
+    @Binding var isShowSortButtonSheet: Bool
+    @Binding var currentSortKey       : String
     
     var body: some View {
         VStack {
@@ -38,7 +38,7 @@ struct OrderHistorySortButtonSheet: View {
                     ForEach(sortKeys, id: \.self) { sortkey in
                         Button {
                             currentSortKey = sortkey
-                            isShowSort = false
+                            isShowSortButtonSheet = false
                         } label: {
                             let isSelected: Bool = sortkey == currentSortKey
                             
@@ -76,5 +76,5 @@ struct OrderHistorySortButtonSheet: View {
 }
 
 #Preview {
-    OrderHistorySortButtonSheet(isShowSort: .constant(true), currentSortKey: .constant("ALL"))
+    OrderHistorySortButtonSheet(isShowSortButtonSheet: .constant(true), currentSortKey: .constant("ALL"))
 }
