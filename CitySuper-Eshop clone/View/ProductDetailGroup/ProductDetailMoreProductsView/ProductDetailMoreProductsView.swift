@@ -17,13 +17,15 @@ struct ProductDetailMoreProductsView: View {
     var body: some View {
         ZStack {
             CollectionNormalLayoutView_Normal(
-                collectionNormalLayout: CollectionNormalLayoutModel(title: title,
-                                                                    layout: "",
-                                                                    products: products,
-                                                                    shopify_collection_id: shopifyID),
-                itemWidth: 175,
-                itemHeight: 270,
-                isRelatedSimilar: true, meetLast: {meetLast()})
+                collectionNormalLayout: CollectionNormalLayoutModel(
+                    title: title,
+                    layout: "",
+                    products: products,
+                    shopify_collection_id: shopifyID),
+                    itemWidth: 175,
+                    itemHeight: 270,
+                    isRelatedSimilar: true, meetLast: {meetLast()}
+            )
             .background(Color(hex: "F2F2F2"))
         }
     }
