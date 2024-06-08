@@ -45,7 +45,7 @@ struct OrderHistoryCell: View {
                 Spacer()
                     .frame(height: 30)
                 
-                Text("Amount: HK$\(orderHistory.totalPrice.formattedPrice)")
+                Text("Amount: HK\(Currency.stringFrom(orderHistory.totalPrice))")
                     .foregroundColor(.black)
             }
             .padding(8)

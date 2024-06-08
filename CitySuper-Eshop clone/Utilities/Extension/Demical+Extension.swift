@@ -7,13 +7,4 @@
 
 import Foundation
 
-extension Decimal {
-    
-    var formattedPrice: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(for: self) ?? "\(self)"
-    }
-}
+extension Decimal {}

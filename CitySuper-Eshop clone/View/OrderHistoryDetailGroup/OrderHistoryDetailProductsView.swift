@@ -34,7 +34,7 @@ struct OrderHistoryDetailProductsView: View {
                         HStack {
                             Spacer()
                             
-                            Text("$\(lineItems[index].originalTotalPrice.amount.formattedPrice)")
+                            Text(Currency.stringFrom(lineItems[index].originalTotalPrice.amount))
                                 .foregroundColor(Color(hex: "E85321"))
                         }
                     }

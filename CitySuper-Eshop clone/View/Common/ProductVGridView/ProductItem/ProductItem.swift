@@ -68,7 +68,7 @@ struct ProductItem: View {
                         if VM.isSoldOut {
                             SoldOutButton(width: 53, height: 25)
                         } else {
-                            CartButton(width: 25, height: 25)
+                            CartButton(width: 25, height: 25, shopifyID: VM.product?.shopify_product_id ?? "")
                         }
                     }
                     .padding(5)

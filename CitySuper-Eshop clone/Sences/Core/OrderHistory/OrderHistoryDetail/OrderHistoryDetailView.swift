@@ -31,19 +31,19 @@ struct OrderHistoryDetailView: View {
                             VStack(spacing: 7) {
                                 SeperateLineView()
                                 
-                                OrderHistoryDetailTextItem(leadingText: "Items Subtotal", trailingText: "$\(orderHistory.lineItemsTotalPrice.formattedPrice)")
+                                OrderHistoryDetailTextItem(leadingText: "Items Subtotal", trailingText: Currency.stringFrom(orderHistory.lineItemsTotalPrice))
                                 
                                 let totalDiscount = orderHistory.lineItemsTotalPrice - orderHistory.totalPrice + orderHistory.totalShippingPrice
                                 OrderHistoryDetailTextItem(leadingText: orderHistory.discountApplication?.textViewFormat ?? "",
-                                                           trailingText: "-$\(totalDiscount.formattedPrice)")
+                                                           trailingText: "-\(Currency.stringFrom(totalDiscount))")
                                     .lineSpacing(7)
                                 
-                                OrderHistoryDetailTextItem(leadingText: "Shipping charges", trailingText: "$\(orderHistory.totalShippingPrice.formattedPrice)")
+                                OrderHistoryDetailTextItem(leadingText: "Shipping charges", trailingText: Currency.stringFrom(orderHistory.totalShippingPrice))
                                 
                                 SeperateLineView()
                             }
                             
-                            OrderHistoryDetailTextItem(font: .system(size: 18), leadingText: "Total", trailingText: "$\(orderHistory.totalPrice.formattedPrice)")
+                            OrderHistoryDetailTextItem(font: .system(size: 18), leadingText: "Total", trailingText: Currency.stringFrom(orderHistory.totalPrice))
                                 .padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
                                 .fontWeight(.bold)
 

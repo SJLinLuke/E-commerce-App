@@ -114,7 +114,7 @@ struct SearchBarView: View {
                 .frame(height: 1)
         }
         .sheet(isPresented: $isShowSort) {
-            OrderHistorySortButtonSheet(isShowSortButtonSheet: $isShowSort, currentSortKey: $currentSortKey)
+            OrderHistorySortButtomSheet(isShowSortButtonSheet: $isShowSort, currentSortKey: $currentSortKey)
         }
     }
 }

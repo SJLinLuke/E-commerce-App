@@ -9,19 +9,30 @@ import SwiftUI
 
 struct CartButton: View {
     
-    @EnvironmentObject private var cartEnv: CartEnvironment
+    @StateObject private var addToCartVM = AddToCartButtomSheetViewModel.shared
     
     var width: CGFloat
     var height: CGFloat
     
-    init(width: CGFloat, height: CGFloat) {
-        self.width = width
-        self.height = height
+    let shopifyID: String
+    
+    init(width: CGFloat, height: CGFloat, shopifyID: String) {
+        self.width     = width
+        self.height    = height
+        self.shopifyID = shopifyID
     }
     
     var body: some View {
         Button {
-            cartEnv.isShowCartButtonSheet.toggle()
+            addToCartVM.isProductSoldOut(shopifyID: shopifyID) { isSoldOut in
+                if (isSoldOut) {
+                    addToCartVM.alertItem = AlertContext.outOfStock
+                } else {
+                    addToCartVM.isShowAddToCartButtonSheet.toggle()
+                }
+            }
+            
+            
         } label: {
             Image("cart_icon")
                 .resizable()
@@ -31,5 +42,5 @@ struct CartButton: View {
 }
 
 #Preview {
-    CartButton(width: 25, height: 25)
+    CartButton(width: 25, height: 25, shopifyID: "")
 }

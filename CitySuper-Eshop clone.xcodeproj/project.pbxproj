@@ -84,6 +84,9 @@
 		406612DC2BF855200037C4D8 /* QRcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612DB2BF855200037C4D8 /* QRcodeView.swift */; };
 		406612DF2BF861AC0037C4D8 /* QRcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612DE2BF861AC0037C4D8 /* QRcodeViewModel.swift */; };
 		40736CA02C1375D800496AB7 /* CartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736C9F2C1375D800496AB7 /* CartEnvironment.swift */; };
+		40736CA42C149BB600496AB7 /* AddToCartButtomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CA32C149BB600496AB7 /* AddToCartButtomSheetViewModel.swift */; };
+		40736CA62C14B3FF00496AB7 /* AddToCartButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CA52C14B3FF00496AB7 /* AddToCartButtomSheet.swift */; };
+		40736CA92C14C1BC00496AB7 /* QuantitySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CA82C14C1BC00496AB7 /* QuantitySelectorView.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
@@ -92,7 +95,7 @@
 		40BC65512C0C3CB300EA5067 /* CouponListTNCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65502C0C3CB300EA5067 /* CouponListTNCView.swift */; };
 		40BC65532C0C980200EA5067 /* CouponListRedeemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65522C0C980200EA5067 /* CouponListRedeemView.swift */; };
 		40BC65552C10C15500EA5067 /* OrderHistoryEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65542C10C15500EA5067 /* OrderHistoryEmptyView.swift */; };
-		40BC65582C1204A800EA5067 /* OrderHistorySortButtonSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65572C1204A800EA5067 /* OrderHistorySortButtonSheet.swift */; };
+		40BC65582C1204A800EA5067 /* OrderHistorySortButtomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65572C1204A800EA5067 /* OrderHistorySortButtomSheet.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -252,6 +255,9 @@
 		406612DB2BF855200037C4D8 /* QRcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeView.swift; sourceTree = "<group>"; };
 		406612DE2BF861AC0037C4D8 /* QRcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeViewModel.swift; sourceTree = "<group>"; };
 		40736C9F2C1375D800496AB7 /* CartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEnvironment.swift; sourceTree = "<group>"; };
+		40736CA32C149BB600496AB7 /* AddToCartButtomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButtomSheetViewModel.swift; sourceTree = "<group>"; };
+		40736CA52C14B3FF00496AB7 /* AddToCartButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartButtomSheet.swift; sourceTree = "<group>"; };
+		40736CA82C14C1BC00496AB7 /* QuantitySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelectorView.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
@@ -260,7 +266,7 @@
 		40BC65502C0C3CB300EA5067 /* CouponListTNCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListTNCView.swift; sourceTree = "<group>"; };
 		40BC65522C0C980200EA5067 /* CouponListRedeemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListRedeemView.swift; sourceTree = "<group>"; };
 		40BC65542C10C15500EA5067 /* OrderHistoryEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryEmptyView.swift; sourceTree = "<group>"; };
-		40BC65572C1204A800EA5067 /* OrderHistorySortButtonSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistorySortButtonSheet.swift; sourceTree = "<group>"; };
+		40BC65572C1204A800EA5067 /* OrderHistorySortButtomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistorySortButtomSheet.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -647,6 +653,31 @@
 			path = QRcodeModel;
 			sourceTree = "<group>";
 		};
+		40736CA12C149B8200496AB7 /* OrderHistorySort */ = {
+			isa = PBXGroup;
+			children = (
+				40BC65572C1204A800EA5067 /* OrderHistorySortButtomSheet.swift */,
+			);
+			path = OrderHistorySort;
+			sourceTree = "<group>";
+		};
+		40736CA22C149B9200496AB7 /* AddToCart */ = {
+			isa = PBXGroup;
+			children = (
+				40736CA52C14B3FF00496AB7 /* AddToCartButtomSheet.swift */,
+				40736CA32C149BB600496AB7 /* AddToCartButtomSheetViewModel.swift */,
+			);
+			path = AddToCart;
+			sourceTree = "<group>";
+		};
+		40736CA72C14C17800496AB7 /* QuantitySelectorView */ = {
+			isa = PBXGroup;
+			children = (
+				40736CA82C14C1BC00496AB7 /* QuantitySelectorView.swift */,
+			);
+			path = QuantitySelectorView;
+			sourceTree = "<group>";
+		};
 		40AB32682C0B071E0091ECC4 /* MoreStaticPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -686,7 +717,8 @@
 		40BC65562C12048300EA5067 /* ButtonSheet */ = {
 			isa = PBXGroup;
 			children = (
-				40BC65572C1204A800EA5067 /* OrderHistorySortButtonSheet.swift */,
+				40736CA22C149B9200496AB7 /* AddToCart */,
+				40736CA12C149B8200496AB7 /* OrderHistorySort */,
 			);
 			path = ButtonSheet;
 			sourceTree = "<group>";
@@ -1078,6 +1110,7 @@
 		40E522D52BF26BBA0046C3AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				40736CA72C14C17800496AB7 /* QuantitySelectorView */,
 				C593F1B22C071F8D00DBB028 /* CustomTextField */,
 				4062BF162C01D34C00FF7184 /* SeperateLineView */,
 				400C056C2BFF916C00493ACA /* AVPlayerView */,
@@ -1542,6 +1575,7 @@
 				C59AEBF12BF367AA001541BE /* XDismissButton.swift in Sources */,
 				400C05132BF9EA3500493ACA /* Fragment+OrderConnectionQuery.swift in Sources */,
 				40E522812BED28470046C3AA /* InboxListCell.swift in Sources */,
+				40736CA42C149BB600496AB7 /* AddToCartButtomSheetViewModel.swift in Sources */,
 				C58274662C0439BD00A84CDD /* Shopify+Extension.swift in Sources */,
 				400C05172BF9EAB200493ACA /* PaginatedArray.swift in Sources */,
 				40E522722BED14710046C3AA /* InboxView.swift in Sources */,
@@ -1555,6 +1589,7 @@
 				40E522922BEF37F70046C3AA /* PopularCategoryItem.swift in Sources */,
 				400C056E2BFF917E00493ACA /* AVPlayerView.swift in Sources */,
 				400C054D2BFA053F00493ACA /* Demical+Extension.swift in Sources */,
+				40736CA62C14B3FF00496AB7 /* AddToCartButtomSheet.swift in Sources */,
 				400C053E2BF9EB1400493ACA /* ManualCodeViewModel.swift in Sources */,
 				40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */,
 				40E522972BEF3E6F0046C3AA /* NetworkManager.swift in Sources */,
@@ -1562,7 +1597,8 @@
 				400C04FC2BF9E9C900493ACA /* Client.swift in Sources */,
 				400C053B2BF9EB1400493ACA /* DiscountApplication.swift in Sources */,
 				406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */,
-				40BC65582C1204A800EA5067 /* OrderHistorySortButtonSheet.swift in Sources */,
+				40736CA92C14C1BC00496AB7 /* QuantitySelectorView.swift in Sources */,
+				40BC65582C1204A800EA5067 /* OrderHistorySortButtomSheet.swift in Sources */,
 				40E522742BED148F0046C3AA /* FavouritesView.swift in Sources */,
 				4062BF312C0B04E500FF7184 /* MoreListStaticPageViewModel.swift in Sources */,
 				4062BF1B2C04C55100FF7184 /* InboxDetailViewModel.swift in Sources */,

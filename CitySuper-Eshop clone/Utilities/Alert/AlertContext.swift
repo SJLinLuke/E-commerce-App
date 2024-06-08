@@ -48,4 +48,12 @@ struct AlertContext {
     
     static let deliveryAddress_fillForm = AlertItem(title: "Notice",
                                                     message: Text("Please fill in all required fields"))
+    
+    //MARK: - inventory Alerts
+    
+    static let outOfStock          = AlertItem(title: "Notice",
+                                               message: Text("This item is out of stock"))
+    
+    static let quantityUnavailable = AlertItem(title: "Notice",
+                                               message: Text("Your desired quantity is unavailable"))
 }

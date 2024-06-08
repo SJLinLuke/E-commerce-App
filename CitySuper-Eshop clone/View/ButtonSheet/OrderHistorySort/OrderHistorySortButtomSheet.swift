@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OrderHistorySortButtonSheet: View {
+struct OrderHistorySortButtomSheet: View {
     
     private let sortKeys = ["Payment Pending", "Processing", "Refunded", "Completed", "ALL"]
     
@@ -76,5 +76,5 @@ struct OrderHistorySortButtonSheet: View {
 }
 
 #Preview {
-    OrderHistorySortButtonSheet(isShowSortButtonSheet: .constant(true), currentSortKey: .constant("ALL"))
+    OrderHistorySortButtomSheet(isShowSortButtonSheet: .constant(true), currentSortKey: .constant("ALL"))
 }

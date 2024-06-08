@@ -11,12 +11,11 @@ import UIKit
 struct MainTabbarView: View {
     
     @EnvironmentObject private var userEnv: UserEnviroment
-    @EnvironmentObject private var cartEnv: CartEnvironment
     
-    @StateObject private var inboxVM = InboxViewModel.shared
+    @StateObject private var inboxVM     = InboxViewModel.shared
+    @StateObject private var addToCartVM = AddToCartButtomSheetViewModel.shared
     
-    @State private var selectIndex:Int = 0
-    
+    @State private var selectIndex: Int = 0
     var body: some View {
         TabView(selection: $selectIndex) {
             
@@ -53,16 +52,21 @@ struct MainTabbarView: View {
                 inboxVM.fetchUnreadNumber()
             }
         }
-        .sheet(isPresented: $cartEnv.isShowCartButtonSheet) {
-            VStack {
-                Text("Cart Buttom Sheet")
+        .overlay {
+            if addToCartVM.isLoading {
+                LoadingIndicatiorView()
             }
-            .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 3.2)])
-            .presentationBackgroundInteraction(.disabled)
-            .presentationCornerRadius(20)
         }
+        .sheet(isPresented: $addToCartVM.isShowAddToCartButtonSheet) {
+            if userEnv.isLogin {
+                AddToCartButtomSheet()
+            } else {
+                LoginView(isShowingModal: $addToCartVM.isShowAddToCartButtonSheet)
+            }
+        }
+        .modifier(AlertModifier(alertItem: addToCartVM.alertItem, isAlertShow: $addToCartVM.isAlertShow))
     }
-    
+
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }

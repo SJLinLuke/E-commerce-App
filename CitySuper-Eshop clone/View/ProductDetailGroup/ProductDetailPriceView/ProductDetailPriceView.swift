@@ -32,7 +32,7 @@ struct ProductDetailPriceView: View {
             if VM.isSoldOut {
                 SoldOutButton(width: 53, height: 30)
             } else {
-                CartButton(width: 30, height: 30)
+                CartButton(width: 30, height: 30, shopifyID: VM.product?.shopify_product_id ?? "")
             }
             
         }

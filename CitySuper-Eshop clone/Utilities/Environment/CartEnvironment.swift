@@ -9,7 +9,8 @@ import Foundation
 
 @MainActor final class CartEnvironment: ObservableObject {
     
-    @Published var isShowCartButtonSheet: Bool = false
+    @Published var isLoading            : Bool = false
+    
     
     
 }
