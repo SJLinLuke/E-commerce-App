@@ -77,7 +77,7 @@ struct ProductDetailView: View {
                         })
                     }
                 }
-                .onAppear {
+                .task {
                     VM.fetchProduct(shopifyID: shopifyID)
                 }
             }
