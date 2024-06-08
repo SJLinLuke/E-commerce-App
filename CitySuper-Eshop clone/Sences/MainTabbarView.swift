@@ -11,6 +11,7 @@ import UIKit
 struct MainTabbarView: View {
     
     @EnvironmentObject private var userEnv: UserEnviroment
+    @EnvironmentObject private var cartEnv: CartEnvironment
     
     @StateObject private var inboxVM = InboxViewModel.shared
     
@@ -51,6 +52,14 @@ struct MainTabbarView: View {
             if (userEnv.isLogin) {
                 inboxVM.fetchUnreadNumber()
             }
+        }
+        .sheet(isPresented: $cartEnv.isShowCartButtonSheet) {
+            VStack {
+                Text("Cart Buttom Sheet")
+            }
+            .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 3.2)])
+            .presentationBackgroundInteraction(.disabled)
+            .presentationCornerRadius(20)
         }
     }
     

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CartButton: View {
     
+    @EnvironmentObject private var cartEnv: CartEnvironment
+    
     var width: CGFloat
     var height: CGFloat
     
@@ -19,7 +21,7 @@ struct CartButton: View {
     
     var body: some View {
         Button {
-            
+            cartEnv.isShowCartButtonSheet.toggle()
         } label: {
             Image("cart_icon")
                 .resizable()

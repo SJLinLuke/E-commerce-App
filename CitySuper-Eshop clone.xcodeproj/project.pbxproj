@@ -83,6 +83,7 @@
 		406612D92BF843A40037C4D8 /* NavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612D82BF843A40037C4D8 /* NavigationModifier.swift */; };
 		406612DC2BF855200037C4D8 /* QRcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612DB2BF855200037C4D8 /* QRcodeView.swift */; };
 		406612DF2BF861AC0037C4D8 /* QRcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406612DE2BF861AC0037C4D8 /* QRcodeViewModel.swift */; };
+		40736CA02C1375D800496AB7 /* CartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736C9F2C1375D800496AB7 /* CartEnvironment.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
@@ -250,6 +251,7 @@
 		406612D82BF843A40037C4D8 /* NavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModifier.swift; sourceTree = "<group>"; };
 		406612DB2BF855200037C4D8 /* QRcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeView.swift; sourceTree = "<group>"; };
 		406612DE2BF861AC0037C4D8 /* QRcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeViewModel.swift; sourceTree = "<group>"; };
+		40736C9F2C1375D800496AB7 /* CartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEnvironment.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
@@ -1312,6 +1314,7 @@
 			isa = PBXGroup;
 			children = (
 				C5EA797D2BF452780042FEF0 /* UserEnviroment.swift */,
+				40736C9F2C1375D800496AB7 /* CartEnvironment.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -1525,6 +1528,7 @@
 				C5AA75A52C006F8600612D48 /* ProductCollectionModel.swift in Sources */,
 				400C05312BF9EAF800493ACA /* CreditCardViewModel.swift in Sources */,
 				406612D42BF836290037C4D8 /* FavouriteModel.swift in Sources */,
+				40736CA02C1375D800496AB7 /* CartEnvironment.swift in Sources */,
 				C5EA798C2BF458D70042FEF0 /* Binding+Extension.swift in Sources */,
 				C5EA79912BF4A5150042FEF0 /* String+Extension.swift in Sources */,
 				40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */,

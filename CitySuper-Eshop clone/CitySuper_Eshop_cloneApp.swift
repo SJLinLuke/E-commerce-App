@@ -11,6 +11,7 @@ import SwiftUI
 struct CitySuper_Eshop_cloneApp: App {
     
     @State private var userEnv = UserEnviroment()
+    @State private var cartEnv = CartEnvironment()
     @State private var isShowingIntroVideo: Bool = false
     
     @StateObject private var couponListVM = CouponListViewModel.shared
@@ -21,6 +22,7 @@ struct CitySuper_Eshop_cloneApp: App {
         WindowGroup {
             MainTabbarView()
                 .environmentObject(userEnv)
+                .environmentObject(cartEnv)
                 .onAppear {
                     // init
                     couponListVM.fetchCoupon()
