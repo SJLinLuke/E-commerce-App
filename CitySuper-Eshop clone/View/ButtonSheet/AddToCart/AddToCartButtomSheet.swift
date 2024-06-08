@@ -50,7 +50,12 @@ struct AddToCartButtomSheet: View {
             
             Spacer()
             
-            ThemeButton(title: "Add to Cart")
+            Button {
+                
+            } label: {
+                ThemeButton(title: "Add to Cart")
+            }
+            
         }
         .padding(.horizontal, 10)
         .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 2.1)])
