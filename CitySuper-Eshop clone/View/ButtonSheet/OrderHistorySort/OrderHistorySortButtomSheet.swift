@@ -69,7 +69,7 @@ struct OrderHistorySortButtomSheet: View {
             Spacer()
         }
         .padding(EdgeInsets(top: 40, leading: 10, bottom: 0, trailing: 10))
-        .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 3.2)])
+        .presentationDetents([.medium, .medium, .height(UIScreen.main.bounds.height / 3.2)])
         .presentationBackgroundInteraction(.disabled)
         .presentationCornerRadius(20)
     }

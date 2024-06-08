@@ -58,7 +58,7 @@ struct AddToCartButtomSheet: View {
             
         }
         .padding(.horizontal, 10)
-        .presentationDetents([.medium, .large, .height(UIScreen.main.bounds.height / 2.1)])
+        .presentationDetents([.medium, .medium, .height(UIScreen.main.bounds.height / 2.1)])
         .presentationBackgroundInteraction(.disabled)
         .presentationCornerRadius(20)
     }    
