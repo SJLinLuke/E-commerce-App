@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NavigationModifier: ViewModifier {
+    
+    @EnvironmentObject private var cartEnv: CartEnvironment
         
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
@@ -46,6 +48,18 @@ struct NavigationModifier: ViewModifier {
                             isShowingShoppingCart.toggle()
                         } label: {
                             Image("bar_shoppingcart_icon")
+                        }
+                        .overlay(alignment: .topTrailing) { 
+                            // native badge is not allow in ToolbarItem, custom one for now
+                            let width = cartEnv.cartItemsCountingNum > 10 ? 20.0 : 15.0
+                            Text("\(cartEnv.cartItemsCountingNum)")
+                                .font(.system(size: 12))
+                                .foregroundColor(.white)
+                                .frame(width: width, height: 15)
+                                .background(Color(hex: "E94E1B"))
+                                .cornerRadius(50)
+                                .alignmentGuide(.top) { $0[.bottom] - $0.width * 0.8}
+                                .alignmentGuide(.trailing) { $0[.trailing] - $0.width * 0.5 }
                         }
                     }
                 }

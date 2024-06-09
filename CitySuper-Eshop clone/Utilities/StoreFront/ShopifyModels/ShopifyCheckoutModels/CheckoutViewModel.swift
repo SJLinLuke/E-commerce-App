@@ -65,6 +65,7 @@ final class CheckoutViewModel: ViewModel {
     let totalDiscounts:         Decimal
     
     let shippingDiscountAllocations: [DiscountAllocationViewModel]
+    var discountApplication:         [DiscountApplication]?
     
     // ----------------------------------
     //  MARK: - Init -
@@ -92,7 +93,11 @@ final class CheckoutViewModel: ViewModel {
         self.paymentDue       = model.paymentDue.amount
         
         self.shippingDiscountAllocations = model.shippingDiscountAllocations.viewModels
-
+        
+        if (!model.discountApplications.edges.isEmpty){
+            self.discountApplication  =  model.discountApplications.edges.map{ $0.node.resolvedViewModel }
+        }
+        
         self.shippingDiscountName   = self.shippingDiscountAllocations.aggregateName
         self.totalShippingDiscounts = self.shippingDiscountAllocations.totalDiscount
         

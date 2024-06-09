@@ -95,6 +95,10 @@ extension Storefront.CheckoutQuery {
                             .amount()
                             .currencyCode()
                         }
+                        .image { $0
+                            .url()
+                        }
+                        .quantityAvailable()
                     }
                     .title()
                     .quantity()

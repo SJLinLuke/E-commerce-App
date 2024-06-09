@@ -25,9 +25,13 @@ struct CitySuper_Eshop_cloneApp: App {
                 .environmentObject(cartEnv)
                 .onAppear {
                     // init
+                    networkManager.userEnv = userEnv
+                    cartEnv.userEnv = userEnv
+                    
+                    cartEnv.fetchCheckout()
                     couponListVM.fetchCoupon()
                     inboxVM.fetchUnreadNumber()
-                    networkManager.userEnv = userEnv
+                    
                     
                     self.isShowingIntroVideo = true
                 }

@@ -27,7 +27,7 @@
 import Foundation
 import MobileBuySDK
 
-final class LineItemViewModel: ViewModel {
+final class LineItemViewModel: ViewModel, Identifiable, Equatable {
     
     typealias ModelType = Storefront.CheckoutLineItemEdge
     
@@ -39,6 +39,7 @@ final class LineItemViewModel: ViewModel {
     let quantity:            Int
     let individualPrice:     Decimal
     let totalPrice:          Decimal
+    let variant:             Storefront.ProductVariant?
     let discountAllocations: [DiscountAllocationViewModel]
     
     // ----------------------------------
@@ -53,7 +54,17 @@ final class LineItemViewModel: ViewModel {
         self.quantity            = Int(model.node.quantity)
         self.individualPrice     = model.node.variant!.price.amount
         self.totalPrice          = self.individualPrice * Decimal(self.quantity)
+        self.variant             = model.node.variant
         self.discountAllocations = model.node.discountAllocations.viewModels
+    }
+    
+    static func == (lhs: LineItemViewModel, rhs: LineItemViewModel) -> Bool {
+        lhs.cursor == rhs.cursor &&
+        lhs.variantID == rhs.variantID &&
+        lhs.title == rhs.title &&
+        lhs.quantity == rhs.quantity &&
+        lhs.individualPrice == rhs.individualPrice &&
+        lhs.totalPrice == rhs.totalPrice
     }
 }
 

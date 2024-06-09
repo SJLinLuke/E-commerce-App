@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ShoppingCartView: View {
     
+    @EnvironmentObject private var userEnv: UserEnviroment
+    @EnvironmentObject private var cartEnv: CartEnvironment
+    
     @Binding var isShowingModal: Bool
     
     var body: some View {
@@ -17,15 +20,13 @@ struct ShoppingCartView: View {
                 Color(hex:"F2F2F2")
                 VStack {
                     
-                    ShoppingHeaderView()
+                    ShoppingHeaderView(cartItemsNum: cartEnv.lineItems.count)
                     
                     ScrollView {
-                        // itemsCell
                         LazyVGrid(columns: [GridItem()], spacing: 1) {
-                            ShoppingCartProductsListCell()
-                            ShoppingCartProductsListCell()
-                            ShoppingCartProductsListCell()
-                            ShoppingCartProductsListCell()
+                            ForEach(cartEnv.lineItems) { lineItem in
+                                ShoppingCartProductsListCell(lineItem: lineItem)
+                            }
                         }
                     }
                     .padding(.top, -8)
@@ -33,6 +34,14 @@ struct ShoppingCartView: View {
                     
                     ShoppingCartInfoView()
                 }
+            }
+            .overlay {
+                if cartEnv.isLoading {
+                    LoadingIndicatiorView()
+                }
+            }
+            .task {
+                cartEnv.fetchCheckout()
             }
             .navigationTitle("Shopping Cart")
             .navigationBarTitleDisplayMode(.inline)
@@ -51,9 +60,13 @@ struct ShoppingCartView: View {
 
 #Preview {
     ShoppingCartView(isShowingModal: .constant(true))
+        .environmentObject(CartEnvironment())
 }
 
 struct ShoppingHeaderView: View {
+    
+    let cartItemsNum: Int
+    
     var body: some View {
         HStack {
             var cartCountingNum: AttributedString {
@@ -61,7 +74,7 @@ struct ShoppingHeaderView: View {
                 var cart = AttributedString("Cart:")
                 cart.foregroundColor = .secondary
                 cart.font = .callout
-                var countingNum = AttributedString("  5 items")
+                var countingNum = AttributedString("  \(cartItemsNum) items")
                 countingNum.font = .system(.callout, weight: .heavy)
                 countingNum.foregroundColor = .secondary
                 
@@ -87,16 +100,19 @@ struct ShoppingHeaderView: View {
 }
 
 struct ShoppingCartInfoView: View {
+    
+    @EnvironmentObject private var cartEnv: CartEnvironment
+    
     var body: some View {
         VStack {
             
             CustomFormTextItem(leadingText: "SubTotal", 
-                               trailingText: "$949.00",
+                               trailingText: Currency.stringFrom(cartEnv.subTotal),
                                leadingColor: Color(hex: "777777"),
                                trailingFont: .bold)
             
-            CustomFormTextItem(leadingText: "super-e gold discount 3% off",
-                               trailingText: "-$25.47",
+            CustomFormTextItem(leadingText: cartEnv.discountApplication.textViewFormat,
+                               trailingText: "-\(Currency.stringFrom(cartEnv.totalDiscount))",
                                leadingColor: Color(hex: "777777"),
                                trailingColor: Color(hex: "E85321"),
                                alignment: .bottom)
@@ -108,7 +124,7 @@ struct ShoppingCartInfoView: View {
                     Text("Total")
                         .foregroundColor(Color(hex: "777777"))
                         .padding(.bottom, 5)
-                    Text("$923.53")
+                    Text(Currency.stringFrom(cartEnv.totalPrice))
                         .fontWeight(.bold)
                         .font(.system(size: 16))
                 }
@@ -133,28 +149,35 @@ struct ShoppingCartInfoView: View {
 
 struct ShoppingCartProductsListCell: View {
     
-    @State var quantity: Int = 1
+    let lineItem: LineItemViewModel
+    
+    @State var quantity: Int
+    
+    init(lineItem: LineItemViewModel) {
+        self.lineItem = lineItem
+        self.quantity = lineItem.quantity
+    }
     
     var body: some View {
         
         HStack {
-            Rectangle()
+            RemoteImageView(url: lineItem.variant?.image?.url.absoluteString ?? "", placeholder: .common)
                 .frame(width: 130, height: 130)
             
             VStack(alignment: .leading) {
-                Text("lineItem.titlefdjskfjdlksjfjfkdsljkfsdfjdksljlkfd")
+                Text(lineItem.title)
                     .fontWeight(.bold)
                     .lineLimit(2)
                 
                 Spacer()
                 
-                QuantitySelectorView(quantity: $quantity, inventoryQuantity: 10)
+                QuantitySelectorView(quantity: $quantity, inventoryQuantity: Int(lineItem.variant?.quantityAvailable ?? 0))
             }
             
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text(Currency.stringFrom(200.0))
+                Text(Currency.stringFrom(lineItem.individualPrice))
                 
                 Spacer()
                 
@@ -165,6 +188,7 @@ struct ShoppingCartProductsListCell: View {
                 }
             }
             .padding(.trailing, 5)
+            .padding(.leading)
         }
         .font(.subheadline)
         .padding(8)
