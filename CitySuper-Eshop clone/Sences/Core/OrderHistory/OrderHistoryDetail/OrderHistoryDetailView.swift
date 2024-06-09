@@ -105,7 +105,7 @@ struct OrderHistoryDetailView: View {
                         }
                         .padding(.vertical)
                     }
-                    .modifier(NavigationModifier(title: "Order History", isHideCollectionsList: true, isHideShoppingCart: true))
+                    .modifier(NavigationModifier(navTilte: "Order History", isHideCollectionsList: true, isHideShoppingCart: true))
                 }
                 
             }

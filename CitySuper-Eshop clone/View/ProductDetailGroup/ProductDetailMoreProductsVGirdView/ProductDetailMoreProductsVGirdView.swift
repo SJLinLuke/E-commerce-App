@@ -25,7 +25,7 @@ struct ProductDetailMoreProductsVGirdView: View {
                     })
                 }
             }
-            .modifier(NavigationModifier(title: navTitle, isHideCollectionsList: true))
+            .modifier(NavigationModifier(navTilte: navTitle, isHideCollectionsList: true))
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onAppear {
                 VM.fetchMoreProducts(navTitle, id: shopifyID)

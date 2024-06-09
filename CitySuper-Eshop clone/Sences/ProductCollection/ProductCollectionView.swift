@@ -76,7 +76,7 @@ struct ProductCollectionView: View {
                     VM.fetchCollectionProducts(collectionID: collectionID)
                 }
                 .background(Color(hex:"F7F7F7"))
-                .modifier(NavigationModifier(title: navTitle, isHideCollectionsList: true))
+                .modifier(NavigationModifier(navTilte: navTitle, isHideCollectionsList: true))
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
         }
