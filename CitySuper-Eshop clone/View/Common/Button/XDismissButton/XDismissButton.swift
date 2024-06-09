@@ -9,7 +9,7 @@ import SwiftUI
 
 struct XDismissButton: View {
     
-    @Binding var isShowing: Bool
+    @Binding var isShow: Bool
     
     let color : Color
     var width : CGFloat = 20
@@ -17,7 +17,7 @@ struct XDismissButton: View {
     
     var body: some View {
         Button {
-            isShowing = false
+            isShow = false
         } label: {
             Image("close_icon")
                 .resizable()
@@ -29,5 +29,5 @@ struct XDismissButton: View {
 }
 
 #Preview {
-    XDismissButton(isShowing: .constant(true), color: .black)
+    XDismissButton(isShow: .constant(true), color: .black)
 }

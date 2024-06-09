@@ -61,7 +61,7 @@ struct MainTabbarView: View {
             if userEnv.isLogin {
                 AddToCartButtomSheet()
             } else {
-                LoginView(isShowingModal: $addToCartVM.isShowAddToCartButtonSheet)
+                LoginView(isShow: $addToCartVM.isShowAddToCartButtonSheet)
             }
         }
         .modifier(AlertModifier(alertItem: addToCartVM.alertItem, isAlertShow: $addToCartVM.isAlertShow))

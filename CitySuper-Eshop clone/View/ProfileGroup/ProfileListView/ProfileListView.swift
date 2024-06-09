@@ -12,7 +12,7 @@ struct ProfileListView: View {
     @EnvironmentObject var userEnv: UserEnviroment
     @StateObject var VM = ProfileViewModel()
     
-    @State var isShowingLoginModal     : Bool = false
+    @State var isShowingLoginView     : Bool = false
     @State var isShowingOrderHistory   : Bool = false
     @State var isShowingDeliveryAddress: Bool = false
     @State var isShowingMoreList       : Bool = false
@@ -32,8 +32,8 @@ struct ProfileListView: View {
         .listSectionSeparator(.hidden, edges: .all)
         .environment(\.defaultMinListRowHeight, 55)
         .padding(.top, -3)
-        .fullScreenCover(isPresented: $isShowingLoginModal) {
-            LoginView(isShowingModal: $isShowingLoginModal)
+        .fullScreenCover(isPresented: $isShowingLoginView) {
+            LoginView(isShow: $isShowingLoginView)
         }
         .navigationDestination(isPresented: $isShowingOrderHistory) {
             OrderHistoryView(selectIndex: .constant(1))
@@ -63,7 +63,7 @@ struct ProfileListView: View {
             case "More":
                 isShowingMoreList.toggle()
             case "Login":
-                isShowingLoginModal.toggle()
+                isShowingLoginView.toggle()
             case "Logout":
                 userEnv.removeUser()
                 OrderHistoryViewModel.shared.initHistorys()

@@ -65,7 +65,7 @@ struct InboxView: View {
                 VM.fetchInbox()
             }
         }, content: {
-            LoginView(isShowingModal: $isShowingLoginModal)
+            LoginView(isShow: $isShowingLoginModal)
         })
     }
 }

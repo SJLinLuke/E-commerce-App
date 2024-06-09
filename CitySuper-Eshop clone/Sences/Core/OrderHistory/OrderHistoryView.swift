@@ -72,7 +72,7 @@ struct OrderHistoryView: View {
                 VM.fetchOrderHistories()
             }
         }, content: {
-            LoginView(isShowingModal: $isShowingLoginModal)
+            LoginView(isShow: $isShowingLoginModal)
         })
     }
 }

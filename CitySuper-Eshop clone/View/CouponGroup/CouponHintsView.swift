@@ -22,7 +22,7 @@ struct CouponHintsView: View {
                     
                     Spacer()
                     
-                    XDismissButton(isShowing: $isShowTerms, color: .white, width: 15, height: 15)
+                    XDismissButton(isShow: $isShowTerms, color: .white, width: 15, height: 15)
                 }
                 .padding(.horizontal, 8)
             }

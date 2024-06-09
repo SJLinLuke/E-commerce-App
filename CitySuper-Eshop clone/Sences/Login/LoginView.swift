@@ -16,13 +16,13 @@ struct LoginView: View {
     @State private var account: String = "wectestegold@hotmail.com"
     @State private var password: String = "Cs123456"
     
-    @Binding var isShowingModal: Bool
+    @Binding var isShow: Bool
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                XDismissButton(isShowing: $isShowingModal, color: .black)
+                XDismissButton(isShow: $isShow, color: .black)
             }
             
             
@@ -69,7 +69,7 @@ struct LoginView: View {
             Button {
                 VM.loginSever(loginData: LoginBody(username: self.account,password: self.password)) { isLogin in
                     if (isLogin) {
-                        isShowingModal = false
+                        isShow = false
                     }
                 }
             } label: {
@@ -94,7 +94,7 @@ struct LoginView: View {
         .padding()
         .overlay {
             if(VM.isLoading) {
-                LoadingIndicatiorView()
+                LoadingIndicatiorView(backgroundDisable: true)
             }
         }
         .onAppear {
@@ -104,6 +104,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(isShowingModal: .constant(true))
+    LoginView(isShow: .constant(true))
         .environmentObject(UserEnviroment())
 }

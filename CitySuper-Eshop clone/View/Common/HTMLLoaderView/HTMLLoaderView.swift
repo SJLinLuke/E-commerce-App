@@ -11,8 +11,9 @@ import WebKit
 struct HTMLLoaderView: UIViewRepresentable {
     
     @Binding var htmlFrameHeight: CGFloat
+    
     var htmlString: String?
-    var source: String
+    var source    : String
     
     func makeCoordinator() -> HTMLLoaderView.Coordinator {
         // connect coordinator
