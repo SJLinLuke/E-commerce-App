@@ -14,6 +14,7 @@ struct ThemeButton: View {
     var width   : CGFloat? = 355
     var height  : CGFloat? = 42
     var iconPath: String?
+    var color   : Color? = .white
     
     var body: some View {
         Label {
@@ -21,6 +22,7 @@ struct ThemeButton: View {
         } icon: {
             if let iconPath = iconPath {
                 Image(iconPath)
+                    .renderingMode(.template)
             }
         }
         .font(.headline)
@@ -28,7 +30,7 @@ struct ThemeButton: View {
         .frame(width: width, height: height)
         .background(Color.themeDarkGreen)
         .cornerRadius(10)
-        .foregroundColor(.white)
+        .foregroundColor(color)
     }
 }
 
