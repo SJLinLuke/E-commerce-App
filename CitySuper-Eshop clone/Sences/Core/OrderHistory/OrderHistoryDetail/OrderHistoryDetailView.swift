@@ -34,7 +34,7 @@ struct OrderHistoryDetailView: View {
                                 CustomFormTextItem(leadingText: "Items Subtotal", trailingText: Currency.stringFrom(orderHistory.lineItemsTotalPrice))
                                 
                                 let totalDiscount = orderHistory.lineItemsTotalPrice - orderHistory.totalPrice + orderHistory.totalShippingPrice
-                                CustomFormTextItem(leadingText: orderHistory.discountApplication?.textViewFormat ?? "",
+                                CustomFormTextItem(leadingText: orderHistory.discountApplication?.textViewFormat() ?? "",
                                                            trailingText: "-\(Currency.stringFrom(totalDiscount))")
                                     .lineSpacing(7)
                                 

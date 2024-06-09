@@ -9,7 +9,7 @@ import Foundation
 
 extension [DiscountApplication] {
 
-    var textViewFormat: String {
+    func textViewFormat(seperated: Bool = true) -> String {
         // seenNames checking is for mutiple duplicate discount name
         var seenNames = Set<String>()
         return self.compactMap { discount in
@@ -18,7 +18,7 @@ extension [DiscountApplication] {
             }
             seenNames.insert(discount.name)
             return discount.name
-        }.joined(separator: " /\n")
+        }.joined(separator: "\(seperated ? " /" : "")\n")
     }
     
 }
