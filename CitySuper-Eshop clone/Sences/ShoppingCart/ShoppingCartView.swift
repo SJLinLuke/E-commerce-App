@@ -16,20 +16,8 @@ struct ShoppingCartView: View {
             ZStack {
                 Color(hex:"F2F2F2")
                 VStack {
-                    HStack {
-                        Text("Cart:  5 items")
-                        
-                        Spacer()
-                        
-                        Button {
-                            
-                        } label: {
-                            Text("Clean all")
-                                .fontWeight(.bold)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .padding()
+                    
+                    ShoppingHeaderView()
                     
                     ScrollView {
                         // itemsCell
@@ -65,32 +53,53 @@ struct ShoppingCartView: View {
     ShoppingCartView(isShowingModal: .constant(true))
 }
 
+struct ShoppingHeaderView: View {
+    var body: some View {
+        HStack {
+            var cartCountingNum: AttributedString {
+                var result: AttributedString = ""
+                var cart = AttributedString("Cart:")
+                cart.foregroundColor = .secondary
+                cart.font = .callout
+                var countingNum = AttributedString("  5 items")
+                countingNum.font = .system(.callout, weight: .heavy)
+                countingNum.foregroundColor = .secondary
+                
+                result = cart + countingNum
+                return result
+            }
+            
+            Text(cartCountingNum)
+            
+            Spacer()
+            
+            Button {
+                
+            } label: {
+                Text("Clean all")
+                    .font(.callout)
+                    .fontWeight(.heavy)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding()
+    }
+}
+
 struct ShoppingCartInfoView: View {
     var body: some View {
         VStack {
-            HStack {
-                Text("SubTotal")
-                    .foregroundColor(Color(hex: "777777"))
-                    .font(.system(size: 16))
-                
-                Spacer()
-                
-                Text("$949.00")
-                    .fontWeight(.bold)
-                    .font(.system(size: 16))
-            }
             
-            HStack(alignment: .bottom) {
-                Text("super-e gold discount 3% off")
-                    .foregroundColor(Color(hex: "777777"))
-                    .font(.system(size: 16))
-                
-                Spacer()
-                
-                Text("-$25.47")
-                    .foregroundColor(Color(hex: "E85321"))
-                    .font(.system(size: 16))
-            }
+            CustomFormTextItem(leadingText: "SubTotal", 
+                               trailingText: "$949.00",
+                               leadingColor: Color(hex: "777777"),
+                               trailingFont: .bold)
+            
+            CustomFormTextItem(leadingText: "super-e gold discount 3% off",
+                               trailingText: "-$25.47",
+                               leadingColor: Color(hex: "777777"),
+                               trailingColor: Color(hex: "E85321"),
+                               alignment: .bottom)
             
             SeperateLineView(color: .commonBackGroundGray, height: 1.5)
             
