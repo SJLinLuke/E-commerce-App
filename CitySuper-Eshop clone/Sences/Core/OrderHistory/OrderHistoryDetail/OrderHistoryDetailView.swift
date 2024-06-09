@@ -31,19 +31,21 @@ struct OrderHistoryDetailView: View {
                             VStack(spacing: 7) {
                                 SeperateLineView()
                                 
-                                OrderHistoryDetailTextItem(leadingText: "Items Subtotal", trailingText: Currency.stringFrom(orderHistory.lineItemsTotalPrice))
+                                CustomFormTextItem(leadingText: "Items Subtotal", trailingText: Currency.stringFrom(orderHistory.lineItemsTotalPrice))
                                 
                                 let totalDiscount = orderHistory.lineItemsTotalPrice - orderHistory.totalPrice + orderHistory.totalShippingPrice
-                                OrderHistoryDetailTextItem(leadingText: orderHistory.discountApplication?.textViewFormat ?? "",
+                                CustomFormTextItem(leadingText: orderHistory.discountApplication?.textViewFormat ?? "",
                                                            trailingText: "-\(Currency.stringFrom(totalDiscount))")
                                     .lineSpacing(7)
                                 
-                                OrderHistoryDetailTextItem(leadingText: "Shipping charges", trailingText: Currency.stringFrom(orderHistory.totalShippingPrice))
+                                CustomFormTextItem(leadingText: "Shipping charges", trailingText: Currency.stringFrom(orderHistory.totalShippingPrice))
                                 
                                 SeperateLineView()
                             }
                             
-                            OrderHistoryDetailTextItem(font: .system(size: 18), leadingText: "Total", trailingText: Currency.stringFrom(orderHistory.totalPrice))
+                            CustomFormTextItem(leadingText: "Total",
+                                               trailingText: Currency.stringFrom(orderHistory.totalPrice),
+                                               font: .system(size: 18))
                                 .padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
                                 .fontWeight(.bold)
 
@@ -54,13 +56,12 @@ struct OrderHistoryDetailView: View {
                         
                         VStack(spacing: 8) {
                            
-                            OrderHistoryDetailTextItem(leadingText: "\(orderHistory.orderMethodInfo.orderMethod) Date",
-                                                       trailingText: orderHistory.orderMethodInfo.orderCompleteDate)
+                            CustomFormTextItem(leadingText: "\(orderHistory.orderMethodInfo.orderMethod) Date",
+                                               trailingText: orderHistory.orderMethodInfo.orderCompleteDate)
                             
-                            OrderHistoryDetailTextItem(alignment: .top,
-                                                       leadingText: orderHistory.orderMethodInfo.orderMethod == "Delivery" ? "Delivery Address" : "Pickup Store",
-                                                       trailingText: orderHistory.shippingAddress?.fullAddress ?? "")
-
+                            CustomFormTextItem(leadingText: orderHistory.orderMethodInfo.orderMethod == "Delivery" ? "Delivery Address" : "Pickup Store",
+                                               trailingText: orderHistory.shippingAddress?.fullAddress ?? "",
+                                               alignment: .top)
                         }
                         .padding(.horizontal, 5)
                         
