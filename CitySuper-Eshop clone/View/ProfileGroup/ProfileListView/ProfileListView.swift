@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileListView: View {
     
     @EnvironmentObject var userEnv: UserEnviroment
+    @EnvironmentObject var cartEnv: CartEnvironment
+    
     @StateObject var VM = ProfileViewModel()
     
     @State var isShowingLoginView     : Bool = false
@@ -66,6 +68,7 @@ struct ProfileListView: View {
                 isShowingLoginView.toggle()
             case "Logout":
                 userEnv.removeUser()
+                cartEnv.deleteLocalCheckout()
                 OrderHistoryViewModel.shared.initHistorys()
                 InboxViewModel.shared.initInboxMessages()
                 FavouriteViewModel.shared.initFavourites()
