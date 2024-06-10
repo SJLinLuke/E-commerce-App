@@ -14,7 +14,7 @@ struct ThemeButton: View {
     var width   : CGFloat? = 355
     var height  : CGFloat? = 42
     var iconPath: String?
-    var color   : Color? = .white
+    var disable : Bool = false
     
     var body: some View {
         Label {
@@ -28,9 +28,9 @@ struct ThemeButton: View {
         .font(.headline)
         .fontWeight(font)
         .frame(width: width, height: height)
-        .background(Color.themeDarkGreen)
+        .background(disable ? Color(hex: "D2D2D2") : Color.themeDarkGreen)
         .cornerRadius(10)
-        .foregroundColor(color)
+        .foregroundColor(.white)
     }
 }
 
