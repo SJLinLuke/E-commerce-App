@@ -9,7 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @EnvironmentObject var userEnv: UserEnviroment
+    @EnvironmentObject private var userEnv: UserEnviroment
+    @EnvironmentObject private var cartEnv: CartEnvironment
     
     @StateObject var VM = LoginViewModel()
     
@@ -99,6 +100,11 @@ struct LoginView: View {
         }
         .onAppear {
             VM.userEnv = self.userEnv
+        }
+        .onDisappear {
+            if userEnv.isLogin {
+                cartEnv.fetchCheckout(needAsync: false)
+            }
         }
     }
 }

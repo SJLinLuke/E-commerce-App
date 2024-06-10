@@ -99,6 +99,10 @@ extension Storefront.CheckoutQuery {
                             .url()
                         }
                         .quantityAvailable()
+                        .compareAtPrice { $0
+                            .amount()
+                            .currencyCode()
+                        }
                     }
                     .title()
                     .quantity()

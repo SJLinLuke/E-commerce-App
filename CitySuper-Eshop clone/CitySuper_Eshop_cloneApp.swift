@@ -28,12 +28,15 @@ struct CitySuper_Eshop_cloneApp: App {
                     networkManager.userEnv = userEnv
                     cartEnv.userEnv = userEnv
                     
-                    cartEnv.fetchCheckout()
-                    couponListVM.fetchCoupon()
-                    inboxVM.fetchUnreadNumber()
+                    if userEnv.isLogin {
+                        cartEnv.fetchCheckout(needAsync: false)
+                        couponListVM.fetchCoupon()
+                        inboxVM.fetchUnreadNumber()
+                    }
                     
-                    
-                    self.isShowingIntroVideo = true
+                    DispatchQueue.main.async {
+                        self.isShowingIntroVideo = true
+                    }
                 }
                 .fullScreenCover(isPresented: $isShowingIntroVideo) {
                     AVPlayerView(isShowingIntoVideo: $isShowingIntroVideo)

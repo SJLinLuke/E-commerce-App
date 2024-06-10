@@ -322,6 +322,31 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+
+    // MARK: ShoppingCart Upload
+    func uploadShoppingCart(lineItems: [LineItemViewModel]) async throws -> ShoppingCartData {
+        
+        var params: [ShoppingCartRequest] = []
+        
+        for item in lineItems {
+            params = lineItems.map{ ShoppingCartRequest(shopify_variant_id:  $0.variant?.id.rawValue.shopifyIDEncode ?? "", quantity: $0.quantity) }
+        }
+        
+        let postDataDict: Dictionary<String, [ShoppingCartRequest]> = ["cart_items": params]
+        let postData = try encoder.encode(postDataDict)
+        
+        var request = generateURLRequest(host + Constants.shoppingCart, method: .post)
+        request.httpBody = postData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(ShoppingCartResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

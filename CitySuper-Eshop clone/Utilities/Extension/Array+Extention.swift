@@ -10,3 +10,9 @@ import Foundation
 extension Array {
     
 }
+
+extension [String] {
+    func textViewFormat() -> String {
+        return self.compactMap { $0 }.joined(separator: "\n")
+    }
+}

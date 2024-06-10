@@ -39,6 +39,7 @@ struct Constants {
     static let productRelated     = "api/eshop/relatedProducts/"
     static let staticPage         = "api/eshop/staticPage?page="
     static let coupon             = "api/eshop/discounts?membercoupon=1"
+    static let shoppingCart       = "api/eshop/shoppingCartProducts"
     
     static let productDetail_html_source = """
         <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>

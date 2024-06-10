@@ -10,20 +10,22 @@ import SwiftUI
 struct NavigationModifier: ViewModifier {
     
     @EnvironmentObject private var cartEnv: CartEnvironment
-        
+    @EnvironmentObject private var userEnv: UserEnviroment
+    
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
+    @State var isShowingLoginView     : Bool = false
     
-    var title: String?
+    var navTilte             : String?
     var isHideCollectionsList: Bool = false
-    var isHideShoppingCart: Bool = false
+    var isHideShoppingCart   : Bool = false
     
     func body(content: Content) -> some View {
         content
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle((title != nil ? title : nil) ?? "")
+            .navigationTitle((navTilte != nil ? navTilte : nil) ?? "")
             .toolbar {
-                if title == nil || title?.isEmpty ?? true {
+                if navTilte == nil || navTilte?.isEmpty ?? true {
                     ToolbarItem(placement: .principal) {
                         Image("bar_logo")
                             .resizable()
@@ -45,7 +47,11 @@ struct NavigationModifier: ViewModifier {
                 if !isHideShoppingCart {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            isShowingShoppingCart.toggle()
+                            if userEnv.isLogin {
+                                isShowingShoppingCart.toggle()
+                            } else {
+                                isShowingLoginView.toggle()
+                            }
                         } label: {
                             Image("bar_shoppingcart_icon")
                         }
@@ -55,11 +61,12 @@ struct NavigationModifier: ViewModifier {
                             Text("\(cartEnv.cartItemsCountingNum)")
                                 .font(.system(size: 12))
                                 .foregroundColor(.white)
-                                .frame(width: width, height: 15)
+                                .frame(width: width, height: 15) // expand the badge a little bit when count number is up to 10 or more
                                 .background(Color(hex: "E94E1B"))
                                 .cornerRadius(50)
-                                .alignmentGuide(.top) { $0[.bottom] - $0.width * 0.8}
+                                .alignmentGuide(.top) { $0[.bottom] - $0.width * 0.8 }
                                 .alignmentGuide(.trailing) { $0[.trailing] - $0.width * 0.5 }
+                                .opacity(cartEnv.cartItemsCountingNum == 0 ? 0 : 1) // hide badge when count number is 0
                         }
                     }
                 }
@@ -70,6 +77,10 @@ struct NavigationModifier: ViewModifier {
             .fullScreenCover(isPresented: $isShowingShoppingCart) {
                 ShoppingCartView(isShowingModal: $isShowingShoppingCart)
             }
+            .fullScreenCover(isPresented: $isShowingLoginView) {
+                LoginView(isShow: $isShowingLoginView)
+            }
+            
     }
     
 }
