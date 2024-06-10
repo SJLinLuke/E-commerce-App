@@ -44,7 +44,7 @@ struct AddToCartButtomSheet: View {
             SeperateLineView()
             
             HStack {
-                ProductDetailBulletPointsView(tags: VM.product?.logistic_tags ?? [])
+                BulletPointsView(tags: VM.product?.logistic_tags ?? [])
                 Spacer()
             }
             

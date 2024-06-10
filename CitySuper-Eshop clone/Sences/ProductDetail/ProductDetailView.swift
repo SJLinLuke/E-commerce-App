@@ -44,7 +44,7 @@ struct ProductDetailView: View {
                         
                         SeperateLineView()
                         
-                        ProductDetailBulletPointsView(tags: VM.product?.logistic_tags ?? [])
+                        BulletPointsView(tags: VM.product?.logistic_tags ?? [])
                         
                         SeperateLineView()
                         
