@@ -17,18 +17,20 @@ import MobileBuySDK
     
     var userEnv: UserEnviroment? = nil
     
+    
     // MARK: checkout
     var cartItemsCountingNum: Int { checkout?.lineItems.reduce(0, { $0 + $1.quantity}) ?? 0 }
     
     var lineItems: [LineItemViewModel] { checkout?.lineItems ?? [] }
     
-    var subTotal: Decimal { checkout?.lineItems.reduce(0, { $0 + ($1.variant?.price.amount ?? 0) * Decimal($1.quantity) }) ?? 0}
+    var subTotal: Decimal { checkout?.lineItems.reduce(0, { $0 + ($1.variant?.price ?? 0) * Decimal($1.quantity) }) ?? 0}
     
     var totalPrice: Decimal { checkout?.totalPrice ?? 0 }
     
     var totalDiscount: Decimal { checkout?.totalDiscounts ?? 0 }
     
     var discountApplication: [DiscountApplication] { checkout?.discountApplication ?? [] }
+    
     
     // MARK: shoppingCartData
     var isAllowToCheckout: Bool {
@@ -47,19 +49,19 @@ import MobileBuySDK
     
     func getLogicTag(shopifyID: String) -> [LogisticTag] {
         guard let shoppingCartProducts = self.shoppingCartData?.products else { return [] }
-        print(shopifyID)
         for product in shoppingCartProducts {
-            if product.variants?[0].shopify_product_variant_id == shopifyID {
+            if product.variants?[0].variantID == shopifyID {
                 return product.logistic_tags ?? []
             }
         }
         return []
     }
     
+    
     // MARK: Network fetch
     func fetchCheckout(needAsync: Bool = true) {
         
-        guard let userEnv = userEnv, !isLoading else { return }
+        guard let userEnv = userEnv else { return }
         
         self.isLoading = true
         Client.shared.pollForReadyCheckout(userEnv.checkoutID) { checkout in
@@ -85,6 +87,56 @@ import MobileBuySDK
             }
         }
     }
+    
+    @objc private func executePendingMutations() {
+        
+        guard let userEnv = userEnv, let lastMutationsToExecute = pendingMutations.last else { return }
+        
+        self.isLoading = true
+        
+        pendingMutations.removeAll()
+        
+        Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
+            if let checkout = checkout {
+                self.checkout = checkout
+                self.fetchCheckout()
+            }
+        }
+    }
+    
+
+    // MARK: Operations
+    func mutateItem(lineItems: [LineItemViewModel]) {
+        self.mutateItemToCheckout(lineItems: lineItems)
+    }
+    
+    private var pendingMutations: [[LineItemViewModel]] = []
+    private var debounceWorkItem: DispatchWorkItem?
+    
+    private func mutateItemToCheckout(lineItems: [LineItemViewModel]) {
+        
+        guard let userEnv = userEnv, !isLoading else { return }
+        
+        pendingMutations.append(lineItems)
+                
+        debounce(#selector(executePendingMutations), delay: 0.4)
+    }
+    
+    private func debounce(_ selector: Selector, delay: TimeInterval) {
+        // Cancel any existing work item to prevent previous tasks from executing
+        debounceWorkItem?.cancel()
+        
+        // Create a new work item to execute the function
+        debounceWorkItem = DispatchWorkItem { [weak self] in
+            self?.executePendingMutations()
+        }
+        
+        // Schedule the work item after the specified delay
+        if let workItem = debounceWorkItem {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: workItem)
+        }
+    }
+    
     
     // MARK: Init
     func deleteLocalCheckout() {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct QuantitySelectorView: View {
     
+    @EnvironmentObject private var cartEnv: CartEnvironment
+    
     @State private var isAlertShow: Bool = false
     @State private var alertItem  : AlertItem? {
         didSet {
@@ -18,7 +20,9 @@ struct QuantitySelectorView: View {
     
     @Binding var quantity: Int
     
-    let inventoryQuantity:Int
+    let variantID        : String
+    let inventoryQuantity: Int
+    var mode             : UIMode = .normal
     
     var body: some View {
         HStack {
@@ -54,13 +58,48 @@ struct QuantitySelectorView: View {
     }
     
     func tapMinus() {
-        guard quantity > 1 else { return }
-        quantity -= 1
+
+        if mode == .cart {
+            
+            guard quantity > 1 && !cartEnv.isLoading else { return }
+            
+            quantity -= 1
+            
+            let lineItems = cartEnv.lineItems
+            for item in lineItems {
+                if item.variantID?.shopifyIDEncode == variantID {
+                    item.quantity = quantity
+                }
+            }
+            
+            cartEnv.mutateItem(lineItems: lineItems)
+        } else {
+            // addToCart should handle here
+            quantity -= 1
+        }
     }
     
     func tapPlus() {
         if quantity < inventoryQuantity {
-            quantity += 1
+            
+            if mode == .cart {
+                
+                guard !cartEnv.isLoading else { return }
+                
+                quantity += 1
+                
+                let lineItems = cartEnv.lineItems
+                for item in lineItems {
+                    if item.variantID?.shopifyIDEncode == variantID {
+                        item.quantity = quantity
+                    }
+                }
+                
+                cartEnv.mutateItem(lineItems: lineItems)
+            } else {
+                // addToCart should handle here
+                quantity += 1
+            }
         } else {
             self.alertItem = AlertContext.quantityUnavailable
         }
@@ -68,5 +107,6 @@ struct QuantitySelectorView: View {
 }
 
 #Preview {
-    QuantitySelectorView(quantity: .constant(10), inventoryQuantity: 20)
+    QuantitySelectorView(quantity: .constant(10), variantID: "", inventoryQuantity: 20)
+        .environmentObject(CartEnvironment())
 }
