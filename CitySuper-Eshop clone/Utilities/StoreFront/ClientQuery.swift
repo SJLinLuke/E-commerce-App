@@ -270,7 +270,7 @@ final class ClientQuery {
     //
     static func mutationForCartItem(of checkout_id: GraphQL.ID, cartItems: [CartItem]) -> Storefront.MutationQuery {
         let lineItems = cartItems.map { item in
-            Storefront.CheckoutLineItemInput.create(quantity: Int32(item.quantity), variantId: GraphQL.ID(rawValue: item.variant.variantID ?? ""))
+            Storefront.CheckoutLineItemInput.create(quantity: Int32(item.quantity), variantId: GraphQL.ID(rawValue: item.variant.shopify_product_variant_id))
         }
         
         return Storefront.buildMutation { $0

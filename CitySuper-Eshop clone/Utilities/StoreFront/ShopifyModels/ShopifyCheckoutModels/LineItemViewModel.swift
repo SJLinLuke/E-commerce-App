@@ -31,15 +31,16 @@ final class LineItemViewModel: ViewModel, Identifiable, Equatable {
     
     typealias ModelType = Storefront.CheckoutLineItemEdge
     
-    let model:    ModelType
-    let cursor:   String
+    let model              : ModelType
+    let cursor             : String
     
-    let variantID:           String?
-    let title:               String
-    var quantity:            Int
-    let individualPrice:     Decimal
-    let totalPrice:          Decimal
-    let variant:             VariantNodeViewModel?
+    let id                 : String
+    let variantID          : String?
+    let title              : String
+    var quantity           : Int
+    let individualPrice    : Decimal
+    let totalPrice         : Decimal
+    let variant            : VariantNodeViewModel?
     let discountAllocations: [DiscountAllocationViewModel]
     
     // ----------------------------------
@@ -49,6 +50,7 @@ final class LineItemViewModel: ViewModel, Identifiable, Equatable {
         self.model               = model
         self.cursor              = model.cursor
         
+        self.id                  = model.node.id.rawValue
         self.variantID           = model.node.variant!.id.rawValue
         self.title               = model.node.title
         self.quantity            = Int(model.node.quantity)
@@ -60,6 +62,7 @@ final class LineItemViewModel: ViewModel, Identifiable, Equatable {
     
     static func == (lhs: LineItemViewModel, rhs: LineItemViewModel) -> Bool {
         lhs.cursor          == rhs.cursor &&
+        lhs.id              == rhs.id &&
         lhs.variantID       == rhs.variantID &&
         lhs.title           == rhs.title &&
         lhs.quantity        == rhs.quantity &&

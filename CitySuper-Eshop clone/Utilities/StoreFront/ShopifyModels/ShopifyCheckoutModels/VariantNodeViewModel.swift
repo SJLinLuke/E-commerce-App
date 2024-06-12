@@ -18,6 +18,7 @@ final class VariantNodeViewModel: ViewModel{
     let price            : Decimal
     let comparePrice     : Decimal
     let quantityAvailable: Int
+    let product_id       : String
     let image            : URL?
     
     required init(from model: ModelType) {
@@ -28,6 +29,7 @@ final class VariantNodeViewModel: ViewModel{
         self.price             = model.price.amount
         self.comparePrice      = model.compareAtPrice?.amount ?? 0.0
         self.quantityAvailable = Int(model.quantityAvailable ?? 0)
+        self.product_id        = model.product.id.rawValue
         self.image             = model.image?.url
     }
 }

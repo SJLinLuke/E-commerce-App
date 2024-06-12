@@ -86,7 +86,7 @@ class CartItem: Equatable, Hashable, Serializable {
 extension CartItem {
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.variant.variantID)
+        hasher.combine(self.variant.shopify_product_variant_id)
     }
 }
 
@@ -96,6 +96,6 @@ extension CartItem {
 extension CartItem {
     
     static func ==(lhs: CartItem, rhs: CartItem) -> Bool {
-        return lhs.variant.variantID == rhs.variant.variantID
+        return lhs.variant.shopify_product_variant_id == rhs.variant.shopify_product_variant_id
     }
 }

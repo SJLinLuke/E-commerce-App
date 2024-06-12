@@ -117,6 +117,7 @@ extension Storefront.CheckoutQuery {
                             .id()
                         }
                     }
+                    .id()
                     .title()
                     .quantity()
                     .discountAllocations { $0

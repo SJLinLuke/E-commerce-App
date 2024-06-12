@@ -50,8 +50,8 @@ import MobileBuySDK
     func getLogicTag(shopifyID: String) -> [LogisticTag] {
         guard let shoppingCartProducts = self.shoppingCartData?.products else { return [] }
         for product in shoppingCartProducts {
-            if product.variants?[0].variantID == shopifyID {
-                return product.logistic_tags ?? []
+            if product.variants?[0].shopify_product_variant_id == shopifyID, let logistic_tags = product.logistic_tags {
+                return logistic_tags
             }
         }
         return []
