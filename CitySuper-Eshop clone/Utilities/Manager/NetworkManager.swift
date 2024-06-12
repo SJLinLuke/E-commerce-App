@@ -328,8 +328,8 @@ final class NetworkManager: ObservableObject {
         
         var params: [ShoppingCartRequest] = []
         
-        for item in lineItems {
-            params = lineItems.map{ ShoppingCartRequest(shopify_variant_id:  $0.variant?.id.rawValue.shopifyIDEncode ?? "", quantity: $0.quantity) }
+        for _ in lineItems {
+            params = lineItems.map{ ShoppingCartRequest(shopify_variant_id:  $0.variant?.id.shopifyIDEncode ?? "", quantity: $0.quantity) }
         }
         
         let postDataDict: Dictionary<String, [ShoppingCartRequest]> = ["cart_items": params]

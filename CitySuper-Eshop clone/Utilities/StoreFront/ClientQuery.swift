@@ -268,19 +268,14 @@ final class ClientQuery {
     // ----------------------------------
     //  MARK: - Checkout -
     //
-    static func mutationForCreateCheckout(with cartItems: [CartItem]) -> Storefront.MutationQuery {
+    static func mutationForCartItem(of checkout_id: GraphQL.ID, cartItems: [CartItem]) -> Storefront.MutationQuery {
         let lineItems = cartItems.map { item in
-            Storefront.CheckoutLineItemInput.create(quantity: Int32(item.quantity), variantId: GraphQL.ID(rawValue: item.variant.id))
+            Storefront.CheckoutLineItemInput.create(quantity: Int32(item.quantity), variantId: GraphQL.ID(rawValue: item.variant.variantID ?? ""))
         }
         
-        let checkoutInput = Storefront.CheckoutCreateInput.create(
-            lineItems: .value(lineItems),
-            allowPartialAddresses: .value(true)
-        )
-        
         return Storefront.buildMutation { $0
-            .checkoutCreate(input: checkoutInput) { $0
-                .checkout { $0
+            .checkoutLineItemsReplace(lineItems: lineItems, checkoutId: checkout_id) { $0
+                .checkout{$0
                     .fragmentForCheckout()
                 }
             }

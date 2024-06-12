@@ -7,4 +7,12 @@
 
 import Foundation
 
-extension Decimal {}
+extension Decimal {
+    var formattedAmount: String? {
+        let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: self as NSDecimalNumber)
+    }
+}

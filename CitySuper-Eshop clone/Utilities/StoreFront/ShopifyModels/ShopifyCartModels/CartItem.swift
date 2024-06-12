@@ -29,21 +29,21 @@ import Foundation
 class CartItem: Equatable, Hashable, Serializable {
     
     private struct Key {
-        static let product  = "product"
+//        static let product  = "product"
         static let quantity = "quantity"
         static let variant  = "variant"
     }
     
-    let product: ProductViewModel
-    let variant: VariantViewModel
+//    let product: ProductViewModel
+    let variant: ProductVariant
     
     var quantity: Int
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    required init(product: ProductViewModel, variant: VariantViewModel, quantity: Int = 1) {
-        self.product  = product
+    required init(variant: ProductVariant, quantity: Int = 1) {
+//        self.product  = product
         self.variant  = variant
         self.quantity = quantity
     }
@@ -52,11 +52,11 @@ class CartItem: Equatable, Hashable, Serializable {
     //  MARK: - Serializable -
     //
     static func deserialize(from representation: SerializedRepresentation) -> Self? {
-        guard let product = ProductViewModel.deserialize(from: representation[Key.product] as! SerializedRepresentation) else {
-            return nil
-        }
+//        guard let product = ProductViewModel.deserialize(from: representation[Key.product] as! SerializedRepresentation) else {
+//            return nil
+//        }
         
-        guard let variant = VariantViewModel.deserialize(from: representation[Key.variant] as! SerializedRepresentation) else {
+        guard let variant = representation[Key.variant] as? ProductVariant else {
             return nil
         }
         
@@ -65,7 +65,7 @@ class CartItem: Equatable, Hashable, Serializable {
         }
         
         return self.init(
-            product:  product,
+//            product:  product,
             variant:  variant,
             quantity: quantity
         )
@@ -74,8 +74,8 @@ class CartItem: Equatable, Hashable, Serializable {
     func serialize() -> SerializedRepresentation {
         return [
             Key.quantity : self.quantity,
-            Key.product  : self.product.serialize(),
-            Key.variant  : self.variant.serialize(),
+//            Key.product  : self.product.serialize(),
+            Key.variant  : self.variant.asJSON()
         ]
     }
 }
@@ -86,7 +86,7 @@ class CartItem: Equatable, Hashable, Serializable {
 extension CartItem {
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.variant.id)
+        hasher.combine(self.variant.variantID)
     }
 }
 
@@ -96,6 +96,6 @@ extension CartItem {
 extension CartItem {
     
     static func ==(lhs: CartItem, rhs: CartItem) -> Bool {
-        return lhs.variant.id == rhs.variant.id && lhs.product.id == rhs.product.id
+        return lhs.variant.variantID == rhs.variant.variantID
     }
 }

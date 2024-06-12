@@ -37,7 +37,7 @@ struct AddToCartButtomSheet: View {
                 
                 Spacer()
                 
-                QuantitySelectorView(quantity: $quantity, inventoryQuantity: VM.product?.inventory_quantity ?? 0)
+                QuantitySelectorView(quantity: $quantity, variantID: VM.product?.variants?[0].variantID ?? "", inventoryQuantity: VM.product?.inventory_quantity ?? 0)
             }
             .padding(.vertical, 1)
             

@@ -23,7 +23,7 @@ struct ShoppingCartProductsListCell: View {
     var body: some View {
         
         HStack {
-            RemoteImageView(url: lineItem.variant?.image?.url.absoluteString ?? "", placeholder: .common)
+            RemoteImageView(url: lineItem.variant?.image?.absoluteString ?? "", placeholder: .common)
                 .frame(width: 130, height: 130)
             
             VStack(alignment: .leading) {
@@ -37,19 +37,19 @@ struct ShoppingCartProductsListCell: View {
                     
                 Spacer()
                 
-                QuantitySelectorView(quantity: $quantity, inventoryQuantity: Int(lineItem.variant?.quantityAvailable ?? 0))
+                QuantitySelectorView(quantity: $quantity, variantID: lineItem.variant?.id.shopifyIDEncode ?? "", inventoryQuantity: Int(lineItem.variant?.quantityAvailable ?? 0), mode: .cart)
             }
             
             Spacer()
             
             VStack(alignment: .trailing) {
-                let isCompareWithPrice = lineItem.variant?.compareAtPrice?.amount ?? 0.0 != 0.0
+                let isCompareWithPrice = lineItem.variant?.comparePrice ?? 0.0 != 0.0
                 
                 Text(Currency.stringFrom(lineItem.individualPrice))
                     .foregroundColor(isCompareWithPrice ? Color(hex: "E85321") : .black)
                 
                 if isCompareWithPrice {
-                    Text(Currency.stringFrom(lineItem.variant?.compareAtPrice?.amount ?? 0))
+                    Text(Currency.stringFrom(lineItem.variant?.comparePrice ?? 0))
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .strikethrough()

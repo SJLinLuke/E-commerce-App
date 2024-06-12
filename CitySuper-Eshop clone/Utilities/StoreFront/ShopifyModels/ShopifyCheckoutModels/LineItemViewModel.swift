@@ -36,10 +36,10 @@ final class LineItemViewModel: ViewModel, Identifiable, Equatable {
     
     let variantID:           String?
     let title:               String
-    let quantity:            Int
+    var quantity:            Int
     let individualPrice:     Decimal
     let totalPrice:          Decimal
-    let variant:             Storefront.ProductVariant?
+    let variant:             VariantNodeViewModel?
     let discountAllocations: [DiscountAllocationViewModel]
     
     // ----------------------------------
@@ -54,17 +54,17 @@ final class LineItemViewModel: ViewModel, Identifiable, Equatable {
         self.quantity            = Int(model.node.quantity)
         self.individualPrice     = model.node.variant!.price.amount
         self.totalPrice          = self.individualPrice * Decimal(self.quantity)
-        self.variant             = model.node.variant
+        self.variant             = model.node.variant?.viewModel
         self.discountAllocations = model.node.discountAllocations.viewModels
     }
     
     static func == (lhs: LineItemViewModel, rhs: LineItemViewModel) -> Bool {
-        lhs.cursor == rhs.cursor &&
-        lhs.variantID == rhs.variantID &&
-        lhs.title == rhs.title &&
-        lhs.quantity == rhs.quantity &&
+        lhs.cursor          == rhs.cursor &&
+        lhs.variantID       == rhs.variantID &&
+        lhs.title           == rhs.title &&
+        lhs.quantity        == rhs.quantity &&
         lhs.individualPrice == rhs.individualPrice &&
-        lhs.totalPrice == rhs.totalPrice
+        lhs.totalPrice      == rhs.totalPrice
     }
 }
 

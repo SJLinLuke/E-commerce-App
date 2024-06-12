@@ -39,7 +39,7 @@ class CartController {
     
     var subtotal: Decimal {
         return self.items.reduce(0) {
-            $0 + $1.variant.price * Decimal($1.quantity)
+            $0 + (Decimal(string: $1.variant.price ?? "0") ?? 0.0) * Decimal($1.quantity)
         }
     }
     

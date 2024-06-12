@@ -365,19 +365,6 @@ final class Client {
     //  MARK: - Checkout -
     //
     @discardableResult
-    func createCheckout(with cartItems: [CartItem], completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
-        let mutation = ClientQuery.mutationForCreateCheckout(with: cartItems)
-        let task     = self.client.mutateGraphWith(mutation) { response, error in
-            error.debugPrint()
-            
-            completion(response?.checkoutCreate?.checkout?.viewModel)
-        }
-        
-        task.resume()
-        return task
-    }
-    
-    @discardableResult
     func updateCheckout(_ id: String, updatingPartialShippingAddress address: PayPostalAddress, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
         let mutation = ClientQuery.mutationForUpdateCheckout(id, updatingPartialShippingAddress: address)
         let task     = self.client.mutateGraphWith(mutation) { response, error in
@@ -445,6 +432,31 @@ final class Client {
             
             if let checkout = response?.node as? Storefront.Checkout {
                 completion(checkout.viewModel)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
+    func MutateItemToCheckout(with lineItems: [LineItemViewModel], of id: GraphQL.ID, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+        
+        var cartItems: [CartItem] = []
+        for item in lineItems {
+            if let variant = item.variant, let pv = ProductVariant.fromVM(item: variant) {
+                cartItems.append(CartItem(variant: pv, quantity: item.quantity))
+            }
+        }
+        
+        let mutation = ClientQuery.mutationForCartItem(of: id, cartItems: cartItems)
+        let task     = self.client.mutateGraphWith(mutation) { mutation, error in
+            error.debugPrint()
+            
+            if let _mutation = mutation {
+                completion(_mutation.checkoutLineItemsReplace?.checkout?.viewModel)
             } else {
                 completion(nil)
             }

@@ -35,7 +35,15 @@ extension Storefront.CheckoutQuery {
         .requiresShipping()
         .taxesIncluded()
         .email()
-        
+        .availableShippingRates{ $0
+            .shippingRates{ $0
+                .title()
+                .handle()
+                .price{ $0
+                    .amount()
+                }
+            }
+        }
         .discountApplications(first: 250) { $0
             .edges { $0
                 .node { $0
@@ -91,6 +99,7 @@ extension Storefront.CheckoutQuery {
                 .node { $0
                     .variant { $0
                         .id()
+                        .title()
                         .price { $0
                             .amount()
                             .currencyCode()
@@ -102,6 +111,10 @@ extension Storefront.CheckoutQuery {
                         .compareAtPrice { $0
                             .amount()
                             .currencyCode()
+                        }
+                        .product { $0
+                            .title()
+                            .id()
                         }
                     }
                     .title()
