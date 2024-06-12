@@ -18,11 +18,13 @@ struct ShoppingCartInfoView: View {
                                leadingColor: Color(hex: "777777"),
                                trailingFont: .bold)
             
-            CustomFormTextItem(leadingText: cartEnv.discountApplication.textViewFormat(seperated: false),
-                               trailingText: "-\(Currency.stringFrom(cartEnv.totalDiscount))",
-                               leadingColor: Color(hex: "777777"),
-                               trailingColor: Color(hex: "E85321"),
-                               alignment: .bottom)
+            if !cartEnv.discountApplication.textViewFormat(seperated: false).isEmpty {
+                CustomFormTextItem(leadingText: cartEnv.discountApplication.textViewFormat(seperated: false),
+                                   trailingText: "-\(Currency.stringFrom(cartEnv.totalDiscount))",
+                                   leadingColor: Color(hex: "777777"),
+                                   trailingColor: Color(hex: "E85321"),
+                                   alignment: .bottom)
+            }
             
             SeperateLineView(color: .commonBackGroundGray, height: 1.5)
             
