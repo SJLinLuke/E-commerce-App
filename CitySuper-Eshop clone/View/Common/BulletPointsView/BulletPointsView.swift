@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum BulletPointMode {
+enum UIMode {
     case normal
     case cart
 }
@@ -15,7 +15,7 @@ enum BulletPointMode {
 struct BulletPointsView: View {
         
     let tags: [LogisticTag]
-    var mode: BulletPointMode = .normal
+    var mode: UIMode = .normal
     
     var body: some View {
         VStack(alignment: .leading) {
