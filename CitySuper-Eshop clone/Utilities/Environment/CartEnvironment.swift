@@ -9,14 +9,14 @@ import Foundation
 import MobileBuySDK
 
 @MainActor final class CartEnvironment: ObservableObject {
+    
     typealias Task = _Concurrency.Task
     
-    @Published var isLoading: Bool = false
-    @Published private var checkout : CheckoutViewModel?
+    @Published var isLoading               : Bool = false
+    @Published private var checkout        : CheckoutViewModel?
     @Published private var shoppingCartData: ShoppingCartData?
     
     var userEnv: UserEnviroment? = nil
-    
     
     // MARK: checkout
     var cartItemsCountingNum: Int { checkout?.lineItems.reduce(0, { $0 + $1.quantity}) ?? 0 }
@@ -106,13 +106,13 @@ import MobileBuySDK
     
 
     // MARK: Operations
-    func mutateItem(lineItems: [LineItemViewModel]) {
-        self.mutateItemToCheckout(lineItems: lineItems)
-    }
-    
     private var pendingMutations: [[LineItemViewModel]] = []
     private var debounceWorkItem: DispatchWorkItem?
     
+    func mutateItem(lineItems: [LineItemViewModel]) {
+        self.mutateItemToCheckout(lineItems: lineItems)
+    }
+
     private func mutateItemToCheckout(lineItems: [LineItemViewModel]) {
         
         guard let userEnv = userEnv, !isLoading else { return }
