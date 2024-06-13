@@ -65,14 +65,14 @@ struct QuantitySelectorView: View {
             
             quantity -= 1
             
-            let lineItems = cartEnv.lineItems
-            for item in lineItems {
+            let tempLineItems = cartEnv.lineItems
+            for item in tempLineItems {
                 if item.variantID?.shopifyIDEncode == variantID {
                     item.quantity = quantity
                 }
             }
             
-            cartEnv.mutateItem(lineItems: lineItems)
+            cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
             // addToCart should handle here
             quantity -= 1
@@ -88,14 +88,14 @@ struct QuantitySelectorView: View {
                 
                 quantity += 1
                 
-                let lineItems = cartEnv.lineItems
-                for item in lineItems {
+                let tempLineItems = cartEnv.lineItems
+                for item in tempLineItems {
                     if item.variantID?.shopifyIDEncode == variantID {
                         item.quantity = quantity
                     }
                 }
                 
-                cartEnv.mutateItem(lineItems: lineItems)
+                cartEnv.mutateItem(lineItems: tempLineItems)
             } else {
                 // addToCart should handle here
                 quantity += 1

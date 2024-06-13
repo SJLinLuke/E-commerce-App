@@ -115,7 +115,7 @@ import MobileBuySDK
 
     private func mutateItemToCheckout(lineItems: [LineItemViewModel]) {
         
-        guard let userEnv = userEnv, !isLoading else { return }
+        guard let _ = userEnv, !isLoading else { return }
         
         pendingMutations.append(lineItems)
                 

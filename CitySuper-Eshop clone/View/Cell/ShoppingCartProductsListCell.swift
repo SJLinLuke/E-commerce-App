@@ -58,7 +58,7 @@ struct ShoppingCartProductsListCell: View {
                 Spacer()
                 
                 Button {
-                    
+                    tapTrashCan()
                 } label: {
                     Image("trash_can_icon")
                 }
@@ -70,6 +70,16 @@ struct ShoppingCartProductsListCell: View {
         .padding(8)
         .background(.white)
         .padding(.horizontal, 10)
+    }
+    
+    func tapTrashCan() {
+        var tempLineItems = cartEnv.lineItems
+
+        tempLineItems = tempLineItems.filter { templineItem in
+            lineItem.variantID?.shopifyIDEncode != templineItem.variantID?.shopifyIDEncode
+        }
+        
+        cartEnv.mutateItem(lineItems: tempLineItems)
     }
 }
 
