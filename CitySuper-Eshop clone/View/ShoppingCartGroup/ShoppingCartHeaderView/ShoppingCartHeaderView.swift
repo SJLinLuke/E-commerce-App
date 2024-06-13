@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ShoppingCartHeaderView: View {
     
+    @EnvironmentObject private var cartEnv: CartEnvironment
+    
+    @State var alertItem  : AlertItem?
+    @State var isAlertShow: Bool = false
+    
     let cartItemsNum: Int
     
     var body: some View {
@@ -31,7 +36,7 @@ struct ShoppingCartHeaderView: View {
             Spacer()
             
             Button {
-                
+                tapCleanAll()
             } label: {
                 Text("Clean all")
                     .font(.callout)
@@ -40,6 +45,18 @@ struct ShoppingCartHeaderView: View {
             }
         }
         .padding()
+        .modifier(AlertModifier(alertItem: alertItem, isAlertShow: $isAlertShow))
+    }
+    
+    func tapCleanAll() {
+        self.alertItem = AlertContext.clearCart
+        self.alertItem?.buttons.append(AlertButton(title: "No", action: {}))
+        self.alertItem?.buttons.append(AlertButton(title: "Yes", action: {
+            // clear all cart items
+            let carItem: [LineItemViewModel] = []
+            cartEnv.mutateItem(lineItems: carItem)
+        }))
+        self.isAlertShow = true
     }
 }
 

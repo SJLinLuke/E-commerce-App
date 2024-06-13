@@ -18,25 +18,29 @@ struct ShoppingCartView: View {
         NavigationStack {
             ZStack {
                 Color(hex:"F2F2F2")
-                VStack {
-                    
-                    if !cartEnv.noticeMessage.isEmpty {
-                        ShoppingCartNoticeView(noticeMessage: cartEnv.noticeMessage)
-                    }
+                if cartEnv.lineItems.isEmpty {
+                    ShoppingCartEmptyView()
+                } else {
+                    VStack {
+                        
+                        if !cartEnv.noticeMessage.isEmpty {
+                            ShoppingCartNoticeView(noticeMessage: cartEnv.noticeMessage)
+                        }
 
-                    ShoppingCartHeaderView(cartItemsNum: cartEnv.cartItemsCountingNum)
-                    
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem()], spacing: 1) {
-                            ForEach(cartEnv.lineItems) { lineItem in
-                                ShoppingCartProductsListCell(lineItem: lineItem)
+                        ShoppingCartHeaderView(cartItemsNum: cartEnv.cartItemsCountingNum)
+                        
+                        ScrollView {
+                            LazyVGrid(columns: [GridItem()], spacing: 1) {
+                                ForEach(cartEnv.lineItems) { lineItem in
+                                    ShoppingCartProductsListCell(lineItem: lineItem)
+                                }
                             }
                         }
+                        .padding(.top, -8)
+                        .padding(.bottom, -8)
+                        
+                        ShoppingCartInfoView()
                     }
-                    .padding(.top, -8)
-                    .padding(.bottom, -8)
-                    
-                    ShoppingCartInfoView()
                 }
             }
             .overlay {
