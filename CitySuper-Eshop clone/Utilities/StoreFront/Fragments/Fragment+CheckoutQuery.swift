@@ -35,15 +35,6 @@ extension Storefront.CheckoutQuery {
         .requiresShipping()
         .taxesIncluded()
         .email()
-        .availableShippingRates{ $0
-            .shippingRates{ $0
-                .title()
-                .handle()
-                .price{ $0
-                    .amount()
-                }
-            }
-        }
         .discountApplications(first: 250) { $0
             .edges { $0
                 .node { $0
@@ -148,5 +139,14 @@ extension Storefront.CheckoutQuery {
             .amount()
             .currencyCode()
         }
+        //        .availableShippingRates{ $0
+        //            .shippingRates{ $0
+        //                .title()
+        //                .handle()
+        //                .price{ $0
+        //                    .amount()
+        //                }
+        //            }
+        //        }
     }
 }
