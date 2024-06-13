@@ -57,11 +57,11 @@ struct NavigationModifier: ViewModifier {
                         }
                         .overlay(alignment: .topTrailing) { 
                             // native badge is not allow in ToolbarItem, custom one for now
-                            let width = cartEnv.cartItemsCountingNum > 10 ? 20.0 : 15.0
+                            let width = cartEnv.cartItemsCountingNum > 10 ? 20.0 : 16.0
                             Text("\(cartEnv.cartItemsCountingNum)")
                                 .font(.system(size: 12))
                                 .foregroundColor(.white)
-                                .frame(width: width, height: 15) // expand the badge a little bit when count number is up to 10 or more
+                                .frame(width: width, height: 16) // expand the badge a little bit when count number is up to 10 or more
                                 .background(Color(hex: "E94E1B"))
                                 .cornerRadius(50)
                                 .alignmentGuide(.top) { $0[.bottom] - $0.width * 0.8 }
