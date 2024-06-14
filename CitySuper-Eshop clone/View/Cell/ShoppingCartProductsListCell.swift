@@ -37,6 +37,13 @@ struct ShoppingCartProductsListCell: View {
                     
                 Spacer()
                 
+                if lineItem.quantity == lineItem.variant?.quantityAvailable ?? 0 {
+                    Text("*Only \(lineItem.variant?.quantityAvailable ?? 0) left in stock. Buy soon!")
+                        .font(.system(size: 9))
+                        .lineLimit(1)
+                        .foregroundColor(Color(hex: "E94E1B"))
+                }
+                
                 QuantitySelectorView(quantity: $quantity, variantID: lineItem.variant?.id.shopifyIDEncode ?? "", inventoryQuantity: Int(lineItem.variant?.quantityAvailable ?? 0), mode: .cart)
             }
             
@@ -64,7 +71,6 @@ struct ShoppingCartProductsListCell: View {
                 }
             }
             .padding(.trailing, 5)
-            .padding(.leading)
         }
         .font(.subheadline)
         .padding(8)
