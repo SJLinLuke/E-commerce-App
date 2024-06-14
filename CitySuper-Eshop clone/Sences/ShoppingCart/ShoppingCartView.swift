@@ -20,13 +20,18 @@ struct ShoppingCartView: View {
                 Color(hex:"F2F2F2")
                 if cartEnv.lineItems.isEmpty {
                     ShoppingCartEmptyView()
+                        .overlay(alignment: .top) {
+                            ShoppingCartOOSView(lineItems_OOS: cartEnv.lineItems_OOS)
+                        }
                 } else {
                     VStack {
                         
                         if !cartEnv.noticeMessage.isEmpty {
                             ShoppingCartNoticeView(noticeMessage: cartEnv.noticeMessage)
                         }
-
+                        
+                        ShoppingCartOOSView(lineItems_OOS: cartEnv.lineItems_OOS)
+                                                
                         ShoppingCartHeaderView(cartItemsNum: cartEnv.cartItemsCountingNum)
                         
                         ScrollView {

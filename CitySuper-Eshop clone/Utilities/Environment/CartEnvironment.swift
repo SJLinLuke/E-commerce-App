@@ -15,13 +15,31 @@ import MobileBuySDK
     @Published var isLoading               : Bool = false
     @Published private var checkout        : CheckoutViewModel?
     @Published private var shoppingCartData: ShoppingCartData?
-    
+    @Published var lineItems_OOS           : [LineItemViewModel] = [] {
+        didSet {
+            lineItem_OOS_isChanged = true
+        }
+    }
+    var lineItem_OOS_isChanged: Bool = false
     var userEnv: UserEnviroment? = nil
     
     // MARK: checkout
     var cartItemsCountingNum: Int { checkout?.lineItems.reduce(0, { $0 + $1.quantity}) ?? 0 }
     
-    var lineItems: [LineItemViewModel] { checkout?.lineItems ?? [] }
+    var lineItems: [LineItemViewModel] {
+        var tempLineItems:[LineItemViewModel] = []
+        for lineItem in checkout?.lineItems ?? [] {
+            let availableQuantity = lineItem.variant?.quantityAvailable ?? 0
+            if availableQuantity > 0 {
+                tempLineItems.append(lineItem)
+            } else {
+                if !lineItems_OOS.contains(where: { $0.variantID == lineItem.variantID }) {
+                    lineItems_OOS.append(lineItem)
+                }
+            }
+        }
+        return tempLineItems
+    }
     
     var subTotal: Decimal { checkout?.lineItems.reduce(0, { $0 + ($1.variant?.price ?? 0) * Decimal($1.quantity) }) ?? 0}
     
@@ -67,6 +85,7 @@ import MobileBuySDK
         Client.shared.pollForReadyCheckout(userEnv.checkoutID) { checkout in
             if let checkout = checkout {
                 self.checkout = checkout
+                
                 if needAsync {
                     self.asyncShoppingCart()
                 } else {
@@ -81,6 +100,12 @@ import MobileBuySDK
             do {
                 self.shoppingCartData = try await NetworkManager.shared.uploadShoppingCart(lineItems: lineItems)
                 self.isLoading = false
+                
+                if lineItem_OOS_isChanged {
+                    self.lineItem_OOS_isChanged = false
+                    self.mutateItemToCheckout(lineItems: self.lineItems)
+                }
+                
             } catch {
                 print(error.localizedDescription)
                 self.isLoading = false
@@ -99,7 +124,7 @@ import MobileBuySDK
         Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, addCartItem: addCartItem?.cartItem, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
             if let checkout = checkout {
                 self.checkout = checkout
-                self.fetchCheckout()
+                self.asyncShoppingCart()
             }
         }
     }

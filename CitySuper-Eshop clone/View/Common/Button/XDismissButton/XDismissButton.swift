@@ -14,10 +14,14 @@ struct XDismissButton: View {
     let color : Color
     var width : CGFloat = 20
     var height: CGFloat = 20
+    var onComplete: (() -> Void)?
     
     var body: some View {
         Button {
             isShow = false
+            if let onComplete = onComplete {
+                onComplete()
+            }
         } label: {
             Image("close_icon")
                 .resizable()
