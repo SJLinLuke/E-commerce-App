@@ -16,8 +16,8 @@ import Foundation
             self.isAlertShow = true
         }
     }
-    @Published var isAlertShow: Bool = false
-    @Published var isLoading = false
+    @Published var isAlertShow               : Bool = false
+    @Published var isLoading                 : Bool = false
     @Published var isShowAddToCartButtonSheet: Bool = false
     
     var product: ProductBody?
