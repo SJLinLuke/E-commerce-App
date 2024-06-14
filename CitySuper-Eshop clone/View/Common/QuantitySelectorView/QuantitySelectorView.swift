@@ -30,6 +30,7 @@ struct QuantitySelectorView: View {
                 tapMinus()
             } label: {
                 Image("minus_icon")
+                    .padding(3) // make more tap area
             }
             .frame(width: 28, height: 28)
             .background(Color(hex: "D6D6D6"))
@@ -45,6 +46,7 @@ struct QuantitySelectorView: View {
                 tapPlus()
             } label: {
                 Image("plus_icon")
+                    .padding(3) // make more tap area
             }
             .frame(width: 28, height: 28)
             .background(.themeDarkGreen)
