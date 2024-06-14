@@ -26,7 +26,6 @@ struct LoginView: View {
                 XDismissButton(isShow: $isShow, color: .black)
             }
             
-            
             Spacer()
                 .frame(height: 75)
             

@@ -66,6 +66,7 @@ struct MainTabbarView: View {
             }
         }
         .modifier(AlertModifier(alertItem: addToCartVM.alertItem, isAlertShow: $addToCartVM.isAlertShow))
+        .modifier(PopupViewModifier())
     }
 
     init() {
@@ -76,4 +77,5 @@ struct MainTabbarView: View {
 #Preview {
     MainTabbarView()
         .environmentObject(UserEnviroment())
+        .environmentObject(CartEnvironment())
 }

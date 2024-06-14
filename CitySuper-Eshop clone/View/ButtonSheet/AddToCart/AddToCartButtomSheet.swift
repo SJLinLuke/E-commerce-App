@@ -11,7 +11,7 @@ struct AddToCartButtomSheet: View {
     
     @StateObject private var VM = AddToCartButtomSheetViewModel.shared
     
-    @State private var quantity   : Int = 1
+    @State private var quantity: Int = 1
     
     var body: some View {
      
@@ -51,7 +51,8 @@ struct AddToCartButtomSheet: View {
             Spacer()
             
             Button {
-                
+                VM.isShowAddToCartButtonSheet = false
+                tap()
             } label: {
                 ThemeButton(title: "Add to Cart")
             }
@@ -62,6 +63,9 @@ struct AddToCartButtomSheet: View {
         .presentationBackgroundInteraction(.disabled)
         .presentationCornerRadius(20)
     }    
+    func tap() {
+        NotificationCenter.default.post(name: Notification.Name.addToCart_Popup, object: nil)
+    }
 }
 
 #Preview {
