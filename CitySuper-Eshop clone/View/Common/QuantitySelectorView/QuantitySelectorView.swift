@@ -75,6 +75,8 @@ struct QuantitySelectorView: View {
             cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
             // addToCart should handle here
+            guard quantity > 1  else { return }
+            
             quantity -= 1
         }
     }
