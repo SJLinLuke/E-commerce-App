@@ -442,13 +442,17 @@ final class Client {
     }
     
     @discardableResult
-    func MutateItemToCheckout(with lineItems: [LineItemViewModel], of id: GraphQL.ID, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+    func MutateItemToCheckout(with lineItems: [LineItemViewModel], addCartItem: CartItem? = nil, of id: GraphQL.ID, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
         
         var cartItems: [CartItem] = []
         for item in lineItems {
             if let variant = item.variant, let pv = ProductVariant.fromVM(item: variant) {
                 cartItems.append(CartItem(variant: pv, quantity: item.quantity))
             }
+        }
+        
+        if let addCartItem = addCartItem {
+            cartItems.append(addCartItem)
         }
         
         let mutation = ClientQuery.mutationForCartItem(of: id, cartItems: cartItems)

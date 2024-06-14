@@ -65,7 +65,6 @@ struct MainTabbarView: View {
                     .interactiveDismissDisabled()
             }
         }
-        .modifier(AlertModifier(alertItem: addToCartVM.alertItem, isAlertShow: $addToCartVM.isAlertShow))
         .modifier(PopupViewModifier())
     }
 

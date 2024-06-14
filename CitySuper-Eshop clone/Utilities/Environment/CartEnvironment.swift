@@ -87,8 +87,8 @@ import MobileBuySDK
             }
         }
     }
-    
-    @objc private func executePendingMutations() {
+
+    @objc private func executePendingMutations(addCartItem: CartItemWrapper? = nil) {
         
         guard let userEnv = userEnv, let lastMutationsToExecute = pendingMutations.last else { return }
         
@@ -96,7 +96,7 @@ import MobileBuySDK
         
         pendingMutations.removeAll()
         
-        Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
+        Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, addCartItem: addCartItem?.cartItem, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
             if let checkout = checkout {
                 self.checkout = checkout
                 self.fetchCheckout()
@@ -109,17 +109,21 @@ import MobileBuySDK
     private var pendingMutations: [[LineItemViewModel]] = []
     private var debounceWorkItem: DispatchWorkItem?
     
-    func mutateItem(lineItems: [LineItemViewModel]) {
-        self.mutateItemToCheckout(lineItems: lineItems)
+    func mutateItem(lineItems: [LineItemViewModel], addCartItem: CartItem? = nil) {
+        self.mutateItemToCheckout(lineItems: lineItems, addCartItem: addCartItem)
     }
 
-    private func mutateItemToCheckout(lineItems: [LineItemViewModel]) {
+    private func mutateItemToCheckout(lineItems: [LineItemViewModel], addCartItem: CartItem? = nil) {
         
         guard let _ = userEnv, !isLoading else { return }
         
         pendingMutations.append(lineItems)
-                
-        debounce(#selector(executePendingMutations), delay: 0.4)
+        
+        if let addCartItem = addCartItem {
+            executePendingMutations(addCartItem: CartItemWrapper(cartItem: addCartItem))
+        } else {
+            debounce(#selector(executePendingMutations), delay: 0.4)
+        }
     }
     
     private func debounce(_ selector: Selector, delay: TimeInterval) {

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AddToCartButtomSheet: View {
     
+    @EnvironmentObject private var cartEnv: CartEnvironment
+
     @StateObject private var VM = AddToCartButtomSheetViewModel.shared
-    
-    @State private var quantity: Int = 1
     
     var body: some View {
      
@@ -37,7 +37,7 @@ struct AddToCartButtomSheet: View {
                 
                 Spacer()
                 
-                QuantitySelectorView(quantity: $quantity, variantID:  VM.product?.variants?[0].shopify_product_variant_id ?? "", inventoryQuantity: VM.product?.inventory_quantity ?? 0)
+                QuantitySelectorView(quantity: $VM.quantity, variantID:  VM.product?.variants?[0].shopify_product_variant_id ?? "", inventoryQuantity: VM.product?.inventory_quantity ?? 0)
             }
             .padding(.vertical, 1)
             
@@ -51,8 +51,7 @@ struct AddToCartButtomSheet: View {
             Spacer()
             
             Button {
-                VM.isShowAddToCartButtonSheet = false
-                tap()
+                VM.tapAddToCart()
             } label: {
                 ThemeButton(title: "Add to Cart")
             }
@@ -62,9 +61,13 @@ struct AddToCartButtomSheet: View {
         .presentationDetents([.medium, .medium, .height(UIScreen.main.bounds.height / 2.1)])
         .presentationBackgroundInteraction(.disabled)
         .presentationCornerRadius(20)
-    }    
-    func tap() {
-        NotificationCenter.default.post(name: Notification.Name.addToCart_Popup, object: nil)
+        .onAppear {
+            VM.cartEnv = cartEnv
+        }
+        .onDisappear {
+            VM.quantity = 1
+        }
+        .modifier(AlertModifier(alertItem: VM.alertItem, isAlertShow: $VM.isAlertShow))
     }
 }
 

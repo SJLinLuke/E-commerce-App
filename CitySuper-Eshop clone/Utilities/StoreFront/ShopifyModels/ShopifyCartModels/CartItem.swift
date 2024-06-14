@@ -26,6 +26,13 @@
 
 import Foundation
 
+class CartItemWrapper: NSObject {
+    let cartItem: CartItem
+    init(cartItem: CartItem) {
+        self.cartItem = cartItem
+    }
+}
+
 class CartItem: Equatable, Hashable, Serializable {
     
     private struct Key {
