@@ -62,6 +62,7 @@ struct MainTabbarView: View {
                 AddToCartButtomSheet()
             } else {
                 LoginView(isShow: $addToCartVM.isShowAddToCartButtonSheet)
+                    .interactiveDismissDisabled()
             }
         }
         .modifier(AlertModifier(alertItem: addToCartVM.alertItem, isAlertShow: $addToCartVM.isAlertShow))
