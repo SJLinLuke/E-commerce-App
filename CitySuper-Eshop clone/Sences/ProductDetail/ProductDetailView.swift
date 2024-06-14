@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    @StateObject var VM = ProductDetailViewModel()
+    @StateObject var VM = ProductDetailViewModel.shared
     
     @State var searchText: String        = ""
     @State var htmlFrameHeight: CGFloat  = .zero
