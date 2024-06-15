@@ -31,6 +31,18 @@ struct PopupViewModifier: ViewModifier {
                 isShow = true
             }
         }
+        NotificationCenter.default.addObserver(forName: Notification.Name.addToFavourite_Popup, object: nil, queue: .main) { _ in
+            DispatchQueue.main.async {
+                type = .favourite_add
+                isShow = true
+            }
+        }
+        NotificationCenter.default.addObserver(forName: Notification.Name.RemoveFromFavourite_Popup, object: nil, queue: .main) { _ in
+            DispatchQueue.main.async {
+                type = .favourite_remove
+                isShow = true
+            }
+        }
     }
 }
 

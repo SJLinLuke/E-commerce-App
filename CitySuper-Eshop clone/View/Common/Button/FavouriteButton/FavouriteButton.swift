@@ -38,6 +38,11 @@ struct FavouriteButton: View {
         }
         .onTapGesture {
             isFavourite = !isFavourite
+            if !isFavourite {
+                NotificationCenter.default.post(name: Notification.Name.RemoveFromFavourite_Popup, object: nil)
+            } else {
+                NotificationCenter.default.post(name: Notification.Name.addToFavourite_Popup, object: nil)
+            }
         }
     }
 }

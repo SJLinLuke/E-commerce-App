@@ -32,9 +32,9 @@ struct PopupAnimateView: View {
         case .cart_add:
             return PopViewItem(imagePath: "addtocart_popup", title: "Added to \nCart")
         case .favourite_add:
-            return PopViewItem(imagePath: "", title: "")
+            return PopViewItem(imagePath: "favourite_popup", title: "Added to \nFavourites")
         case .favourite_remove:
-            return PopViewItem(imagePath: "", title: "")
+            return PopViewItem(imagePath: "favourite_popup", title: "Removed from \nFavourites")
         }
     }
     
@@ -53,6 +53,7 @@ struct PopupAnimateView: View {
                 Text(item.title)
                     .font(.title3)
                     .fontWeight(.bold)
+                    .fixedSize()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                     .lineLimit(2)
