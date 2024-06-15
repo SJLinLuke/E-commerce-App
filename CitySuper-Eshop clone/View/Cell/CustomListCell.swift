@@ -13,7 +13,7 @@ struct CustomListCell: View {
     
     @State var isLoginOrLogout: Bool = false
     
-    let rowData: CommonListRowModel
+    let rowData: CustomListRowModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -56,5 +56,5 @@ struct CustomListCell: View {
 }
 
 #Preview {
-    CustomListCell(rowData: CommonListRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true))
+    CustomListCell(rowData: CustomListRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true))
 }

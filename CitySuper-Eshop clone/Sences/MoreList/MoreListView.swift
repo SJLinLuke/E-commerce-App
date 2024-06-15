@@ -17,14 +17,14 @@ struct MoreListView: View {
     }
         
     let rows = [
-        CommonListRowModel(title: "Language", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Privacy Policy Statement", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Terms and Conditions", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "License and Permit", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Disclaimer", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Explore city'super HK App", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Explore city'super E-Shop Website", icon: "arrow_icon", seperateType: true),
-        CommonListRowModel(title: "Terminate MemberShip", icon: "", seperateType: true),
+        CustomListRowModel(title: "Language", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Privacy Policy Statement", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Terms and Conditions", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "License and Permit", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Disclaimer", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Explore city'super HK App", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Explore city'super E-Shop Website", icon: "arrow_icon", seperateType: true),
+        CustomListRowModel(title: "Terminate MemberShip", icon: "", seperateType: true),
     ]
     
     var body: some View {
@@ -54,7 +54,7 @@ struct MoreListView: View {
         }
     }
     
-    func tapCell(_ rowData: CommonListRowModel) {
+    func tapCell(_ rowData: CustomListRowModel) {
         DispatchQueue.main.async {
             switch rowData.title {
             case "Language":

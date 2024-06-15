@@ -51,7 +51,7 @@ struct ProfileListView: View {
         }
     }
     
-    func tapCell(_ rowData: CommonListRowModel) {
+    func tapCell(_ rowData: CustomListRowModel) {
         DispatchQueue.main.async {
             switch rowData.title {
             case "E-Shop Coupon":

@@ -51,7 +51,7 @@ struct ProfileData: Codable {
     let changePassword  : Bool?
 }
 
-struct CommonListRowModel: Identifiable, Equatable {
+struct CustomListRowModel: Identifiable, Equatable {
     let id = UUID()
     
     let title        : String
