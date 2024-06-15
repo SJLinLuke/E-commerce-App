@@ -17,14 +17,14 @@ struct MoreListView: View {
     }
         
     let rows = [
-        ProfileRowModel(title: "Language", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Privacy Policy Statement", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Terms and Conditions", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "License and Permit", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Disclaimer", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Explore city'super HK App", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Explore city'super E-Shop Website", icon: "arrow_icon", seperateType: true),
-        ProfileRowModel(title: "Terminate MemberShip", icon: "", seperateType: true),
+        CommonListRowModel(title: "Language", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Privacy Policy Statement", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Terms and Conditions", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "License and Permit", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Disclaimer", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Explore city'super HK App", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Explore city'super E-Shop Website", icon: "arrow_icon", seperateType: true),
+        CommonListRowModel(title: "Terminate MemberShip", icon: "", seperateType: true),
     ]
     
     var body: some View {
@@ -32,7 +32,7 @@ struct MoreListView: View {
             List {
                 Section {
                     ForEach(rows) { rowData in
-                        ProfileListCell(rowData: rowData)
+                        CustomListCell(rowData: rowData)
                             .onTapGesture {
                                 tapCell(rowData)
                             }
@@ -54,7 +54,7 @@ struct MoreListView: View {
         }
     }
     
-    func tapCell(_ rowData: ProfileRowModel) {
+    func tapCell(_ rowData: CommonListRowModel) {
         DispatchQueue.main.async {
             switch rowData.title {
             case "Language":

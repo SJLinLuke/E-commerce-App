@@ -1,5 +1,5 @@
 //
-//  ProfileListCell.swift
+//  CustomListCell.swift
 //  CitySuper-Eshop clone
 //
 //  Created by LukeLin on 2024/5/15.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct ProfileListCell: View {
+struct CustomListCell: View {
     
     @StateObject var couponListVM = CouponListViewModel.shared
     
     @State var isLoginOrLogout: Bool = false
     
-    let rowData: ProfileRowModel
+    let rowData: CommonListRowModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -56,5 +56,5 @@ struct ProfileListCell: View {
 }
 
 #Preview {
-    ProfileListCell(rowData: ProfileRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true))
+    CustomListCell(rowData: CommonListRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true))
 }

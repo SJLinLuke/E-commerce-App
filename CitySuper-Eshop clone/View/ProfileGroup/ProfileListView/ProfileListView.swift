@@ -22,7 +22,7 @@ struct ProfileListView: View {
     
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
-            ProfileListCell(rowData: rowData)
+            CustomListCell(rowData: rowData)
                 .onTapGesture {
                     tapCell(rowData)
                 }
@@ -51,7 +51,7 @@ struct ProfileListView: View {
         }
     }
     
-    func tapCell(_ rowData: ProfileRowModel) {
+    func tapCell(_ rowData: CommonListRowModel) {
         DispatchQueue.main.async {
             switch rowData.title {
             case "E-Shop Coupon":

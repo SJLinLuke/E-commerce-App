@@ -13,20 +13,20 @@ import SwiftUI
     @Published var userEnv  : UserEnviroment? = nil
     @Published var isLoading: Bool = false
 
-    func getProfileData() -> [ProfileRowModel] {
+    func getProfileData() -> [CommonListRowModel] {
         return userEnv?.isLogin ?? false ?
         [
-          ProfileRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true),
-          ProfileRowModel(title: "Order History", icon: "tab_history", seperateType: true),
-          ProfileRowModel(title: "Delivery Address", icon: "address_icon", seperateType: true),
-          ProfileRowModel(title: "Wallet", icon: "wallet_icon", seperateType: true),
-          ProfileRowModel(title: "More", icon: "more_icon", seperateType: true),
-          ProfileRowModel(title: "Logout", icon: "", seperateType: false)
+          CommonListRowModel(title: "E-Shop Coupon", icon: "coupon_icon", seperateType: true),
+          CommonListRowModel(title: "Order History", icon: "tab_history", seperateType: true),
+          CommonListRowModel(title: "Delivery Address", icon: "address_icon", seperateType: true),
+          CommonListRowModel(title: "Wallet", icon: "wallet_icon", seperateType: true),
+          CommonListRowModel(title: "More", icon: "more_icon", seperateType: true),
+          CommonListRowModel(title: "Logout", icon: "", seperateType: false)
         ]
         :
         [ 
-          ProfileRowModel(title: "More", icon: "more_icon", seperateType: true),
-          ProfileRowModel(title: "Login", icon: "", seperateType: false)
+          CommonListRowModel(title: "More", icon: "more_icon", seperateType: true),
+          CommonListRowModel(title: "Login", icon: "", seperateType: false)
         ]
         
         
