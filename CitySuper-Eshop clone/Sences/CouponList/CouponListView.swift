@@ -34,8 +34,6 @@ struct CouponListView: View {
                         }
                     }
                 }
-                
-                Spacer()
             }
             .overlay {
                 if VM.isLoading {
