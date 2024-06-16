@@ -41,7 +41,7 @@ final class NetworkManager: ObservableObject {
         var request = generateURLRequest(host + Constants.login, method: .post)
         
         let postData = try encoder.encode(loginData)
-            request.httpBody = postData
+        request.httpBody = postData
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
@@ -173,7 +173,7 @@ final class NetworkManager: ObservableObject {
     // MARK: Favourite
     func fetchFavourites(_ page: Int) async throws -> FavouriteData {
         
-        let request = generateURLRequest(host + Constants.favourite + "\(page)")
+        let request = generateURLRequest(host + Constants.favourites + "\(page)")
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
@@ -186,6 +186,30 @@ final class NetworkManager: ObservableObject {
         } catch {
             print(error.localizedDescription)
             throw CSAlert.inValidData
+        }
+    }
+    
+    func modifyFavourite(_ shopifyID: String, method: FavModifyType) async throws -> Result<Bool, Error> {
+        
+        let path = method == .add ? Constants.favourite : Constants.unfavourite
+        var request = generateURLRequest(host + path, method: .post)
+        
+        let params: [String: String] = ["shopify_product_id" : shopifyID.shopifyIDEncode]
+        
+        let postData = try encoder.encode(params)
+        request.httpBody = postData
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CSAlert.inValidResponse
+        }
+        
+        switch httpResponse.statusCode {
+        case 200...299:
+            return .success(true)
+        default:
+            return .failure(CSAlert.inValidData)
         }
     }
     

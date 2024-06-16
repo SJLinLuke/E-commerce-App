@@ -12,23 +12,25 @@ import Foundation
     static let shared = ProductDetailViewModel()
     
     @Published var isLoading: Bool = false
-    @Published var product: ProductBody?
+    @Published var product  : ProductBody? {
+        didSet {
+            self.isFavourite = FavVM.isFavourite(shopifyID: product?.shopify_product_id.shopifyIDEncode ?? "")
+        }
+    }
     @Published var relatedProducts: [ProductBody] = []
     @Published var similarProducts: [ProductBody] = []
+    @Published var isFavourite    : Bool = false
     
+    private var FavVM = FavouriteViewModel.shared
+
     private var isRelatedHasMore: Bool = true
     private var isSimilarHasMore: Bool = true
     
     private var relatedPage: Int = 1
     private var similarPage: Int = 1
     
-    var isCompareWithPrice: Bool {
-        product?.compare_at_price != nil
-    }
-    
-    var isSoldOut: Bool {
-        product?.inventory_quantity == 0
-    }
+    var isCompareWithPrice: Bool { product?.compare_at_price != nil }
+    var isSoldOut: Bool { product?.inventory_quantity == 0 }
     
     init() {
         self.isRelatedHasMore = true

@@ -32,5 +32,5 @@ struct ProductDetailMoreProductsView: View {
 }
 
 #Preview {
-    ProductDetailMoreProductsView(title: "Related Products", shopifyID: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil)], meetLast: {print("testing")})
+    ProductDetailMoreProductsView(title: "Related Products", shopifyID: "", products: [ProductBody.mockData()], meetLast: {print("testing")})
 }

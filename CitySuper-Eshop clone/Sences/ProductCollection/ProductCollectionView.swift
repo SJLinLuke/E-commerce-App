@@ -32,7 +32,7 @@ struct ProductCollectionView: View {
                             .frame(height: 300)
                             .padding(.top, 5)
                         
-                        ProductItem(product: VM.getHighLightProduct(), width: 320, height: 480, isNeedDelete: false)
+                        ProductItem(width: 320, height: 480, isNeedDelete: false, product: VM.getHighLightProduct())
                             .padding(.top, -20)
                         
                     }

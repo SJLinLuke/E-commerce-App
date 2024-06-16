@@ -80,6 +80,6 @@ import Foundation
         if let highLightProduct = self.highLightProduct {
             return highLightProduct
         }
-        return ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "", variants: nil, options: nil, logistic_tags: nil, image_src: nil, inventory_quantity: nil, compare_at_price: nil, price: nil, images: nil)
+        return ProductBody.mockData()
     }
 }

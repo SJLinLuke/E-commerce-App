@@ -92,5 +92,5 @@ struct FastCollectionView: View {
 }
 
 #Preview {
-    FastCollectionView(popularCategories: [PopularCategory(image_src: "", shopify_collection_id: "", title: "Beef", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Beef (privious forzen) (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 1, compare_at_price: nil, price: "69.99", images: nil, products: nil, similar_products: nil)])])
+    FastCollectionView(popularCategories: [PopularCategory(image_src: "", shopify_collection_id: "", title: "Beef", products: [ProductBody.mockData()])])
 }

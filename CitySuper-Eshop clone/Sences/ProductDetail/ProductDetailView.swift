@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    @StateObject var VM = ProductDetailViewModel.shared
+    @StateObject private var VM = ProductDetailViewModel.shared
     
-    @State var searchText: String        = ""
-    @State var htmlFrameHeight: CGFloat  = .zero
+    @State var searchText         : String = ""
+    @State var htmlFrameHeight    : CGFloat = .zero
     @State var isGalleryDetailShow: Bool = false
     
     var shopifyID: String
@@ -27,7 +27,8 @@ struct ProductDetailView: View {
                         Spacer()
                             .frame(width: geometry.size.width - 15, height: 1)
                             .overlay(alignment: .trailing) {
-                                FavouriteButton(isFavourite: true, width: 40, height: 40)
+                                FavouriteButton(isFavourite: $VM.isFavourite,
+                                                product: VM.product ?? ProductBody.mockData(), width: 40, height: 40)
                             }
                             .padding(.top, -8)
                     })
@@ -94,4 +95,5 @@ struct ProductDetailView: View {
 
 #Preview {
     ProductDetailView(shopifyID: "")
+        .environmentObject(CartEnvironment())
 }

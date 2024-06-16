@@ -14,8 +14,10 @@ struct CitySuper_Eshop_cloneApp: App {
     @State private var cartEnv = CartEnvironment()
     @State private var isShowingIntroVideo: Bool = false
     
+    @StateObject private var FavVM        = FavouriteViewModel.shared
     @StateObject private var couponListVM = CouponListViewModel.shared
     @StateObject private var inboxVM      = InboxViewModel.shared
+    
     private var networkManager            = NetworkManager.shared
     
     var body: some Scene {
@@ -29,6 +31,7 @@ struct CitySuper_Eshop_cloneApp: App {
                     cartEnv.userEnv = userEnv
                     
                     if userEnv.isLogin {
+                        FavVM.fetchFavourite()
                         cartEnv.fetchCheckout(needAsync: false)
                         couponListVM.fetchCoupon()
                         inboxVM.fetchUnreadNumber()

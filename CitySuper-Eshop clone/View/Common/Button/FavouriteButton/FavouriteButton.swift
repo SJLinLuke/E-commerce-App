@@ -9,16 +9,14 @@ import SwiftUI
 
 struct FavouriteButton: View {
     
-    @State var isFavourite: Bool
-    var width : CGFloat
-    var height: CGFloat
+    @StateObject private var FavVM = FavouriteViewModel.shared
     
-    init(isFavourite: Bool, width: CGFloat, height: CGFloat) {
-        self.isFavourite = isFavourite
-        self.width = width
-        self.height = height
-    }
+    @Binding var isFavourite: Bool
     
+    let product: ProductBody
+    var width  : CGFloat
+    var height : CGFloat
+
     var body: some View {
         ZStack {
             Circle()
@@ -38,15 +36,17 @@ struct FavouriteButton: View {
         }
         .onTapGesture {
             isFavourite = !isFavourite
-            if !isFavourite {
-                NotificationCenter.default.post(name: Notification.Name.RemoveFromFavourite_Popup, object: nil)
-            } else {
+            if isFavourite {
+                FavVM.addFavourite(product: product)
                 NotificationCenter.default.post(name: Notification.Name.addToFavourite_Popup, object: nil)
+            } else {
+                FavVM.removeFavourite(product: product)
+                NotificationCenter.default.post(name: Notification.Name.RemoveFromFavourite_Popup, object: nil)
             }
         }
     }
 }
 
 #Preview {
-    FavouriteButton(isFavourite: true, width: 50, height: 50)
+    FavouriteButton(isFavourite: .constant(true), product: ProductBody.mockData(), width: 50, height: 50)
 }

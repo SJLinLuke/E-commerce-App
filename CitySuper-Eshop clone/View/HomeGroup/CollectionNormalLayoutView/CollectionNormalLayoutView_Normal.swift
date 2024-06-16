@@ -48,7 +48,7 @@ struct CollectionNormalLayoutView_Normal: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: rows) {
                     ForEach(collectionNormalLayout.products, id: \.self) { product in
-                        ProductItem(product: product, width: itemWidth, height: itemHeight, isNeedDelete: false)
+                        ProductItem(width: itemWidth, height: itemHeight, isNeedDelete: false, product: product)
                             .onAppear {
                                 if collectionNormalLayout.products.last == product {
                                     meetLast()
@@ -63,5 +63,5 @@ struct CollectionNormalLayoutView_Normal: View {
 }
 
 #Preview {
-    CollectionNormalLayoutView_Normal(collectionNormalLayout: CollectionNormalLayoutModel(title: "Beef Sliced", layout: "", products: [ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Itailian Veal Tongue [Previous Forzen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.00", images: nil, products: nil, similar_products: nil)], shopify_collection_id: ""), itemWidth: 150, itemHeight: 250, isRelatedSimilar: false, meetLast: {print("meetLast")})
+    CollectionNormalLayoutView_Normal(collectionNormalLayout: CollectionNormalLayoutModel(title: "Beef Sliced", layout: "", products: [ProductBody.mockData()], shopify_collection_id: ""), itemWidth: 150, itemHeight: 250, isRelatedSimilar: false, meetLast: {print("meetLast")})
 }

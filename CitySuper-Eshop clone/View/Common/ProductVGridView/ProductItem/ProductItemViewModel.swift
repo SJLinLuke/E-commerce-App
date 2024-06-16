@@ -7,20 +7,23 @@
 
 import Foundation
 
-final class ProductItemViewModel: ObservableObject {
+@MainActor final class ProductItemViewModel: ObservableObject {
     
-    @Published var product: ProductBody?
+    static let shared = ProductItemViewModel()
     
-    var isSoldOut: Bool {
-        product?.inventory_quantity == 0
+    @Published var product: ProductBody? {
+        didSet {
+            self.isFavourite = FavVM.isFavourite(shopifyID: product?.shopify_product_id ?? "")
+        }
     }
     
-    var isCompareWithPrice: Bool {
-        guard product?.compare_at_price != nil else { return false }
-        
-        return true
-    }
+    @Published var isFavourite: Bool = false
     
+    private var FavVM = FavouriteViewModel.shared
+    
+    var isSoldOut: Bool { product?.inventory_quantity == 0 }
+    var isCompareWithPrice: Bool { product?.compare_at_price != nil }
+
     func getProductImageSrc() -> String {
         guard let images = self.product?.images, images.count > 0 else { return "" }
         

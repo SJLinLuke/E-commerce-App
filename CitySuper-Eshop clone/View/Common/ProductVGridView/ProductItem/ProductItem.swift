@@ -9,18 +9,14 @@ import SwiftUI
 
 struct ProductItem: View {
     
-    let VM = ProductItemViewModel()
+    @StateObject private var FavVM = FavouriteViewModel.shared
+    
+    @StateObject private var VM = ProductItemViewModel()
     
     let width       : CGFloat
     let height      : CGFloat
     let isNeedDelete: Bool
-        
-    init(product: ProductBody, width: CGFloat, height: CGFloat, isNeedDelete: Bool) {
-        VM.product        = product
-        self.width        = width
-        self.height       = height
-        self.isNeedDelete = isNeedDelete
-    }
+    let product     : ProductBody
     
     var body: some View {
         NavigationLink(destination: ProductDetailView(shopifyID: VM.product?.shopify_product_id ?? "")) {
@@ -35,7 +31,9 @@ struct ProductItem: View {
                         .frame(width: width - 3, height: 1)
                         .overlay(alignment: .trailing) {
                             if (!isNeedDelete) {
-                                FavouriteButton(isFavourite: VM.product?.is_favourite ?? false, width: 30, height: 30)
+                                FavouriteButton(
+                                    isFavourite: $VM.isFavourite,
+                                    product: VM.product ?? ProductBody.mockData(), width: 30, height: 30)
                             }
                         }
                     
@@ -78,11 +76,15 @@ struct ProductItem: View {
             .cornerRadius(10)
             .shadow(color: .gray, radius: 2, x: 0.5, y: 0.5)
             .padding(.leading, 3)
+            .onAppear {
+                VM.product = product
+            }
             .overlay(alignment:.topTrailing) {
                 if (isNeedDelete) {
                     ZStack {
                         Button {
-                            print("tap delete!")
+                            FavVM.removeFavourite(product: VM.product ?? ProductBody.mockData())
+                            NotificationCenter.default.post(name: Notification.Name.RemoveFromFavourite_Popup, object: nil)
                         } label: {
                             Image("favourite_delete_icon")
                         }
@@ -94,6 +96,6 @@ struct ProductItem: View {
 }
 
 #Preview {
-    ProductItem(product: ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.99", images: nil, products: nil, similar_products: nil), width: 150, height: 240, isNeedDelete: false)
+    ProductItem(width: 150 , height: 240, isNeedDelete: false, product: ProductBody.mockData())
 }
 
