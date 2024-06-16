@@ -26,6 +26,7 @@ struct FavouritesView: View {
                                 VM.fetchFavourite()
                             }
                         })
+                        .padding(.bottom)
                     }
                 }
             }
