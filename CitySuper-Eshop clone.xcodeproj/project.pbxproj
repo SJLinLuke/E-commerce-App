@@ -146,6 +146,7 @@
 		40E62EEA2C1D490C0044ED44 /* NavigationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EE92C1D490C0044ED44 /* NavigationsModel.swift */; };
 		40E62EEC2C1D59EE0044ED44 /* MoreCollectionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EEB2C1D59EE0044ED44 /* MoreCollectionsListViewModel.swift */; };
 		40E62EEF2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EEE2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift */; };
+		40E62EF12C1EECE90044ED44 /* ScrollToTopModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EF02C1EECE90044ED44 /* ScrollToTopModifier.swift */; };
 		C5776E2B2BF5B915007D5653 /* ProfileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E272BF5B915007D5653 /* ProfileListView.swift */; };
 		C5776E2C2BF5B915007D5653 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E292BF5B915007D5653 /* ProfileInfoView.swift */; };
 		C5776E2F2BF5B939007D5653 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E2D2BF5B939007D5653 /* Progress.swift */; };
@@ -335,6 +336,7 @@
 		40E62EE92C1D490C0044ED44 /* NavigationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationsModel.swift; sourceTree = "<group>"; };
 		40E62EEB2C1D59EE0044ED44 /* MoreCollectionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionsListViewModel.swift; sourceTree = "<group>"; };
 		40E62EEE2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionListHeaderView.swift; sourceTree = "<group>"; };
+		40E62EF02C1EECE90044ED44 /* ScrollToTopModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollToTopModifier.swift; sourceTree = "<group>"; };
 		4F9F286C04BA46682386FA73 /* Pods-CitySuper-Eshop clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.debug.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.debug.xcconfig"; sourceTree = "<group>"; };
 		648E8A9F6D8F99E408490679 /* Pods_CitySuper_Eshop_clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CitySuper_Eshop_clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8ED33EFAEF42CD30691397 /* Pods-CitySuper-Eshop clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.release.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.release.xcconfig"; sourceTree = "<group>"; };
@@ -988,6 +990,7 @@
 				406612D82BF843A40037C4D8 /* NavigationModifier.swift */,
 				4062BF282C0AE83200FF7184 /* AlertModifier.swift */,
 				C58994772C1C278A00AAE892 /* PopupViewModifier.swift */,
+				40E62EF02C1EECE90044ED44 /* ScrollToTopModifier.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -1715,6 +1718,7 @@
 				C5EA798C2BF458D70042FEF0 /* Binding+Extension.swift in Sources */,
 				C5EA79912BF4A5150042FEF0 /* String+Extension.swift in Sources */,
 				40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */,
+				40E62EF12C1EECE90044ED44 /* ScrollToTopModifier.swift in Sources */,
 				40E522892BEE87EA0046C3AA /* MaqureeModifier.swift in Sources */,
 				C5EA79872BF452E30042FEF0 /* ThemeButton.swift in Sources */,
 				40BC65512C0C3CB300EA5067 /* CouponListTNCView.swift in Sources */,

@@ -12,7 +12,7 @@ struct HomeView: View {
     @StateObject var VM = HomeViewModel()
     
     @State private var searchText        : String = ""
-    @State private var isShowingBackToTop: Bool = false
+    @State private var isShowBackToTop   : Bool = false
     @State private var isLoad            : Bool = true
     
     var body: some View {
@@ -70,21 +70,16 @@ struct HomeView: View {
                                 PlainCollectionView(popularCategories: popularCategory_Plain.categories)
                             }
                         }
-                        .background(GeometryReader { geometry in
-                            Color.clear
-                                .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
-                        })
-                        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                            DispatchQueue.main.async {
-                                withAnimation {
-                                    if value.y < 120 {
-                                        self.isShowingBackToTop = true
-                                    } else {
-                                        self.isShowingBackToTop = false
-                                    }
-                                }
-                            }
+                        .modifier(ScrollToTopModifier(isShowBackToTop: $isShowBackToTop))
+                    }
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    Button {
+                        withAnimation {
+                            scrollView.scrollTo("top")
                         }
+                    } label: {
+                        BackToTopButton(isShow: isShowBackToTop)
                     }
                 }
                 .overlay {
@@ -98,15 +93,7 @@ struct HomeView: View {
                 .modifier(NavigationModifier())
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
-            .overlay(alignment: .bottomTrailing) {
-                Button {
-                    withAnimation {
-                        scrollView.scrollTo("top")
-                    }
-                } label: {
-                    BackToTopButton(isShow: isShowingBackToTop)
-                }
-            }
+            
             
         }
     }
