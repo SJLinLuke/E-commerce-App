@@ -21,7 +21,7 @@ struct MainTabbarView: View {
     var body: some View {
         TabView(selection: $selectIndex) {
             
-            HomeView(searchText: $searchText)
+            HomeView()
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .tabItem { Label("Home",
                                  image: selectIndex == 0 ? "tab_home_on" : "tab_home")}
@@ -38,7 +38,7 @@ struct MainTabbarView: View {
                 .tag(2)
                 .badge(inboxVM.unreadNumber)
             
-            FavouritesView(searchText: $searchText)
+            FavouritesView()
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .tabItem { Label("Favourite",
                                  image: selectIndex == 3 ? "tab_favourites_on" : "tab_favourites")}
