@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ProductCollectionView: View {
     
-    @StateObject var VM = ProductCollectionViewModel()
+    @StateObject private var VM       = ProductCollectionViewModel()
+    @StateObject private var searchVM = SearchViewModel.shared
     
-    @State var searchText     : String = ""
     @State var isShowBackToTop: Bool = false
     
     var collectionID: String
@@ -81,8 +81,9 @@ struct ProductCollectionView: View {
                     .background(Color(hex:"F7F7F7"))
                     .modifier(NavigationModifier(navTilte: navTitle, isHideCollectionsList: true))
                     .modifier(ScrollToTopModifier(isShowBackToTop: $isShowBackToTop))
-                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 }
+                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .overlay(alignment: .bottomTrailing) {
                     Button {
                         withAnimation {

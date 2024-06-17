@@ -16,13 +16,11 @@ struct MainTabbarView: View {
     @StateObject private var addToCartVM = AddToCartButtomSheetViewModel.shared
     
     @State private var selectIndex: Int = 0
-    @State private var searchText : String = ""
     
     var body: some View {
         TabView(selection: $selectIndex) {
             
             HomeView()
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .tabItem { Label("Home",
                                  image: selectIndex == 0 ? "tab_home_on" : "tab_home")}
                 .tag(0)
@@ -39,7 +37,6 @@ struct MainTabbarView: View {
                 .badge(inboxVM.unreadNumber)
             
             FavouritesView()
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .tabItem { Label("Favourite",
                                  image: selectIndex == 3 ? "tab_favourites_on" : "tab_favourites")}
                 .tag(3)

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var VM = HomeViewModel()
+    @StateObject private var VM       = HomeViewModel()
+    @StateObject private var searchVM = SearchViewModel.shared
     
     @State private var searchText        : String = ""
     @State private var isShowBackToTop   : Bool = false
@@ -91,7 +92,8 @@ struct HomeView: View {
                     VM.fetchHomepage()
                 }
                 .modifier(NavigationModifier())
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
             
             

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MoreCollectionsListView: View {
     
-    @StateObject private var VM = MoreCollectionsListViewModel.shared
+    @StateObject private var VM       = MoreCollectionsListViewModel.shared
+    @StateObject private var searchVM = SearchViewModel.shared
     
     @State var searchText: String = ""
     
@@ -41,7 +42,8 @@ struct MoreCollectionsListView: View {
                 VM.fetchCollectionsList()
             }
             .modifier(NavigationModifier())
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .modifier(searchModifier(searchText: $searchVM.searchText))
+            .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden()
         }
         .navigationDestination(isPresented: $VM.isShowCollectionProductList) {

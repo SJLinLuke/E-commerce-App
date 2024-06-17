@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ProductDetailView: View {
     
-    @StateObject private var VM = ProductDetailViewModel()
+    @StateObject private var VM       = ProductDetailViewModel()
+    @StateObject private var searchVM = SearchViewModel.shared
     
-    @State var searchText         : String = ""
     @State var htmlFrameHeight    : CGFloat = .zero
     @State var isGalleryDetailShow: Bool = false
     @State var isShowBackToTop    : Bool = false
@@ -86,6 +86,8 @@ struct ProductDetailView: View {
                         VM.fetchProduct(shopifyID: shopifyID)
                     }
                 }
+                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .modifier(NavigationModifier(isHideCollectionsList: true))
                 .overlay {
                     if VM.isLoading {
                         LoadingIndicatiorView()
@@ -100,8 +102,7 @@ struct ProductDetailView: View {
                         BackToTopButton(isShow: isShowBackToTop)
                     }
                 }
-                .modifier(NavigationModifier(isHideCollectionsList: true))
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
         }
     }
