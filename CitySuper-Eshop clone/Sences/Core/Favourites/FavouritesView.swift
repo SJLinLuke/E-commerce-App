@@ -15,7 +15,6 @@ struct FavouritesView: View {
     @StateObject private var searchVM = SearchViewModel.shared
 
     @State var isShowingLoginModal: Bool = false
-    @State var searchText: String = ""
 
     var body: some View {
         NavigationStack {
@@ -33,7 +32,6 @@ struct FavouritesView: View {
             }
             .modifier(NavigationModifier())
             .modifier(searchModifier(searchText: $searchVM.searchText))
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
         .overlay {
             if (VM.isLoading) {
@@ -50,7 +48,7 @@ struct FavouritesView: View {
                 self.isShowingLoginModal = !userEnv.isLogin
             }
         }
-        .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
     }
 }
 

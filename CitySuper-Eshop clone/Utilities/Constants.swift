@@ -53,4 +53,5 @@ struct Constants {
     
     static let static_html_source = "<header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header><style>*{font-family: Helvetica} iframe{width: 100% !important;height: auto !important;}</style>"
                                 
+    static let searchPrompt = "Search brand or product name"
 }

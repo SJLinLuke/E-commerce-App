@@ -43,7 +43,7 @@ struct MoreCollectionsListView: View {
             }
             .modifier(NavigationModifier())
             .modifier(searchModifier(searchText: $searchVM.searchText))
-            .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
             .navigationBarBackButtonHidden()
         }
         .navigationDestination(isPresented: $VM.isShowCollectionProductList) {

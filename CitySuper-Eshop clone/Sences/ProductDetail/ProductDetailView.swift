@@ -102,7 +102,7 @@ struct ProductDetailView: View {
                         BackToTopButton(isShow: isShowBackToTop)
                     }
                 }
-                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
             }
         }
     }

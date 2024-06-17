@@ -83,7 +83,7 @@ struct ProductCollectionView: View {
                     .modifier(ScrollToTopModifier(isShowBackToTop: $isShowBackToTop))
                 }
                 .modifier(searchModifier(searchText: $searchVM.searchText))
-                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
                 .overlay(alignment: .bottomTrailing) {
                     Button {
                         withAnimation {
