@@ -148,6 +148,7 @@
 		40E62EEF2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EEE2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift */; };
 		40E62EF12C1EECE90044ED44 /* ScrollToTopModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EF02C1EECE90044ED44 /* ScrollToTopModifier.swift */; };
 		40E62EF32C1F1DB30044ED44 /* SearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EF22C1F1DB30044ED44 /* SearchModifier.swift */; };
+		40E62EF52C206C780044ED44 /* FlexibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E62EF42C206C780044ED44 /* FlexibleView.swift */; };
 		C5776E2B2BF5B915007D5653 /* ProfileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E272BF5B915007D5653 /* ProfileListView.swift */; };
 		C5776E2C2BF5B915007D5653 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E292BF5B915007D5653 /* ProfileInfoView.swift */; };
 		C5776E2F2BF5B939007D5653 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5776E2D2BF5B939007D5653 /* Progress.swift */; };
@@ -340,6 +341,7 @@
 		40E62EEE2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionListHeaderView.swift; sourceTree = "<group>"; };
 		40E62EF02C1EECE90044ED44 /* ScrollToTopModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollToTopModifier.swift; sourceTree = "<group>"; };
 		40E62EF22C1F1DB30044ED44 /* SearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModifier.swift; sourceTree = "<group>"; };
+		40E62EF42C206C780044ED44 /* FlexibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleView.swift; sourceTree = "<group>"; };
 		4F9F286C04BA46682386FA73 /* Pods-CitySuper-Eshop clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.debug.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.debug.xcconfig"; sourceTree = "<group>"; };
 		648E8A9F6D8F99E408490679 /* Pods_CitySuper_Eshop_clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CitySuper_Eshop_clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8ED33EFAEF42CD30691397 /* Pods-CitySuper-Eshop clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CitySuper-Eshop clone.release.xcconfig"; path = "Target Support Files/Pods-CitySuper-Eshop clone/Pods-CitySuper-Eshop clone.release.xcconfig"; sourceTree = "<group>"; };
@@ -1221,6 +1223,7 @@
 		40E522D52BF26BBA0046C3AA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				40E62EF62C206C7C0044ED44 /* FlexibleView */,
 				400C05602BFF7CFB00493ACA /* BulletPointsView */,
 				40736CAD2C15803F00496AB7 /* CustomFormTextItem */,
 				C593F1B22C071F8D00DBB028 /* CustomTextField */,
@@ -1276,6 +1279,14 @@
 				40E62EEE2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift */,
 			);
 			path = MoreCollectionListGroup;
+			sourceTree = "<group>";
+		};
+		40E62EF62C206C7C0044ED44 /* FlexibleView */ = {
+			isa = PBXGroup;
+			children = (
+				40E62EF42C206C780044ED44 /* FlexibleView.swift */,
+			);
+			path = FlexibleView;
 			sourceTree = "<group>";
 		};
 		60CD7B7AB602F3949B37FA4A /* Pods */ = {
@@ -1721,6 +1732,7 @@
 				400C05552BFCFBE200493ACA /* BulletPointsView.swift in Sources */,
 				4062FCEE2C1B45520072C2DE /* ShoppingCartEmptyView.swift in Sources */,
 				C5776E2C2BF5B915007D5653 /* ProfileInfoView.swift in Sources */,
+				40E62EF52C206C780044ED44 /* FlexibleView.swift in Sources */,
 				C5776E312BF5BCA1007D5653 /* InboxViewModel.swift in Sources */,
 				C58505D22C05D78A0055B844 /* ProductDetailMoreProductsVGirdView.swift in Sources */,
 				400C05532BFCFB8F00493ACA /* ProductDetailTagsView.swift in Sources */,

@@ -43,7 +43,7 @@ struct searchModifier: ViewModifier {
 
 
 
-let data = ["Short", "A bit longer", "Even longer text item", "Short", "Text", "Another longer text item", "More text", "Last item"]
+let data = ["Short", "A bit longer", "Even longer text item", "Short1", "Text", "Another longer text item", "More text", "Last item"]
 
 struct abc: View {
         
@@ -56,6 +56,7 @@ struct abc: View {
                         Text("Recent Searches")
                             .fontWeight(.bold)
                             .foregroundColor(Color(hex: "777777"))
+                        
                         Spacer()
                         
                         Button {
@@ -68,19 +69,25 @@ struct abc: View {
                     }
                     .padding()
                     
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 50))], spacing: 10) {
-                        ForEach(data.indices, id: \.self) { index in
-                            Text("\(data[index])")
-                                .frame(minWidth: 50, maxWidth: geometry.size.width)
-                                .frame(height: 30)
-                                .fixedSize(horizontal: true, vertical: false)
-                                .background(Color.blue.opacity(0.3))
-                                .cornerRadius(5)
-                            
+                    FlexibleView(availableWidth: geometry.size.width, data: data, spacing: 5, alignment: .leading, isShowMore: false ) {
+                        item in
+                        HStack {
+                            Text(item)
+                            Image("search_arrowright_icon")
+                        }
+                        .font(.callout)
+                        .fontWeight(.medium)
+                        .frame(height: 30)
+                        .padding(.horizontal, 10)
+                        .foregroundColor(.secondary)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.gray ,lineWidth: 1.5)
                         }
                     }
-                    .padding()
-                    .frame(width: geometry.size.width)
+                    
+
+                    
                 }
             })
         }
