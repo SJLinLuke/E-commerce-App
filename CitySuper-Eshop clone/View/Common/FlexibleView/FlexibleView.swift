@@ -30,9 +30,8 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
                             .measureSize(perform: { CGSize in
                                 elementsSize[element] = CGSize
                             })
-                        
-                        
                     }
+                    
                     Spacer()
                 }
                 .padding(.leading)
@@ -41,10 +40,11 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
     }
     
     func generateRows() -> [[Data.Element]] {
+        
         var rows: [[Data.Element]] = [[]]
         var currentRow = 0
         var remainingWidth = availableWidth
-        
+                 
         for element in data {
             let elementSize = elementsSize[element, default: CGSize(width: availableWidth, height: 1)]
             
@@ -59,9 +59,9 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
         }
         
         if !isShowMore && !rows[0].isEmpty {
-            print(rows)
             return [rows[0]]
         }
+        
         return rows
     }
 }
