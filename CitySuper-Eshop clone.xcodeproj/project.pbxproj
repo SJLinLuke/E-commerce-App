@@ -95,6 +95,7 @@
 		40736CB62C1765D300496AB7 /* ShoppingCartNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CB52C1765D300496AB7 /* ShoppingCartNoticeView.swift */; };
 		40736CB92C17661900496AB7 /* ShoppingCartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CB82C17661900496AB7 /* ShoppingCartHeaderView.swift */; };
 		40736CBC2C17665500496AB7 /* ShoppingCartInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CBB2C17665500496AB7 /* ShoppingCartInfoView.swift */; };
+		407F90B92C21D5BD000D3201 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F90B82C21D5BD000D3201 /* SearchModel.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
@@ -286,6 +287,7 @@
 		40736CB52C1765D300496AB7 /* ShoppingCartNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartNoticeView.swift; sourceTree = "<group>"; };
 		40736CB82C17661900496AB7 /* ShoppingCartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartHeaderView.swift; sourceTree = "<group>"; };
 		40736CBB2C17665500496AB7 /* ShoppingCartInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartInfoView.swift; sourceTree = "<group>"; };
+		407F90B82C21D5BD000D3201 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
@@ -780,6 +782,14 @@
 			path = ShoppingCartInfoView;
 			sourceTree = "<group>";
 		};
+		407F90B72C21D5B0000D3201 /* SearchModel */ = {
+			isa = PBXGroup;
+			children = (
+				407F90B82C21D5BD000D3201 /* SearchModel.swift */,
+			);
+			path = SearchModel;
+			sourceTree = "<group>";
+		};
 		40AB32682C0B071E0091ECC4 /* MoreStaticPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1039,6 +1049,7 @@
 		40E522982BEF41F40046C3AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				407F90B72C21D5B0000D3201 /* SearchModel */,
 				40E62EE82C1D48F70044ED44 /* NavigationsModel */,
 				40736CAE2C15DE7800496AB7 /* ShoppingCartModel */,
 				40BC654B2C0C31FA00EA5067 /* CouponModel */,
@@ -1729,6 +1740,7 @@
 				400C05592BFCFC4E00493ACA /* ProductDetailPriceView.swift in Sources */,
 				C5AA75A02C005CC100612D48 /* ProductCollectionView.swift in Sources */,
 				400C052F2BF9EAF800493ACA /* ShippingRateViewModel.swift in Sources */,
+				407F90B92C21D5BD000D3201 /* SearchModel.swift in Sources */,
 				400C05552BFCFBE200493ACA /* BulletPointsView.swift in Sources */,
 				4062FCEE2C1B45520072C2DE /* ShoppingCartEmptyView.swift in Sources */,
 				C5776E2C2BF5B915007D5653 /* ProfileInfoView.swift in Sources */,

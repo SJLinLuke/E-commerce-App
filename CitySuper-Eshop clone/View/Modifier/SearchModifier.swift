@@ -47,6 +47,8 @@ struct searchModifier: ViewModifier {
 
 struct SearchView: View {
     
+    @StateObject var VM = SearchViewModel.shared
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -54,16 +56,23 @@ struct SearchView: View {
                     print("clean all")
                 }
                 
-                SearchTagsView()
+                SearchTagsView(data: ["123"])
                 
                 SearchHeader(title: "Hot Keywords")
                 
-                SearchTagsView()
+                SearchTagsView(data: VM.hotKeywords)
                 
                 SearchHeader(title: "Recommendation Collections")
                 
-                SearchRecommendationView()
-                
+                SearchRecommendationView(recommendationCollections: VM.recommendKeywords)
+            }
+            .task {
+                VM.fetchSuggestion()
+            }
+        }
+        .overlay {
+            if VM.isLoading {
+                LoadingIndicatiorView()
             }
         }
         .background(Color(hex: "F2F2F2"))
@@ -103,9 +112,9 @@ struct SearchHeader: View {
 
 struct SearchTagsView: View {
     
-    let data = ["Short", "A bit longer", "Even longer text item", "Short1", "Text", "Another longer text item", "More text", "Last item"]
-    
     @State private var isShowMore: Bool = false
+    
+    let data: [String]
     
     private let screenWidth = UIScreen.main.bounds.width
     
@@ -128,40 +137,38 @@ struct SearchTagsView: View {
                 }
             }
             
-            Button {
-                DispatchQueue.main.async { isShowMore.toggle() }
-            } label: {
-                HStack {
-                    Text(isShowMore ? "Show less" : "Show more")
-                    Image(isShowMore ?
-                          "search_arrowup_icon" : "search_arrowdown_icon")
+            if !data.isEmpty {
+                Button {
+                    DispatchQueue.main.async { isShowMore.toggle() }
+                } label: {
+                    HStack {
+                        Text(isShowMore ? "Show less" : "Show more")
+                        Image(isShowMore ?
+                              "search_arrowup_icon" : "search_arrowdown_icon")
+                    }
+                    .font(.system(size: 14))
+                    .foregroundColor(Color(hex: "777777"))
                 }
-                .font(.system(size: 14))
-                .foregroundColor(Color(hex: "777777"))
+                .padding(.top)
             }
-            .padding(.top)
+            
         }
     }
 }
 
 struct SearchRecommendationView: View {
     
+    let recommendationCollections: [recommendKeywords]
+    
     private let width = UIScreen.main.bounds.width / 2.25
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: width, maximum: width))]) {
-            Rectangle()
-                .frame(height: 170)
-            Rectangle()
-                .frame(height: 170)
-            Rectangle()
-                .frame(height: 170)
-            Rectangle()
-                .frame(height: 170)
-            Rectangle()
-                .frame(height: 170)
-            Rectangle()
-                .frame(height: 170)
+            ForEach(recommendationCollections) { collection in
+                RemoteImageView(url: collection.image_src ?? "", placeholder: .common)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 170)
+            }
         }
         .padding(.bottom)
     }

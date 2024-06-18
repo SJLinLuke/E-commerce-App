@@ -136,7 +136,6 @@ final class NetworkManager: ObservableObject {
         }
     }
     
-    // MARK: NotificationDetail
     func fetchNotificationDetail(_ id: Int) async throws -> MessageDetailData {
         
         let request = generateURLRequest(host + Constants.notificationDetail + "\(id)")
@@ -287,7 +286,6 @@ final class NetworkManager: ObservableObject {
         }
     }
     
-    // MARK: Product-Similar
     func fetchSimilarProduct(_ shopifyID: String, page: Int) async throws -> [ProductBody] {
         
         let request = generateURLRequest(host + Constants.productSimilar + shopifyID + "?page=\(page)")
@@ -302,7 +300,6 @@ final class NetworkManager: ObservableObject {
         }
     }
     
-    // MARK: Product-Related
     func fetchRelatedProduct(_ shopifyID: String, page: Int) async throws -> [ProductBody] {
         
         let request = generateURLRequest(host + Constants.productRelated + shopifyID + "?page=\(page)")
@@ -381,6 +378,21 @@ final class NetworkManager: ObservableObject {
         
         do {
             return try decoder.decode(NavigationsResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: Search
+    func fetchSuggestion() async throws -> SearchSuggestionData {
+        
+        let request = generateURLRequest(host + Constants.suggestion)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SearchSuggestionResponse.self, from: data).data
         } catch {
             print(error.localizedDescription)
             throw CSAlert.inValidData
