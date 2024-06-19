@@ -8,13 +8,11 @@
 import Foundation
 import SwiftUI
 
-@MainActor final class SearchViewModel: ObservableObject {
+@MainActor final class SuggestionViewModel: ObservableObject {
     
-    static let shared = SearchViewModel()
+    static let shared = SuggestionViewModel()
     
     @AppStorage("searchHistoryKeywords") private var storage_historyKeywords: Data?
-    
-    @Published var searchText: String = ""
     
     @Published var isLoading        : Bool = false
     @Published var historyKeywords  : [String] = []
@@ -42,7 +40,6 @@ import SwiftUI
             }
         }
     }
-    
     
     // MARK: History Keywords Operations
     private func retriveHistoryKeyword() -> [String] {

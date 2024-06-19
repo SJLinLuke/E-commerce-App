@@ -398,6 +398,20 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    func fetchKeyword(_ keyword: String) async throws -> SearchKeywordData {
+        
+        let request = generateURLRequest(host + Constants.summary + "\(keyword)&mode=incremental")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SearchKeywordResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

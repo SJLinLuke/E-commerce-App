@@ -12,7 +12,7 @@ struct FavouritesView: View {
     @EnvironmentObject var userEnv: UserEnviroment
     
     @StateObject private var VM       = FavouriteViewModel.shared
-    @StateObject private var searchVM = SearchViewModel.shared
+    @StateObject private var searchVM = SearchListViewModel.shared
 
     @State var isShowingLoginModal: Bool = false
 

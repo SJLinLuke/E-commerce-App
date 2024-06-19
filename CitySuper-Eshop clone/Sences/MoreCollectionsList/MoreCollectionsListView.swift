@@ -10,7 +10,7 @@ import SwiftUI
 struct MoreCollectionsListView: View {
     
     @StateObject private var VM       = MoreCollectionsListViewModel.shared
-    @StateObject private var searchVM = SearchViewModel.shared
+    @StateObject private var searchVM = SearchListViewModel.shared
     
     @State var searchText: String = ""
     

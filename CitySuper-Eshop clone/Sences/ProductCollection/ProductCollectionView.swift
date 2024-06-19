@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductCollectionView: View {
     
     @StateObject private var VM       = ProductCollectionViewModel()
-    @StateObject private var searchVM = SearchViewModel.shared
+    @StateObject private var searchVM = SearchListViewModel.shared
     
     @State var isShowBackToTop: Bool = false
     

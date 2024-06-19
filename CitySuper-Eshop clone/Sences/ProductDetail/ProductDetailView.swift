@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductDetailView: View {
     
     @StateObject private var VM       = ProductDetailViewModel()
-    @StateObject private var searchVM = SearchViewModel.shared
+    @StateObject private var searchVM = SearchListViewModel.shared
     
     @State var htmlFrameHeight    : CGFloat = .zero
     @State var isGalleryDetailShow: Bool = false

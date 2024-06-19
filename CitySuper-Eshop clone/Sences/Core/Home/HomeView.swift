@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject private var VM       = HomeViewModel()
-    @StateObject private var searchVM = SearchViewModel.shared
+    @StateObject private var searchVM = SearchListViewModel.shared
     
     @State private var searchText        : String = ""
     @State private var isShowBackToTop   : Bool = false

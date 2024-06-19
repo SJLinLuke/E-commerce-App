@@ -38,3 +38,26 @@ struct recommendKeywords: Decodable, Hashable, Equatable, Identifiable {
         self.not_viewable          = try container.decode([String].self, forKey: .not_viewable)
     }
 }
+
+
+struct SearchKeywordResponse: Decodable {
+    let success      : Bool
+    let error_message: String?
+    let data         : SearchKeywordData
+}
+
+struct SearchKeywordData: Decodable, Hashable, Equatable {
+    var brands             : [String]? = nil
+    var collections        : [SearchKeywordCollection]? = nil
+    var product_collections: [SearchKeywordCollection]? = nil
+    var suggest_products   : [ProductBody]? = nil
+    var products           : [ProductBody]? = nil
+}
+
+struct SearchKeywordCollection: Decodable, Hashable, Equatable {
+    let shopify_storefront_id: String?
+    let title                : String
+    let not_viewable         : [String]?
+    let image_src            : String?
+    let item_count           : Int?
+}

@@ -17,7 +17,7 @@ struct searchModifier: ViewModifier {
         ZStack {
             if isSearching {
                 if searchText.isEmpty {
-                    SearchView()
+                    SuggestionView()
                 } else {
                     SearchList()
                 }
@@ -30,24 +30,26 @@ struct searchModifier: ViewModifier {
 
 struct SearchListCell: View {
     
-    let title: String
+    let text : Text
     let icon : String
     
-    var isShowArrow: Bool = true
+    var isAccessoryIcon: Bool = true
     
     var body: some View {
         HStack {
-            Image(icon)
-                .resizable()
-                .frame(width: 20, height: 18)
+            if !icon.isEmpty {
+                Image(icon)
+                    .resizable()
+                    .frame(width: 20, height: 18)
+            }
             
-            Text(title)
+            text
                 .padding(.leading, 10)
                 .lineLimit(1)
             
             Spacer()
             
-            if isShowArrow {
+            if isAccessoryIcon {
                 Image("search_arrowright_icon")
             }
         }
@@ -57,47 +59,67 @@ struct SearchListCell: View {
 }
 
 struct SearchList: View {
-    let abc = [1, 2]
+    
+    @StateObject var VM = SearchListViewModel.shared
+    
     var body: some View {
         ScrollView {
-            
             VStack(spacing: 0) {
-                SearchHeader(title: "Brand")
-                    .background(Color(hex: "F2F2F2"))
-
-
-                ForEach(abc, id: \.self) { a in
-                    SearchListCell(title: "\(a)", icon: "search_shop_icon")
-                        .overlay(alignment: .bottom) {
-                            if a != abc.last {
-                                SeperateLineView(color: .black)
+                
+                if !VM.brands.isEmpty {
+                    SearchHeader(title: "Brand")
+                        .background(Color(hex: "F2F2F2"))
+                    
+                    ForEach(VM.brands, id: \.self) { brand in
+                        SearchListCell(text: Text(brand), icon: "search_shop_icon")
+                            .overlay(alignment: .bottom) {
+                                if brand != VM.brands.last {
+                                    SeperateLineView(color: .black)
+                                }
                             }
-                        }
+                    }
                 }
-
-                SearchHeader(title: "Keyword Suggestions")
-                    .background(Color(hex: "F2F2F2"))
-
-                ForEach(abc, id: \.self) { a in
-                    SearchListCell(title: "\(a)", icon: "search_shop_icon")                        .overlay(alignment: .bottom) {
-                            if a != abc.last {
-                                SeperateLineView(color: .black)
+                
+                if !VM.collections.isEmpty {
+                    SearchHeader(title: "Keyword Suggestions")
+                        .background(Color(hex: "F2F2F2"))
+                    
+                    ForEach(VM.collections, id: \.self) { collection in
+                        SearchListCell(text: Text(collection.title), icon: "search_icon")
+                            .overlay(alignment: .bottom) {
+                                if collection != VM.collections.last {
+                                    SeperateLineView(color: .black)
+                                }
                             }
-                        }
+                    }
                 }
-
-                SearchHeader(title: "Keyword Under Categories")
-                    .background(Color(hex: "F2F2F2"))
-
-                ForEach(abc, id: \.self) { a in
-                    SearchListCell(title: "\(a)", icon: "search_shop_icon")                        .overlay(alignment: .bottom) {
-                            if a != abc.last {
-                                SeperateLineView(color: .black)
+                
+                if !VM.product_collections.isEmpty {
+                    SearchHeader(title: "Keyword Under Categories")
+                        .background(Color(hex: "F2F2F2"))
+                    
+                    ForEach(VM.product_collections, id: \.self) { collection in
+                        SearchListCell(text: Text(collection.title), icon: "search_icon")
+                            .overlay(alignment: .bottom) {
+                                if collection != VM.product_collections.last {
+                                    SeperateLineView(color: .black)
+                                }
                             }
-                        }
+                    }
                 }
+                
                 SeperateLineView(color: Color(hex: "F2F2F2"), height: 20)
-                SearchListCell(title: "Show all result for beef", icon: "", isShowArrow: false)
+                
+                HStack {
+                    SearchListCell(text:
+                                    Text("Show all results for ") +
+                                   Text("\"\(VM.searchText)\"").bold().foregroundColor(.gray)
+                                   , icon: "", isAccessoryIcon: false)
+                    if VM.isLoading {
+                        ProgressView()
+                            .padding(.trailing)
+                    }
+                }
                 
             }
         }
@@ -120,9 +142,9 @@ struct SearchList: View {
 
 
 
-struct SearchView: View {
+struct SuggestionView: View {
     
-    @StateObject var VM = SearchViewModel.shared
+    @StateObject var VM = SuggestionViewModel.shared
     
     var body: some View {
         ScrollView {
@@ -209,7 +231,7 @@ struct SearchTagCell: View {
 
 struct SearchTagsView: View {
     
-    @StateObject var VM = SearchViewModel.shared
+    @StateObject var searchVM = SearchListViewModel.shared
     
     @State private var isShowMore: Bool = false
     
@@ -223,7 +245,7 @@ struct SearchTagsView: View {
                 title in
                 SearchTagCell(title: title)
                     .onTapGesture {
-                        VM.searchText = title
+                        searchVM.searchText = title
                     }
             }
             
