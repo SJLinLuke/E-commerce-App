@@ -54,7 +54,7 @@ struct CarouselBannerView: View {
             }
         case LinkType.COLLECTION.rawValue:
             if let id = bannerSetModel.related_id {
-                return AnyView(ProductCollectionView(collectionID: id, navTitle: ""))
+                return AnyView(ProductCollectionView(collectionID: id))
             }
 //        case LinkType.EXTERNAL_LINK.rawValue:
 //            if let url = URL(string: bannerSetModel.external_url ?? "") {

@@ -34,8 +34,7 @@ struct CollectionNormalLayoutView_Normal: View {
                         ProductDetailMoreProductsVGirdView(navTitle: collectionNormalLayout.title ,
                                                            shopifyID: collectionNormalLayout.shopify_collection_id)
                     } else {
-                        ProductCollectionView(collectionID: collectionNormalLayout.shopify_collection_id,
-                                              navTitle: collectionNormalLayout.title)
+                        ProductCollectionView(collectionID: collectionNormalLayout.shopify_collection_id)
                     }
                 } label: {
                     AllButton()

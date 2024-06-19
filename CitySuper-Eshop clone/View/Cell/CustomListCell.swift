@@ -19,8 +19,7 @@ struct CustomListCell: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(rowData.title)
-                    .foregroundColor(isLoginOrLogout ? .themeGreen : .black
-                    )
+                    .foregroundColor(isLoginOrLogout ? .themeGreen : .black)
                 
                 if (rowData.title == "E-Shop Coupon" && couponListVM.couponsCount > 0) {
                     Circle()

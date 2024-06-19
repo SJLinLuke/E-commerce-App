@@ -10,6 +10,7 @@ import Foundation
 @MainActor final class ProductCollectionViewModel: ObservableObject {
     
     @Published var isLoading         : Bool = false
+    @Published var navTitle          : String = ""
     @Published var collectionInfo    : ProductCollectionData? = nil
     @Published var collectionProducts: [ProductBody] = []
     @Published var productsTotal     : Int = 0
@@ -24,6 +25,7 @@ import Foundation
         Task {
             do {
                 self.collectionInfo = try await NetworkManager.shared.fetchCollectionInfo(collectionID)
+                self.navTitle = self.collectionInfo?.title ?? ""
             } catch {
                 print(error.localizedDescription)
             }

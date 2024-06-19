@@ -65,8 +65,7 @@ struct FastCollectionView: View {
             Spacer()
             
             NavigationLink {
-                ProductCollectionView(collectionID: popularCategories[currentIndex].shopify_collection_id,
-                                      navTitle: popularCategories[currentIndex].title)
+                ProductCollectionView(collectionID: popularCategories[currentIndex].shopify_collection_id)
             } label: {
                 AllButton()
                     .padding(.vertical)

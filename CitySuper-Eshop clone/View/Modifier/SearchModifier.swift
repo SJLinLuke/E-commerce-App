@@ -19,7 +19,7 @@ struct searchModifier: ViewModifier {
                 if searchText.isEmpty {
                     SearchView()
                 } else {
-                    //                    absss()
+                    SearchList()
                 }
             } else {
                 content
@@ -28,11 +28,86 @@ struct searchModifier: ViewModifier {
     }
 }
 
+struct SearchListCell: View {
+    
+    let title: String
+    let icon : String
+    
+    var isShowArrow: Bool = true
+    
+    var body: some View {
+        HStack {
+            Image(icon)
+                .resizable()
+                .frame(width: 20, height: 18)
+            
+            Text(title)
+                .padding(.leading, 10)
+                .lineLimit(1)
+            
+            Spacer()
+            
+            if isShowArrow {
+                Image("search_arrowright_icon")
+            }
+        }
+        .foregroundColor(.secondary)
+        .padding()
+    }
+}
+
+struct SearchList: View {
+    let abc = [1, 2]
+    var body: some View {
+        ScrollView {
+            
+            VStack(spacing: 0) {
+                SearchHeader(title: "Brand")
+                    .background(Color(hex: "F2F2F2"))
 
 
+                ForEach(abc, id: \.self) { a in
+                    SearchListCell(title: "\(a)", icon: "search_shop_icon")
+                        .overlay(alignment: .bottom) {
+                            if a != abc.last {
+                                SeperateLineView(color: .black)
+                            }
+                        }
+                }
+
+                SearchHeader(title: "Keyword Suggestions")
+                    .background(Color(hex: "F2F2F2"))
+
+                ForEach(abc, id: \.self) { a in
+                    SearchListCell(title: "\(a)", icon: "search_shop_icon")                        .overlay(alignment: .bottom) {
+                            if a != abc.last {
+                                SeperateLineView(color: .black)
+                            }
+                        }
+                }
+
+                SearchHeader(title: "Keyword Under Categories")
+                    .background(Color(hex: "F2F2F2"))
+
+                ForEach(abc, id: \.self) { a in
+                    SearchListCell(title: "\(a)", icon: "search_shop_icon")                        .overlay(alignment: .bottom) {
+                            if a != abc.last {
+                                SeperateLineView(color: .black)
+                            }
+                        }
+                }
+                SeperateLineView(color: Color(hex: "F2F2F2"), height: 20)
+                SearchListCell(title: "Show all result for beef", icon: "", isShowArrow: false)
+                
+            }
+        }
+    }
+}
 
 
-
+#Preview {
+    SearchList()
+}
 
 
 
@@ -53,14 +128,15 @@ struct SearchView: View {
         ScrollView {
             VStack {
                 SearchHeader(title: "Recent Searches", buttonTitle: "Clean all") {
-                    print("clean all")
+                    VM.historyKeywords = []
+                    VM.clearHistoryKeyword()
                 }
                 
-                SearchTagsView(data: ["123"])
+                SearchTagsView(keywords: VM.historyKeywords)
                 
                 SearchHeader(title: "Hot Keywords")
                 
-                SearchTagsView(data: VM.hotKeywords)
+                SearchTagsView(keywords: VM.hotKeywords)
                 
                 SearchHeader(title: "Recommendation Collections")
                 
@@ -80,9 +156,7 @@ struct SearchView: View {
     }
 }
 
-#Preview {
-    SearchView()
-}
+
 
 struct SearchHeader: View {
     
@@ -93,6 +167,7 @@ struct SearchHeader: View {
     var body: some View {
         HStack {
             Text(title)
+                .font(.system(size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(Color(hex: "777777"))
             
@@ -110,34 +185,49 @@ struct SearchHeader: View {
     }
 }
 
+struct SearchTagCell: View {
+    
+    let title: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+            Image("search_arrowright_icon")
+                .resizable()
+                .frame(width: 6, height: 8)
+        }
+        .font(.system(size: 14))
+        .frame(height: 28)
+        .padding(.horizontal, 5)
+        .foregroundColor(.secondary)
+        .overlay {
+            RoundedRectangle(cornerRadius: 4)
+                .stroke(.gray ,lineWidth: 1)
+        }
+    }
+}
+
 struct SearchTagsView: View {
+    
+    @StateObject var VM = SearchViewModel.shared
     
     @State private var isShowMore: Bool = false
     
-    let data: [String]
+    let keywords: [String]
     
-    private let screenWidth = UIScreen.main.bounds.width
+    private let screenWidth = UIScreen.main.bounds.width * 0.95
     
     var body: some View {
         VStack {
-            FlexibleView(availableWidth: screenWidth, data: data, spacing: 5, alignment: .leading, isShowMore: isShowMore ) {
-                FlexibleItem in
-                HStack {
-                    Text(FlexibleItem)
-                    Image("search_arrowright_icon")
-                }
-                .font(.callout)
-                .fontWeight(.medium)
-                .frame(height: 30)
-                .padding(.horizontal, 10)
-                .foregroundColor(.secondary)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(.gray ,lineWidth: 1.5)
-                }
+            FlexibleView(availableWidth: screenWidth, data: keywords, spacing: 5, alignment: .leading, isShowMore: isShowMore ) {
+                title in
+                SearchTagCell(title: title)
+                    .onTapGesture {
+                        VM.searchText = title
+                    }
             }
             
-            if !data.isEmpty {
+            if !keywords.isEmpty {
                 Button {
                     DispatchQueue.main.async { isShowMore.toggle() }
                 } label: {
@@ -165,9 +255,13 @@ struct SearchRecommendationView: View {
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: width, maximum: width))]) {
             ForEach(recommendationCollections) { collection in
-                RemoteImageView(url: collection.image_src ?? "", placeholder: .common)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 170)
+                NavigationLink {
+                    ProductCollectionView(collectionID: collection.shopify_storefront_id)
+                } label: {
+                    RemoteImageView(url: collection.image_src ?? "", placeholder: .common)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 170)
+                }
             }
         }
         .padding(.bottom)

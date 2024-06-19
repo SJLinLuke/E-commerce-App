@@ -78,7 +78,7 @@ struct InboxDetailView: View {
             }
         case LinkType.COLLECTION.rawValue:
             if let id = messageDetail.link_related_id {
-                return AnyView(ProductCollectionView(collectionID: id, navTitle: ""))
+                return AnyView(ProductCollectionView(collectionID: id))
             }
         case LinkType.ORDER.rawValue:
             if let id = messageDetail.link_related_id {

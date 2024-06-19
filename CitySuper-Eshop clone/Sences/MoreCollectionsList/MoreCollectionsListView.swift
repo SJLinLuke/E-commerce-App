@@ -49,8 +49,7 @@ struct MoreCollectionsListView: View {
         .navigationDestination(isPresented: $VM.isShowCollectionProductList) {
             if let selectedCollection = VM.selectedCollection {
                 ProductCollectionView(
-                    collectionID: selectedCollection.shopify_collection_id,
-                    navTitle: selectedCollection.title)
+                    collectionID: selectedCollection.shopify_collection_id)
             }
         } 
     }

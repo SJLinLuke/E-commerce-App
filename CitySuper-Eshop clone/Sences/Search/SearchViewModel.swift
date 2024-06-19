@@ -25,6 +25,7 @@ import SwiftUI
         self.historyKeywords = retriveHistoryKeyword()
     }
     
+    // MARK: Network Fetch
     func fetchSuggestion() {
         
         guard !isLoading else { return }
@@ -42,11 +43,11 @@ import SwiftUI
         }
     }
     
+    
+    // MARK: History Keywords Operations
     private func retriveHistoryKeyword() -> [String] {
         
-        guard let storedHistoryKeywords = self.storage_historyKeywords else {
-            return []
-        }
+        guard let storedHistoryKeywords = self.storage_historyKeywords else { return [] }
         
         do {
             return try JSONDecoder().decode([String].self, from: storedHistoryKeywords)
@@ -60,7 +61,7 @@ import SwiftUI
         
         guard !historyKeywords.contains(keyword) else { return }
         
-        historyKeywords.append(keyword)
+        historyKeywords.insert(keyword, at: 0)
         
         do {
             let data = try JSONEncoder().encode(historyKeywords)
@@ -68,5 +69,9 @@ import SwiftUI
         } catch {
             print("something went wrong when encode qrcode data")
         }
+    }
+    
+    func clearHistoryKeyword() {
+        storage_historyKeywords = nil
     }
 }

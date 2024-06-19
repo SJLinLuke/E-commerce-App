@@ -15,7 +15,6 @@ struct ProductCollectionView: View {
     @State var isShowBackToTop: Bool = false
     
     var collectionID: String
-    var navTitle    : String
     
     var body: some View {
         NavigationStack {
@@ -79,7 +78,7 @@ struct ProductCollectionView: View {
                         VM.fetchCollectionProducts(collectionID: collectionID)
                     }
                     .background(Color(hex:"F7F7F7"))
-                    .modifier(NavigationModifier(navTilte: navTitle, isHideCollectionsList: true))
+                    .modifier(NavigationModifier(navTilte: VM.navTitle, isHideCollectionsList: true))
                     .modifier(ScrollToTopModifier(isShowBackToTop: $isShowBackToTop))
                 }
                 .modifier(searchModifier(searchText: $searchVM.searchText))
@@ -105,5 +104,5 @@ struct ProductCollectionView: View {
 }
 
 #Preview {
-    ProductCollectionView(collectionID: "", navTitle: "Pork")
+    ProductCollectionView(collectionID: "")
 }
