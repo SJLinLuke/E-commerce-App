@@ -20,7 +20,7 @@ struct SearchListView: View {
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.brands, id: \.self) { brand in
-                        NavigationLink { SearchResult() } label: {
+                        NavigationLink { SearchResult(keyword: brand) } label: {
                             SearchListCell(text: Text(brand), icon: "search_shop_icon")
                                 .background(.white)
                                 .overlay(alignment: .bottom) {
@@ -37,7 +37,7 @@ struct SearchListView: View {
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.collections, id: \.self) { collection in
-                        NavigationLink { SearchResult() } label: {
+                        NavigationLink { SearchResult(keyword: collection.title) } label: {
                             SearchListCell(text: Text(collection.title), icon: "search_icon")
                                 .background(.white)
                                 .overlay(alignment: .bottom) {

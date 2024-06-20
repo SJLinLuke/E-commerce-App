@@ -61,3 +61,19 @@ struct SearchKeywordCollection: Decodable, Hashable, Equatable {
     let image_src            : String?
     let item_count           : Int?
 }
+
+
+struct SearchResultResponse: Decodable {
+    let success: Bool
+    let error_message: String?
+    let data: SearchResultData
+}
+
+struct SearchResultData: Decodable {
+    let current_page    : String?
+    let total_page      : Int?
+    let total_record    : Int?
+    var products        : [ProductBody]? = nil
+    var suggest_products: [ProductBody]? = nil
+}
+

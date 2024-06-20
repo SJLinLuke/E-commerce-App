@@ -21,10 +21,9 @@ struct SearchTagsView: View {
         VStack {
             FlexibleView(availableWidth: screenWidth, data: keywords, spacing: 5, alignment: .leading, isShowMore: isShowMore ) {
                 title in
-                SearchTagCell(title: title)
-                    .onTapGesture {
-                        searchVM.searchText = title
-                    }
+                NavigationLink { SearchResult(keyword: title) } label: {
+                    SearchTagCell(title: title)
+                }
             }
             
             if !keywords.isEmpty {

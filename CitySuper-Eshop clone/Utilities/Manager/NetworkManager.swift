@@ -412,6 +412,24 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+
+    func fetchKeywordProducts(_ keyword: String, collectionID: String, page: Int, sortKey: String, sortOrder: HttpSortOrderKey) async throws -> SearchResultData {
+        
+        guard let _keyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { throw CSAlert.inValidURL }
+        
+        let _collectionID = collectionID.isEmpty ? "" : "&shopify_storefront_id=\(collectionID.shopifyIDEncode)"
+        
+        let request = generateURLRequest(host + Constants.searchProduct + "\(_keyword)\(_collectionID)&page=\(page)&size=10&sortKey=\(sortKey)&sortOrder=\(sortOrder.rawValue)")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SearchResultResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {
