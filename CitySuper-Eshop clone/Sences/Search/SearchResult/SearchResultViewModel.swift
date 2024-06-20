@@ -12,9 +12,13 @@ import Foundation
 //    static let shared = SearchResultViewModel()
     
     @Published var isLoading      : Bool = false
-    @Published var currcntSelected: SearchResultType = .products
-    @Published var products       : [ProductBody] = []
+    @Published var isListShowMore : Bool = false
+    @Published var currcntSelected: SearchResultType = .collections
     
+    @Published var products      : [ProductBody] = []
+    @Published var collectionList: [SearchKeywordCollection] = []
+    @Published var collectionTags: [SearchKeywordCollection] = []
+
     var sortKey  : String = "SCORE"
     var sortOrder: HttpSortOrderKey = .DESC
     var isHasMore: Bool = true
@@ -51,6 +55,49 @@ import Foundation
                 self.isLoading = false
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    func fetchKeywordList(keyword: String) {
+        Task {
+            do {
+                self.isLoading = true
+                let response = try await NetworkManager.shared.fetchKeywordResultList(keyword)
+                
+                if let collections = response.collections {
+                    self.collectionList = collections
+                }
+                
+                self.isLoading = false
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchKeywordCollection(keyword: String) {
+        Task {
+            do {
+                self.isLoading = true
+                let response = try await NetworkManager.shared.fetchKeywordResultCollections(keyword)
+                if let product_collections = response.product_collections {
+                    self.collectionTags = product_collections
+                }
+                
+                self.isLoading = false
+            } catch {
+                self.isLoading = false
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getList() -> [SearchKeywordCollection] {
+        if isListShowMore {
+            return collectionList
+        } else {
+            return Array(collectionList.prefix(3))
         }
     }
 }

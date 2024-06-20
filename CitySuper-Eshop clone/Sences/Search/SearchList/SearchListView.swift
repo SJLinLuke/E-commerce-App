@@ -16,12 +16,12 @@ struct SearchListView: View {
             VStack(spacing: 0) {
                 
                 if !VM.brands.isEmpty {
-                    SearchHeaderView(title: "Brand")
+                    SearchHeaderView(text: Text("Brand"))
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.brands, id: \.self) { brand in
                         NavigationLink { SearchResult(keyword: brand) } label: {
-                            SearchListCell(text: Text(brand), icon: "search_shop_icon")
+                            SearchListCell(text: Text(brand), iconPath: "search_shop_icon")
                                 .background(.white)
                                 .overlay(alignment: .bottom) {
                                     if brand != VM.brands.last {
@@ -33,12 +33,12 @@ struct SearchListView: View {
                 }
                 
                 if !VM.collections.isEmpty {
-                    SearchHeaderView(title: "Keyword Suggestions")
+                    SearchHeaderView(text: Text("Keyword Suggestions"))
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.collections, id: \.self) { collection in
                         NavigationLink { SearchResult(keyword: collection.title) } label: {
-                            SearchListCell(text: Text(collection.title), icon: "search_icon")
+                            SearchListCell(text: Text(collection.title), iconPath: "search_icon")
                                 .background(.white)
                                 .overlay(alignment: .bottom) {
                                     if collection != VM.collections.last {
@@ -50,12 +50,12 @@ struct SearchListView: View {
                 }
                 
                 if !VM.product_collections.isEmpty {
-                    SearchHeaderView(title: "Keyword Under Categories")
+                    SearchHeaderView(text: Text("Keyword Under Categories"))
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.product_collections, id: \.self) { collection in
                         NavigationLink {  ProductCollectionView(collectionID: collection.shopify_storefront_id ?? "") } label: {
-                            SearchListCell(text: Text(collection.title), icon: "search_icon")
+                            SearchListCell(text: Text(collection.title), iconPath: "search_icon")
                                 .background(.white)
                                 .overlay(alignment: .bottom) {
                                     if collection != VM.product_collections.last {
@@ -71,8 +71,7 @@ struct SearchListView: View {
                 HStack {
                     SearchListCell(text:
                                     Text("Show all results for ") +
-                                   Text("\"\(VM.searchText)\"").bold().foregroundColor(.gray)
-                                   , icon: "", isAccessoryIcon: false)
+                                   Text("\"\(VM.searchText)\"").bold().foregroundColor(.gray), isAccessoryIcon: false)
                     if VM.isLoading {
                         ProgressView()
                             .padding(.trailing)

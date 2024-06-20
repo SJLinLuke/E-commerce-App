@@ -9,16 +9,22 @@ import SwiftUI
 
 struct SearchListCell: View {
     
-    let text : Text
-    let icon : String
+    let text: Text
     
+    var iconPath       : String = ""
+    var imageSrc       : String?
     var isAccessoryIcon: Bool = true
     
     var body: some View {
         HStack {
-            if !icon.isEmpty {
-                Image(icon)
+            if !iconPath.isEmpty {
+                Image(iconPath)
                     .resizable()
+                    .frame(width: 20, height: 18)
+            }
+            
+            if let imageSrc = imageSrc {
+                RemoteImageView(url: imageSrc, placeholder: .searchList)
                     .frame(width: 20, height: 18)
             }
             
@@ -38,5 +44,5 @@ struct SearchListCell: View {
 }
 
 #Preview {
-    SearchListCell(text: Text("TEST"), icon: "search_shop_icon")
+    SearchListCell(text: Text("TEST"), iconPath: "search_shop_icon")
 }

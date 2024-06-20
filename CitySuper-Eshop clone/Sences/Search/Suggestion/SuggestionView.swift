@@ -14,18 +14,18 @@ struct SuggestionView: View {
     var body: some View {
         ScrollView {
             VStack {
-                SearchHeaderView(title: "Recent Searches", buttonTitle: "Clean all") {
+                SearchHeaderView(text: Text("Recent Searches"), buttonTitle: "Clean all") {
                     VM.historyKeywords = []
                     VM.clearHistoryKeyword()
                 }
                 
                 SearchTagsView(keywords: VM.historyKeywords)
                 
-                SearchHeaderView(title: "Hot Keywords")
+                SearchHeaderView(text: Text("Hot Keywords"))
                 
                 SearchTagsView(keywords: VM.hotKeywords)
                 
-                SearchHeaderView(title: "Recommendation Collections")
+                SearchHeaderView(text: Text("Recommendation Collections"))
                 
                 SearchRecommendationView(recommendationCollections: VM.recommendKeywords)
             }

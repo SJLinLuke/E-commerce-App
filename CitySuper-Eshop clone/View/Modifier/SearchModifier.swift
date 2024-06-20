@@ -112,6 +112,9 @@ struct SearchResult: View {
                             }
                         }
                     }
+                    .task {
+                        VM.fetchKeywordProducts(keyword: keyword, collectionID: collectionID)
+                    }
                     .padding(.horizontal)
                     .foregroundColor(Color(hex: "777777"))
                     
@@ -121,6 +124,44 @@ struct SearchResult: View {
                 }
                 
                 if VM.isSelectCollections {
+                    VStack(spacing: 0) {
+                        
+                        if !VM.collectionList.isEmpty {
+                            SearchHeaderView(text:
+                                Text("\(VM.collectionList.count) colleciton(s) for ") + Text("\"\(keyword)\"").bold(), titleFont: .system(size: 16), titleFontWeight: .regular, buttonTitle: "Show all") {
+                                VM.isListShowMore.toggle()
+                            }
+                                .overlay(alignment: .bottom) {
+                                    SeperateLineView(color: Color(hex: "F7F7F7"), height: 2)
+                                }
+                            
+                            ForEach(VM.getList(), id: \.self) { collection in
+                                NavigationLink { ProductCollectionView(collectionID: collection.shopify_storefront_id ?? "") } label: {
+                                    SearchListCell(text: Text(collection.title), imageSrc: collection.image_src ?? "")
+                                        .padding(.vertical, -2)
+                                        .overlay(alignment: .bottom) {
+                                            SeperateLineView(color: .black)
+                                        }
+                                }
+                            }
+                            
+                        }
+                        
+                        if !VM.collectionTags.isEmpty {
+                            SearchHeaderView(text:
+                                                Text("\(VM.collectionTags.count) products(s) contain in below collection(s)"), titleFont: .system(size: 16), titleFontWeight: .regular)
+                            
+                            FlexibleView(availableWidth: UIScreen.main.bounds.width * 0.95, data: VM.collectionTags, spacing: 5, alignment: .leading, isShowMore: true) { collection in
+                                SearchTagCell(title: collection.title)
+                            }
+                            
+                        }
+                        
+                    }
+                    .task {
+                        VM.fetchKeywordList(keyword: keyword)
+                        VM.fetchKeywordCollection(keyword: keyword)
+                    }
                     
                 }
                 
@@ -134,7 +175,6 @@ struct SearchResult: View {
         }
         .onAppear {
             searchVM.searchText = keyword
-            VM.fetchKeywordProducts(keyword: keyword, collectionID: collectionID)
         }
         .modifier(NavigationModifier(isHideCollectionsList: true))
         .modifier(searchModifier(searchText: $searchVM.searchText))

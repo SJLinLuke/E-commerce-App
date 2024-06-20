@@ -430,6 +430,34 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    func fetchKeywordResultList(_ keyword: String) async throws -> SearchKeywordData {
+        
+        let request = generateURLRequest(host + Constants.searchList + "\(keyword)&page=1&page_szie=30")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SearchKeywordResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    func fetchKeywordResultCollections(_ keyword: String) async throws -> SearchResultCollectionData {
+
+        let request = generateURLRequest(host + Constants.searchCollections + "\(keyword)&page=1&page_szie=30")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(SearchResultCollectionResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
 }
 
 extension NetworkManager {

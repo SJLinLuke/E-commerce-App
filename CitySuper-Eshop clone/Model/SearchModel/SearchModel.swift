@@ -77,3 +77,15 @@ struct SearchResultData: Decodable {
     var suggest_products: [ProductBody]? = nil
 }
 
+
+struct SearchResultCollectionResponse: Decodable {
+    let success      : Bool
+    let error_message: String?
+    let data         : SearchResultCollectionData
+}
+
+struct SearchResultCollectionData: Decodable {
+    let total_record       : Int
+    var product_collections: [SearchKeywordCollection]? = nil
+}
+

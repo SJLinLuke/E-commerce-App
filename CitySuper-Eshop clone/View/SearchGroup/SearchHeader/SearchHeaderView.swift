@@ -9,15 +9,17 @@ import SwiftUI
 
 struct SearchHeaderView: View {
     
-    let title       : String
-    var buttonTitle : String?
-    var buttonAction: (() -> Void)?
+    let text           : Text
+    var titleFont      : Font = .system(size: 16)
+    var titleFontWeight: Font.Weight = .bold
+    var buttonTitle    : String?
+    var buttonAction   : (() -> Void)?
     
     var body: some View {
         HStack {
-            Text(title)
-                .font(.system(size: 16))
-                .fontWeight(.bold)
+            text
+                .font(titleFont)
+                .fontWeight(titleFontWeight)
                 .foregroundColor(Color(hex: "777777"))
             
             Spacer()
@@ -36,5 +38,5 @@ struct SearchHeaderView: View {
 
 
 #Preview {
-    SearchHeaderView(title: "TEST")
+    SearchHeaderView(text: Text("TEST"))
 }

@@ -10,6 +10,7 @@ import SwiftUI
 enum PlaceholderType {
     case common
     case inbox
+    case searchList
 }
 
 struct RemoteImageView: View {
@@ -28,6 +29,9 @@ struct RemoteImageView: View {
                     .resizable()
             case .inbox:
                 Image("inbox_placeholder")
+                    .resizable()
+            case .searchList:
+                Image("search_fruit_placeholder")
                     .resizable()
             case nil:
                 Image("common_placeholder")

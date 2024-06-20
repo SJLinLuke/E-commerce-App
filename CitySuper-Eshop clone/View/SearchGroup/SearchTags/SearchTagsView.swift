@@ -9,8 +9,6 @@ import SwiftUI
 
 struct SearchTagsView: View {
     
-    @StateObject var searchVM = SearchListViewModel.shared
-    
     @State private var isShowMore: Bool = false
     
     let keywords: [String]
@@ -40,7 +38,6 @@ struct SearchTagsView: View {
                 }
                 .padding(.top)
             }
-            
         }
     }
 }
