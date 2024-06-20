@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor final class SearchResultViewModel: ObservableObject {
     
-    static let shared = SearchResultViewModel()
+//    static let shared = SearchResultViewModel()
     
     @Published var isLoading      : Bool = false
     @Published var currcntSelected: SearchResultType = .products

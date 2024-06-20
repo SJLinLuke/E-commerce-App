@@ -34,15 +34,15 @@ enum SearchResultType {
 }
 
 struct SearchResultHeaderView: View {
-    
-    @StateObject var searchResultVM = SearchResultViewModel.shared
-    
+        
+    @Binding var currentSelected: SearchResultType
+ 
     private let edgeInsets = EdgeInsets(top: 7, leading: 15, bottom: 7, trailing: 15)
     
     var body: some View {
         HStack {
             Button {
-                searchResultVM.currcntSelected = .products
+                currentSelected = .products
             } label: {
                 Text("Products")
                     .padding(edgeInsets)
@@ -50,14 +50,14 @@ struct SearchResultHeaderView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(.secondary ,lineWidth: 1)
                     }
-                    .foregroundColor(searchResultVM.isSelectProducts ? .white : Color(hex: "777777") )
-                    .background(searchResultVM.isSelectProducts ? Color(hex: "777777") : .white)
+                    .foregroundColor(currentSelected == .products ? .white : Color(hex: "777777") )
+                    .background(currentSelected == .products ? Color(hex: "777777") : .white)
                     .cornerRadius(5)
                     .padding(.leading)
             }
             
             Button {
-                searchResultVM.currcntSelected = .collections
+                currentSelected = .collections
             } label: {
                 Text("Collections")
                     .padding(edgeInsets)
@@ -65,8 +65,8 @@ struct SearchResultHeaderView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(lineWidth: 1)
                     }
-                    .foregroundColor(searchResultVM.isSelectCollections ? .white : Color(hex: "777777") )
-                    .background(searchResultVM.isSelectCollections ? Color(hex: "777777") : .white)
+                    .foregroundColor(currentSelected == .collections ? .white : Color(hex: "777777") )
+                    .background(currentSelected == .collections ? Color(hex: "777777") : .white)
                     .cornerRadius(5)
             }
             Spacer()
@@ -80,7 +80,7 @@ struct SearchResultHeaderView: View {
 struct SearchResult: View {
     
     @StateObject var searchVM = SearchListViewModel.shared
-    @StateObject var VM       = SearchResultViewModel.shared
+    @StateObject var VM       = SearchResultViewModel()
     
     private let edgeInsets = EdgeInsets(top: 7, leading: 15, bottom: 7, trailing: 15)
 
@@ -91,7 +91,7 @@ struct SearchResult: View {
         VStack {
             ScrollView {
                
-                SearchResultHeaderView()
+                SearchResultHeaderView(currentSelected: $VM.currcntSelected)
                 
                 if VM.isSelectProducts {
                     HStack {
