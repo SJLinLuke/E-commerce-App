@@ -28,6 +28,12 @@ struct searchModifier: ViewModifier {
     }
 }
 
+struct SearchResult: View {
+    var body: some View {
+        Text("SearchResult")
+    }
+}
+
 struct SearchListCell: View {
     
     let text : Text
@@ -71,12 +77,15 @@ struct SearchList: View {
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.brands, id: \.self) { brand in
-                        SearchListCell(text: Text(brand), icon: "search_shop_icon")
-                            .overlay(alignment: .bottom) {
-                                if brand != VM.brands.last {
-                                    SeperateLineView(color: .black)
+                        NavigationLink { SearchResult() } label: {
+                            SearchListCell(text: Text(brand), icon: "search_shop_icon")
+                                .background(.white)
+                                .overlay(alignment: .bottom) {
+                                    if brand != VM.brands.last {
+                                        SeperateLineView(color: .black)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
                 
@@ -85,12 +94,15 @@ struct SearchList: View {
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.collections, id: \.self) { collection in
-                        SearchListCell(text: Text(collection.title), icon: "search_icon")
-                            .overlay(alignment: .bottom) {
-                                if collection != VM.collections.last {
-                                    SeperateLineView(color: .black)
+                        NavigationLink { SearchResult() } label: {
+                            SearchListCell(text: Text(collection.title), icon: "search_icon")
+                                .background(.white)
+                                .overlay(alignment: .bottom) {
+                                    if collection != VM.collections.last {
+                                        SeperateLineView(color: .black)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
                 
@@ -99,12 +111,15 @@ struct SearchList: View {
                         .background(Color(hex: "F2F2F2"))
                     
                     ForEach(VM.product_collections, id: \.self) { collection in
-                        SearchListCell(text: Text(collection.title), icon: "search_icon")
-                            .overlay(alignment: .bottom) {
-                                if collection != VM.product_collections.last {
-                                    SeperateLineView(color: .black)
+                        NavigationLink {  ProductCollectionView(collectionID: collection.shopify_storefront_id ?? "") } label: {
+                            SearchListCell(text: Text(collection.title), icon: "search_icon")
+                                .background(.white)
+                                .overlay(alignment: .bottom) {
+                                    if collection != VM.product_collections.last {
+                                        SeperateLineView(color: .black)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
                 
