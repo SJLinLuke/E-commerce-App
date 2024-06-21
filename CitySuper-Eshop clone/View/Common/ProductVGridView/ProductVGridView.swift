@@ -21,7 +21,7 @@ struct ProductVGridView: View {
     
     var body: some View {
         LazyVGrid(columns: colums, spacing: 10) {
-            ForEach(products, id: \.self) { product in
+            ForEach(products) { product in
                 ProductItem(width: itemWidth, height: itemHeight, isNeedDelete: isNeedDelete, product: product)
                     .onAppear {
                         if (products.last == product) {

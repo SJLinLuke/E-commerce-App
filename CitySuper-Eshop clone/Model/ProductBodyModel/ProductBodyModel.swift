@@ -19,8 +19,9 @@ struct ProductResponse: Decodable {
     let data         : ProductBody
 }
 
-struct ProductBody: Decodable, Equatable, Hashable {
-    
+struct ProductBody: Decodable, Equatable, Hashable, Identifiable {
+    var id = UUID()
+
     let description_html  : String?
     let is_favourite      : Bool
     let shopify_product_id: String
@@ -40,9 +41,95 @@ struct ProductBody: Decodable, Equatable, Hashable {
     /// these are not for using now (fetch by api/eshop/similarProducts/ and api/eshop/relatedProducts/)
     var products          : [ProductBody]? /// related products
     var similar_products  : [ProductBody]? /// similar products
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case description_html
+        case is_favourite
+        case shopify_product_id
+        case title
+        case variants
+        case options
+        case logistic_tags
+        case image_src
+        case inventory_quantity
+        case compare_at_price
+        case price
+        case images
+        case products
+        case similar_products
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.description_html   = try container.decodeIfPresent(String.self, forKey: .description_html)
+        self.is_favourite       = try container.decode(Bool.self, forKey: .is_favourite)
+        self.shopify_product_id = try container.decode(String.self, forKey: .shopify_product_id)
+        self.title              = try container.decode(String.self, forKey: .title)
+        self.variants           = try container.decodeIfPresent([ProductVariant].self, forKey: .variants)
+        self.options            = try container.decodeIfPresent([ProductOption].self, forKey: .options)
+        self.logistic_tags      = try container.decodeIfPresent([LogisticTag].self, forKey: .logistic_tags)
+        self.image_src          = try container.decodeIfPresent(String.self, forKey: .image_src)
+        self.inventory_quantity = try container.decodeIfPresent(Int.self, forKey: .inventory_quantity)
+        self.compare_at_price   = try container.decodeIfPresent(String.self, forKey: .compare_at_price)
+        self.price              = try container.decodeIfPresent(String.self, forKey: .price)
+        self.images             = try container.decodeIfPresent([ProductImage].self, forKey: .images)
+        self.products           = try container.decodeIfPresent([ProductBody].self, forKey: .products)
+        self.similar_products   = try container.decodeIfPresent([ProductBody].self, forKey: .similar_products)
+    }
+    
+    init(
+        id                : UUID = UUID(),
+        description_html  : String? = nil,
+        is_favourite      : Bool,
+        shopify_product_id: String,
+        title             : String,
+        variants          : [ProductVariant]? = nil,
+        options           : [ProductOption]? = nil,
+        logistic_tags     : [LogisticTag]? = nil,
+        image_src         : String? = nil,
+        inventory_quantity: Int? = nil,
+        compare_at_price  : String? = nil,
+        price             : String? = nil,
+        images            : [ProductImage]? = nil,
+        products          : [ProductBody]? = nil,
+        similar_products  : [ProductBody]? = nil
+    ) {
+        self.id                 = id
+        self.description_html   = description_html
+        self.is_favourite       = is_favourite
+        self.shopify_product_id = shopify_product_id
+        self.title              = title
+        self.variants           = variants
+        self.options            = options
+        self.logistic_tags      = logistic_tags
+        self.image_src          = image_src
+        self.inventory_quantity = inventory_quantity
+        self.compare_at_price   = compare_at_price
+        self.price              = price
+        self.images             = images
+        self.products           = products
+        self.similar_products   = similar_products
+    }
         
     static func mockData() -> ProductBody {
-        return ProductBody(description_html: "", is_favourite: false, shopify_product_id: "", title: "1 Italian Veal Tongue [PreViously Frozen] (300g)", variants: nil, options: nil, logistic_tags: nil, image_src: "", inventory_quantity: 0, compare_at_price: "40", price: "69.99", images: nil, products: nil, similar_products: nil)
+        return ProductBody(
+            description_html: "Mock Description",
+            is_favourite: false,
+            shopify_product_id: "mock_shopify_product_id",
+            title: "Mock Product Title",
+            variants: [],
+            options: [],
+            logistic_tags: [],
+            image_src: "mock_image_src",
+            inventory_quantity: 10,
+            compare_at_price: "100.00",
+            price: "80.00",
+            images: [],
+            products: [],
+            similar_products: []
+        )
     }
     //    func convertToProductViewModel() -> ProductViewModel? {
     //
