@@ -12,8 +12,9 @@ struct MoreCollectionsListView: View {
     @StateObject private var VM       = MoreCollectionsListViewModel.shared
     @StateObject private var searchVM = SearchListViewModel.shared
     
-    @State var searchText: String = ""
-    
+    @State private var searchText  : String = ""
+    @State private var isShowResult: Bool = false
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -42,7 +43,7 @@ struct MoreCollectionsListView: View {
                 VM.fetchCollectionsList()
             }
             .modifier(NavigationModifier())
-            .modifier(searchModifier(searchText: $searchVM.searchText))
+            .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
             .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
             .navigationBarBackButtonHidden()
         }

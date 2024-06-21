@@ -9,11 +9,13 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject private var VM       = HomeViewModel()
-    @StateObject private var searchVM = SearchListViewModel.shared
+    @StateObject private var VM             = HomeViewModel()
+    @StateObject private var searchVM       = SearchListViewModel.shared
+    @StateObject private var searchResultVM = SearchResultViewModel.shared
     
     @State private var searchText        : String = ""
     @State private var isShowBackToTop   : Bool = false
+    @State private var isShowResult      : Bool = false
     @State private var isLoad            : Bool = true
     
     var body: some View {
@@ -92,8 +94,11 @@ struct HomeView: View {
                     VM.fetchHomepage()
                 }
                 .modifier(NavigationModifier())
-                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
                 .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
+                .onSubmit(of: .search) {
+                    isShowResult.toggle()
+                }
             }
             
             

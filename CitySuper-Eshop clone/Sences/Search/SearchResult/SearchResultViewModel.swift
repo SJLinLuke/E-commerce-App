@@ -9,11 +9,12 @@ import Foundation
 
 @MainActor final class SearchResultViewModel: ObservableObject {
     
-//    static let shared = SearchResultViewModel()
+    static let shared = SearchResultViewModel()
+    private let suggestionVM = SuggestionViewModel.shared
     
     @Published var isLoading      : Bool = false
     @Published var isListShowMore : Bool = false
-    @Published var currcntSelected: SearchResultType = .collections
+    @Published var currcntSelected: SearchResultType = .products
     
     @Published var products      : [ProductBody] = []
     @Published var collectionList: [SearchKeywordCollection] = []
@@ -21,22 +22,24 @@ import Foundation
 
     var sortKey  : String = "SCORE"
     var sortOrder: HttpSortOrderKey = .DESC
-    var isHasMore: Bool = true
-    
+   
     var totalCountNum      : Int = 0
     var isSelectProducts   : Bool { currcntSelected == .products }
     var isSelectCollections: Bool { currcntSelected == .collections }
     
-    private var page: Int = 1
+    private var isHasMore: Bool = true
+    private var page     : Int = 1
     
-    func fetchKeywordProducts(keyword: String, collectionID: String) {
+    func fetchKeywordProducts(keyword: String, collectionID: String? = nil) {
         
-        guard isHasMore, !keyword.isEmpty, !isLoading else { return }
+        guard isHasMore, !keyword.isEmpty else { return }
+        
+        suggestionVM.saveHistoryKeyword(keyword)
         
         Task {
             do {
                 self.isLoading = true
-                let response = try await NetworkManager.shared.fetchKeywordProducts(keyword, collectionID: collectionID,
+                let response = try await NetworkManager.shared.fetchKeywordProducts(keyword, collectionID: collectionID ?? "",
                                                                                     page: self.page, sortKey: self.sortKey, sortOrder: self.sortOrder)
                 
                 self.isHasMore = Int(response.current_page ?? "0") ?? 0 < response.total_page ?? 0
@@ -99,5 +102,14 @@ import Foundation
         } else {
             return Array(collectionList.prefix(3))
         }
+    }
+    
+    func initConfig() {
+        products = []
+        collectionList = []
+        collectionTags = []
+        
+        isHasMore = true
+        page = 1
     }
 }

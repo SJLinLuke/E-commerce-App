@@ -12,8 +12,9 @@ struct ProductCollectionView: View {
     @StateObject private var VM       = ProductCollectionViewModel()
     @StateObject private var searchVM = SearchListViewModel.shared
     
-    @State var isShowBackToTop: Bool = false
-    
+    @State private var isShowBackToTop: Bool = false
+    @State private var isShowResult   : Bool = false
+
     var collectionID: String
     
     var body: some View {
@@ -81,7 +82,7 @@ struct ProductCollectionView: View {
                     .modifier(NavigationModifier(navTilte: VM.navTitle, isHideCollectionsList: true))
                     .modifier(ScrollToTopModifier(isShowBackToTop: $isShowBackToTop))
                 }
-                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
                 .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
                 .overlay(alignment: .bottomTrailing) {
                     Button {

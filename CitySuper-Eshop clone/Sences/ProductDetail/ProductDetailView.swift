@@ -12,9 +12,10 @@ struct ProductDetailView: View {
     @StateObject private var VM       = ProductDetailViewModel()
     @StateObject private var searchVM = SearchListViewModel.shared
     
-    @State var htmlFrameHeight    : CGFloat = .zero
-    @State var isGalleryDetailShow: Bool = false
-    @State var isShowBackToTop    : Bool = false
+    @State var htmlFrameHeight     : CGFloat = .zero
+    @State var isGalleryDetailShow : Bool = false
+    @State var isShowBackToTop     : Bool = false
+    @State private var isShowResult: Bool = false
     
     var shopifyID: String
     
@@ -86,7 +87,7 @@ struct ProductDetailView: View {
                         VM.fetchProduct(shopifyID: shopifyID)
                     }
                 }
-                .modifier(searchModifier(searchText: $searchVM.searchText))
+                .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
                 .modifier(NavigationModifier(isHideCollectionsList: true))
                 .overlay {
                     if VM.isLoading {

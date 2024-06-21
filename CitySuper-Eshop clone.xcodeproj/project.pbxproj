@@ -811,8 +811,8 @@
 		407F90BA2C230BEB000D3201 /* Suggestion */ = {
 			isa = PBXGroup;
 			children = (
-				C5A8C9D52C1FD6A100A6D877 /* SuggestionViewModel.swift */,
 				C58C3A0B2C23D58F003580C2 /* SuggestionView.swift */,
+				C5A8C9D52C1FD6A100A6D877 /* SuggestionViewModel.swift */,
 			);
 			path = Suggestion;
 			sourceTree = "<group>";

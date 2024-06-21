@@ -11,7 +11,8 @@ struct searchModifier: ViewModifier {
     
     @Environment(\.isSearching) var isSearching
     
-    @Binding var searchText: String
+    @Binding var isShowResult: Bool
+    @Binding var searchText  : String
     
     func body(content: Content) -> some View {
         ZStack {
@@ -24,6 +25,9 @@ struct searchModifier: ViewModifier {
             } else {
                 content
             }
+        }
+        .navigationDestination(isPresented: $isShowResult) {
+            SearchResultView(keyword: searchText)
         }
     }
 }
@@ -77,26 +81,28 @@ struct SearchResultHeaderView: View {
     }
 }
 
-struct SearchResult: View {
+struct SearchResultView: View {
     
     @StateObject var searchVM = SearchListViewModel.shared
     @StateObject var VM       = SearchResultViewModel()
     
+    @State private var isShowResult: Bool = false
+
     private let edgeInsets = EdgeInsets(top: 7, leading: 15, bottom: 7, trailing: 15)
 
-    var keyword: String = ""
+    var keyword     : String = ""
     var collectionID: String = ""
     
     var body: some View {
-        VStack {
-            ScrollView {
+        ScrollView {
+            VStack(spacing: 0) {
                
                 SearchResultHeaderView(currentSelected: $VM.currcntSelected)
                 
                 if VM.isSelectProducts {
                     HStack {
                         Text("\(VM.totalCountNum) product(s) for ") +
-                        Text("\"\(keyword)\"").bold()
+                        Text("\"\(searchVM.searchText)\"").bold()
                         Spacer()
                         Button {
                             
@@ -115,7 +121,7 @@ struct SearchResult: View {
                     .task {
                         VM.fetchKeywordProducts(keyword: keyword, collectionID: collectionID)
                     }
-                    .padding(.horizontal)
+                    .padding(10)
                     .foregroundColor(Color(hex: "777777"))
                     
                     ProductVGridView(products: VM.products, isNeedDelete: false, itemWidth: 182, itemHeight: 270, meetLast: {
@@ -126,15 +132,16 @@ struct SearchResult: View {
                 if VM.isSelectCollections {
                     VStack(spacing: 0) {
                         
+                        SearchHeaderView(text:
+                                            Text("\(VM.collectionList.count) colleciton(s) for ") + Text("\"\(searchVM.searchText)\"").bold(), titleFont: .system(size: 16), titleFontWeight: .regular, buttonTitle: VM.isListShowMore ? "Show less" : "Show all") {
+                            VM.isListShowMore.toggle()
+                        }
+                                            .overlay(alignment: .bottom) {
+                                                SeperateLineView(color: Color(hex: "F7F7F7"), height: 2)
+                                            }
+                        
                         if !VM.collectionList.isEmpty {
-                            SearchHeaderView(text:
-                                Text("\(VM.collectionList.count) colleciton(s) for ") + Text("\"\(keyword)\"").bold(), titleFont: .system(size: 16), titleFontWeight: .regular, buttonTitle: "Show all") {
-                                VM.isListShowMore.toggle()
-                            }
-                                .overlay(alignment: .bottom) {
-                                    SeperateLineView(color: Color(hex: "F7F7F7"), height: 2)
-                                }
-                            
+
                             ForEach(VM.getList(), id: \.self) { collection in
                                 NavigationLink { ProductCollectionView(collectionID: collection.shopify_storefront_id ?? "") } label: {
                                     SearchListCell(text: Text(collection.title), imageSrc: collection.image_src ?? "")
@@ -147,10 +154,11 @@ struct SearchResult: View {
                             
                         }
                         
+                        
+                        SearchHeaderView(text:
+                                            Text("\(VM.collectionTags.count) products(s) contain in below collection(s)"), titleFont: .system(size: 16), titleFontWeight: .regular)
+                        
                         if !VM.collectionTags.isEmpty {
-                            SearchHeaderView(text:
-                                                Text("\(VM.collectionTags.count) products(s) contain in below collection(s)"), titleFont: .system(size: 16), titleFontWeight: .regular)
-                            
                             FlexibleView(availableWidth: UIScreen.main.bounds.width * 0.95, data: VM.collectionTags, spacing: 5, alignment: .leading, isShowMore: true) { collection in
                                 SearchTagCell(title: collection.title)
                             }
@@ -177,13 +185,18 @@ struct SearchResult: View {
             searchVM.searchText = keyword
         }
         .modifier(NavigationModifier(isHideCollectionsList: true))
-        .modifier(searchModifier(searchText: $searchVM.searchText))
         .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
+        .onSubmit(of: .search) {
+            VM.initConfig()
+            VM.fetchKeywordProducts(keyword: searchVM.searchText)
+            VM.fetchKeywordList(keyword: searchVM.searchText)
+            VM.fetchKeywordCollection(keyword: searchVM.searchText)
+        }
     }
 }
 
 
 #Preview {
-    SearchResult()
+    SearchResultView()
         .environmentObject(CartEnvironment())
 }

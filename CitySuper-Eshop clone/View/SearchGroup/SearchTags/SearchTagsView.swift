@@ -19,7 +19,7 @@ struct SearchTagsView: View {
         VStack {
             FlexibleView(availableWidth: screenWidth, data: keywords, spacing: 5, alignment: .leading, isShowMore: isShowMore ) {
                 title in
-                NavigationLink { SearchResult(keyword: title) } label: {
+                NavigationLink { SearchResultView(keyword: title) } label: {
                     SearchTagCell(title: title)
                 }
             }

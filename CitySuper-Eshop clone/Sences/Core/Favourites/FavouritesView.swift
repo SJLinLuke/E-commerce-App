@@ -14,7 +14,8 @@ struct FavouritesView: View {
     @StateObject private var VM       = FavouriteViewModel.shared
     @StateObject private var searchVM = SearchListViewModel.shared
 
-    @State var isShowingLoginModal: Bool = false
+    @State var isShowingLoginModal : Bool = false
+    @State private var isShowResult: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -31,7 +32,7 @@ struct FavouritesView: View {
                 }
             }
             .modifier(NavigationModifier())
-            .modifier(searchModifier(searchText: $searchVM.searchText))
+            .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
         }
         .overlay {
             if (VM.isLoading) {

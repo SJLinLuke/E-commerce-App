@@ -54,7 +54,7 @@ import SwiftUI
         }
     }
     
-    private func saveHistoryKeyword(_ keyword: String) {
+    func saveHistoryKeyword(_ keyword: String) {
         
         guard !historyKeywords.contains(keyword) else { return }
         
