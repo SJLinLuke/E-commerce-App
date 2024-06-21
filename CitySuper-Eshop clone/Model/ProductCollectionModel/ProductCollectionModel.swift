@@ -35,5 +35,6 @@ struct CollectionProductsResponse: Decodable {
 
 struct CollectionProductsData: Decodable {
     let total: Int?
+    var next_page_url: String?
     var data : [ProductBody]?
 }

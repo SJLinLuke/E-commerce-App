@@ -42,7 +42,11 @@ struct SearchResultCollectionsSection: View {
             
             if !VM.collectionTags.isEmpty {
                 FlexibleView(availableWidth: UIScreen.main.bounds.width * 0.95, data: VM.collectionTags, spacing: 5, alignment: .leading, isShowMore: true) { collection in
-                    SearchTagCell(title: collection.title)
+                    NavigationLink {
+                        SearchResultProductsListView(collection: collection)
+                    } label: {
+                        SearchTagCell(title: collection.title)
+                    }
                 }
                 
             }

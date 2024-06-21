@@ -101,6 +101,8 @@
 		40AAF1102C25AE8300B17AF9 /* SearchResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF10F2C25AE8300B17AF9 /* SearchResultHeaderView.swift */; };
 		40AAF1132C25B78200B17AF9 /* SearchResultProductsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1122C25B78200B17AF9 /* SearchResultProductsSection.swift */; };
 		40AAF1162C25B85700B17AF9 /* SearchResultCollectionsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1152C25B85700B17AF9 /* SearchResultCollectionsSection.swift */; };
+		40AAF1182C25BD1600B17AF9 /* SearchResultProductsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1172C25BD1500B17AF9 /* SearchResultProductsListView.swift */; };
+		40AAF11A2C25BE1B00B17AF9 /* SearchResultProductsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1192C25BE1B00B17AF9 /* SearchResultProductsListViewModel.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
@@ -306,6 +308,8 @@
 		40AAF10F2C25AE8300B17AF9 /* SearchResultHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultHeaderView.swift; sourceTree = "<group>"; };
 		40AAF1122C25B78200B17AF9 /* SearchResultProductsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProductsSection.swift; sourceTree = "<group>"; };
 		40AAF1152C25B85700B17AF9 /* SearchResultCollectionsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionsSection.swift; sourceTree = "<group>"; };
+		40AAF1172C25BD1500B17AF9 /* SearchResultProductsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProductsListView.swift; sourceTree = "<group>"; };
+		40AAF1192C25BE1B00B17AF9 /* SearchResultProductsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProductsListViewModel.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
@@ -838,6 +842,8 @@
 			isa = PBXGroup;
 			children = (
 				40AAF1122C25B78200B17AF9 /* SearchResultProductsSection.swift */,
+				40AAF1172C25BD1500B17AF9 /* SearchResultProductsListView.swift */,
+				40AAF1192C25BE1B00B17AF9 /* SearchResultProductsListViewModel.swift */,
 			);
 			path = ProductsSection;
 			sourceTree = "<group>";
@@ -1966,6 +1972,7 @@
 				400C05232BF9EADB00493ACA /* VariantViewModel.swift in Sources */,
 				C58274692C047FD000A84CDD /* CustomFormTextItem.swift in Sources */,
 				400C03AB2BF8A32900493ACA /* MoreCollectionsListView.swift in Sources */,
+				40AAF11A2C25BE1B00B17AF9 /* SearchResultProductsListViewModel.swift in Sources */,
 				400C055E2BFF7C6900493ACA /* HTMLLoaderView.swift in Sources */,
 				C58C3A0C2C23D58F003580C2 /* SuggestionView.swift in Sources */,
 				40E522D82BF271420046C3AA /* BackToTopButton.swift in Sources */,
@@ -2005,6 +2012,7 @@
 				40E522BD2BEFA4D40046C3AA /* CollectionNormalLayoutView_Normal.swift in Sources */,
 				400C052E2BF9EAF800493ACA /* CheckoutViewModel.swift in Sources */,
 				4062BF342C0B06AB00FF7184 /* MoreListStaticPageView.swift in Sources */,
+				40AAF1182C25BD1600B17AF9 /* SearchResultProductsListView.swift in Sources */,
 				C590345C2BF2023800E30594 /* AllButton.swift in Sources */,
 				40E62EEA2C1D490C0044ED44 /* NavigationsModel.swift in Sources */,
 				400C05012BF9EA1400493ACA /* GraphQL+Serializable.swift in Sources */,

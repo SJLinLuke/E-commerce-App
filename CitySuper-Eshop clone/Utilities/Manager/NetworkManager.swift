@@ -254,7 +254,25 @@ final class NetworkManager: ObservableObject {
     func fetchCollectionProduct(_ collectionID: String,
                                 page: Int, sortKey: ProductCollectionSortKeys, sortOrder: HttpSortOrderKey) async throws -> CollectionProductsData {
     
-        let request = generateURLRequest(host + Constants.collectionProducts + collectionID + "/products?page=\(page)&sortKey=\(sortKey.rawValue)&sortOrder=\(sortOrder.rawValue)")
+        let request = generateURLRequest(host + Constants.collection + collectionID + "/products?page=\(page)&sortKey=\(sortKey.rawValue)&sortOrder=\(sortOrder.rawValue)")
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            if let data = try decoder.decode(CollectionProductsResponse.self, from: data).data {
+                return data
+            } else {
+                throw CSAlert.inValidData
+            }
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
+    func fetchCollectionAllProduct(_ collectionID: String, page: Int) async throws -> CollectionProductsData {
+    
+        let request = generateURLRequest(host + Constants.collection + collectionID + "/products?page=\(page)")
 
         let (data, _) = try await URLSession.shared.data(for: request)
         
