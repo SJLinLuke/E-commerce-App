@@ -101,8 +101,14 @@ struct SearchResultView: View {
                 
                 if VM.isSelectProducts {
                     HStack {
-                        Text("\(VM.totalCountNum) product(s) for ") +
-                        Text("\"\(searchVM.searchText)\"").bold()
+                        if VM.totalCountNum > 0 {
+                            Text("\(VM.totalCountNum) product(s) for ") +
+                            Text("\"\(searchVM.searchText)\"").bold()
+                        } else {
+                            Text("No result found.\nShowing top popular products for you...")
+                                .font(.system(size: 14))
+                        }
+                        
                         Spacer()
                         Button {
                             
@@ -119,13 +125,13 @@ struct SearchResultView: View {
                         }
                     }
                     .task {
-                        VM.fetchKeywordProducts(keyword: keyword, collectionID: collectionID)
+                        VM.fetchKeywordProducts(keyword: searchVM.searchText, collectionID: collectionID)
                     }
                     .padding(10)
                     .foregroundColor(Color(hex: "777777"))
                     
                     ProductVGridView(products: VM.products, isNeedDelete: false, itemWidth: 182, itemHeight: 270, meetLast: {
-                        VM.fetchKeywordProducts(keyword: keyword, collectionID: collectionID)
+                        VM.fetchKeywordProducts(keyword: searchVM.searchText, collectionID: collectionID)
                     })
                 }
                 
@@ -167,8 +173,8 @@ struct SearchResultView: View {
                         
                     }
                     .task {
-                        VM.fetchKeywordList(keyword: keyword)
-                        VM.fetchKeywordCollection(keyword: keyword)
+                        VM.fetchKeywordList(keyword: searchVM.searchText)
+                        VM.fetchKeywordCollection(keyword: searchVM.searchText)
                     }
                     
                 }
@@ -187,6 +193,7 @@ struct SearchResultView: View {
         .modifier(NavigationModifier(isHideCollectionsList: true))
         .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
         .onSubmit(of: .search) {
+//            self.keyword = searchVM.searchText
             VM.initConfig()
             VM.fetchKeywordProducts(keyword: searchVM.searchText)
             VM.fetchKeywordList(keyword: searchVM.searchText)

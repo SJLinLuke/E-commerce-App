@@ -12,8 +12,8 @@ struct MoreCollectionsListView: View {
     @StateObject private var VM       = MoreCollectionsListViewModel.shared
     @StateObject private var searchVM = SearchListViewModel.shared
     
-    @State private var searchText  : String = ""
-    @State private var isShowResult: Bool = false
+    @State private var searchText: String = ""
+    @State private var isShowResult : Bool = false
 
     var body: some View {
         NavigationStack {
