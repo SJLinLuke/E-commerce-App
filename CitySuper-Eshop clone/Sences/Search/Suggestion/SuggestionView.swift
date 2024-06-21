@@ -40,6 +40,7 @@ struct SuggestionView: View {
         }
         .background(Color(hex: "F2F2F2"))
         .padding(.top)
+        .frame(width: UIScreen.main.bounds.width)
     }
 }
 

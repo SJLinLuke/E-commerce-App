@@ -39,6 +39,7 @@ struct SearchTagsView: View {
                 .padding(.top)
             }
         }
+        .frame(maxWidth: UIScreen.main.bounds.width)
     }
 }
 

@@ -97,6 +97,8 @@
 		40736CBC2C17665500496AB7 /* ShoppingCartInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40736CBB2C17665500496AB7 /* ShoppingCartInfoView.swift */; };
 		407F90B92C21D5BD000D3201 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F90B82C21D5BD000D3201 /* SearchModel.swift */; };
 		407F90BD2C230C24000D3201 /* SearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F90BC2C230C24000D3201 /* SearchListViewModel.swift */; };
+		40AAF10E2C25AE1B00B17AF9 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF10D2C25AE1B00B17AF9 /* SearchResultView.swift */; };
+		40AAF1102C25AE8300B17AF9 /* SearchResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF10F2C25AE8300B17AF9 /* SearchResultHeaderView.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
@@ -298,6 +300,8 @@
 		40736CBB2C17665500496AB7 /* ShoppingCartInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartInfoView.swift; sourceTree = "<group>"; };
 		407F90B82C21D5BD000D3201 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		407F90BC2C230C24000D3201 /* SearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewModel.swift; sourceTree = "<group>"; };
+		40AAF10D2C25AE1B00B17AF9 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		40AAF10F2C25AE8300B17AF9 /* SearchResultHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultHeaderView.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
@@ -1470,6 +1474,7 @@
 			isa = PBXGroup;
 			children = (
 				C58C3A0D2C23D5F0003580C2 /* SearchHeaderView.swift */,
+				40AAF10F2C25AE8300B17AF9 /* SearchResultHeaderView.swift */,
 			);
 			path = SearchHeader;
 			sourceTree = "<group>";
@@ -1494,6 +1499,7 @@
 			isa = PBXGroup;
 			children = (
 				C58C3A172C23E1A1003580C2 /* SearchResultViewModel.swift */,
+				40AAF10D2C25AE1B00B17AF9 /* SearchResultView.swift */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";
@@ -1891,6 +1897,7 @@
 				C588E5CD2BFC7C4200E4C58D /* ProductDetailView.swift in Sources */,
 				400C04FC2BF9E9C900493ACA /* Client.swift in Sources */,
 				400C053B2BF9EB1400493ACA /* DiscountApplication.swift in Sources */,
+				40AAF1102C25AE8300B17AF9 /* SearchResultHeaderView.swift in Sources */,
 				406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */,
 				40736CA92C14C1BC00496AB7 /* QuantitySelectorView.swift in Sources */,
 				40BC65582C1204A800EA5067 /* OrderHistorySortButtomSheet.swift in Sources */,
@@ -1952,6 +1959,7 @@
 				40E62EF32C1F1DB30044ED44 /* SearchModifier.swift in Sources */,
 				40E5229E2BEF428B0046C3AA /* MarqueeModel.swift in Sources */,
 				40E522B82BEF69740046C3AA /* Array+Extention.swift in Sources */,
+				40AAF10E2C25AE1B00B17AF9 /* SearchResultView.swift in Sources */,
 				40E522AD2BEF46740046C3AA /* ProductBodyModel.swift in Sources */,
 				40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */,
 				C5EA79932BF4B5A70042FEF0 /* ProfileViewModel.swift in Sources */,
