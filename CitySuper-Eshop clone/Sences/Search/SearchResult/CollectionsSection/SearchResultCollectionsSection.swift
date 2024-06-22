@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchResultCollectionsSection: View {
     
     @StateObject var searchVM = SearchListViewModel.shared
-    @StateObject var VM       = SearchResultViewModel()
+    @StateObject var VM       = SearchResultViewModel.shared
     
     var body: some View {
         VStack(spacing: 0) {
@@ -36,7 +36,6 @@ struct SearchResultCollectionsSection: View {
                 
             }
             
-            
             SearchHeaderView(text:
                                 Text("\(VM.collectionTags.count) products(s) contain in below collection(s)"), titleFont: .system(size: 16), titleFontWeight: .regular)
             
@@ -53,8 +52,10 @@ struct SearchResultCollectionsSection: View {
             
         }
         .task {
-            VM.fetchKeywordList(keyword: searchVM.searchText)
-            VM.fetchKeywordCollection(keyword: searchVM.searchText)
+            if VM.collectionTags.isEmpty && VM.collectionList.isEmpty {
+                VM.fetchKeywordList(keyword: searchVM.searchText)
+                VM.fetchKeywordCollection(keyword: searchVM.searchText)
+            }
         }
     }
 }

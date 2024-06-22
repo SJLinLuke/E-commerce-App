@@ -10,11 +10,9 @@ import SwiftUI
 struct SearchResultView: View {
     
     @StateObject var searchVM = SearchListViewModel.shared
-    @StateObject var VM       = SearchResultViewModel()
+    @StateObject var VM       = SearchResultViewModel.shared
     
-    @State private var isShowResult: Bool = false
-
-    var keyword     : String = ""
+    @State var keyword: String?
     
     var body: some View {
         ScrollView {
@@ -30,7 +28,6 @@ struct SearchResultView: View {
                     SearchResultCollectionsSection()
                 }
                 
-                Spacer()
             }
         }
         .overlay {
@@ -39,11 +36,15 @@ struct SearchResultView: View {
             }
         }
         .onAppear {
-            searchVM.searchText = keyword
+            if let keyword = keyword {
+                VM.initConfig()
+                searchVM.searchText = keyword
+            }
         }
         .modifier(NavigationModifier(isHideCollectionsList: true))
         .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
         .onSubmit(of: .search) {
+            keyword = searchVM.searchText
             VM.initConfig()
             VM.fetchKeywordProducts(keyword: searchVM.searchText)
             VM.fetchKeywordList(keyword: searchVM.searchText)

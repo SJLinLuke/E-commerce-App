@@ -32,7 +32,7 @@ struct SearchResultProductsListView: View {
                     VM.fetchCollectionProducts(collectionID: collection.shopify_storefront_id ?? "")
                 })
             }
-            .onAppear {
+            .task {
                 VM.fetchCollectionProducts(collectionID: collection.shopify_storefront_id ?? "")
             }
             .modifier(NavigationModifier(isHideCollectionsList: true))

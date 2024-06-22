@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchResultProductsSection: View {
     
-    @StateObject var VM       = SearchResultViewModel()
+    @StateObject var VM       = SearchResultViewModel.shared
     @StateObject var searchVM = SearchListViewModel.shared
     
     private let edgeInsets = EdgeInsets(top: 7, leading: 15, bottom: 7, trailing: 15)
@@ -40,7 +40,9 @@ struct SearchResultProductsSection: View {
             }
         }
         .task {
-            VM.fetchKeywordProducts(keyword: searchVM.searchText, collectionID: "")
+            if VM.products.isEmpty {
+                VM.fetchKeywordProducts(keyword: searchVM.searchText, collectionID: "")
+            }
         }
         .padding(10)
         .foregroundColor(Color(hex: "777777"))

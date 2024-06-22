@@ -84,6 +84,9 @@ struct ProductCollectionView: View {
                 }
                 .modifier(searchModifier(isShowResult: $isShowResult, searchText: $searchVM.searchText))
                 .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Constants.searchPrompt)
+                .onSubmit(of: .search, {
+                    isShowResult.toggle()
+                })
                 .overlay(alignment: .bottomTrailing) {
                     Button {
                         withAnimation {
