@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ProductCollectionView: View {
     
-    @StateObject private var VM       = ProductCollectionViewModel()
+    @StateObject private var VM       = ProductCollectionViewModel.shared
     @StateObject private var searchVM = SearchListViewModel.shared
     
     @State private var isShowBackToTop: Bool = false
     @State private var isShowResult   : Bool = false
-
+    @State private var isShowSort     : Bool = false
+    
     var collectionID: String
     
     var body: some View {
@@ -28,18 +29,21 @@ struct ProductCollectionView: View {
                             .padding(.top, 40)
                             .id("top")
                         
-                        ZStack(alignment: .top) {
-                            
-                            Image("bg_highLight")
-                                .resizable()
-                                .frame(height: 300)
-                                .padding(.top, 5)
-                            
-                            ProductItem(width: 320, height: 480, isNeedDelete: false, product: VM.getHighLightProduct())
-                                .padding(.top, -20)
-                            
+                        if let highLightProduct = VM.highLightProduct {
+                            ZStack(alignment: .top) {
+                                
+                                Image("bg_highLight")
+                                    .resizable()
+                                    .frame(height: 300)
+                                    .padding(.top, 5)
+                                
+                                
+                                ProductItem(width: 320, height: 480, isNeedDelete: false, product: highLightProduct)
+                                    .padding(.top, -20)
+                            }
+                            .frame(height: 500)
                         }
-                        .frame(height: 500)
+                            
                         
                         HStack {
                             Text("\(VM.productsTotal) results")
@@ -50,7 +54,7 @@ struct ProductCollectionView: View {
                             Spacer()
                             
                             Button {
-                                
+                                isShowSort.toggle()
                             } label: {
                                 Text("SORT")
                                 Image("dropdown_icon")
@@ -75,8 +79,12 @@ struct ProductCollectionView: View {
                         Spacer()
                     }
                     .onAppear {
+                        VM.initConfig()
                         VM.fetchCollection(collectionID: collectionID)
                         VM.fetchCollectionProducts(collectionID: collectionID)
+                    }
+                    .sheet(isPresented: $isShowSort) {
+                        ProductCollectionSortBottomSheet(isShowSort: $isShowSort, collectionID: collectionID)
                     }
                     .background(Color(hex:"F7F7F7"))
                     .modifier(NavigationModifier(navTilte: VM.navTitle, isHideCollectionsList: true))
@@ -109,4 +117,5 @@ struct ProductCollectionView: View {
 
 #Preview {
     ProductCollectionView(collectionID: "")
+        .environmentObject(CartEnvironment())
 }

@@ -9,16 +9,19 @@ import Foundation
 
 @MainActor final class ProductCollectionViewModel: ObservableObject {
     
+    static let shared = ProductCollectionViewModel()
+    
     @Published var isLoading         : Bool = false
     @Published var navTitle          : String = ""
     @Published var collectionInfo    : ProductCollectionData? = nil
     @Published var collectionProducts: [ProductBody] = []
     @Published var productsTotal     : Int = 0
+    @Published var highLightProduct  : ProductBody? = nil
+    @Published var currentSortKey    : String = "Default Sorting"
     
-    private var highLightProduct: ProductBody? = nil
     private var page            : Int = 1
     private var isHasMore       : Bool = true
-    private var sortKet         : ProductCollectionSortKeys = .manual
+    private var sortKey         : ProductCollectionSortKeys = .manual
     private var sortOrder       : HttpSortOrderKey = .ASC
     
     func fetchCollection(collectionID: String) {
@@ -40,7 +43,7 @@ import Foundation
             do {
                 self.isLoading = true
                 let collectionProductData = try await NetworkManager.shared.fetchCollectionProduct(collectionID,
-                                                                                                   page: page, sortKey: self.sortKet, sortOrder: self.sortOrder)
+                                                                                                   page: page, sortKey: self.sortKey, sortOrder: self.sortOrder)
                 if let products = collectionProductData.data, !products.isEmpty {
                     self.retriveHighLightProduct(products) { productsWithoutHighLight in
                         self.collectionProducts.append(contentsOf: productsWithoutHighLight)
@@ -77,11 +80,19 @@ import Foundation
         
         complete(_products)
     }
+
+    func setSortLogic(sortKey: ProductCollectionSortKeys, sortOrder: HttpSortOrderKey, collectionID: String) {
+        self.sortKey = sortKey
+        self.sortOrder = sortOrder
+        
+        self.initConfig()
+        self.fetchCollectionProducts(collectionID: collectionID)
+    }
     
-    func getHighLightProduct() -> ProductBody {
-        if let highLightProduct = self.highLightProduct {
-            return highLightProduct
-        }
-        return ProductBody.mockData()
+    func initConfig() {
+        self.highLightProduct = nil
+        self.collectionProducts = []
+        self.page = 1
+        self.isHasMore = true
     }
 }
