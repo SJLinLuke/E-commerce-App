@@ -29,7 +29,6 @@ struct FastCollectionView: View {
                                     .onTapGesture {
                                         withAnimation {
                                             currentIndex = index
-                                            scrollView.scrollTo(scrollIndex(currentIndex))
                                         }
                                     }
                                     .overlay(alignment: .bottom) {
@@ -42,11 +41,11 @@ struct FastCollectionView: View {
                             }
                         }
                     }
-                    .onChange(of: currentIndex) { 
+                    .onChange(of: currentIndex, { prevIndex, currecntIndex in
                         withAnimation {
-                            scrollView.scrollTo(scrollIndex(currentIndex))
+                            scrollView.scrollTo(scrollIndex(prevIndex, currentIndex))
                         }
-                    }
+                    })
                 }
                 .padding(.horizontal, 5)
             }
@@ -74,20 +73,28 @@ struct FastCollectionView: View {
         }
         .frame(height: 700)
     }
-    
-    func scrollIndex(_ currentIndex: Int) -> Int {
-        if (currentIndex == 0) {
+    func scrollIndex(_ prevIndex: Int, _ currentIndex: Int) -> Int {
+        
+        let middleIndex = (popularCategories.count / 2)
+        
+        if currentIndex == 0 {
             return 0
         }
-        if (currentIndex == popularCategories.count - 1) {
-            return currentIndex
+        
+        if currentIndex == popularCategories.count - 1 {
+            return popularCategories.count - 1
         }
-        if (currentIndex >= 1 && popularCategories.count - currentIndex > 3) {
-            return currentIndex + 2
-        } else {
+        
+        if prevIndex > currentIndex {
+            return currentIndex - 1
+        }
+        
+        if prevIndex < currentIndex {
             return currentIndex + 1
         }
+        return middleIndex
     }
+    
 }
 
 #Preview {
