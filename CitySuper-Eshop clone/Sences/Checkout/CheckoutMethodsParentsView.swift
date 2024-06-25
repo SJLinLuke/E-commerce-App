@@ -71,7 +71,11 @@ struct delivery: View {
     
     @State var firstName: String = ""
     @State var isSave: Bool = false
+    @State var date: Date = Date()
+    private let screenWidth = UIScreen.main.bounds.width
+    
     let data = [1, 2]
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -122,18 +126,24 @@ struct delivery: View {
                     
                     if index == data.last {
                         HStack(spacing: 10) {
-                            Circle()
-                                .frame(width: 15)
-                                .foregroundColor(.clear)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 50)
-                                        .stroke(.secondary, lineWidth: 0.5)
-                                    Circle()
-                                        .frame(width: 5.5)
-                                        .foregroundColor(.themeDarkGreen)
-                                }
-                                .shadow(radius: 10)
-                                .padding(.leading, 10)
+                            VStack {
+                                Circle()
+                                    .frame(width: 15)
+                                    .foregroundColor(.clear)
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 50)
+                                            .stroke(.secondary, lineWidth: 0.5)
+                                        Circle()
+                                            .frame(width: 5.5)
+                                            .foregroundColor(.themeDarkGreen)
+                                    }
+                                    .shadow(radius: 10)
+                                    .padding(.leading, 10)
+                                    .padding(.top, 10)
+                                
+                                Spacer()
+                            }
+                            
                             
                             VStack {
                                 CustomTextField(placeHolder: "Your first name", text: $firstName)
@@ -171,6 +181,46 @@ struct delivery: View {
                         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                     }
                 }
+                
+                HStack {
+                    Text("Delivery time :")
+                        .bold()
+                    Text("2024/06/25")
+                    Spacer()
+                }
+                .font(.system(size: 14))
+                .padding(EdgeInsets(top: 20, leading: 10, bottom: 5, trailing: 10))
+                
+                VStack {
+                    Text("Jun 2024")
+                        .padding(.top, 10)
+                    
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth * 0.9 / 8, maximum: screenWidth * 0.9 / 8))]) {
+                        
+                        ForEach(days, id: \.self) { day in
+                            Text(day)
+                                .padding(.vertical)
+                        }
+                        
+                        ForEach(1...30, id: \.self) { num in
+                            Text("\(num)")
+                                .frame(width: screenWidth * 0.9 / 7.5, height: screenWidth * 0.9 / 7.5)
+                                .background(.themeGreen)
+                                .cornerRadius(50)
+                                .padding(.bottom, 5)
+                        }
+//                        .padding(.vertical)
+                        
+                    }
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(lineWidth: 1)
+                }
+                .padding(.horizontal, 10)
+                
+//                .frame(width: screenWidth * 0.95, height: 400)
+                    
             }
         }
     }
