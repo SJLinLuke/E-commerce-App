@@ -77,112 +77,111 @@ struct delivery: View {
     
     let data = [1, 2]
  
-   
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-//                HStack {
-//                    Text("Delivery Address")
-//                        .font(.system(size: 16))
-//                        .fontWeight(.bold)
-//                    
-//                    Spacer()
-//                }
-//                .padding(.leading, 8)
-//                .padding(.vertical)
+                HStack {
+                    Text("Delivery Address")
+                        .font(.system(size: 16))
+                        .fontWeight(.bold)
+                    
+                    Spacer()
+                }
+                .padding(.leading, 8)
+                .padding(.vertical)
                 
-//                ForEach(data, id: \.self) { index in
-//                    HStack(spacing: 10) {
-//                        Circle()
-//                            .frame(width: 15)
-//                            .foregroundColor(.clear)
-//                            .overlay {
-//                                RoundedRectangle(cornerRadius: 50)
-//                                    .stroke(.secondary, lineWidth: 0.5)
-//                                Circle()
-//                                    .frame(width: 5.5)
-//                                    .foregroundColor(.themeDarkGreen)
-//                            }
-//                            .shadow(radius: 10)
-//                            .padding(.leading, 10)
-//                        
-//                        HStack {
-//                            Text("TESTER USER\nNO ADDRESS TEST\n123458999")
-//                                .padding(8)
-//                                .lineSpacing(5)
-//                                .font(.callout)
-//                                .fontWeight(.regular)
-//                                .foregroundColor(Color(hex: "666666"))
-//                            
-//                            Spacer()
-//                        }
-//                        .overlay {
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .stroke(Color(hex: "D2D2D2") ,lineWidth: 1)
-//                        }
-//                        .background(Color(hex: "F2F2F2"))
-//                        
-//                        
-//                    }
-//                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-//                    
-//                    if index == data.last {
-//                        HStack(spacing: 10) {
-//                            VStack {
-//                                Circle()
-//                                    .frame(width: 15)
-//                                    .foregroundColor(.clear)
-//                                    .overlay {
-//                                        RoundedRectangle(cornerRadius: 50)
-//                                            .stroke(.secondary, lineWidth: 0.5)
-//                                        Circle()
-//                                            .frame(width: 5.5)
-//                                            .foregroundColor(.themeDarkGreen)
-//                                    }
-//                                    .shadow(radius: 10)
-//                                    .padding(.leading, 10)
-//                                    .padding(.top, 10)
-//                                
-//                                Spacer()
-//                            }
-//                            
-//                            
-//                            VStack {
-//                                CustomTextField(placeHolder: "Your first name", text: $firstName)
-//                                CustomTextField(placeHolder: "Your last name", text: $firstName)
-//                                CustomTextField(placeHolder: "Company(Optional)", text: $firstName)
-//                                CustomTextField(placeHolder: "Address", text: $firstName)
-//                                CustomTextField(placeHolder: "District", text: $firstName)
-//                                HStack {
-//                                    CustomTextField(placeHolder: "Country/Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $firstName)
-//                                    CustomTextField(placeHolder: "Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $firstName)
-//                                }
-//                                CustomTextField(placeHolder: "Your phone number", text: $firstName)
-//                                HStack {
-//                                    Rectangle()
-//                                        .frame(width: 20, height: 20)
-//                                        .foregroundColor(.clear)
-//                                        .overlay {
-//                                            if isSave {
-//                                                Image("checkbox_icon")
-//                                            } else {
-//                                                Rectangle()
-//                                                    .stroke(Color(hex: "D2D2D2"), lineWidth: 1)
-//                                            }
-//                                        }
-//                                        .onTapGesture {
-//                                            isSave.toggle()
-//                                        }
-//                                    
-//                                    Text("Save this information for next time")
-//                                        .font(.system(size: 14))
-//                                    Spacer()
-//                                }
-//                            }
-//                        }
-//                        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-//                    }
-//                }
+                ForEach(data, id: \.self) { index in
+                    HStack(spacing: 10) {
+                        Circle()
+                            .frame(width: 15)
+                            .foregroundColor(.clear)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 50)
+                                    .stroke(.secondary, lineWidth: 0.5)
+                                Circle()
+                                    .frame(width: 5.5)
+                                    .foregroundColor(.themeDarkGreen)
+                            }
+                            .shadow(radius: 10)
+                            .padding(.leading, 10)
+                        
+                        HStack {
+                            Text("TESTER USER\nNO ADDRESS TEST\n123458999")
+                                .padding(8)
+                                .lineSpacing(5)
+                                .font(.callout)
+                                .fontWeight(.regular)
+                                .foregroundColor(Color(hex: "666666"))
+                            
+                            Spacer()
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color(hex: "D2D2D2") ,lineWidth: 1)
+                        }
+                        .background(Color(hex: "F2F2F2"))
+                        
+                        
+                    }
+                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                    
+                    if index == data.last {
+                        HStack(spacing: 10) {
+                            VStack {
+                                Circle()
+                                    .frame(width: 15)
+                                    .foregroundColor(.clear)
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 50)
+                                            .stroke(.secondary, lineWidth: 0.5)
+                                        Circle()
+                                            .frame(width: 5.5)
+                                            .foregroundColor(.themeDarkGreen)
+                                    }
+                                    .shadow(radius: 10)
+                                    .padding(.leading, 10)
+                                    .padding(.top, 10)
+                                
+                                Spacer()
+                            }
+                            
+                            
+                            VStack {
+                                CustomTextField(placeHolder: "Your first name", text: $firstName)
+                                CustomTextField(placeHolder: "Your last name", text: $firstName)
+                                CustomTextField(placeHolder: "Company(Optional)", text: $firstName)
+                                CustomTextField(placeHolder: "Address", text: $firstName)
+                                CustomTextField(placeHolder: "District", text: $firstName)
+                                HStack {
+                                    CustomTextField(placeHolder: "Country/Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $firstName)
+                                    CustomTextField(placeHolder: "Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $firstName)
+                                }
+                                CustomTextField(placeHolder: "Your phone number", text: $firstName)
+                                HStack {
+                                    Rectangle()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.clear)
+                                        .overlay {
+                                            if isSave {
+                                                Image("checkbox_icon")
+                                            } else {
+                                                Rectangle()
+                                                    .stroke(Color(hex: "D2D2D2"), lineWidth: 1)
+                                            }
+                                        }
+                                        .onTapGesture {
+                                            isSave.toggle()
+                                        }
+                                    
+                                    Text("Save this information for next time")
+                                        .font(.system(size: 14))
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                    }
+                }
                 
                 HStack {
                     Text("Delivery time :")

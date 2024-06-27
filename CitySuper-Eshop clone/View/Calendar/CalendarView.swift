@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
+        
     @Binding var currentSelectedDate: String
 
     @State private var currentMonth: Date = Date()
@@ -15,17 +16,14 @@ struct CalendarView: View {
     @State private var availableMonth:[Int] = []
     @State private var currentMonthDays: [String] = []
     @State var currentMonthYear: String = ""
-    
-    private let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    @State var height: CGFloat = .zero
     
     let startDate: String
-    let endDate: String
+    let endDate  : String
     
     private let screenWidth = UIScreen.main.bounds.width * 0.9
 
-    // 获取当前月份的天数
-    
-    func collectMonthsInRange(startDate: String, endDate: String) -> [Int] {
+    func collectAvailableMonthes(startDate: String, endDate: String) -> [Int] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -49,22 +47,20 @@ struct CalendarView: View {
         
         return monthRange.sorted()
     }
-
     
     private func loadNextMonthDays() {
-        let currentMonthComponent = Calendar.current.component(.month, from: currentMonth)
+        if let maxMonth = availableMonth.max() {
+            let currentMonthComponent = Calendar.current.component(.month, from: currentMonth)
             
-            // 檢查當前月份是否在範圍內，且是否能夠增加
-            if let maxMonth = availableMonth.max(), currentMonthComponent < maxMonth {
-                currentMonthDays = []
-                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
-                perpareDates()
-            }
-            if let maxMonth = availableMonth.max(), currentMonthComponent >= maxMonth {
-                currentMonthDays = []
+            if currentMonthComponent >= maxMonth {
                 currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
-                perpareDates()
+            } else {
+                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
             }
+            
+            currentMonthDays = []
+            perpareDates()
+        }
     }
     
     private func isDateBlocked(_ date: String) -> Bool {
@@ -81,10 +77,8 @@ struct CalendarView: View {
     
     private func perpareDates() {
         let calendar = Calendar.current
-        let date = currentMonth
         
-        // 获取当前月份的第一天是星期几
-        let components = calendar.dateComponents([.year, .month], from: date)
+        let components = calendar.dateComponents([.year, .month], from: currentMonth)
         let firstDayOfMonth = calendar.date(from: components)!
         let spacesCount = calendar.component(.weekday, from: firstDayOfMonth) - 1
         
@@ -92,10 +86,9 @@ struct CalendarView: View {
         dateFormatter.dateFormat = "MMM yyyy"
         currentMonthYear = dateFormatter.string(from: currentMonth)
         
-        // 使用空字串來代替空白部分
-        let range = calendar.range(of: .day, in: .month, for: date)!
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
+        let range = calendar.range(of: .day, in: .month, for: currentMonth)!
+        let year = calendar.component(.year, from: currentMonth)
+        let month = calendar.component(.month, from: currentMonth)
         
         var arr: [String] = []
         arr.insert(contentsOf: Array(repeating: "", count: spacesCount), at: 0)
@@ -117,57 +110,53 @@ struct CalendarView: View {
                 .fontWeight(.medium)
                 .padding(.top, 10)
             
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth / 8, maximum: screenWidth / 8))]) {
-                ForEach(days, id: \.self) { day in
-                    
-                    Text(day)
-                        .font(.system(size: 14))
-                        .fontWeight(.medium)
-                        .foregroundColor(Color(hex: "B1B1B1"))
-                        .padding(.vertical, 10 )
-                }
-            }
+            WeekDaysView()
             
             TabView(selection: $selectedMonthIndex) {
                 ForEach(availableMonth, id: \.self) { index in
-                    
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth / 8, maximum: screenWidth / 8))]) {
-                        
-                        ForEach(currentMonthDays, id: \.self) { day in
-                            let isSelected: Bool = currentSelectedDate == day
-                            if let dayNumber = day.split(separator: "-").last, let dayNumber_int = Int(dayNumber) {
-                                Text("\(dayNumber_int)")
-                                    .frame(width: screenWidth / 7.5, height: screenWidth / 7.5)
-                                    .font(.system(size: 16))
-                                    .background(isSelected ? .themeGreen : Color(hex: "F7F7F7"))
-                                    .foregroundColor(isSelected ? .white : isDateBlocked(day) ? .black : .gray)
-                                    .cornerRadius(50)
-                                    .padding(.bottom, 5)
-                                    .onTapGesture {
-                                        if isDateBlocked(day) {
-                                            currentSelectedDate = day
-                                        } else {
-                                            loadNextMonthDays()
-                                            currentSelectedDate = currentMonthDays.first ?? ""
+                    GeometryReader { geometry in
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth / 8, maximum: screenWidth / 8))]) {
+                            ForEach(currentMonthDays, id: \.self) { day in
+                                let isSelected: Bool = currentSelectedDate == day
+                                if let dayNumber = day.split(separator: "-").last, let dayNumber_int = Int(dayNumber) {
+                                    Text("\(dayNumber_int)")
+                                        .frame(width: screenWidth / 7.5, height: screenWidth / 7.5)
+                                        .font(.system(size: 16))
+                                        .background(isSelected ? .themeGreen : Color(hex: "F7F7F7"))
+                                        .foregroundColor(isSelected ? .white : isDateBlocked(day) ? .black : .gray)
+                                        .cornerRadius(50)
+                                        .padding(.bottom, 5)
+                                        .onTapGesture {
+                                            if isDateBlocked(day) {
+                                                currentSelectedDate = day
+                                            } else {
+                                                loadNextMonthDays()
+                                                currentSelectedDate = currentMonthDays.first ?? ""
+                                            }
                                         }
-                                    }
-                            } else {
-                                Text(day)
+                                } else {
+                                    Text(day)
+                                }
                             }
-                           
-                        }.id(UUID())
+                            .id(UUID())
+                        }
+                        .onAppear {
+                            DispatchQueue.main.async {
+                                height = geometry.size.height
+                            }
+                        }
                     }
                 }
             }
             .onAppear {
                 perpareDates()
-                self.availableMonth = collectMonthsInRange(startDate: startDate, endDate: endDate)
+                self.availableMonth = collectAvailableMonthes(startDate: startDate, endDate: endDate)
             }
-            .frame(height: 400)
             .tabViewStyle(.page(indexDisplayMode: .never))
             .onChange(of: selectedMonthIndex) {
                 loadNextMonthDays()
             }
+            .frame(height: height == .zero ? 350 : height)
         }
         .overlay {
             RoundedRectangle(cornerRadius: 5)
@@ -179,5 +168,23 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(currentSelectedDate: .constant(""), startDate: "", endDate: "")
+    CalendarView(currentSelectedDate: .constant(""), startDate: "2024-06-20", endDate: "2024-07-05")
+}
+
+struct WeekDaysView: View {
+    
+    private let weekdays    = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    private let screenWidth = UIScreen.main.bounds.width * 0.9
+    
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth / 8, maximum: screenWidth / 8))]) {
+            ForEach(weekdays, id: \.self) { day in
+                Text(day)
+                    .font(.system(size: 14))
+                    .fontWeight(.medium)
+                    .foregroundColor(Color(hex: "B1B1B1"))
+                    .padding(.vertical, 10)
+            }
+        }
+    }
 }
