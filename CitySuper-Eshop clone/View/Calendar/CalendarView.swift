@@ -22,7 +22,8 @@ struct CalendarView: View {
     let endDate  : String
     
     private let screenWidth = UIScreen.main.bounds.width * 0.9
-
+    private let calendar = Calendar.current
+    
     func collectAvailableMonthes(startDate: String, endDate: String) -> [Int] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -31,8 +32,6 @@ struct CalendarView: View {
               let endDate = dateFormatter.date(from: endDate) else {
             return []
         }
-        
-        let calendar = Calendar.current
         
         let startMonth = calendar.component(.month, from: startDate)
         let endMonth = calendar.component(.month, from: endDate)
@@ -76,7 +75,6 @@ struct CalendarView: View {
     }
     
     private func perpareDates() {
-        let calendar = Calendar.current
         
         let components = calendar.dateComponents([.year, .month], from: currentMonth)
         let firstDayOfMonth = calendar.date(from: components)!
