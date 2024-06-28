@@ -8,102 +8,24 @@
 import SwiftUI
 
 struct CalendarView: View {
-        
-    @Binding var currentSelectedDate: String
+    
+    @StateObject private var VM          : CalendarViewModel
+    @Binding var currentSelectedDate     : String
+    @State private var selectedMonthIndex: Int = 1
 
-    @State private var currentMonth: Date = Date()
-    @State private var selectedMonthIndex = 1
-    @State private var availableMonth:[Int] = []
-    @State private var currentMonthDays: [String] = []
-    @State var currentMonthYear: String = ""
-    @State var height: CGFloat = .zero
-    
-    let startDate: String
-    let endDate  : String
-    
     private let screenWidth = UIScreen.main.bounds.width * 0.9
-    private let calendar = Calendar.current
+    private let column = [
+        GridItem(.adaptive(minimum: UIScreen.main.bounds.width * 0.9 / 8, maximum: UIScreen.main.bounds.width * 0.9 / 8))]
     
-    func collectAvailableMonthes(startDate: String, endDate: String) -> [Int] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let startDate = dateFormatter.date(from: startDate),
-              let endDate = dateFormatter.date(from: endDate) else {
-            return []
-        }
-        
-        let startMonth = calendar.component(.month, from: startDate)
-        let endMonth = calendar.component(.month, from: endDate)
-        
-        var monthRange: [Int] = []
-        if startMonth <= endMonth {
-            monthRange = Array(startMonth...endMonth)
-        } else {
-            // Handle case where start month is after end month (crossing year boundary)
-            monthRange = Array(startMonth...12) + Array(1...endMonth)
-        }
-        
-        return monthRange.sorted()
-    }
-    
-    private func loadNextMonthDays() {
-        if let maxMonth = availableMonth.max() {
-            let currentMonthComponent = Calendar.current.component(.month, from: currentMonth)
-            
-            if currentMonthComponent >= maxMonth {
-                currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
-            } else {
-                currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
-            }
-            
-            currentMonthDays = []
-            perpareDates()
-        }
-    }
-    
-    private func isDateBlocked(_ date: String) -> Bool {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        guard let startDate = formatter.date(from: startDate),
-              let endDate = formatter.date(from: endDate),
-              let checkDate = formatter.date(from: date) else {
-            return false
-        }
-        
-        return (startDate...endDate).contains(checkDate)
-    }
-    
-    private func perpareDates() {
-        
-        let components = calendar.dateComponents([.year, .month], from: currentMonth)
-        let firstDayOfMonth = calendar.date(from: components)!
-        let spacesCount = calendar.component(.weekday, from: firstDayOfMonth) - 1
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM yyyy"
-        currentMonthYear = dateFormatter.string(from: currentMonth)
-        
-        let range = calendar.range(of: .day, in: .month, for: currentMonth)!
-        let year = calendar.component(.year, from: currentMonth)
-        let month = calendar.component(.month, from: currentMonth)
-        
-        var arr: [String] = []
-        arr.insert(contentsOf: Array(repeating: "", count: spacesCount), at: 0)
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        for day in range {
-            if let date = calendar.date(from: DateComponents(year: year, month: month, day: day)) {
-                arr.append(dateFormatter.string(from: date))
-            }
-        }
-        currentMonthDays = arr
+    init(currentSelectedDate: Binding<String>, startDate: String, endDate: String) {
+        self._currentSelectedDate = currentSelectedDate
+        self._VM = StateObject(wrappedValue: 
+                                CalendarViewModel(startDate: startDate, endDate: endDate))
     }
     
     var body: some View {
         VStack {
-            Text(currentMonthYear)
+            Text(VM.currentMonthYear)
                 .font(.system(size: 14))
                 .fontWeight(.medium)
                 .padding(.top, 10)
@@ -111,26 +33,21 @@ struct CalendarView: View {
             WeekDaysView()
             
             TabView(selection: $selectedMonthIndex) {
-                ForEach(availableMonth, id: \.self) { index in
+                ForEach(VM.availableMonth, id: \.self) { index in
                     GeometryReader { geometry in
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: screenWidth / 8, maximum: screenWidth / 8))]) {
-                            ForEach(currentMonthDays, id: \.self) { day in
+                        LazyVGrid(columns: column) {
+                            ForEach(VM.currentMonthDays, id: \.self) { day in
                                 let isSelected: Bool = currentSelectedDate == day
                                 if let dayNumber = day.split(separator: "-").last, let dayNumber_int = Int(dayNumber) {
                                     Text("\(dayNumber_int)")
                                         .frame(width: screenWidth / 7.5, height: screenWidth / 7.5)
                                         .font(.system(size: 16))
                                         .background(isSelected ? .themeGreen : Color(hex: "F7F7F7"))
-                                        .foregroundColor(isSelected ? .white : isDateBlocked(day) ? .black : .gray)
+                                        .foregroundColor(isSelected ? .white : VM.isDateBlocked(day) ? .black : .gray)
                                         .cornerRadius(50)
                                         .padding(.bottom, 5)
                                         .onTapGesture {
-                                            if isDateBlocked(day) {
-                                                currentSelectedDate = day
-                                            } else {
-                                                loadNextMonthDays()
-                                                currentSelectedDate = currentMonthDays.first ?? ""
-                                            }
+                                            handleDayTap(day)
                                         }
                                 } else {
                                     Text(day)
@@ -140,21 +57,17 @@ struct CalendarView: View {
                         }
                         .onAppear {
                             DispatchQueue.main.async {
-                                height = geometry.size.height
+                                VM.frameHeight = geometry.size.height
                             }
                         }
                     }
                 }
             }
-            .onAppear {
-                perpareDates()
-                self.availableMonth = collectAvailableMonthes(startDate: startDate, endDate: endDate)
-            }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .onChange(of: selectedMonthIndex) {
-                loadNextMonthDays()
+                VM.loadNextMonthDays()
             }
-            .frame(height: height == .zero ? 350 : height)
+            .frame(height: VM.frameHeight == .zero ? 350 : VM.frameHeight)
         }
         .overlay {
             RoundedRectangle(cornerRadius: 5)
@@ -162,6 +75,15 @@ struct CalendarView: View {
         }
         .background(Color(hex: "F7F7F7"))
         .padding(.horizontal, 10)
+    }
+    
+    private func handleDayTap(_ day: String) {
+        if VM.isDateBlocked(day) {
+            currentSelectedDate = day
+        } else {
+            VM.loadNextMonthDays()
+            currentSelectedDate = VM.currentMonthDays.first ?? ""
+        }
     }
 }
 
