@@ -37,7 +37,7 @@ struct AddToCartButtomSheet: View {
                 
                 Spacer()
                 
-                QuantitySelectorView(quantity: $VM.quantity, variantID:  VM.product?.variants?[0].shopify_product_variant_id ?? "", inventoryQuantity: VM.product?.inventory_quantity ?? 0)
+                QuantitySelectorView()
             }
             .padding(.vertical, 1)
             

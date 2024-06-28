@@ -17,12 +17,10 @@ struct QuantitySelectorView: View {
             self.isAlertShow.toggle()
         }
     }
+    @State private var quantity: Int = 1
     
-    @Binding var quantity: Int
-    
-    let variantID        : String
-    let inventoryQuantity: Int
-    var mode             : UIMode = .normal
+    var mode     : UIMode = .normal
+    var lineItem : LineItemViewModel?
     
     var body: some View {
         HStack {
@@ -36,7 +34,7 @@ struct QuantitySelectorView: View {
             .background(Color(hex: "D6D6D6"))
             .cornerRadius(3)
             
-            TextField("", value: $quantity, formatter: NumberFormatter())
+            Text("\(lineItem?.quantity ?? quantity)")
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
                 .frame(width: 25)
@@ -60,57 +58,55 @@ struct QuantitySelectorView: View {
     }
     
     func tapMinus() {
-
+        
         if mode == .cart {
             
-            guard quantity > 1 && !cartEnv.isLoading else { return }
+            guard let lineItem = lineItem, lineItem.quantity > 1 && !cartEnv.isLoading else { return }
             
-            quantity -= 1
+            lineItem.quantity -= 1
             
             let tempLineItems = cartEnv.lineItems
             for item in tempLineItems {
-                if item.variantID?.shopifyIDEncode == variantID {
-                    item.quantity = quantity
+                if item.variantID?.shopifyIDEncode == lineItem.variantID {
+                    item.quantity = lineItem.quantity
                 }
             }
             
             cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
             // addToCart should handle here
-            guard quantity > 1  else { return }
+            guard self.quantity > 1  else { return }
             
-            quantity -= 1
+            self.quantity -= 1
         }
     }
     
     func tapPlus() {
-        if quantity < inventoryQuantity {
+        if mode == .cart {
             
-            if mode == .cart {
-                
-                guard !cartEnv.isLoading else { return }
-                
-                quantity += 1
-                
-                let tempLineItems = cartEnv.lineItems
-                for item in tempLineItems {
-                    if item.variantID?.shopifyIDEncode == variantID {
-                        item.quantity = quantity
-                    }
-                }
-                
-                cartEnv.mutateItem(lineItems: tempLineItems)
-            } else {
-                // addToCart should handle here
-                quantity += 1
+            guard let lineItem = lineItem , lineItem.quantity < lineItem.variant?.quantityAvailable ?? 0, !cartEnv.isLoading else {
+                self.alertItem = AlertContext.quantityUnavailable
+                return
             }
+            
+            lineItem.quantity += 1
+            
+            let tempLineItems = cartEnv.lineItems
+            for item in tempLineItems {
+                if item.variantID?.shopifyIDEncode == lineItem.variantID {
+                    item.quantity = lineItem.quantity
+                }
+            }
+            
+            cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
-            self.alertItem = AlertContext.quantityUnavailable
+            // addToCart should handle here
+            self.quantity += 1
         }
     }
 }
 
-#Preview {
-    QuantitySelectorView(quantity: .constant(10), variantID: "", inventoryQuantity: 20)
-        .environmentObject(CartEnvironment())
-}
+//#Preview {
+//    QuantitySelectorView(lineItem: )
+//        .environmentObject(CartEnvironment())
+//}

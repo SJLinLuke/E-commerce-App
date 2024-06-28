@@ -13,34 +13,18 @@ import MobileBuySDK
     typealias Task = _Concurrency.Task
     
     @Published var isLoading               : Bool = false
+    @Published var isShowCheckout          : Bool = false
     @Published private var checkout        : CheckoutViewModel?
     @Published private var shoppingCartData: ShoppingCartData?
-    @Published var lineItems_OOS           : [LineItemViewModel] = [] {
-        didSet {
-            lineItem_OOS_isChanged = true
-        }
-    }
+    @Published var lineItems_OOS           : [LineItemViewModel] = []
+    @Published var lineItems: [LineItemViewModel] = []
+    
     var lineItem_OOS_isChanged: Bool = false
     var userEnv: UserEnviroment? = nil
     
     // MARK: checkout
     var cartItemsCountingNum: Int { checkout?.lineItems.reduce(0, { $0 + $1.quantity}) ?? 0 }
-    
-    var lineItems: [LineItemViewModel] {
-        var tempLineItems:[LineItemViewModel] = []
-        for lineItem in checkout?.lineItems ?? [] {
-            let availableQuantity = lineItem.variant?.quantityAvailable ?? 0
-            if availableQuantity > 0 {
-                tempLineItems.append(lineItem)
-            } else {
-                if !lineItems_OOS.contains(where: { $0.variantID == lineItem.variantID }) {
-                    lineItems_OOS.append(lineItem)
-                }
-            }
-        }
-        return tempLineItems
-    }
-    
+
     var subTotal: Decimal { checkout?.lineItems.reduce(0, { $0 + ($1.variant?.price ?? 0) * Decimal($1.quantity) }) ?? 0}
     
     var totalPrice: Decimal { checkout?.totalPrice ?? 0 }
@@ -77,7 +61,7 @@ import MobileBuySDK
     
     
     // MARK: Network fetch
-    func fetchCheckout(needAsync: Bool = true) {
+    func fetchCheckout(needAsync: Bool = true, complete: (() -> Void)? = nil) {
         
         guard let userEnv = userEnv else { return }
         
@@ -85,11 +69,16 @@ import MobileBuySDK
         Client.shared.pollForReadyCheckout(userEnv.checkoutID) { checkout in
             if let checkout = checkout {
                 self.checkout = checkout
-                
-                if needAsync {
-                    self.asyncShoppingCart()
-                } else {
-                    self.isLoading = false
+                self.checkoutOOS(lineItems: checkout.lineItems) { lineItems in
+                    self.lineItems = lineItems
+                    if let complete = complete {
+                        complete()
+                    }
+                    if needAsync {
+                        self.asyncShoppingCart()
+                    } else {
+                        self.isLoading = false
+                    }
                 }
             }
         }
@@ -124,7 +113,10 @@ import MobileBuySDK
         Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, addCartItem: addCartItem?.cartItem, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
             if let checkout = checkout {
                 self.checkout = checkout
-                self.asyncShoppingCart()
+                self.checkoutOOS(lineItems: checkout.lineItems) { lineItems in
+                    self.lineItems = lineItems
+                    self.asyncShoppingCart()
+                }
             }
         }
     }
@@ -166,6 +158,41 @@ import MobileBuySDK
         }
     }
     
+    // MARK: OOS
+    private func checkoutOOS(lineItems: [LineItemViewModel], complete: @escaping([LineItemViewModel]) -> Void) {
+        var tempLineItems:[LineItemViewModel] = []
+        for lineItem in lineItems {
+            let availableQuantity = lineItem.variant?.quantityAvailable ?? 0
+                        
+            if availableQuantity >= lineItem.quantity {
+                tempLineItems.append(lineItem)
+            }
+            
+            if availableQuantity < lineItem.quantity {
+                self.lineItem_OOS_isChanged = true
+                lineItem.quantity = availableQuantity
+                tempLineItems.append(lineItem)
+            }
+            
+            if availableQuantity == 0 {
+                if !lineItems_OOS.contains(where: { $0.variantID == lineItem.variantID }) {
+                    self.lineItem_OOS_isChanged = true
+                    self.lineItems_OOS.append(lineItem)
+                }
+            }
+        }
+        complete(tempLineItems)
+    }
+    
+    // MARK: Checkout
+    func tapOnCheckout() {
+        self.fetchCheckout {
+            if !self.lineItem_OOS_isChanged {
+                self.isShowCheckout.toggle()
+                print("go to checkout")
+            }
+        }
+    }
     
     // MARK: Init
     func deleteLocalCheckout() {

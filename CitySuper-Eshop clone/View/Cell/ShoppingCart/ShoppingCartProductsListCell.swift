@@ -11,17 +11,16 @@ struct ShoppingCartProductsListCell: View {
     
     @EnvironmentObject private var cartEnv: CartEnvironment
     
-    @State var quantity: Int
+//    @State var quantity: Int
     
     let lineItem: LineItemViewModel
     
     init(lineItem: LineItemViewModel) {
         self.lineItem = lineItem
-        self.quantity = lineItem.quantity
+//        self.quantity = lineItem.quantity
     }
     
     var body: some View {
-        
         HStack {
             RemoteImageView(url: lineItem.variant?.image?.absoluteString ?? "", placeholder: .common)
                 .frame(width: 130, height: 130)
@@ -44,7 +43,7 @@ struct ShoppingCartProductsListCell: View {
                         .foregroundColor(Color(hex: "E94E1B"))
                 }
                 
-                QuantitySelectorView(quantity: $quantity, variantID: lineItem.variant?.id.shopifyIDEncode ?? "", inventoryQuantity: Int(lineItem.variant?.quantityAvailable ?? 0), mode: .cart)
+                QuantitySelectorView(mode: .cart, lineItem: lineItem)
             }
             
             Spacer()
