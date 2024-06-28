@@ -37,7 +37,7 @@ struct AddToCartButtomSheet: View {
                 
                 Spacer()
                 
-                QuantitySelectorView()
+                QuantitySelectorView(quantity: $VM.quantity)
             }
             .padding(.vertical, 1)
             

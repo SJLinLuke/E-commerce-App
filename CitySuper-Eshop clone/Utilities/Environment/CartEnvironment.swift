@@ -176,9 +176,12 @@ import MobileBuySDK
             
             if availableQuantity == 0 {
                 if !lineItems_OOS.contains(where: { $0.variantID == lineItem.variantID }) {
-                    self.lineItem_OOS_isChanged = true
                     self.lineItems_OOS.append(lineItem)
+                    self.lineItem_OOS_isChanged = true
                 }
+                tempLineItems = tempLineItems.filter({ tempLineItem in
+                    tempLineItem != lineItem
+                })
             }
         }
         complete(tempLineItems)

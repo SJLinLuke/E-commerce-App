@@ -11,13 +11,16 @@ struct QuantitySelectorView: View {
     
     @EnvironmentObject private var cartEnv: CartEnvironment
     
+    @StateObject private var addToCartVM = AddToCartButtomSheetViewModel.shared
+    
     @State private var isAlertShow: Bool = false
     @State private var alertItem  : AlertItem? {
         didSet {
             self.isAlertShow.toggle()
         }
     }
-    @State private var quantity: Int = 1
+    
+    @Binding var quantity: Int
     
     var mode     : UIMode = .normal
     var lineItem : LineItemViewModel?
@@ -93,7 +96,7 @@ struct QuantitySelectorView: View {
             
             let tempLineItems = cartEnv.lineItems
             for item in tempLineItems {
-                if item.variantID?.shopifyIDEncode == lineItem.variantID {
+                if item.variantID?.shopifyIDEncode == lineItem.variantID?.shopifyIDEncode {
                     item.quantity = lineItem.quantity
                 }
             }
@@ -101,6 +104,10 @@ struct QuantitySelectorView: View {
             cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
             // addToCart should handle here
+            guard self.quantity < addToCartVM.product?.inventory_quantity ?? 0 else {
+                self.alertItem = AlertContext.quantityUnavailable
+                return
+            }
             self.quantity += 1
         }
     }

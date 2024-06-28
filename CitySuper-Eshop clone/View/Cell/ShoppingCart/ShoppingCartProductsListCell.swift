@@ -43,7 +43,7 @@ struct ShoppingCartProductsListCell: View {
                         .foregroundColor(Color(hex: "E94E1B"))
                 }
                 
-                QuantitySelectorView(mode: .cart, lineItem: lineItem)
+                QuantitySelectorView(quantity: .constant(1), mode: .cart, lineItem: lineItem)
             }
             
             Spacer()
