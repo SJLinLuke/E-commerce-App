@@ -36,7 +36,8 @@ struct CalendarView: View {
                 ForEach(VM.availableMonth, id: \.self) { index in
                     GeometryReader { geometry in
                         LazyVGrid(columns: column) {
-                            ForEach(VM.currentMonthDays, id: \.self) { day in
+                            ForEach(VM.currentMonthDays.indices, id: \.self) { index in
+                                let day = VM.currentMonthDays[index]
                                 let isSelected: Bool = currentSelectedDate == day
                                 if let dayNumber = day.split(separator: "-").last, let dayNumber_int = Int(dayNumber) {
                                     Text("\(dayNumber_int)")
@@ -49,11 +50,12 @@ struct CalendarView: View {
                                         .onTapGesture {
                                             handleDayTap(day)
                                         }
+                                        .id(index)
                                 } else {
                                     Text(day)
+                                        .id(index)
                                 }
                             }
-                            .id(UUID())
                         }
                         .onAppear {
                             DispatchQueue.main.async {
