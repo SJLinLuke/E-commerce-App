@@ -70,7 +70,7 @@ struct QuantitySelectorView: View {
             
             let tempLineItems = cartEnv.lineItems
             for item in tempLineItems {
-                if item.variantID?.shopifyIDEncode == lineItem.variantID {
+                if item.variantID?.shopifyIDEncode == lineItem.variantID?.shopifyIDEncode {
                     item.quantity = lineItem.quantity
                 }
             }
