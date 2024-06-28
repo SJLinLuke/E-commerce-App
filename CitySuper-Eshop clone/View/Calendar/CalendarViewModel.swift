@@ -19,9 +19,7 @@ import Foundation
     
     private var startDate: String = ""
     private var endDate  : String = ""
-    
 
-    
     init(startDate: String, endDate: String) {
         self.startDate = startDate
         self.endDate   = endDate
@@ -44,7 +42,7 @@ import Foundation
         }
     }
 
-    func perpareDates() {
+    private func perpareDates() {
         
         let components = calendar.dateComponents([.year, .month], from: currentMonth)
         let firstDayOfMonth = calendar.date(from: components)!
