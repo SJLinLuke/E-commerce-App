@@ -21,7 +21,7 @@ import Foundation
 
     @Published var addresses: [AddressViewModel] = []
     
-    func fetchAddresses() {
+    func fetchAddresses(complete: (() -> Void)? = nil) {
         
         guard !isLoading else { return }
         
@@ -35,6 +35,9 @@ import Foundation
                         let rawAddresses = container.addresses.items
                         self.addresses = rawAddresses
                         self.isLoading = false
+                        if let complete = complete {
+                            complete()
+                        }
                     }
                 }
             } catch {

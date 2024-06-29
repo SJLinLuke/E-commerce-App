@@ -41,7 +41,7 @@ struct ShoppingCartInfoView: View {
                 Spacer()
                 
                 Button {
-                    
+                    cartEnv.tapOnCheckout()
                 } label: {
                     ThemeButton(title: "Checkout",
                                 font: .regular,

@@ -14,7 +14,8 @@ import Foundation
     @Published var currentMonth: Date = Date()
     @Published var currentMonthDays: [String] = []
     @Published var currentMonthYear: String = ""
-    
+    @Published var selectedMonthIndex: Int = 1
+
     private let calendar = Calendar.current
     
     private var startDate: String = ""
@@ -88,6 +89,14 @@ import Foundation
             // Handle case where start month is after end month (crossing year boundary)
             monthRange = Array(startMonth...12) + Array(1...endMonth)
         }
+        
+        // default value setup
+        self.selectedMonthIndex = monthRange.sorted().first ?? 1
+        
+        var components = calendar.dateComponents([.year], from: Date())
+        components.month = monthRange.sorted().first
+        components.day = 1
+        self.currentMonth = calendar.date(from: components) ?? Date()
         
         return monthRange.sorted()
     }

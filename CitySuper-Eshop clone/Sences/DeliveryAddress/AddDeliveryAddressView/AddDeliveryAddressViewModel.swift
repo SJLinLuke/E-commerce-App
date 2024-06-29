@@ -35,7 +35,7 @@ import Combine
     }
     
     
-    func addAddress() {
+    func addAddress(complete: (() -> Void)? = nil) {
         
         guard !isLoading else { return }
         
@@ -46,13 +46,21 @@ import Combine
         
         Task {
             do {
-                self.isLoading = true
-                
-                let accessToken = try await NetworkManager.shared.getAccessToken()
-                
-                Client.shared.createAddress(input, with: accessToken) {
-                    self.isLoading = false
-                    self.shouldDismissView = true
+                if let complete = complete {
+                    let accessToken = try await NetworkManager.shared.getAccessToken()
+                    
+                    Client.shared.createAddress(input, with: accessToken) {
+                        complete()
+                    }
+                } else {
+                    self.isLoading = true
+                    
+                    let accessToken = try await NetworkManager.shared.getAccessToken()
+                    
+                    Client.shared.createAddress(input, with: accessToken) {
+                        self.isLoading = false
+                        self.shouldDismissView = true
+                    }
                 }
             } catch {
                 print(error.localizedDescription)

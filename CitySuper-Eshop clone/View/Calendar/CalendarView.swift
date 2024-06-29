@@ -9,9 +9,9 @@ import SwiftUI
 
 struct CalendarView: View {
     
-    @StateObject private var VM          : CalendarViewModel
-    @Binding var currentSelectedDate     : String
-    @State private var selectedMonthIndex: Int = 1
+    @StateObject private var VM     : CalendarViewModel
+    
+    @Binding var currentSelectedDate: String
 
     private let screenWidth = UIScreen.main.bounds.width * 0.9
     private let column = [
@@ -32,7 +32,7 @@ struct CalendarView: View {
             
             WeekDaysView()
             
-            TabView(selection: $selectedMonthIndex) {
+            TabView(selection: $VM.selectedMonthIndex) {
                 ForEach(VM.availableMonth, id: \.self) { index in
                     GeometryReader { geometry in
                         LazyVGrid(columns: column) {
@@ -50,12 +50,13 @@ struct CalendarView: View {
                                         .onTapGesture {
                                             handleDayTap(day)
                                         }
-                                        .id(index)
+//                                        .id(index)
                                 } else {
                                     Text(day)
-                                        .id(index)
+//                                        .id(index)
                                 }
                             }
+                            .id(UUID())
                         }
                         .onAppear {
                             DispatchQueue.main.async {
@@ -66,7 +67,7 @@ struct CalendarView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .onChange(of: selectedMonthIndex) {
+            .onChange(of: VM.selectedMonthIndex) {
                 VM.loadNextMonthDays()
             }
             .frame(height: VM.frameHeight == .zero ? 350 : VM.frameHeight)
@@ -90,7 +91,7 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(currentSelectedDate: .constant(""), startDate: "2024-06-20", endDate: "2024-07-05")
+    CalendarView(currentSelectedDate: .constant("2024-07-01"), startDate: "2024-06-01", endDate: "2024-07-05")
 }
 
 struct WeekDaysView: View {

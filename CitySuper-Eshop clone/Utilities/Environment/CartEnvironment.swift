@@ -8,6 +8,11 @@
 import Foundation
 import MobileBuySDK
 
+enum CheckoutMethodsType: String {
+    case delivery = "Delivery"
+    case pickup   = "Pickup"
+}
+
 @MainActor final class CartEnvironment: ObservableObject {
     
     typealias Task = _Concurrency.Task
@@ -17,7 +22,10 @@ import MobileBuySDK
     @Published private var checkout        : CheckoutViewModel?
     @Published private var shoppingCartData: ShoppingCartData?
     @Published var lineItems_OOS           : [LineItemViewModel] = []
-    @Published var lineItems: [LineItemViewModel] = []
+    @Published var lineItems               : [LineItemViewModel] = []
+    @Published var currentMethod           : CheckoutMethodsType = .delivery
+    @Published var currentSelectedAddress  : AddressViewModel?
+    @Published var currentSelectedDate     : String = ""
     
     var lineItem_OOS_isChanged: Bool = false
     var userEnv: UserEnviroment? = nil
@@ -32,7 +40,6 @@ import MobileBuySDK
     var totalDiscount: Decimal { checkout?.totalDiscounts ?? 0 }
     
     var discountApplication: [DiscountApplication] { checkout?.discountApplication ?? [] }
-    
     
     // MARK: shoppingCartData
     var isAllowToCheckout: Bool {
@@ -59,6 +66,29 @@ import MobileBuySDK
         return []
     }
     
+    var availableMethods: [CheckoutMethodsType] 
+    {
+        var tempMethods: [CheckoutMethodsType] = []
+        if shoppingCartData?.location_options?.contains("Delivery") ?? false {
+            tempMethods.append(.delivery)
+        }
+        if shoppingCartData?.location_options?.contains("StorePickup") ?? false {
+            tempMethods.append(.pickup)
+        }
+        return tempMethods
+    }
+    
+    var deliveryPicker: Bool {
+        shoppingCartData?.delivery_date_picker ?? true && !(shoppingCartData?.delivery_available_dates?.isEmpty ?? false)
+    }
+    
+    var deliveryStartDate: String {
+        shoppingCartData?.delivery_start_date ?? ""
+    }
+    
+    var deliveryEndDate: String {
+        shoppingCartData?.delivery_end_date ?? ""
+    }
     
     // MARK: Network fetch
     func fetchCheckout(needAsync: Bool = true, complete: (() -> Void)? = nil) {
@@ -187,12 +217,13 @@ import MobileBuySDK
         complete(tempLineItems)
     }
     
-    // MARK: Checkout
+    // MARK: TapOnCheckout
     func tapOnCheckout() {
         self.fetchCheckout {
-            if !self.lineItem_OOS_isChanged {
+            if !self.availableMethods.isEmpty, !self.lineItem_OOS_isChanged {
+                self.currentMethod = self.availableMethods.first ?? .delivery
+                self.currentSelectedDate = self.shoppingCartData?.delivery_available_dates?.first ?? ""
                 self.isShowCheckout.toggle()
-                print("go to checkout")
             }
         }
     }

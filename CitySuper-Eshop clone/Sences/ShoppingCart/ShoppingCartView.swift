@@ -69,6 +69,9 @@ struct ShoppingCartView: View {
                     }
                 }
             }
+            .navigationDestination(isPresented: $cartEnv.isShowCheckout) {
+                CheckoutMethodsParentsView()
+            }
         }
     }
 }
