@@ -47,6 +47,7 @@ struct Constants {
     static let searchProduct      = "api/eshop/search?keyword="
     static let searchList         = "api/eshop/search/collection?keyword="
     static let searchCollections  = "api/eshop/search/product_collection?keyword="
+    static let cloneToCheckout    = "api/eshop/order/cloneCheckout/"
     
     static let productDetail_html_source = """
         <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>

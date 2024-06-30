@@ -315,23 +315,23 @@ final class ClientQuery {
         }
     }
     
-    static func mutationForUpdateCheckout(_ id: String, updatingCompleteShippingAddress address: PayAddress) -> Storefront.MutationQuery {
+    static func mutationForUpdateCheckout(_ id: String, updatingCompleteShippingAddress address: Storefront.MailingAddressInput) -> Storefront.MutationQuery {
         
         let checkoutID   = GraphQL.ID(rawValue: id)
-        let addressInput = Storefront.MailingAddressInput.create(
-            address1:  address.addressLine1.orNull,
-            address2:  address.addressLine2.orNull,
-            city:      address.city.orNull,
-            country:   address.country.orNull,
-            firstName: address.firstName.orNull,
-            lastName:  address.lastName.orNull,
-            phone:     address.phone.orNull,
-            province:  address.province.orNull,
-            zip:       address.zip.orNull
-        )
+//        let addressInput = Storefront.MailingAddressInput.create(
+//            address1:  address.addressLine1.orNull,
+//            address2:  address.addressLine2.orNull,
+//            city:      address.city.orNull,
+//            country:   address.country.orNull,
+//            firstName: address.firstName.orNull,
+//            lastName:  address.lastName.orNull,
+//            phone:     address.phone.orNull,
+//            province:  address.province.orNull,
+//            zip:       address.zip.orNull
+//        )
         
         return Storefront.buildMutation { $0
-            .checkoutShippingAddressUpdateV2(shippingAddress: addressInput, checkoutId: checkoutID) { $0
+            .checkoutShippingAddressUpdateV2(shippingAddress: address, checkoutId: checkoutID) { $0
                 .checkoutUserErrors { $0
                     .field()
                     .message()
@@ -382,6 +382,36 @@ final class ClientQuery {
                     .message()
                 }
                 .checkout { $0
+                    .fragmentForCheckout()
+                }
+            }
+        }
+    }
+    
+    static func mutationForUpdateAttributesofCheckout(by checkout_id: String, attributes:  [Storefront.AttributeInput]) -> Storefront.MutationQuery{
+        return Storefront.buildMutation{ $0
+            .checkoutAttributesUpdateV2(checkoutId: GraphQL.ID(rawValue: checkout_id), input: Storefront.CheckoutAttributesUpdateV2Input.create(customAttributes: .init(orNull: attributes))){ $0
+                .checkoutUserErrors{ $0
+                    .code()
+                    .field()
+                    .message()
+                }
+                .checkout{ $0
+                    .fragmentForCheckout()
+                }
+            }
+        }
+    }
+    
+    static func mutationForUpdateShippingLine(by checkout_id:String, shippingLineHandle: String) -> Storefront.MutationQuery{
+        return Storefront.buildMutation{ $0
+            .checkoutShippingLineUpdate(checkoutId: GraphQL.ID(rawValue: checkout_id), shippingRateHandle: shippingLineHandle){ $0
+                .checkoutUserErrors{ $0
+                    .code()
+                    .field()
+                    .message()
+                }
+                .checkout{ $0
                     .fragmentForCheckout()
                 }
             }

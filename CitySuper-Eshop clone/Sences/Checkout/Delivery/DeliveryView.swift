@@ -58,7 +58,7 @@ struct DeliveryView: View {
                 }
                 
                 Button {
-                    
+                    cartEnv.tapConfirm()
                 } label: {
                     ThemeButton(title: "Confirm", width: screenWidth, disable: !cartEnv.deliveryPicker)
                         .padding(.top)
@@ -69,6 +69,12 @@ struct DeliveryView: View {
                     cartEnv.currentSelectedAddress = DA_VM.addresses.first
                 }
             }
+            .overlay {
+                if DA_VM.isLoading { LoadingIndicatiorView() }
+            }
+        }
+        .overlay {
+            if cartEnv.isLoading { LoadingIndicatiorView(backgroundDisable: true) }
         }
     }
 }

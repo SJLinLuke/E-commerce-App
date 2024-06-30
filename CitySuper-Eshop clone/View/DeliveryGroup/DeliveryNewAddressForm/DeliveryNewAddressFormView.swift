@@ -10,9 +10,9 @@ import SwiftUI
 struct DeliveryNewAddressFormView: View {
     @EnvironmentObject private var cartEnv: CartEnvironment
 
-    @StateObject private var addDA_VM = AddDeliveryAddressViewModel()
+    @StateObject private var addDA_VM = AddDeliveryAddressViewModel.shared
     
-    @State private var isSaveChecked: Bool = false
+//    @State private var isSaveChecked: Bool = false
     
     var body: some View {
         HStack(spacing: 10) {
@@ -52,7 +52,7 @@ struct DeliveryNewAddressFormView: View {
                         .frame(width: 20, height: 20)
                         .foregroundColor(.clear)
                         .overlay {
-                            if isSaveChecked {
+                            if cartEnv.isCheckSaveAddress {
                                 Image("checkbox_icon")
                             } else {
                                 Rectangle()
@@ -60,7 +60,7 @@ struct DeliveryNewAddressFormView: View {
                             }
                         }
                         .onTapGesture {
-                            isSaveChecked.toggle()
+                            cartEnv.isCheckSaveAddress.toggle()
                         }
                     
                     Text("Save this information for next time")

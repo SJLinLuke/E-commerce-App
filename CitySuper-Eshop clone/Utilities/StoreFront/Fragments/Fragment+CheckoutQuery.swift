@@ -61,6 +61,7 @@ extension Storefront.CheckoutQuery {
         }
         
         .shippingAddress { $0
+            .id()
             .firstName()
             .lastName()
             .phone()
@@ -68,6 +69,7 @@ extension Storefront.CheckoutQuery {
             .address2()
             .city()
             .country()
+            .company()
             .countryCodeV2()
             .province()
             .provinceCode()

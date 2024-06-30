@@ -31,8 +31,6 @@ struct CartButton: View {
                     addToCartVM.isShowAddToCartButtonSheet.toggle()
                 }
             }
-            
-            
         } label: {
             Image("cart_icon")
                 .resizable()

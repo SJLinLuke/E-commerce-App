@@ -72,6 +72,21 @@ final class AddressViewModel: ViewModel, Identifiable, Equatable {
         self.zip         = model.zip ?? "00000"
     }
     
+    var addressInput: Storefront.MailingAddressInput {
+        return Storefront.MailingAddressInput.create(
+                    address1:  .value(self.address1),
+                    address2:  .value(self.address2),
+                    city:      .value(self.city),
+                    company:   .value(self.company),
+                    country:   .value(self.country),
+                    firstName: .value(self.firstName),
+                    lastName:  .value(self.lastName),
+                    phone:     .value(self.phone),
+                    province:  .value("Hong Kong"),
+                    zip:       .value("00000")
+               )
+    }
+    
     static func == (lhs: AddressViewModel, rhs: AddressViewModel) -> Bool {
         lhs.addressID   == rhs.addressID &&
         lhs.firstName   == rhs.firstName &&

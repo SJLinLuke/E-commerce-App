@@ -17,10 +17,11 @@ enum CheckoutMethodsType: String {
     
     typealias Task = _Concurrency.Task
     
-    @Published var isLoading               : Bool = false
-    @Published var isShowDeliveryOrPickup  : Bool = false
-    @Published private var checkout        : CheckoutViewModel?
-    @Published private var shoppingCartData: ShoppingCartData?
+    @Published var isLoading                 : Bool = false
+    @Published var isShowDeliveryOrPickup    : Bool = false
+    @Published var isShowCheckoutConfirmation: Bool = false
+    @Published private var checkout          : CheckoutViewModel?
+    @Published private var shoppingCartData  : ShoppingCartData?
     
     @Published var lineItems_OOS           : [LineItemViewModel] = []
     @Published var lineItems               : [LineItemViewModel] = []
@@ -28,6 +29,9 @@ enum CheckoutMethodsType: String {
     @Published var currentSelectedAddress  : AddressViewModel?
     @Published var currentSelectedDate     : String = ""
     @Published var currentSelectedStore    : Locations?
+    @Published var isCheckSaveAddress      : Bool = false
+    
+    let addDeliveryAddressVM = AddDeliveryAddressViewModel.shared
 
     var lineItem_OOS_isChanged: Bool = false
     var userEnv: UserEnviroment? = nil
@@ -108,7 +112,7 @@ enum CheckoutMethodsType: String {
         
         self.isLoading = true
         Client.shared.pollForReadyCheckout(userEnv.checkoutID) { checkout in
-            if let checkout = checkout {
+            if let checkout {
                 self.checkout = checkout
                 self.checkoutOOS(lineItems: checkout.lineItems) { lineItems in
                     self.lineItems = lineItems
@@ -152,12 +156,27 @@ enum CheckoutMethodsType: String {
         pendingMutations.removeAll()
         
         Client.shared.MutateItemToCheckout(with: lastMutationsToExecute, addCartItem: addCartItem?.cartItem, of: GraphQL.ID(rawValue: userEnv.checkoutID)) { checkout in
-            if let checkout = checkout {
+            if let checkout {
                 self.checkout = checkout
                 self.checkoutOOS(lineItems: checkout.lineItems) { lineItems in
                     self.lineItems = lineItems
                     self.asyncShoppingCart()
                 }
+            }
+        }
+    }
+    
+    private func cloneToCheckout(complete: @escaping (String?) -> Void) {
+        
+        guard let userEnv = userEnv else { return }
+        
+        Task {
+            do {
+                let clonedCheckoutID = try await NetworkManager.shared.cloneToCheckout(userEnv.checkoutID)
+                complete(clonedCheckoutID)
+            } catch {
+                complete(nil)
+                print(error.localizedDescription)
             }
         }
     }
@@ -235,12 +254,82 @@ enum CheckoutMethodsType: String {
         
         self.fetchCheckout {
             if !self.availableMethods.isEmpty, !self.lineItem_OOS_isChanged {
-                self.currentMethod = self.availableMethods.first ?? .delivery
-                self.currentSelectedDate = self.shoppingCartData?.delivery_available_dates?.first ?? ""
+                self.currentMethod        = self.availableMethods.first ?? .delivery
+                self.currentSelectedDate  = self.shoppingCartData?.delivery_available_dates?.first ?? ""
                 self.currentSelectedStore = self.shoppingCartData?.store_pickup_locations.first
                 self.isShowDeliveryOrPickup.toggle()
             }
         }
+    }
+    
+    func tapConfirm() {
+        
+        guard !isLoading else { return }
+        
+        self.isLoading = true
+        
+        var address: Storefront.MailingAddressInput?
+        var attributesInput: [Storefront.AttributeInput] = []
+        
+        if currentMethod == .delivery {
+            guard !self.currentSelectedDate.isEmpty else {
+                print("No date selected")
+                self.isLoading = false
+                return
+            }
+            
+            if let selectedDeliveryAddress = self.currentSelectedAddress {
+                address = selectedDeliveryAddress.addressInput
+            } else {
+                address = addDeliveryAddressVM.creatInput()
+                
+                if self.isCheckSaveAddress, address != nil {
+                    self.addDeliveryAddressVM.addAddress { debugPrint("address saved") }
+                }
+            }
+            attributesInput = [Storefront.AttributeInput.create(key: "Delivery Date", value: self.currentSelectedDate)]
+        }
+       
+        if currentMethod == .pickup {
+            guard !self.currentSelectedDate.isEmpty else {
+                print("No date selected")
+                self.isLoading = false
+                return
+            }
+            
+            if let selectedStore = self.currentSelectedStore {
+                address = addDeliveryAddressVM.creatInput(store: selectedStore)
+                
+                attributesInput = [
+                    Storefront.AttributeInput.create(key: "Pickup Date", value: self.currentSelectedDate),
+                    Storefront.AttributeInput.create(key: "Pickup Location", value: String(selectedStore.shopify_location_id))]
+            }
+            
+        }
+        
+        guard let address = address else {
+            print("delivery: please fill in address / pickup: please select a pickup store")
+            self.isLoading = false
+            return
+        }
+        
+        self.cloneToCheckout { checkoutID in
+            if let checkoutID = checkoutID {
+                Client.shared.updateCheckout(checkoutID, updatingCompleteShippingAddress: address) { checkout in
+                    if let checkout {
+                        self.checkout = checkout
+                        Client.shared.updateAttributes(checkout.id, attributes: attributesInput) { checkout in
+                            if let checkout {
+                                self.checkout = checkout
+                                self.isLoading = false
+                                self.isShowCheckoutConfirmation.toggle()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     // MARK: Init

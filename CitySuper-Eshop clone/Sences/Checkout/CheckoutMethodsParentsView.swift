@@ -32,8 +32,10 @@ struct CheckoutMethodsParentsView: View {
                             }
                         }
                         .onTapGesture {
-                            withAnimation {
-                                cartEnv.currentMethod = method
+                            if !cartEnv.isLoading {
+                                withAnimation {
+                                    cartEnv.currentMethod = method
+                                }
                             }
                         }
                 }
@@ -52,12 +54,16 @@ struct CheckoutMethodsParentsView: View {
                     }
                 }
             }
+            .disabled(cartEnv.isLoading)
             .tabViewStyle(.page(indexDisplayMode: .never))
             .padding(EdgeInsets(top: -15, leading: 0, bottom: -10, trailing: 0))
             
             Spacer()
         }
         .modifier(NavigationModifier(isHideCollectionsList: true, isHideShoppingCart: true))
+        .navigationDestination(isPresented: $cartEnv.isShowCheckoutConfirmation) {
+            CheckoutConfirmationView()
+        }
     }
 }
 

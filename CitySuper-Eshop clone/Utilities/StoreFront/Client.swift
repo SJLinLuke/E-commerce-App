@@ -383,7 +383,7 @@ final class Client {
     }
     
     @discardableResult
-    func updateCheckout(_ id: String, updatingCompleteShippingAddress address: PayAddress, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+    func updateCheckout(_ id: String, updatingCompleteShippingAddress address: Storefront.MailingAddressInput, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
         let mutation = ClientQuery.mutationForUpdateCheckout(id, updatingCompleteShippingAddress: address)
         let task     = self.client.mutateGraphWith(mutation) { response, error in
             error.debugPrint()
@@ -409,6 +409,40 @@ final class Client {
             if let checkout = response?.checkoutShippingLineUpdate?.checkout,
                 let _ = checkout.shippingLine {
                 completion(checkout.viewModel)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
+    func updateAttributes(_ checkoutID: String, attributes: [Storefront.AttributeInput], completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+        let mutation = ClientQuery.mutationForUpdateAttributesofCheckout(by: checkoutID, attributes: attributes)
+        let task     = self.client.mutateGraphWith(mutation) { response, error in
+            error.debugPrint()
+            
+            if let _response = response {
+                completion(_response.checkoutAttributesUpdateV2?.checkout?.viewModel)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
+    func updateShippingLine(by checkout_id: String, shippingLineHandle: String, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+        let mutation = ClientQuery.mutationForUpdateShippingLine(by: checkout_id, shippingLineHandle: shippingLineHandle)
+        let task     = self.client.mutateGraphWith(mutation) { response, error in
+            error.debugPrint()
+            
+            if let _reponse = response {
+                completion(_reponse.checkoutShippingLineUpdate?.checkout?.viewModel)
             } else {
                 completion(nil)
             }

@@ -12,6 +12,8 @@ import Combine
 @MainActor final class AddDeliveryAddressViewModel: ObservableObject {
     typealias Task = _Concurrency.Task
     
+    static let shared = AddDeliveryAddressViewModel()
+    
     @Published var isLoading  : Bool = false
     @Published var isAlertShow: Bool = false
     @Published var alertItem  : AlertItem? {
@@ -96,21 +98,36 @@ import Combine
         }
     }
     
-    private func creatInput() -> Storefront.MailingAddressInput? {
+    func creatInput(store: Locations? = nil) -> Storefront.MailingAddressInput? {
+        
+        if let store = store {
+            return  Storefront.MailingAddressInput.create(
+                        address1:  .value(store.address1),
+                        address2:  .value(store.address2),
+                        city:      .value("Hong Kong"),
+                        company:   .value("Citysuper"),
+                        country:   .value("Hong Kong"),
+                        firstName: .value(store.name),
+                        lastName:  .value("Citysuper"),
+                        phone:     .value(""),
+                        province:  .value("Hong Kong"),
+                        zip:       .value("00000")
+                   )
+        }
         
         guard !firstName.isEmpty, !lastName.isEmpty, !address.isEmpty, !district.isEmpty, !country.isEmpty, !region.isEmpty, !phone.isEmpty else { return nil }
             
         return Storefront.MailingAddressInput.create(
-                    address1: .value(address),
-                    address2: .value(district),
-                    city: .value(region),
-                    company: .value(company),
-                    country: .value("Hong Kong"),
+                    address1:  .value(address),
+                    address2:  .value(district),
+                    city:      .value(region),
+                    company:   .value(company),
+                    country:   .value("Hong Kong"),
                     firstName: .value(firstName),
-                    lastName: .value(lastName),
-                    phone: .value(phone),
-                    province: .value("Hong Kong"),
-                    zip: .value("00000")
+                    lastName:  .value(lastName),
+                    phone:     .value(phone),
+                    province:  .value("Hong Kong"),
+                    zip:       .value("00000")
                )
     }
     
@@ -123,5 +140,16 @@ import Combine
         self.country   = info.country
         self.region    = info.city
         self.phone     = info.phone
+    }
+    
+    func initInstantAddress() {
+        self.firstName = ""
+        self.lastName  = ""
+        self.company   = ""
+        self.address   = ""
+        self.district  = ""
+        self.country   = ""
+        self.region    = ""
+        self.phone     = ""
     }
 }

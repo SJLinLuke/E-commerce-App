@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct ProductDetailPriceView: View {
-    
-    @StateObject var VM = ProductDetailViewModel.shared
-    
-    let price: String
+        
+    let price             : String
+    let comparePrice      : String
+    let isCompareWithPrice: Bool
+    let isSoldOut         : Bool
+    let ShopifyID         : String
     
     var body: some View {
         HStack {
             Text("\(Currency.stringFrom(Decimal(string: price) ?? 0.0))")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(VM.isCompareWithPrice ? .red : .black)
+                .foregroundColor(isCompareWithPrice ? .red : .black)
             
-            if VM.isCompareWithPrice {
-                Text("\(Currency.stringFrom(Decimal(string: VM.product?.compare_at_price ?? "0") ?? 0.0))")
+            if isCompareWithPrice {
+                Text("\(Currency.stringFrom(Decimal(string: comparePrice) ?? 0.0))")
                     .font(.caption)
                     .strikethrough()
                     .foregroundColor(.secondary)
@@ -29,10 +31,10 @@ struct ProductDetailPriceView: View {
             
             Spacer()
             
-            if VM.isSoldOut {
+            if isSoldOut {
                 SoldOutButton(width: 53, height: 30)
             } else {
-                CartButton(width: 30, height: 30, shopifyID: VM.product?.shopify_product_id ?? "")
+                CartButton(width: 30, height: 30, shopifyID: ShopifyID)
             }
             
         }
@@ -41,5 +43,5 @@ struct ProductDetailPriceView: View {
 }
 
 #Preview {
-    ProductDetailPriceView(price: "0")
+    ProductDetailPriceView(price: "100", comparePrice: "199", isCompareWithPrice: true, isSoldOut: false, ShopifyID: "")
 }

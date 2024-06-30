@@ -476,6 +476,22 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    // MARK: Checkout
+    func cloneToCheckout(_ checkoutId: String) async throws -> String {
+
+        let request = generateURLRequest(host + Constants.cloneToCheckout + checkoutId, method: .post)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            return try decoder.decode(CloneToCheckoutResponse.self, from: data).data
+        } catch {
+            print(error.localizedDescription)
+            throw CSAlert.inValidData
+        }
+    }
+    
 }
 
 extension NetworkManager {
