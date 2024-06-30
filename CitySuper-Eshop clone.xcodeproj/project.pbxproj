@@ -119,6 +119,8 @@
 		40D99A412C2FE10800BF2AF7 /* DeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A402C2FE10800BF2AF7 /* DeliveryView.swift */; };
 		40D99A452C2FE16E00BF2AF7 /* DeliveryAddressTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A442C2FE16E00BF2AF7 /* DeliveryAddressTagView.swift */; };
 		40D99A482C2FE1B700BF2AF7 /* DeliveryNewAddressFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A472C2FE1B700BF2AF7 /* DeliveryNewAddressFormView.swift */; };
+		40D99A4B2C31121D00BF2AF7 /* PickupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A4A2C31121D00BF2AF7 /* PickupView.swift */; };
+		40D99A4F2C31127000BF2AF7 /* PickupStoreTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A4E2C31127000BF2AF7 /* PickupStoreTagsView.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -334,6 +336,8 @@
 		40D99A402C2FE10800BF2AF7 /* DeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryView.swift; sourceTree = "<group>"; };
 		40D99A442C2FE16E00BF2AF7 /* DeliveryAddressTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddressTagView.swift; sourceTree = "<group>"; };
 		40D99A472C2FE1B700BF2AF7 /* DeliveryNewAddressFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryNewAddressFormView.swift; sourceTree = "<group>"; };
+		40D99A4A2C31121D00BF2AF7 /* PickupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupView.swift; sourceTree = "<group>"; };
+		40D99A4E2C31127000BF2AF7 /* PickupStoreTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupStoreTagsView.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -891,6 +895,7 @@
 		40AAF1212C29A9EB00B17AF9 /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
+				40D99A492C31120C00BF2AF7 /* Pickup */,
 				40D99A3F2C2FE0F000BF2AF7 /* Delivery */,
 				40AAF1222C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift */,
 			);
@@ -975,6 +980,30 @@
 				40D99A472C2FE1B700BF2AF7 /* DeliveryNewAddressFormView.swift */,
 			);
 			path = DeliveryNewAddressForm;
+			sourceTree = "<group>";
+		};
+		40D99A492C31120C00BF2AF7 /* Pickup */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A4A2C31121D00BF2AF7 /* PickupView.swift */,
+			);
+			path = Pickup;
+			sourceTree = "<group>";
+		};
+		40D99A4C2C31124600BF2AF7 /* PickupGroup */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A4D2C31125D00BF2AF7 /* PickupStoreTags */,
+			);
+			path = PickupGroup;
+			sourceTree = "<group>";
+		};
+		40D99A4D2C31125D00BF2AF7 /* PickupStoreTags */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A4E2C31127000BF2AF7 /* PickupStoreTagsView.swift */,
+			);
+			path = PickupStoreTags;
 			sourceTree = "<group>";
 		};
 		40E522522BED05590046C3AA = {
@@ -1107,6 +1136,7 @@
 				40736CB32C17659A00496AB7 /* ShoppingCartGroup */,
 				40E62EED2C1DA0780044ED44 /* MoreCollectionListGroup */,
 				40D99A422C2FE13100BF2AF7 /* DeliveryGroup */,
+				40D99A4C2C31124600BF2AF7 /* PickupGroup */,
 				C58C3A012C23D1EC003580C2 /* SearchGroup */,
 			);
 			path = View;
@@ -1943,6 +1973,7 @@
 				40E522C12BEFC3390046C3AA /* ProductItem.swift in Sources */,
 				40E522A72BEF44860046C3AA /* BannerSetModel.swift in Sources */,
 				406612DC2BF855200037C4D8 /* QRcodeView.swift in Sources */,
+				40D99A4B2C31121D00BF2AF7 /* PickupView.swift in Sources */,
 				C593F1A92C06C4F400DBB028 /* AlertContext.swift in Sources */,
 				40BC65532C0C980200EA5067 /* CouponListRedeemView.swift in Sources */,
 				40BC65552C10C15500EA5067 /* OrderHistoryEmptyView.swift in Sources */,
@@ -1981,6 +2012,7 @@
 				C5EA79872BF452E30042FEF0 /* ThemeButton.swift in Sources */,
 				40BC65512C0C3CB300EA5067 /* CouponListTNCView.swift in Sources */,
 				C59AEBEE2BF353A9001541BE /* LoginView.swift in Sources */,
+				40D99A4F2C31127000BF2AF7 /* PickupStoreTagsView.swift in Sources */,
 				4062FCEC2C1899730072C2DE /* VariantNodeViewModel.swift in Sources */,
 				C582746D2C04806A00A84CDD /* OrderHistoryDetailSectionHeader.swift in Sources */,
 				40E62EEF2C1DA0930044ED44 /* MoreCollectionListHeaderView.swift in Sources */,

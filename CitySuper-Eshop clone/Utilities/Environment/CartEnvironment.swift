@@ -18,15 +18,17 @@ enum CheckoutMethodsType: String {
     typealias Task = _Concurrency.Task
     
     @Published var isLoading               : Bool = false
-    @Published var isShowCheckout          : Bool = false
+    @Published var isShowDeliveryOrPickup  : Bool = false
     @Published private var checkout        : CheckoutViewModel?
     @Published private var shoppingCartData: ShoppingCartData?
+    
     @Published var lineItems_OOS           : [LineItemViewModel] = []
     @Published var lineItems               : [LineItemViewModel] = []
     @Published var currentMethod           : CheckoutMethodsType = .delivery
     @Published var currentSelectedAddress  : AddressViewModel?
     @Published var currentSelectedDate     : String = ""
-    
+    @Published var currentSelectedStore    : Locations?
+
     var lineItem_OOS_isChanged: Bool = false
     var userEnv: UserEnviroment? = nil
     
@@ -52,19 +54,7 @@ enum CheckoutMethodsType: String {
         return true
     }
     
-    var noticeMessage: String {
-        shoppingCartData?.locationMessages?.textViewFormat() ?? ""
-    }
-    
-    func getLogicTag(shopifyID: String) -> [LogisticTag] {
-        guard let shoppingCartProducts = self.shoppingCartData?.products else { return [] }
-        for product in shoppingCartProducts {
-            if product.variants?[0].shopify_product_variant_id == shopifyID, let logistic_tags = product.logistic_tags {
-                return logistic_tags
-            }
-        }
-        return []
-    }
+    var noticeMessage: String { shoppingCartData?.locationMessages?.textViewFormat() ?? "" }
     
     var availableMethods: [CheckoutMethodsType] 
     {
@@ -79,16 +69,37 @@ enum CheckoutMethodsType: String {
     }
     
     var deliveryPicker: Bool {
-        shoppingCartData?.delivery_date_picker ?? true && !(shoppingCartData?.delivery_available_dates?.isEmpty ?? false)
+        shoppingCartData?.delivery_date_picker ?? true &&
+        !(shoppingCartData?.delivery_available_dates?.isEmpty ?? false)
     }
     
-    var deliveryStartDate: String {
-        shoppingCartData?.delivery_start_date ?? ""
+    var deliveryStartDate: String { shoppingCartData?.delivery_start_date ?? "" }
+    var deliveryEndDate  : String { shoppingCartData?.delivery_end_date ?? "" }
+    
+    var pickupStartDate  : String { shoppingCartData?.store_pickup_start_date ?? "" }
+    var pickupEndDate    : String { shoppingCartData?.store_pickup_end_date ?? "" }
+    
+    func getPickupLocations(_ locationCity: String) -> [Locations] {
+        guard let pickupLocations = self.shoppingCartData?.store_pickup_locations else { return [] }
+        var tempLocations = pickupLocations
+        if locationCity == "ALL" {
+            return pickupLocations
+        } else {
+            tempLocations = tempLocations.filter { Location in Location.city == locationCity }
+            return tempLocations
+        }
     }
     
-    var deliveryEndDate: String {
-        shoppingCartData?.delivery_end_date ?? ""
+    func getLogicTag(shopifyID: String) -> [LogisticTag] {
+        guard let shoppingCartProducts = self.shoppingCartData?.products else { return [] }
+        for product in shoppingCartProducts {
+            if product.variants?[0].shopify_product_variant_id == shopifyID, let logistic_tags = product.logistic_tags {
+                return logistic_tags
+            }
+        }
+        return []
     }
+    
     
     // MARK: Network fetch
     func fetchCheckout(needAsync: Bool = true, complete: (() -> Void)? = nil) {
@@ -219,11 +230,15 @@ enum CheckoutMethodsType: String {
     
     // MARK: TapOnCheckout
     func tapOnCheckout() {
+        
+        guard !isLoading else { return }
+        
         self.fetchCheckout {
             if !self.availableMethods.isEmpty, !self.lineItem_OOS_isChanged {
                 self.currentMethod = self.availableMethods.first ?? .delivery
                 self.currentSelectedDate = self.shoppingCartData?.delivery_available_dates?.first ?? ""
-                self.isShowCheckout.toggle()
+                self.currentSelectedStore = self.shoppingCartData?.store_pickup_locations.first
+                self.isShowDeliveryOrPickup.toggle()
             }
         }
     }

@@ -48,7 +48,7 @@ struct CheckoutMethodsParentsView: View {
                     case .delivery:
                         DeliveryView()
                     case .pickup:
-                        pickup()
+                        PickupView()
                     }
                 }
             }
@@ -58,12 +58,6 @@ struct CheckoutMethodsParentsView: View {
             Spacer()
         }
         .modifier(NavigationModifier(isHideCollectionsList: true, isHideShoppingCart: true))
-    }
-}
-
-struct pickup: View {
-    var body: some View {
-        Text("pickup")
     }
 }
 

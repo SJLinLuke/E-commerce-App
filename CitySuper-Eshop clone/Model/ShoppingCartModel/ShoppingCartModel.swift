@@ -49,7 +49,7 @@ struct ShoppingCartData: Decodable {
     let stripe                      : Bool?
 }
 
-struct Locations: Decodable{
+struct Locations: Decodable, Hashable {
     let province           : String?
     let city               : String?
     let address1           : String?

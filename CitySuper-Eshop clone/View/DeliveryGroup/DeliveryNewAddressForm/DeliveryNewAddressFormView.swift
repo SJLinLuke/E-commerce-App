@@ -44,7 +44,7 @@ struct DeliveryNewAddressFormView: View {
                 CustomTextField(placeHolder: "District", text: $addDA_VM.district)
                 HStack {
                     CustomTextField(placeHolder: "Country/Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $addDA_VM.country)
-                    CustomTextField(placeHolder: "Region", isDropDown: true, dropDownItem: ["Hong kong"], text: $addDA_VM.region)
+                    CustomTextField(placeHolder: "Region", isDropDown: true, dropDownItem: ["Hong Kong Island", "New Territories", "Kowloon"], text: $addDA_VM.region)
                 }
                 CustomTextField(placeHolder: "Your phone number", text: $addDA_VM.phone)
                 HStack {

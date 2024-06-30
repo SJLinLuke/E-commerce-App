@@ -69,7 +69,7 @@ struct ShoppingCartView: View {
                     }
                 }
             }
-            .navigationDestination(isPresented: $cartEnv.isShowCheckout) {
+            .navigationDestination(isPresented: $cartEnv.isShowDeliveryOrPickup) {
                 CheckoutMethodsParentsView()
             }
         }

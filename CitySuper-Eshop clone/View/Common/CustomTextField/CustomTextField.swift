@@ -15,6 +15,7 @@ struct CustomTextField: View {
     
     var isDropDown   : Bool = false
     var dropDownItem : [String] = []
+    var height       : CGFloat = 35
     
     @State var isHide        : Bool = false
     @State var isShowDropDown: Bool = false
@@ -65,7 +66,7 @@ struct CustomTextField: View {
         }
         .padding(.horizontal, 10)
         .font(.subheadline)
-        .frame(height: 35)
+        .frame(height: height)
         .background(color)
         .overlay {
             RoundedRectangle(cornerRadius: 5)
