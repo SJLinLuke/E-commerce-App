@@ -45,7 +45,11 @@ struct ProductDetailView: View {
                             
                             SeperateLineView()
                             
-                            ProductDetailPriceView(price: VM.product?.price ?? "0")
+                            ProductDetailPriceView(price: VM.product?.price ?? "0",
+                                                   comparePrice: VM.product?.compare_at_price ?? "0",
+                                                   isCompareWithPrice:  VM.isCompareWithPrice,
+                                                   isSoldOut: VM.isSoldOut,
+                                                   ShopifyID: VM.product?.shopify_product_id ?? "")
                             
                             SeperateLineView()
                             
