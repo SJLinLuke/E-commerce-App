@@ -10,10 +10,12 @@ import MobileBuySDK
 
 @MainActor final class CheckoutConfirmationViewModel: ObservableObject {
     
-    @Published private var checkout: CheckoutViewModel?
+    @Published private var checkout   : CheckoutViewModel?
+    @Published var checkedDate: String
     
-    init(checkout: CheckoutViewModel? = nil) {
+    init(checkout: CheckoutViewModel? = nil, checkedDate: String) {
         self.checkout = checkout
+        self.checkedDate = checkedDate
     }
     
     var lineItems: [LineItemViewModel] { self.checkout?.lineItems ?? [] }

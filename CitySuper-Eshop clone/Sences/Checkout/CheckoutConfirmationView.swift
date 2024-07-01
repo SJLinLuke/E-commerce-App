@@ -13,8 +13,9 @@ struct CheckoutConfirmationView: View {
     
     @State var isShowCoupon: Bool = false
     
-    init(checkout: CheckoutViewModel) {
-        self._VM = StateObject(wrappedValue: CheckoutConfirmationViewModel(checkout: checkout))
+    init(checkout: CheckoutViewModel, checkedDate: String) {
+        self._VM = StateObject(wrappedValue: CheckoutConfirmationViewModel(checkout: checkout,
+                                                                           checkedDate: checkedDate))
     }
     
     var body: some View {
@@ -104,7 +105,8 @@ struct CheckoutConfirmationView: View {
                     VStack(spacing: 8) {
                        
                         CustomFormTextItem(leadingText: "Delivery Date",
-                                           trailingText: "2024/07/02")
+                                           trailingText: VM.checkedDate.convertDataFormat(fromFormat: "yyyy-MM-dd",
+                                                                                          toFormat: "yyyy/MM/dd"))
                         
                         CustomFormTextItem(leadingText: "Delivery Address",
                                            trailingText: "Jason Wong,\nidkidk,\n99999991111",
