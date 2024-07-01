@@ -46,7 +46,6 @@ struct CheckoutConfirmationView: View {
                                         Spacer()
                                         
                                         Text(Currency.stringFrom(VM.lineItems[index].individualPrice))
-                                            .padding(.trailing, 10)
                                     }
                                 }
                                 .font(.subheadline)
@@ -55,6 +54,7 @@ struct CheckoutConfirmationView: View {
                             SeperateLineView()
                         }
                     }
+                    .padding(.horizontal, 10)
                     
                     VStack {
                         SeperateLineView()
