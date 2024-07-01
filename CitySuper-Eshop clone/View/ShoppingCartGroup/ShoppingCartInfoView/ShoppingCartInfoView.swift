@@ -44,7 +44,7 @@ struct ShoppingCartInfoView: View {
                     cartEnv.tapOnCheckout()
                 } label: {
                     ThemeButton(title: "Checkout",
-                                font: .regular,
+                                fontWeight: .regular,
                                 width: 170,
                                 iconPath: "check_icon",
                                 disable: !cartEnv.isAllowToCheckout)

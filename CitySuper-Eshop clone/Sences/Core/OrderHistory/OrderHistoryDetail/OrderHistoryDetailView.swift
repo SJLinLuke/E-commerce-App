@@ -45,10 +45,10 @@ struct OrderHistoryDetailView: View {
                             
                             CustomFormTextItem(leadingText: "Total",
                                                trailingText: Currency.stringFrom(orderHistory.totalPrice),
+                                               leadingFont: .bold, 
+                                               trailingFont: .bold,
                                                font: .system(size: 18))
                                 .padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
-                                .fontWeight(.bold)
-
                         }
                         .padding(.horizontal, 5)
                         

@@ -123,6 +123,7 @@
 		40D99A4F2C31127000BF2AF7 /* PickupStoreTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A4E2C31127000BF2AF7 /* PickupStoreTagsView.swift */; };
 		40D99A522C31223900BF2AF7 /* CheckoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A512C31223900BF2AF7 /* CheckoutModel.swift */; };
 		40D99A542C31825200BF2AF7 /* CheckoutConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A532C31825200BF2AF7 /* CheckoutConfirmationView.swift */; };
+		40D99A562C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A552C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -342,6 +343,7 @@
 		40D99A4E2C31127000BF2AF7 /* PickupStoreTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupStoreTagsView.swift; sourceTree = "<group>"; };
 		40D99A512C31223900BF2AF7 /* CheckoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutModel.swift; sourceTree = "<group>"; };
 		40D99A532C31825200BF2AF7 /* CheckoutConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutConfirmationView.swift; sourceTree = "<group>"; };
+		40D99A552C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutConfirmationViewModel.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -903,6 +905,7 @@
 				40D99A3F2C2FE0F000BF2AF7 /* Delivery */,
 				40AAF1222C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift */,
 				40D99A532C31825200BF2AF7 /* CheckoutConfirmationView.swift */,
+				40D99A552C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -2111,6 +2114,7 @@
 				C582746F2C04822200A84CDD /* InboxDetailView.swift in Sources */,
 				4062BF292C0AE83300FF7184 /* AlertModifier.swift in Sources */,
 				400C04FE2BF9E9CE00493ACA /* ClientQuery.swift in Sources */,
+				40D99A562C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift in Sources */,
 				400C05232BF9EADB00493ACA /* VariantViewModel.swift in Sources */,
 				C58274692C047FD000A84CDD /* CustomFormTextItem.swift in Sources */,
 				400C03AB2BF8A32900493ACA /* MoreCollectionsListView.swift in Sources */,

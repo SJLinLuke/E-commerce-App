@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ThemeButton: View {
     
-    let title   : String
-    var font    : Font.Weight? = .bold
-    var width   : CGFloat? = 355
-    var height  : CGFloat? = 42
-    var iconPath: String?
-    var disable : Bool = false
+    let title     : String
+    var font      : Font? = .headline
+    var fontWeight: Font.Weight? = .bold
+    var width     : CGFloat? = 355
+    var height    : CGFloat? = 42
+    var iconPath  : String?
+    var disable   : Bool = false
     
     var body: some View {
         Label {
@@ -25,8 +26,8 @@ struct ThemeButton: View {
                     .renderingMode(.template)
             }
         }
-        .font(.headline)
-        .fontWeight(font)
+        .font(font)
+        .fontWeight(fontWeight)
         .frame(width: width, height: height)
         .background(disable ? Color(hex: "D2D2D2") : Color.themeDarkGreen)
         .cornerRadius(10)

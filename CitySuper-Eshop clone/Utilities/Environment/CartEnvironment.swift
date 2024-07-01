@@ -20,7 +20,7 @@ enum CheckoutMethodsType: String {
     @Published var isLoading                 : Bool = false
     @Published var isShowDeliveryOrPickup    : Bool = false
     @Published var isShowCheckoutConfirmation: Bool = false
-    @Published private var checkout          : CheckoutViewModel?
+    @Published var checkout                  : CheckoutViewModel?
     @Published private var shoppingCartData  : ShoppingCartData?
     
     @Published var lineItems_OOS           : [LineItemViewModel] = []

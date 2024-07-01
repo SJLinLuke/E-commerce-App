@@ -62,7 +62,9 @@ struct CheckoutMethodsParentsView: View {
         }
         .modifier(NavigationModifier(isHideCollectionsList: true, isHideShoppingCart: true))
         .navigationDestination(isPresented: $cartEnv.isShowCheckoutConfirmation) {
-            CheckoutConfirmationView()
+            if let checkout = cartEnv.checkout {
+                CheckoutConfirmationView(checkout: checkout)
+            }
         }
     }
 }

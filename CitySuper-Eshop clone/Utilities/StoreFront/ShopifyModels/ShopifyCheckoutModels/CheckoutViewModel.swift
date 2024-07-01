@@ -65,6 +65,7 @@ final class CheckoutViewModel: ViewModel {
     let totalDiscounts:         Decimal
     
     let shippingDiscountAllocations: [DiscountAllocationViewModel]
+    let shippingDiscount:            Decimal
     var discountApplication:         [DiscountApplication]?
     
     // ----------------------------------
@@ -106,6 +107,12 @@ final class CheckoutViewModel: ViewModel {
         self.totalLineItemDiscounts = lineItemAllocations.totalDiscount
         
         self.totalDiscounts         = self.totalShippingDiscounts + self.totalLineItemDiscounts
+        
+        if (!model.shippingDiscountAllocations.isEmpty) {
+            self.shippingDiscount = model.shippingDiscountAllocations.first?.allocatedAmount.amount ?? 0.0
+        } else {
+            self.shippingDiscount = 0.0
+        }
     }
 }
 

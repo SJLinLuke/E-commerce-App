@@ -10,11 +10,19 @@ import SwiftUI
 struct CouponListView: View {
     
     @StateObject var VM = CouponListViewModel.shared
+//    @StateObject var confirmationVM: CheckoutConfirmationViewModel
     
     @State private var isVoucher: Bool = false
     
     let isRedeemable: Bool
     
+//    init(confirmationVM: CheckoutConfirmationViewModel? = nil, isRedeemable: Bool) {
+//        if let confirmationVM {
+//            self._confirmationVM = StateObject(wrappedValue: confirmationVM)
+//        }
+//        self.isRedeemable = isRedeemable
+//    }
+//    
     var body: some View {
         NavigationStack {
             VStack {
@@ -51,6 +59,6 @@ struct CouponListView: View {
     }
 }
 
-#Preview {
-    CouponListView(isRedeemable: true)
-}
+//#Preview {
+//    CouponListView(isRedeemable: true)
+//}
