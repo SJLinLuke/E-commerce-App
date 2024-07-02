@@ -61,7 +61,7 @@ struct PickupView: View {
                 CalendarView(currentSelectedDate: $cartEnv.currentSelectedDate, startDate: cartEnv.pickupStartDate, endDate: cartEnv.pickupEndDate)
                 
                 Button {
-                    
+                    cartEnv.tapConfirm()
                 } label: {
                     ThemeButton(title: "Confirm", width: screenWidth)
                         .padding(.top)
@@ -70,6 +70,9 @@ struct PickupView: View {
             .onAppear {
                 self.dropDownItems_city.append(contentsOf: Array(cartEnv.getPickupLocations("ALL").map() {$0.city ?? ""}))
             }
+        }
+        .overlay {
+            if cartEnv.isLoading { LoadingIndicatiorView(backgroundDisable: true) }
         }
     }
 }

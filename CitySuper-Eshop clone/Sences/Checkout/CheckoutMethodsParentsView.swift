@@ -63,7 +63,14 @@ struct CheckoutMethodsParentsView: View {
         .modifier(NavigationModifier(isHideCollectionsList: true, isHideShoppingCart: true))
         .navigationDestination(isPresented: $cartEnv.isShowCheckoutConfirmation) {
             if let checkout = cartEnv.checkout {
-                CheckoutConfirmationView(checkout: checkout, checkedDate: cartEnv.currentSelectedDate)
+                let isDelivery = cartEnv.currentMethod == .delivery
+                
+                CheckoutConfirmationView(
+                    checkout: checkout,
+                    checkedDate: cartEnv.currentSelectedDate,
+                    selectedStore: isDelivery ? nil : cartEnv.currentSelectedStore,
+                    address: isDelivery ? cartEnv.currentSelectedAddress : nil,
+                    checkoutMethod: cartEnv.currentMethod)
             }
         }
     }

@@ -10,34 +10,65 @@ import MobileBuySDK
 
 struct OrderHistoryProductsListCell: View {
     
-    let lineItem: Storefront.OrderLineItem
-    
+    var lineItem_order: Storefront.OrderLineItem?
+    var lineItem_cart : LineItemViewModel?
+
     var body: some View {
-        HStack(spacing: 8) {
-            RemoteImageView(url: lineItem.variant?.image?.url.absoluteString ?? "",
-                            placeholder: .common)
-                .frame(width: 130, height: 130)
-            
-            VStack(alignment: .leading) {
-                Text(lineItem.title)
-                    .fontWeight(.bold)
-                    .lineLimit(3)
+        if let lineItem = lineItem_order {
+            HStack(spacing: 8) {
+                RemoteImageView(url: lineItem.variant?.image?.url.absoluteString ?? "",
+                                placeholder: .common)
+                    .frame(width: 130, height: 130)
                 
-                Text("QTY: \(lineItem.quantity)")
-                    .font(.subheadline)
-                    .padding(.top, 2)
-                
-                Spacer()
-                
-                HStack {
+                VStack(alignment: .leading) {
+                    Text(lineItem.title)
+                        .fontWeight(.bold)
+                        .lineLimit(3)
+                    
+                    Text("QTY: \(lineItem.quantity)")
+                        .font(.subheadline)
+                        .padding(.top, 2)
+                    
                     Spacer()
                     
-                    Text(Currency.stringFrom(lineItem.originalTotalPrice.amount))
-                        .foregroundColor(Color(hex: "E85321"))
+                    HStack {
+                        Spacer()
+                        
+                        Text(Currency.stringFrom(lineItem.originalTotalPrice.amount))
+                            .foregroundColor(Color(hex: "E85321"))
+                    }
                 }
+                .font(.subheadline)
             }
-            .font(.subheadline)
         }
+        
+        if let lineItem = lineItem_cart {
+            HStack(spacing: 8) {
+                RemoteImageView(url: lineItem.variant?.image?.absoluteString ?? "",
+                                placeholder: .common)
+                    .frame(width: 130, height: 130)
+                
+                VStack(alignment: .leading) {
+                    Text(lineItem.title)
+                        .fontWeight(.bold)
+                        .lineLimit(3)
+                    
+                    Text("QTY: \(lineItem.quantity)")
+                        .font(.subheadline)
+                        .padding(.top, 2)
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Text(Currency.stringFrom(lineItem.individualPrice))
+                    }
+                }
+                .font(.subheadline)
+            }
+        }
+        
     }
 }
 

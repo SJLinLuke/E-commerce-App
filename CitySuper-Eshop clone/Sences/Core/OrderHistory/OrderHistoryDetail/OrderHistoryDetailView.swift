@@ -26,7 +26,7 @@ struct OrderHistoryDetailView: View {
                         OrderHistoryDetailSectionHeader(title: "Order Detail")
                         
                         VStack {
-                            OrderHistoryDetailProductsListView(lineItems: orderHistory.lineItems)
+                            OrderHistoryDetailProductsListView(lineItems_order: orderHistory.lineItems)
                             
                             VStack(spacing: 7) {
                                 SeperateLineView()

@@ -456,13 +456,13 @@ final class Client {
     func pollForReadyCheckout(_ id: String, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
 
         let retry = Graph.RetryHandler<Storefront.QueryRoot>(endurance: .finite(30)) { response, error -> Bool in
-            error.debugPrint()
+//            error.debugPrint()
             return (response?.node as? Storefront.Checkout)?.ready ?? false == false
         }
         
         let query = ClientQuery.queryForCheckout(id)
         let task  = client.queryGraphWith(query, cachePolicy: .networkOnly, retryHandler: retry) { response, error in
-            error.debugPrint()
+//            error.debugPrint()
             
             if let checkout = response?.node as? Storefront.Checkout {
                 completion(checkout.viewModel)

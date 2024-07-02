@@ -141,14 +141,14 @@ extension Storefront.CheckoutQuery {
             .amount()
             .currencyCode()
         }
-        //        .availableShippingRates{ $0
-        //            .shippingRates{ $0
-        //                .title()
-        //                .handle()
-        //                .price{ $0
-        //                    .amount()
-        //                }
-        //            }
-        //        }
+        .availableShippingRates{ $0
+            .shippingRates{ $0
+                .title()
+                .handle()
+                .price{ $0
+                    .amount()
+                }
+            }
+        }
     }
 }

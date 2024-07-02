@@ -66,6 +66,8 @@ final class CheckoutViewModel: ViewModel {
     
     let shippingDiscountAllocations: [DiscountAllocationViewModel]
     let shippingDiscount:            Decimal
+    let shippingRateHandle:          String
+    let shippingRatePrice:           Decimal
     var discountApplication:         [DiscountApplication]?
     
     // ----------------------------------
@@ -107,6 +109,9 @@ final class CheckoutViewModel: ViewModel {
         self.totalLineItemDiscounts = lineItemAllocations.totalDiscount
         
         self.totalDiscounts         = self.totalShippingDiscounts + self.totalLineItemDiscounts
+        
+        self.shippingRateHandle = model.availableShippingRates?.shippingRates?.first?.handle ?? ""
+        self.shippingRatePrice = model.availableShippingRates?.shippingRates?.first?.price.amount ?? 0.0
         
         if (!model.shippingDiscountAllocations.isEmpty) {
             self.shippingDiscount = model.shippingDiscountAllocations.first?.allocatedAmount.amount ?? 0.0

@@ -13,9 +13,13 @@ struct CheckoutConfirmationView: View {
     
     @State var isShowCoupon: Bool = false
     
-    init(checkout: CheckoutViewModel, checkedDate: String) {
-        self._VM = StateObject(wrappedValue: CheckoutConfirmationViewModel(checkout: checkout,
-                                                                           checkedDate: checkedDate))
+    init(checkout: CheckoutViewModel, checkedDate: String, selectedStore: Locations? = nil, address: AddressViewModel? = nil, checkoutMethod: CheckoutMethodsType) {
+        self._VM = StateObject(wrappedValue: CheckoutConfirmationViewModel(
+            checkout: checkout,
+            checkedDate: checkedDate,
+            selectedStore: selectedStore,
+            address: address,
+            checkoutMethod: checkoutMethod))
     }
     
     var body: some View {
@@ -23,41 +27,10 @@ struct CheckoutConfirmationView: View {
                 VStack {
                     OrderHistoryDetailSectionHeader(title: "Order Detail")
                     
-//                    OrderHistoryDetailProductsListView(lineItems: VM.lineItems)
+                    OrderHistoryDetailProductsListView(lineItems_cart: VM.lineItems)
+                        .padding(.horizontal, 10)
                     
-                    LazyVGrid(columns: [GridItem()]){
-                        ForEach(VM.lineItems.indices, id: \.self) { index in
-                            HStack(spacing: 8) {
-                                RemoteImageView(url: VM.lineItems[index].variant?.image?.absoluteString ?? "",
-                                                placeholder: .common)
-                                    .frame(width: 130, height: 130)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(VM.lineItems[index].title)
-                                        .fontWeight(.bold)
-                                        .lineLimit(3)
-                                    
-                                    Text("QTY: \(VM.lineItems[index].quantity)")
-                                        .font(.subheadline)
-                                        .padding(.top, 2)
-                                    
-                                    Spacer()
-                                    
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text(Currency.stringFrom(VM.lineItems[index].individualPrice))
-                                    }
-                                }
-                                .font(.subheadline)
-                            }
-                            
-                            SeperateLineView()
-                        }
-                    }
-                    .padding(.horizontal, 10)
-                    
-                    VStack {
+                    VStack(spacing: 5) {
                         SeperateLineView()
                         
                         HStack(alignment: .center) {
@@ -100,16 +73,15 @@ struct CheckoutConfirmationView: View {
                     }
                     .padding(.horizontal, 10)
                     
-                    OrderHistoryDetailSectionHeader(title: "Delivery")
+                    OrderHistoryDetailSectionHeader(title: VM.isDelivery ? "Delivery" : "Pickup")
                     
                     VStack(spacing: 8) {
-                       
-                        CustomFormTextItem(leadingText: "Delivery Date",
+                        CustomFormTextItem(leadingText: VM.isDelivery ? "Delivery Date" : "Pickup Date",
                                            trailingText: VM.checkedDate.convertDataFormat(fromFormat: "yyyy-MM-dd",
                                                                                           toFormat: "yyyy/MM/dd"))
                         
-                        CustomFormTextItem(leadingText: "Delivery Address",
-                                           trailingText: "Jason Wong,\nidkidk,\n99999991111",
+                        CustomFormTextItem(leadingText: VM.isDelivery ? "Delivery Address" : "Pickup Store",
+                                           trailingText: VM.shippingAddress,
                                            alignment: .top)
                     }
                     .padding(.horizontal, 10)
@@ -162,6 +134,14 @@ struct CheckoutConfirmationView: View {
                     }
                     .padding(.top)
 
+                }
+                .onAppear {
+                    VM.initCheckout()
+                }
+            }
+            .overlay {
+                if VM.isLoading {
+                    LoadingIndicatiorView(backgroundDisable: true)
                 }
             }
             .modifier(NavigationModifier(navTilte: "Order Detail", isHideCollectionsList: true, isHideShoppingCart: true))
