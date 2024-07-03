@@ -30,15 +30,31 @@ final class DiscountCodeViewModel: DiscountApplication, ViewModel {
     
     typealias ModelType = Storefront.DiscountCodeApplication
 
-    let model: ModelType
-    let name:  String
+    let model     : ModelType
+    let name      : String
+    let applicable: Bool
+    var type      : String!
+    var price     : Decimal
     
     // ----------------------------------
     //  MARK: - Init -
     //
     required init(from model: ModelType) {
-        self.model = model
-        self.name  = model.code
+        self.model      = model
+        self.name       = model.code
+        self.applicable = model.applicable
+        
+        if let moneyv2 = model.value as? Storefront.MoneyV2{
+            self.price = moneyv2.amount
+        } else {
+            self.price = 0.0
+        }
+        
+        if let percentage = model.value as? Storefront.PricingPercentageValue{
+            self.type = "\(Int(percentage.percentage))% OFF"
+        } else {
+            self.type = ""
+        }
     }
 }
 

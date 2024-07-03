@@ -58,6 +58,21 @@ struct CheckoutConfirmationView: View {
                             leadingText: "Items Subtotal",
                             trailingText: Currency.stringFrom(VM.subTotal))
                         
+                        ForEach(VM.discountApplication.indices, id: \.self) { index in
+                            if let discount = VM.discountApplication[index] as? DiscountCodeViewModel {
+                                CustomFormTextItem(
+                                    leadingText: discount.name,
+                                    trailingText: Currency.stringFrom(discount.price))
+                            }
+                            
+                            if let discount = VM.discountApplication[index] as? ScriptCodeViewModel {
+                                CustomFormTextItem(
+                                    leadingText: discount.name,
+                                    trailingText: Currency.stringFrom(discount.price))
+                            }
+                        }
+
+                        
                         CustomFormTextItem(
                             leadingText: "Shipping charges",
                             trailingText: Currency.stringFrom(VM.shippingPrice))
@@ -146,7 +161,7 @@ struct CheckoutConfirmationView: View {
             }
             .modifier(NavigationModifier(navTilte: "Order Detail", isHideCollectionsList: true, isHideShoppingCart: true))
             .navigationDestination(isPresented: $isShowCoupon) {
-                CouponListView(isRedeemable: true)
+                CouponListView(confirmationVM: VM,isRedeemable: true)
             }
     }
 }

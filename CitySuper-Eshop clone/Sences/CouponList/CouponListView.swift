@@ -10,19 +10,19 @@ import SwiftUI
 struct CouponListView: View {
     
     @StateObject var VM = CouponListViewModel.shared
-//    @StateObject var confirmationVM: CheckoutConfirmationViewModel
     
     @State private var isVoucher: Bool = false
     
+    private var confirmationVM: CheckoutConfirmationViewModel?
+
     let isRedeemable: Bool
     
-//    init(confirmationVM: CheckoutConfirmationViewModel? = nil, isRedeemable: Bool) {
-//        if let confirmationVM {
-//            self._confirmationVM = StateObject(wrappedValue: confirmationVM)
-//        }
-//        self.isRedeemable = isRedeemable
-//    }
-//    
+    init(confirmationVM: CheckoutConfirmationViewModel? = nil, isRedeemable: Bool) {
+        if let confirmationVM {
+            self.confirmationVM = confirmationVM
+        }
+        self.isRedeemable = isRedeemable
+    }
     var body: some View {
         NavigationStack {
             VStack {
@@ -37,8 +37,11 @@ struct CouponListView: View {
                             }
                         }
                         
-                        ForEach(VM.coupons, id: \.self) { coupon in
-                            CouponListCell(coupon: coupon, isRedeemable: isRedeemable)
+                        ForEach(VM.coupons.indices, id: \.self) { index in
+                            let coupon = VM.coupons[index]
+                            CouponListCell(coupon: coupon, isRedeemable: isRedeemable, tapOnUse: {
+                                confirmationVM?.applyDiscount(coupon.discount_code)
+                            })
                         }
                     }
                 }
@@ -46,6 +49,9 @@ struct CouponListView: View {
             .overlay {
                 if VM.isLoading {
                     LoadingIndicatiorView()
+                }
+                if let confirmationVM, confirmationVM.isLoading {
+                    LoadingIndicatiorView(backgroundDisable: true)
                 }
             }
             .onAppear {

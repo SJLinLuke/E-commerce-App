@@ -31,7 +31,8 @@ final class ScriptCodeViewModel: DiscountApplication, ViewModel {
     typealias ModelType = Storefront.ScriptDiscountApplication
     
     let model: ModelType
-    let name:  String
+    let name : String
+    var price: Decimal
     
     // ----------------------------------
     //  MARK: - Init -
@@ -39,6 +40,13 @@ final class ScriptCodeViewModel: DiscountApplication, ViewModel {
     required init(from model: ModelType) {
         self.model = model
         self.name  = model.title
+        
+        if let moneyv2 = model.value as? Storefront.MoneyV2{
+            self.price = moneyv2.amount
+        } else {
+            self.price = 0.0
+        }
+        
     }
 }
 

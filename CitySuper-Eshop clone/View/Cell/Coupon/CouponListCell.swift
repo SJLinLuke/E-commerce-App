@@ -11,6 +11,7 @@ struct CouponListCell: View {
     
     let coupon      : CouponData
     let isRedeemable: Bool
+    let tapOnUse    : () -> Void
     
     var body: some View {
         ZStack {
@@ -66,15 +67,17 @@ struct CouponListCell: View {
                     Spacer()
                     
                     VStack {
-                        Text("HK$100")
-                            .fontWeight(.bold)
-                            .foregroundColor(.themeDarkGreen)
-                        
+                        if false {
+                            Text("HK$100")
+                                .fontWeight(.bold)
+                                .foregroundColor(.themeDarkGreen)
+                        }
+
                         Spacer()
                         
                         if isRedeemable {
                             Button {
-                                
+                                tapOnUse()
                             } label: {
                                 Text("Use")
                                     .font(.system(size: 12))
@@ -96,6 +99,6 @@ struct CouponListCell: View {
 }
 
 #Preview {
-    CouponListCell(coupon: CouponData(discount_id: "", discount_code: "Test", description: "Test", valid_to: nil, type: nil, price: nil, tnc: nil), isRedeemable: true)
+    CouponListCell(coupon: CouponData(discount_id: "", discount_code: "Test", description: "Test", valid_to: nil, type: nil, price: nil, tnc: nil), isRedeemable: true, tapOnUse: {})
         .frame(height: 100)
 }

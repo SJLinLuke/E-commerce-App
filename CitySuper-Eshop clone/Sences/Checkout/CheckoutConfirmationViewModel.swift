@@ -38,6 +38,9 @@ import MobileBuySDK
     
     var shippingAddress: String { checkout.shippingAddress?.fullAddress ?? "" }
     
+    var discountApplication: [DiscountApplication] { checkout.discountApplication ?? [] }
+    
+    // MARK: init (shipping ... etc)
     func initCheckout() {
         
         guard !isLoading else { return }
@@ -58,6 +61,20 @@ import MobileBuySDK
                     self.isLoading = false
                     self.objectWillChange.send()
                 }
+            }
+        }
+    }
+    
+    func applyDiscount(_ code: String) {
+        
+        guard !isLoading else { return }
+        
+        self.isLoading = true
+        Client.shared.applyDiscount(code, to: checkout.id) { checkout in
+            if let checkout {
+                self.checkout = checkout
+                self.isLoading = false
+                self.objectWillChange.send()
             }
         }
     }

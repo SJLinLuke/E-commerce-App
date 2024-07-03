@@ -33,12 +33,36 @@ extension Storefront.DiscountApplicationQuery {
         .onDiscountCodeApplication { $0
             .applicable()
             .code()
+            .value{ $0
+                .onMoneyV2{ $0
+                    .amount()
+                }
+                .onPricingPercentageValue{ $0
+                    .percentage()
+                }
+            }
         }
         .onManualDiscountApplication { $0
             .title()
+            .value { $0
+                .onMoneyV2 { $0
+                    .amount()
+                }
+                .onPricingPercentageValue { $0
+                    .percentage()
+                }
+            }
         }
         .onScriptDiscountApplication { $0
             .title()
+            .value { $0
+                .onMoneyV2 { $0
+                    .amount()
+                }
+                .onPricingPercentageValue { $0
+                    .percentage()
+                }
+            }
         }
     }
 }
