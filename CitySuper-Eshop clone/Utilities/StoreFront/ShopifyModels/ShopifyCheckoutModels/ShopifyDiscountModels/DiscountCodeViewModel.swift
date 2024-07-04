@@ -48,12 +48,7 @@ final class DiscountCodeViewModel: DiscountApplication, ViewModel {
             self.price = moneyv2.amount
         } else {
             self.price = 0.0
-        }
-        
-        if let percentage = model.value as? Storefront.PricingPercentageValue{
-            self.type = "\(Int(percentage.percentage))% OFF"
-        } else {
-            self.type = ""
+            self.type = "Percentage"
         }
     }
 }

@@ -12,12 +12,14 @@ struct CouponListCell: View {
     let coupon      : CouponData
     let isRedeemable: Bool
     let tapOnUse    : () -> Void
+    let tapOnRemove : () -> Void
+    let isUsed      : Bool
     
     var body: some View {
         ZStack {
             Image("bg_coupon")
                 .renderingMode(.template)
-                .foregroundColor(.themeLightGreen)
+                .foregroundColor(isUsed ? .themeDarkGreen : .themeLightGreen)
                 .overlay(alignment: .topLeading) {
                     if false {
                         Text("New")
@@ -62,7 +64,7 @@ struct CouponListCell: View {
                     .frame(maxWidth: geometry.size.width * 0.7, alignment: .leading)
                     .padding(.top, 5)
                     .padding()
-                    .foregroundColor(.themeDarkGreen)
+                    .foregroundColor(isUsed ? .white : .themeDarkGreen)
                     
                     Spacer()
                     
@@ -77,13 +79,17 @@ struct CouponListCell: View {
                         
                         if isRedeemable {
                             Button {
-                                tapOnUse()
+                                if isUsed {
+                                    tapOnRemove()
+                                } else {
+                                    tapOnUse()
+                                }
                             } label: {
-                                Text("Use")
+                                Text(isUsed ? "Remove" : "Use")
                                     .font(.system(size: 12))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(isUsed ? .themeDarkGreen : .white)
                                     .frame(width: 60, height: 27)
-                                    .background(.themeDarkGreen)
+                                    .background(isUsed ? .white : .themeDarkGreen)
                                     .cornerRadius(13)
                             }
                         }
@@ -99,6 +105,6 @@ struct CouponListCell: View {
 }
 
 #Preview {
-    CouponListCell(coupon: CouponData(discount_id: "", discount_code: "Test", description: "Test", valid_to: nil, type: nil, price: nil, tnc: nil), isRedeemable: true, tapOnUse: {})
+    CouponListCell(coupon: CouponData(discount_id: "", discount_code: "Test", description: "Test", valid_to: nil, type: nil, price: nil, tnc: nil), isRedeemable: true, tapOnUse: {}, tapOnRemove: {}, isUsed: false)
         .frame(height: 100)
 }

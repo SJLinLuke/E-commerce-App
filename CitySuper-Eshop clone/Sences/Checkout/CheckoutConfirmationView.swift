@@ -40,7 +40,7 @@ struct CheckoutConfirmationView: View {
                                     Image("coupon_icon")
                                         .renderingMode(.template)
                                         .resizable()
-                                        .frame(width: 25, height: 25)
+                                        .frame(width: 20, height: 20)
                                 }
                             )
                             
@@ -50,7 +50,9 @@ struct CheckoutConfirmationView: View {
                                 isShowCoupon.toggle()
                             } label: { Text("Edit") }
                         }
+                        .font(.system(size: 16))
                         .foregroundColor(.themeDarkGreen)
+                        .padding(.vertical, 5)
                         
                         SeperateLineView()
                         
@@ -62,16 +64,23 @@ struct CheckoutConfirmationView: View {
                             if let discount = VM.discountApplication[index] as? DiscountCodeViewModel {
                                 CustomFormTextItem(
                                     leadingText: discount.name,
-                                    trailingText: Currency.stringFrom(discount.price))
+                                    trailingText: "-" + Currency.stringFrom(
+                                        // The price of type "Percentage" will not be return in discountApplication
+                                        discount.type == "Percentage" ? VM.calculateDiscountPrice(discount.name) : discount.price), 
+                                    leadingColor: .themeDarkGreen,
+                                    trailingColor: .themeDarkGreen
+                                )
                             }
                             
                             if let discount = VM.discountApplication[index] as? ScriptCodeViewModel {
                                 CustomFormTextItem(
                                     leadingText: discount.name,
-                                    trailingText: Currency.stringFrom(discount.price))
+                                    trailingText: "-" + Currency.stringFrom(discount.price),
+                                    leadingColor: .themeDarkGreen,
+                                    trailingColor: .themeDarkGreen
+                                )
                             }
                         }
-
                         
                         CustomFormTextItem(
                             leadingText: "Shipping charges",
@@ -92,8 +101,8 @@ struct CheckoutConfirmationView: View {
                     
                     VStack(spacing: 8) {
                         CustomFormTextItem(leadingText: VM.isDelivery ? "Delivery Date" : "Pickup Date",
-                                           trailingText: VM.checkedDate.convertDataFormat(fromFormat: "yyyy-MM-dd",
-                                                                                          toFormat: "yyyy/MM/dd"))
+                                           trailingText: VM.checkedDate?.convertDataFormat(fromFormat: "yyyy-MM-dd",
+                                                                                           toFormat: "yyyy/MM/dd") ?? "")
                         
                         CustomFormTextItem(leadingText: VM.isDelivery ? "Delivery Address" : "Pickup Store",
                                            trailingText: VM.shippingAddress,

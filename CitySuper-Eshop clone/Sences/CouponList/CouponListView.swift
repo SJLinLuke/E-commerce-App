@@ -13,13 +13,15 @@ struct CouponListView: View {
     
     @State private var isVoucher: Bool = false
     
-    private var confirmationVM: CheckoutConfirmationViewModel?
+    @StateObject private var confirmationVM: CheckoutConfirmationViewModel
 
     let isRedeemable: Bool
     
     init(confirmationVM: CheckoutConfirmationViewModel? = nil, isRedeemable: Bool) {
         if let confirmationVM {
-            self.confirmationVM = confirmationVM
+            self._confirmationVM = StateObject(wrappedValue: confirmationVM)
+        } else {
+            self._confirmationVM = StateObject(wrappedValue: CheckoutConfirmationViewModel(checkout: nil, checkedDate: nil, selectedStore: nil, address: nil, checkoutMethod: nil))
         }
         self.isRedeemable = isRedeemable
     }
@@ -39,9 +41,13 @@ struct CouponListView: View {
                         
                         ForEach(VM.coupons.indices, id: \.self) { index in
                             let coupon = VM.coupons[index]
-                            CouponListCell(coupon: coupon, isRedeemable: isRedeemable, tapOnUse: {
-                                confirmationVM?.applyDiscount(coupon.discount_code)
-                            })
+                            CouponListCell(coupon: coupon, isRedeemable: isRedeemable, 
+                            tapOnUse: {
+                                confirmationVM.applyDiscount(coupon.discount_code)
+                            }, 
+                            tapOnRemove: {
+                                print("tapOnRemove")
+                            }, isUsed: confirmationVM.isDiscountUsed(coupon.discount_code))
                         }
                     }
                 }
@@ -50,7 +56,7 @@ struct CouponListView: View {
                 if VM.isLoading {
                     LoadingIndicatiorView()
                 }
-                if let confirmationVM, confirmationVM.isLoading {
+                if confirmationVM.isLoading {
                     LoadingIndicatiorView(backgroundDisable: true)
                 }
             }
