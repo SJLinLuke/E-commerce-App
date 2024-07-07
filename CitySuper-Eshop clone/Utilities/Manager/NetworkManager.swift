@@ -28,10 +28,15 @@ final class NetworkManager: ObservableObject {
         let (data, _) = try await URLSession.shared.data(for: request)
     
         do {
-            return try decoder.decode(HomePageResponse.self, from: data).data
+            let HomePageResponse = try decoder.decode(HomePageResponse.self, from: data)
+            
+            if let errorMassage = HomePageResponse.error_message {
+                throw CSAlert.customError(HomePageResponse.error_message ?? "")
+            } else {
+                return HomePageResponse.data
+            }
         } catch {
-            print(error)
-            throw CSAlert.inValidData
+            throw error
         }
     }
     
@@ -43,17 +48,18 @@ final class NetworkManager: ObservableObject {
         let postData = try encoder.encode(loginData)
         request.httpBody = postData
         
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         do {
-            if let data = try decoder.decode(LoginResponse.self, from: data).data {
-                return data
+            let loginResponse = try decoder.decode(LoginResponse.self, from: data) 
+            
+            if let loginData = loginResponse.data {
+                return loginData
             } else {
-                throw CSAlert.inValidData
+                throw CSAlert.customError(loginResponse.error_message ?? "")
             }
         } catch {
-            print(error)
-            throw CSAlert.inValidData
+            throw error
         }
     }
     
@@ -82,7 +88,6 @@ final class NetworkManager: ObservableObject {
                 throw CSAlert.inValidData
             }
         } catch {
-            print(error)
             throw CSAlert.inValidData
         }
     }

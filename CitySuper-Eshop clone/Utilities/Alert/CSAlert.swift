@@ -11,4 +11,5 @@ enum CSAlert: Error {
     case inValidURL
     case inValidData
     case inValidResponse
+    case customError(String)
 }

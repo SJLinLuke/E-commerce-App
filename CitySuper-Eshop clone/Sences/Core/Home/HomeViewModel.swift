@@ -19,6 +19,8 @@ import Foundation
     @Published var collectionNormalLayout_Normal: CollectionNormalLayoutModel?
     @Published var collectionNormalLayout_Linear: CollectionNormalLayoutModel?
     
+    private var alertManager = AlertManager.shared
+    
     func fetchHomepage() {
         
         guard !isLoading else { return }
@@ -77,7 +79,7 @@ import Foundation
                 }
             } catch {
                 self.isLoading = false
-                print(error.localizedDescription)
+                alertManager.callErrorAlert(error as! CSAlert)
             }
         }
     }

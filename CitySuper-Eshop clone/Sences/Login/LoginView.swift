@@ -20,7 +20,7 @@ struct LoginView: View {
     @Binding var isShow: Bool
     
     var body: some View {
-        VStack {
+        BaseStack {
             HStack {
                 Spacer()
                 XDismissButton(isShow: $isShow, color: .black)

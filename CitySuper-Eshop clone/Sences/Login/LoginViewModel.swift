@@ -12,7 +12,8 @@ import SwiftUI
     @Published var userEnv  : UserEnviroment? = nil
     @Published var isLoading: Bool = false
    
-    private var InboxVM = InboxViewModel.shared
+    private var InboxVM      = InboxViewModel.shared
+    private var alertManager = AlertManager.shared
     
     func loginSever(loginData: LoginBody, complete: @escaping (Bool) -> Void) {
         
@@ -28,7 +29,7 @@ import SwiftUI
                 self.InboxVM.fetchUnreadNumber()
             } catch {
                 self.isLoading = false
-                print(error.localizedDescription)
+                alertManager.callErrorAlert(error as! CSAlert)
             }
             
             complete(self.userEnv?.isLogin ?? false)
