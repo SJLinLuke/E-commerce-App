@@ -67,22 +67,71 @@ import MobileBuySDK
     
     
     // MARK: Discount (shipping ... etc)
-    func applyDiscount(_ code: String) {
+    func applyDiscount(_ code: String,_ codes:[String]? = nil, complete: ((CheckoutViewModel) -> Void)? = nil) {
+        
+        if let complete, let codes {
+            // for multiple disocunts apply
+            var _codes = codes
+            Client.shared.applyDiscount(codes.first ?? "", to: checkout?.id ?? "") { checkout in
+                if let checkout {
+                    self.checkout = checkout
+                    _codes.removeFirst()
+                    if !_codes.isEmpty {
+                        self.applyDiscount("", _codes, complete: complete)
+                    } else {
+                        complete(checkout)
+                    }
+                }
+            }
+        } else {
+            // for singal disocunt apply
+            guard !isLoading else { return }
+            
+            self.isLoading = true
+            Client.shared.applyDiscount(code, to: checkout?.id ?? "") { checkout in
+                if let checkout {
+                    self.checkout = checkout
+                    if self.isDiscountAppliable(code) {
+                        self.isLoading = false
+                        print("discount is applied")
+                    } else {
+                        self.isLoading = false
+                        print("discount is not appliable")
+                    }
+                    self.objectWillChange.send()
+                }
+            }
+        }
+    }
+    
+    func removeDiscount(_ code: String) {
         
         guard !isLoading else { return }
         
+        var appliedDiscounts:[String] = Array(discountApplication.map({ discount in
+            if let _discount = discount as? DiscountCodeViewModel {
+                return _discount.name
+            }
+            return ""
+        }))
+        
+        appliedDiscounts = appliedDiscounts.filter({ !$0.isEmpty })
+        appliedDiscounts = appliedDiscounts.filter({ $0 != code })
+        print("discount is applied \(appliedDiscounts)")
+        
         self.isLoading = true
-        Client.shared.applyDiscount(code, to: checkout?.id ?? "") { checkout in
+        
+        Client.shared.removeDiscount(checkoutID: checkout?.id ?? "") { checkout in
             if let checkout {
                 self.checkout = checkout
-                if self.isDiscountAppliable(code) {
-                    self.isLoading = false
-                    print("discount is applied")
+                if !appliedDiscounts.isEmpty {
+                    self.applyDiscount("", appliedDiscounts) { checkout in
+                        self.checkout = checkout
+                        self.isLoading = false
+                    }
                 } else {
                     self.isLoading = false
-                    print("discount is not appliable")
                 }
-                self.objectWillChange.send()
             }
         }
     }

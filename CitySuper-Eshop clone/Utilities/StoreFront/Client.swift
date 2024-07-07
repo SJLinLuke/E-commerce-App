@@ -345,6 +345,19 @@ final class Client {
         return task
     }
     
+    @discardableResult
+    func removeDiscount(checkoutID: String, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+        let mutation = ClientQuery.mutationForRemoveDiscount(checkoutID)
+        let task     = self.client.mutateGraphWith(mutation) { response, error in
+            error.debugPrint()
+            
+            completion(response?.checkoutDiscountCodeRemove?.checkout?.viewModel)
+        }
+        
+        task.resume()
+        return task
+    }
+    
     // ----------------------------------
     //  MARK: - Gift Cards -
     //

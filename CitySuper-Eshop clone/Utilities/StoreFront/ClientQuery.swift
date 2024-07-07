@@ -247,6 +247,21 @@ final class ClientQuery {
         }
     }
     
+    static func mutationForRemoveDiscount(_ checkoutID: String) -> Storefront.MutationQuery {
+        let id = GraphQL.ID(rawValue: checkoutID)
+        return Storefront.buildMutation { $0
+            .checkoutDiscountCodeRemove(checkoutId: id) { $0
+                .checkoutUserErrors { $0
+                    .field()
+                    .message()
+                }
+                .checkout { $0
+                    .fragmentForCheckout()
+                }
+            }
+        }
+    }
+    
     // ----------------------------------
     //  MARK: - Gift Cards -
     //

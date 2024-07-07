@@ -46,7 +46,7 @@ struct CouponListView: View {
                                 confirmationVM.applyDiscount(coupon.discount_code)
                             }, 
                             tapOnRemove: {
-                                print("tapOnRemove")
+                                confirmationVM.removeDiscount(coupon.discount_code)
                             }, isUsed: confirmationVM.isDiscountUsed(coupon.discount_code))
                         }
                     }
