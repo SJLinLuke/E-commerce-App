@@ -12,6 +12,8 @@ struct NavigationModifier: ViewModifier {
     @EnvironmentObject private var cartEnv: CartEnvironment
     @EnvironmentObject private var userEnv: UserEnviroment
     
+    @StateObject private var forgetPW_VM = ForgetPasswordViewModel.shared
+    
     @State var isPushToCollectionsList: Bool = false
     @State var isShowingShoppingCart  : Bool = false
     @State var isShowingLoginView     : Bool = false
@@ -80,7 +82,8 @@ struct NavigationModifier: ViewModifier {
             .fullScreenCover(isPresented: $isShowingLoginView) {
                 LoginView(isShow: $isShowingLoginView)
             }
-            
+            .fullScreenCover(isPresented: $forgetPW_VM.isShowForgetPassword) {
+                ForgetPasswordView(isShow: $forgetPW_VM.isShowForgetPassword)
+            }
     }
-    
 }

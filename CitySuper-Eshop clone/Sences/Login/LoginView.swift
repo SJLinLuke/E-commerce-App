@@ -9,12 +9,15 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @Environment(\.presentationMode) private var presentationMode
+    
     @EnvironmentObject private var userEnv: UserEnviroment
     @EnvironmentObject private var cartEnv: CartEnvironment
     
-    @StateObject var VM = LoginViewModel()
+    @StateObject var VM          = LoginViewModel()
+    @StateObject var forgetPW_VM = ForgetPasswordViewModel.shared
     
-    @State private var account: String = "wectestegold@hotmail.com"
+    @State private var account: String  = "wectestegold@hotmail.com"
     @State private var password: String = "Cs123456"
     
     @Binding var isShow: Bool
@@ -49,7 +52,7 @@ struct LoginView: View {
                     Spacer()
                     
                     Button {
-                        
+                        forgetPW_VM.showForgetPassword()
                     } label: {
                         Text("Forgot password ?")
                             .foregroundColor(.black)
@@ -103,6 +106,11 @@ struct LoginView: View {
         .onDisappear {
             if userEnv.isLogin {
                 cartEnv.fetchCheckout(needAsync: false)
+            }
+        }
+        .onReceive(forgetPW_VM.viewDismissPublisher) { shouldDismiss in
+            if shouldDismiss {
+                self.presentationMode.wrappedValue.dismiss()
             }
         }
     }

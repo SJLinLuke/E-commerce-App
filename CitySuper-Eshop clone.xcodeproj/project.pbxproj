@@ -126,6 +126,8 @@
 		40D99A562C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A552C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift */; };
 		40D99A582C3A76D800BF2AF7 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A572C3A76D800BF2AF7 /* AlertManager.swift */; };
 		40D99A5A2C3A8C9B00BF2AF7 /* BaseStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A592C3A8C9B00BF2AF7 /* BaseStack.swift */; };
+		40D99A5D2C3AD05000BF2AF7 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */; };
+		40D99A5F2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -348,6 +350,8 @@
 		40D99A552C32E01300BF2AF7 /* CheckoutConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutConfirmationViewModel.swift; sourceTree = "<group>"; };
 		40D99A572C3A76D800BF2AF7 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		40D99A592C3A8C9B00BF2AF7 /* BaseStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStack.swift; sourceTree = "<group>"; };
+		40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
+		40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -1026,6 +1030,15 @@
 			path = CheckoutModel;
 			sourceTree = "<group>";
 		};
+		40D99A5B2C3AC10A00BF2AF7 /* ForgetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */,
+				40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */,
+			);
+			path = ForgetPassword;
+			sourceTree = "<group>";
+		};
 		40E522522BED05590046C3AA = {
 			isa = PBXGroup;
 			children = (
@@ -1074,6 +1087,7 @@
 				40E522602BED05590046C3AA /* MainTabbarView.swift */,
 				C59AEBEC2BF3536F001541BE /* Core */,
 				C59AEBEB2BF35361001541BE /* Login */,
+				40D99A5B2C3AC10A00BF2AF7 /* ForgetPassword */,
 				406612DD2BF861090037C4D8 /* QRcode */,
 				400C03A92BF8A31100493ACA /* MoreCollectionsList */,
 				4062BF2A2C0AED7000FF7184 /* MoreList */,
@@ -1968,6 +1982,7 @@
 				40E62EEC2C1D59EE0044ED44 /* MoreCollectionsListViewModel.swift in Sources */,
 				40AAF1232C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift in Sources */,
 				400C04F92BF9E98500493ACA /* Serializable.swift in Sources */,
+				40D99A5F2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift in Sources */,
 				4062BF222C0619EC00FF7184 /* Fragment+MailingAddressConnectionQuery.swift in Sources */,
 				400C054B2BF9FECA00493ACA /* OrderHistoryCell.swift in Sources */,
 				40E5228F2BEF343C0046C3AA /* PopularCategoryView.swift in Sources */,
@@ -1998,6 +2013,7 @@
 				40E522A72BEF44860046C3AA /* BannerSetModel.swift in Sources */,
 				406612DC2BF855200037C4D8 /* QRcodeView.swift in Sources */,
 				40D99A5A2C3A8C9B00BF2AF7 /* BaseStack.swift in Sources */,
+				40D99A5D2C3AD05000BF2AF7 /* ForgetPasswordView.swift in Sources */,
 				40D99A4B2C31121D00BF2AF7 /* PickupView.swift in Sources */,
 				40D99A522C31223900BF2AF7 /* CheckoutModel.swift in Sources */,
 				C593F1A92C06C4F400DBB028 /* AlertContext.swift in Sources */,
