@@ -13,12 +13,15 @@ struct BaseStack<Content: View>: View {
     @StateObject private var alertManager = AlertManager.shared
     
     var content: () -> Content
-    init(@ViewBuilder content: @escaping () -> Content) {
+    var alignment: HorizontalAlignment = .center
+    
+    init(@ViewBuilder content: @escaping () -> Content, alignment: HorizontalAlignment = .center) {
         self.content = content
+        self.alignment = alignment
     }
     
     var body: some View {
-        VStack(content: content)
+        VStack(alignment: alignment, content: content)
             .alert(alertManager.alertItem?.title ?? "", isPresented: $alertManager.isShowAlert, actions: {
                 if let buttons = alertManager.alertItem?.buttons {
                     ForEach(buttons) { button in
