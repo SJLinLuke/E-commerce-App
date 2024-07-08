@@ -31,7 +31,7 @@ final class NetworkManager: ObservableObject {
             let HomePageResponse = try decoder.decode(HomePageResponse.self, from: data)
             
             if let errorMassage = HomePageResponse.error_message {
-                throw CSAlert.customError(HomePageResponse.error_message ?? "")
+                throw CSAlert.customError(errorMassage)
             } else {
                 return HomePageResponse.data
             }
@@ -494,6 +494,29 @@ final class NetworkManager: ObservableObject {
         } catch {
             print(error.localizedDescription)
             throw CSAlert.inValidData
+        }
+    }
+    
+    // MARK: OTP
+    func sendOTP(_ email: String) async throws -> Bool {
+        
+        var request = generateURLRequest(host + Constants.otp, method: .post)
+        
+        let postData = try encoder.encode(OTPRequest(app: "CS_ESHOP_APP", email: email))
+        request.httpBody = postData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let response = try decoder.decode(OTPResponse.self, from: data)
+            
+            if let errorMessage = response.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return response.success
+            }
+        } catch {
+            throw error
         }
     }
     

@@ -128,6 +128,8 @@
 		40D99A5A2C3A8C9B00BF2AF7 /* BaseStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A592C3A8C9B00BF2AF7 /* BaseStack.swift */; };
 		40D99A5D2C3AD05000BF2AF7 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */; };
 		40D99A5F2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */; };
+		40D99A622C3C245D00BF2AF7 /* OTPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A612C3C245D00BF2AF7 /* OTPModel.swift */; };
+		40D99A652C3C3F9A00BF2AF7 /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D99A642C3C3F9A00BF2AF7 /* VerifyView.swift */; };
 		40E5225F2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */; };
 		40E522612BED05590046C3AA /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E522602BED05590046C3AA /* MainTabbarView.swift */; };
 		40E522632BED055C0046C3AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E522622BED055C0046C3AA /* Assets.xcassets */; };
@@ -352,6 +354,8 @@
 		40D99A592C3A8C9B00BF2AF7 /* BaseStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStack.swift; sourceTree = "<group>"; };
 		40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 		40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
+		40D99A612C3C245D00BF2AF7 /* OTPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPModel.swift; sourceTree = "<group>"; };
+		40D99A642C3C3F9A00BF2AF7 /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
 		40E5225B2BED05590046C3AA /* CitySuper-Eshop clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CitySuper-Eshop clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E5225E2BED05590046C3AA /* CitySuper_Eshop_cloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySuper_Eshop_cloneApp.swift; sourceTree = "<group>"; };
 		40E522602BED05590046C3AA /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
@@ -1033,10 +1037,27 @@
 		40D99A5B2C3AC10A00BF2AF7 /* ForgetPassword */ = {
 			isa = PBXGroup;
 			children = (
+				40D99A632C3C3F7F00BF2AF7 /* Verify */,
 				40D99A5C2C3AD05000BF2AF7 /* ForgetPasswordView.swift */,
 				40D99A5E2C3AE0F300BF2AF7 /* ForgetPasswordViewModel.swift */,
 			);
 			path = ForgetPassword;
+			sourceTree = "<group>";
+		};
+		40D99A602C3C244400BF2AF7 /* OTPModel */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A612C3C245D00BF2AF7 /* OTPModel.swift */,
+			);
+			path = OTPModel;
+			sourceTree = "<group>";
+		};
+		40D99A632C3C3F7F00BF2AF7 /* Verify */ = {
+			isa = PBXGroup;
+			children = (
+				40D99A642C3C3F9A00BF2AF7 /* VerifyView.swift */,
+			);
+			path = Verify;
 			sourceTree = "<group>";
 		};
 		40E522522BED05590046C3AA = {
@@ -1262,6 +1283,7 @@
 		40E522982BEF41F40046C3AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				40D99A602C3C244400BF2AF7 /* OTPModel */,
 				40D99A502C31222A00BF2AF7 /* CheckoutModel */,
 				407F90B72C21D5B0000D3201 /* SearchModel */,
 				40E62EE82C1D48F70044ED44 /* NavigationsModel */,
@@ -2047,6 +2069,7 @@
 				C5EA798C2BF458D70042FEF0 /* Binding+Extension.swift in Sources */,
 				407F90BD2C230C24000D3201 /* SearchListViewModel.swift in Sources */,
 				C58C3A152C23D665003580C2 /* SearchRecommendationView.swift in Sources */,
+				40D99A652C3C3F9A00BF2AF7 /* VerifyView.swift in Sources */,
 				C5EA79912BF4A5150042FEF0 /* String+Extension.swift in Sources */,
 				40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */,
 				40E62EF12C1EECE90044ED44 /* ScrollToTopModifier.swift in Sources */,
@@ -2093,6 +2116,7 @@
 				400C04FC2BF9E9C900493ACA /* Client.swift in Sources */,
 				400C053B2BF9EB1400493ACA /* DiscountApplication.swift in Sources */,
 				40AAF1102C25AE8300B17AF9 /* SearchResultHeaderView.swift in Sources */,
+				40D99A622C3C245D00BF2AF7 /* OTPModel.swift in Sources */,
 				406612D12BF7B0390037C4D8 /* FavouritesEmptyView.swift in Sources */,
 				40736CA92C14C1BC00496AB7 /* QuantitySelectorView.swift in Sources */,
 				40BC65582C1204A800EA5067 /* OrderHistorySortButtomSheet.swift in Sources */,
