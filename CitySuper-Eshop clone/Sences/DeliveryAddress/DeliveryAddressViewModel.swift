@@ -11,12 +11,6 @@ import Foundation
     
     static let shared = DeliveryAddressViewModel()
     
-    @Published var alertItem  : AlertItem? {
-        didSet {
-            self.isAlertShow = true
-        }
-    }
-    @Published var isAlertShow: Bool = false
     @Published var isLoading  : Bool = false
 
     @Published var addresses: [AddressViewModel] = []

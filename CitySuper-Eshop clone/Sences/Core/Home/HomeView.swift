@@ -24,7 +24,7 @@ struct HomeView: View {
                 ZStack {
                     Color(.commonBackGroundGray)
                     ScrollView {
-                        BaseStack {
+                        VStack {
                             MaqureeView(maqureeItems: VM.maquree)
                                 .id("top")
                             

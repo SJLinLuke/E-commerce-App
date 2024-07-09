@@ -12,7 +12,7 @@ struct VerifyView: View {
     @State var oneTimePassword: String = ""
     
     var body: some View {
-        BaseStack {
+        VStack {
             Image("email_icon")
                 .resizable()
                 .frame(width: 130, height: 130)

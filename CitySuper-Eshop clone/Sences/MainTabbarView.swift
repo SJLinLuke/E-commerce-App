@@ -14,7 +14,7 @@ struct MainTabbarView: View {
     
     @StateObject private var inboxVM     = InboxViewModel.shared
     @StateObject private var addToCartVM = AddToCartButtomSheetViewModel.shared
-    
+
     @State private var selectIndex: Int = 0
     
     var body: some View {

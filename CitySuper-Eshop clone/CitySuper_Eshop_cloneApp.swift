@@ -17,7 +17,8 @@ struct CitySuper_Eshop_cloneApp: App {
     @StateObject private var FavVM        = FavouriteViewModel.shared
     @StateObject private var couponListVM = CouponListViewModel.shared
     @StateObject private var inboxVM      = InboxViewModel.shared
-    
+    @StateObject private var alertManager = AlertManager.shared
+
     private var networkManager            = NetworkManager.shared
     
     var body: some Scene {
@@ -44,6 +45,15 @@ struct CitySuper_Eshop_cloneApp: App {
                 .fullScreenCover(isPresented: $isShowingIntroVideo) {
                     AVPlayerView(isShowingIntoVideo: $isShowingIntroVideo)
                 }
+                .alert(alertManager.alertItem?.title ?? "", isPresented: $alertManager.isShowAlert, actions: {
+                    if let buttons = alertManager.alertItem?.buttons {
+                        ForEach(buttons) { button in
+                            Button(button.title, role: button.role, action: button.action)
+                        }
+                    }
+                }, message: {
+                    alertManager.alertItem?.message ?? Text("")
+                })
         }
     }
 }
