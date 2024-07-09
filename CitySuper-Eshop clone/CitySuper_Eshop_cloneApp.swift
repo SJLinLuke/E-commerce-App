@@ -45,15 +45,7 @@ struct CitySuper_Eshop_cloneApp: App {
                 .fullScreenCover(isPresented: $isShowingIntroVideo) {
                     AVPlayerView(isShowingIntoVideo: $isShowingIntroVideo)
                 }
-                .alert(alertManager.alertItem?.title ?? "", isPresented: $alertManager.isShowAlert, actions: {
-                    if let buttons = alertManager.alertItem?.buttons {
-                        ForEach(buttons) { button in
-                            Button(button.title, role: button.role, action: button.action)
-                        }
-                    }
-                }, message: {
-                    alertManager.alertItem?.message ?? Text("")
-                })
+                .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
         }
     }
 }

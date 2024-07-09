@@ -10,9 +10,8 @@ import SwiftUI
 struct ShoppingCartHeaderView: View {
     
     @EnvironmentObject private var cartEnv: CartEnvironment
-    
-    @State var alertItem  : AlertItem?
-    @State var isAlertShow: Bool = false
+
+    @StateObject private var alertManager = AlertManager()
     
     let cartItemsNum: Int
     
@@ -45,18 +44,18 @@ struct ShoppingCartHeaderView: View {
             }
         }
         .padding()
-        .modifier(AlertModifier(alertItem: alertItem, isAlertShow: $isAlertShow))
+        .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
     }
     
     func tapCleanAll() {
-        self.alertItem = AlertContext.clearCart
-        self.alertItem?.buttons.append(AlertButton(title: "No", action: {}))
-        self.alertItem?.buttons.append(AlertButton(title: "Yes", action: {
+        var alert = AlertContext.clearCart
+        alert.buttons.append(AlertButton(title: "No", action: {}))
+        alert.buttons.append(AlertButton(title: "Yes", action: {
             // clear all cart items
             let carItem: [LineItemViewModel] = []
             cartEnv.mutateItem(lineItems: carItem)
         }))
-        self.isAlertShow = true
+        alertManager.callStaticAlert(alert)
     }
 }
 

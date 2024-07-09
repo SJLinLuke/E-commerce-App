@@ -14,16 +14,17 @@ struct LoginView: View {
     @EnvironmentObject private var userEnv: UserEnviroment
     @EnvironmentObject private var cartEnv: CartEnvironment
     
-    @StateObject var VM          = LoginViewModel()
-    @StateObject var forgetPW_VM = ForgetPasswordViewModel.shared
-    
+    @StateObject private var VM           = LoginViewModel()
+    @StateObject private var forgetPW_VM  = ForgetPasswordViewModel.shared
+    @StateObject private var alertManager = AlertManager()
+
     @State private var account: String  = "wectestegold@hotmail.com"
     @State private var password: String = "Cs123456"
     
     @Binding var isShow: Bool
     
     var body: some View {
-        BaseStack {
+        VStack {
             HStack {
                 Spacer()
                 XDismissButton(isShow: $isShow, color: .black)
@@ -102,6 +103,7 @@ struct LoginView: View {
         }
         .onAppear {
             VM.userEnv = self.userEnv
+            VM.alertManager = self.alertManager
         }
         .onDisappear {
             if userEnv.isLogin {
@@ -113,6 +115,7 @@ struct LoginView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
+        .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
     }
 }
 

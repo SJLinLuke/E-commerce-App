@@ -13,7 +13,7 @@ import SwiftUI
     @Published var isLoading: Bool = false
    
     private var InboxVM      = InboxViewModel.shared
-    private var alertManager = AlertManager.shared
+    var alertManager: AlertManager?
     
     func loginSever(loginData: LoginBody, complete: @escaping (Bool) -> Void) {
         
@@ -29,7 +29,7 @@ import SwiftUI
                 self.InboxVM.fetchUnreadNumber()
             } catch {
                 self.isLoading = false
-                alertManager.callErrorAlert(error as! CSAlert)
+                alertManager?.callErrorAlert(error as! CSAlert)
             }
             
             complete(self.userEnv?.isLogin ?? false)
