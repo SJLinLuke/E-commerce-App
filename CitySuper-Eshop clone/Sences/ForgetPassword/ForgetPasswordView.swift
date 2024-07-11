@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ForgetPasswordView: View {
     
-    @StateObject var VM = ForgetPasswordViewModel.shared
+    @Environment(\.presentationMode) private var presentationMode
     
-    @State var email: String = ""
+    @StateObject var VM = ForgetPasswordViewModel.shared
+    @StateObject var alertManager = AlertManager()
     
     @Binding var isShow: Bool
     
     var body: some View {
-        BaseStack {
-            
+        VStack {
             HStack {
                 Spacer()
                 XDismissButton(isShow: $isShow, color: .black)
@@ -41,12 +41,12 @@ struct ForgetPasswordView: View {
                         
                     Spacer()
                 }
-                CustomTextField(placeHolder: "Email Address", text: $email)
+                CustomTextField(placeHolder: "Email Address", text: $VM.email)
             }
             .padding()
             
             Button {
-                
+                VM.sendOTP()
             } label: {
                 ThemeButton(title: "Submit")
             }
@@ -54,7 +54,19 @@ struct ForgetPasswordView: View {
             
             Spacer()
         }
-
+        .onAppear {
+            VM.alertManager = self.alertManager
+        }
+        .overlay {
+            if VM.isLoading {
+                LoadingIndicatiorView(backgroundDisable: true)
+            }
+        }
+        .onReceive(VM.viewDismissPublisher) { shouldDismiss in
+            if shouldDismiss {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 }
 

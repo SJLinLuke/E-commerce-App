@@ -49,6 +49,18 @@ struct AlertContext {
     static let deliveryAddress_fillForm = AlertItem(title: "Notice",
                                                     message: Text("Please fill in all required fields."))
     
+    static let forgetPassword_resendOTP = AlertItem(title: "Notice",
+                                                    message: Text("A new OTP has been sent to your registered email address."))
+    
+    static let forgetPassword_fillPassword = AlertItem(title: "Notice",
+                                                    message: Text("Password cannot be empty."))
+    
+    static let forgetPassword_passwordNotMatch = AlertItem(title: "Notice",
+                                                    message: Text("Please confirm your password."))
+    
+    static let forgetPassword_passwordUpdated = AlertItem(title: "Notice",
+                                                    message: Text("Password reset successfully."))
+    
     //MARK: - inventory Alerts
     
     static let outOfStock          = AlertItem(title: "Notice",

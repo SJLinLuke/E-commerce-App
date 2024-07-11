@@ -71,11 +71,7 @@ struct LoginView: View {
                 .frame(height: 37)
             
             Button {
-                VM.loginSever(loginData: LoginBody(username: self.account,password: self.password)) { isLogin in
-                    if (isLogin) {
-                        isShow = false
-                    }
-                }
+                VM.loginSever(loginData: LoginBody(username: self.account,password: self.password))
             } label: {
                 ThemeButton(title: "Login")
             }
@@ -111,6 +107,11 @@ struct LoginView: View {
             }
         }
         .onReceive(forgetPW_VM.viewDismissPublisher) { shouldDismiss in
+            if shouldDismiss {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }
+        .onReceive(VM.viewDismissPublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
             }

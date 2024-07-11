@@ -21,7 +21,7 @@ struct Constants {
         locale: Locale.current
     )
     
-    static let host               = "https://mobileapiuat.citysuper.com.hk/public/"
+    static let host               = "https://mobileapiprd.citysuper.com.hk/public/"
     
     static let homepage           = "api/eshop/homepage?version=2"
     static let login              = "api/members/login"
@@ -49,6 +49,8 @@ struct Constants {
     static let searchCollections  = "api/eshop/search/product_collection?keyword="
     static let cloneToCheckout    = "api/eshop/order/cloneCheckout/"
     static let otp                = "api/members/otp"
+    static let resetRandomPassword = "api/members/resetPassword"
+    static let updatePassword     = "api/members/password"
     
     static let productDetail_html_source = """
         <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>

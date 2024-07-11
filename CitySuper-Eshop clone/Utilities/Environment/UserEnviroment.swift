@@ -25,6 +25,8 @@ final class UserEnviroment: ObservableObject {
         }
     }
     
+    var currentPassword: String = ""
+    
     var memberName: String { self.profile?.englishName ?? "" }
     
     var isGoldMember: Bool { self.profile?.memberType != "SUPERE" }

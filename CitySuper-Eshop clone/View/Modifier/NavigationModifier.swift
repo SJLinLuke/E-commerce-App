@@ -85,5 +85,11 @@ struct NavigationModifier: ViewModifier {
             .fullScreenCover(isPresented: $forgetPW_VM.isShowForgetPassword) {
                 ForgetPasswordView(isShow: $forgetPW_VM.isShowForgetPassword)
             }
+            .fullScreenCover(isPresented: $forgetPW_VM.isShowVerify) {
+                VerifyView(isShow: $forgetPW_VM.isShowVerify)
+            }
+            .fullScreenCover(isPresented: $forgetPW_VM.isChangePassword) {
+                ChangePasswordView(isShow: $forgetPW_VM.isChangePassword, OldPassword: userEnv.currentPassword)
+            }
     }
 }

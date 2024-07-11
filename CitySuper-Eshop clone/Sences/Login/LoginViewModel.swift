@@ -6,16 +6,27 @@
 //
 
 import SwiftUI
+import Combine
 
 @MainActor final class LoginViewModel: ObservableObject {
     
     @Published var userEnv  : UserEnviroment? = nil
     @Published var isLoading: Bool = false
-   
+    
+    var viewDismissPublisher = PassthroughSubject<Bool, Never>()
+    private var shouldDismissView = false {
+        didSet {
+            viewDismissPublisher.send(shouldDismissView)
+            shouldDismissView = false
+        }
+    }
+    
     private var InboxVM      = InboxViewModel.shared
+    private var forgetPW_VM  = ForgetPasswordViewModel.shared
+    
     var alertManager: AlertManager?
     
-    func loginSever(loginData: LoginBody, complete: @escaping (Bool) -> Void) {
+    func loginSever(loginData: LoginBody) {
         
         guard !isLoading else { return }
         
@@ -26,13 +37,21 @@ import SwiftUI
                 
                 self.isLoading = false
                 self.userEnv?.setupUser(userData)
+                if self.userEnv?.isLogin ?? false {
+                    shouldDismissView = true
+                    if userData.profile.changePassword ?? false {
+                        self.userEnv?.currentPassword = loginData.password
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.forgetPW_VM.isChangePassword.toggle()
+                        }
+                    }
+                }
                 self.InboxVM.fetchUnreadNumber()
             } catch {
                 self.isLoading = false
                 alertManager?.callErrorAlert(error as! CSAlert)
             }
             
-            complete(self.userEnv?.isLogin ?? false)
         }
     }
 }

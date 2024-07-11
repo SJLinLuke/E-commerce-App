@@ -520,6 +520,52 @@ final class NetworkManager: ObservableObject {
         }
     }
     
+    // MARK: resetPassword
+    func resetRandomPassword(email: String, otp: String) async throws -> Bool {
+        
+        var request = generateURLRequest(host + Constants.resetRandomPassword, method: .post)
+        
+        let postData = try encoder.encode(VerifyRequest(email: email, otp: otp))
+        request.httpBody = postData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let response = try decoder.decode(OTPResponse.self, from: data)
+            
+            if let errorMessage = response.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return response.success
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+    func updatePassword(password: String, newPassword: String) async throws -> Bool {
+        
+        var request = generateURLRequest(host + Constants.updatePassword, method: .put)
+        
+        let postData = try encoder.encode(UpdatePasswordRequest(new_password: newPassword, password: password))
+        request.httpBody = postData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let response = try decoder.decode(UpdatePasswordResponse.self, from: data)
+            
+            if let errorMessage = response.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return response.success
+            }
+        } catch {
+            throw error
+        }
+    }
+
+    
 }
 
 extension NetworkManager {
@@ -533,10 +579,7 @@ extension NetworkManager {
                 request.setValue("iOS", forHTTPHeaderField: "Platform")
             
             if let method = method {
-                switch method {
-                    case .post:
-                        request.httpMethod = method.rawValue
-                    }
+                request.httpMethod = method.rawValue
             }
             
             if let userEnv = userEnv, userEnv.isLogin {
@@ -551,6 +594,7 @@ extension NetworkManager {
 
 enum HttpRequestMethodType: String {
     case post = "POST"
+    case put  = "PUT"
 }
 
 enum HttpSortOrderKey: String {

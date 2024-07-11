@@ -12,6 +12,7 @@ struct CustomTextField: View {
     let placeHolder  : String
     var isSecureField: Bool = false
     var color        : Color = Color(hex: "F2F2F2")
+    var borderColor  : Color = Color.gray
     
     var isDropDown   : Bool = false
     var dropDownItem : [String] = []
@@ -70,7 +71,7 @@ struct CustomTextField: View {
         .background(color)
         .overlay {
             RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.gray, lineWidth: 0.3)
+                .stroke(borderColor, lineWidth: 1)
         }
     }
 }
