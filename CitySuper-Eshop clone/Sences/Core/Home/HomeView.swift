@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject private var VM             = HomeViewModel()
+    @StateObject private var VM             = HomeViewModel.shared
     @StateObject private var searchVM       = SearchListViewModel.shared
     @StateObject private var searchResultVM = SearchResultViewModel.shared
     
@@ -100,8 +100,6 @@ struct HomeView: View {
                     isShowResult.toggle()
                 }
             }
-            
-            
         }
     }
 }

@@ -21,7 +21,7 @@ struct Constants {
         locale: Locale.current
     )
     
-    static let host               = "https://mobileapiprd.citysuper.com.hk/public/"
+    static let host               = "https://mobileapiuat.citysuper.com.hk/public/"
     
     static let homepage           = "api/eshop/homepage?version=2"
     static let login              = "api/members/login"

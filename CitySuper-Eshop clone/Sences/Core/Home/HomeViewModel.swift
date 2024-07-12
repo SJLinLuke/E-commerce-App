@@ -9,8 +9,12 @@ import Foundation
 
 @MainActor final class HomeViewModel: ObservableObject {
     
-    @Published var isLoading: Bool = false
+    static let shared = HomeViewModel()
     
+    @Published var isLoading     : Bool = false
+    @Published var isShowSplashAD: Bool = false
+    
+    @Published var spalshAD: SplashAd?
     @Published var maquree: [MarqueeModel] = []
     @Published var banners: [[BannerSetModel]] = []
     @Published var popularCategory_List : PopularCategoryModel?
@@ -33,6 +37,13 @@ import Foundation
                 self.isLoading = false
                 for data in homeData {
                     switch data.type {
+                    case HomeModelType.splashAd.rawValue:
+                        if let splashAd = data.splashAd {
+                            if self.spalshAD == nil {
+                                self.isShowSplashAD = true
+                            }
+                            self.spalshAD = splashAd
+                        }
                     case HomeModelType.marquee.rawValue:
                         if let marquee = data.marquee {
                             self.maquree = marquee
