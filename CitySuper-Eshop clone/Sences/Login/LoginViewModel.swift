@@ -49,7 +49,9 @@ import Combine
                 self.InboxVM.fetchUnreadNumber()
             } catch {
                 self.isLoading = false
-                alertManager?.callErrorAlert(error as! CSAlert)
+                if let error = error as? CSAlert {
+                    alertManager?.callErrorAlert(error)
+                }
             }
             
         }

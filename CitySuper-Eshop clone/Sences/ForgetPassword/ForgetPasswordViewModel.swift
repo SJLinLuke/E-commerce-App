@@ -60,8 +60,10 @@ import Combine
                     }
                 }
             } catch {
-                alertManager?.callErrorAlert(error as! CSAlert)
                 self.isLoading = false
+                if let error = error as? CSAlert {
+                    alertManager?.callErrorAlert(error)
+                }
             }
         }
     }
@@ -80,8 +82,10 @@ import Combine
                     shouldDismissView.toggle()
                 }
             } catch {
-                alertManager?.callErrorAlert(error as! CSAlert)
                 self.isLoading = false
+                if let error = error as? CSAlert {
+                    alertManager?.callErrorAlert(error)
+                }
             }
         }
     }
