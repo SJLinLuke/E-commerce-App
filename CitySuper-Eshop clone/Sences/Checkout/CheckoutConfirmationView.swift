@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CheckoutConfirmationView: View {
     
-    @StateObject var VM: CheckoutConfirmationViewModel
+    @StateObject private var VM: CheckoutConfirmationViewModel
+    @StateObject private var alertManager = AlertManager()
     
     @State var isShowCoupon: Bool = false
     
@@ -161,6 +162,7 @@ struct CheckoutConfirmationView: View {
                 }
                 .onAppear {
                     VM.initCheckout()
+                    VM.alertManager = self.alertManager
                 }
             }
             .overlay {
@@ -169,6 +171,7 @@ struct CheckoutConfirmationView: View {
                 }
             }
             .modifier(NavigationModifier(navTilte: "Order Detail", isHideCollectionsList: true, isHideShoppingCart: true))
+            .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
             .navigationDestination(isPresented: $isShowCoupon) {
                 CouponListView(confirmationVM: VM,isRedeemable: true)
             }

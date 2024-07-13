@@ -12,7 +12,7 @@ struct CustomTextField: View {
     let placeHolder  : String
     var isSecureField: Bool = false
     var color        : Color = Color(hex: "F2F2F2")
-    var borderColor  : Color = Color.gray
+    var borderColor  : Color = Color(hex: "E2E2E2")
     
     var isDropDown   : Bool = false
     var dropDownItem : [String] = []

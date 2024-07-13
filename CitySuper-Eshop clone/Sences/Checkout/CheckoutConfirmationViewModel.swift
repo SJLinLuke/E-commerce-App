@@ -18,6 +18,8 @@ import MobileBuySDK
     @Published var address         : AddressViewModel?
     @Published var checkoutMethod  : CheckoutMethodsType?
     
+    var alertManager: AlertManager?
+    
     init(checkout: CheckoutViewModel?, checkedDate: String?, selectedStore: Locations?, address: AddressViewModel?, checkoutMethod: CheckoutMethodsType?) {
         if let checkout { self.checkout = checkout }
         if let checkedDate { self.checkedDate = checkedDate }
@@ -74,7 +76,7 @@ import MobileBuySDK
             var _codes = codes
             Client.shared.applyDiscount(codes.first ?? "", to: checkout?.id ?? "") { checkout in
                 if let checkout {
-                    self.checkout = checkout
+//                    self.checkout = checkout
                     _codes.removeFirst()
                     if !_codes.isEmpty {
                         self.applyDiscount("", _codes, complete: complete)
@@ -90,13 +92,17 @@ import MobileBuySDK
             self.isLoading = true
             Client.shared.applyDiscount(code, to: checkout?.id ?? "") { checkout in
                 if let checkout {
+                    let unAppliableDiscounts = self.collectUnAppliableDiscounts(checkout.discountApplication ?? [])
                     self.checkout = checkout
-                    if self.isDiscountAppliable(code) {
-                        self.isLoading = false
-                        print("discount is applied")
+                    self.isLoading = false
+                    if !unAppliableDiscounts.isEmpty {
+                        self.alertManager?.callStaticAlert(AlertContext.discountDisApplied(unAppliableDiscounts))
                     } else {
-                        self.isLoading = false
-                        print("discount is not appliable")
+                        if self.isDiscountAppliable(code) {
+                            self.alertManager?.callStaticAlert(AlertContext.discountApplied)
+                        } else {
+                            self.alertManager?.callStaticAlert(AlertContext.discountDisApplied([code]))
+                        }
                     }
                     self.objectWillChange.send()
                 }
@@ -117,7 +123,6 @@ import MobileBuySDK
         
         appliedDiscounts = appliedDiscounts.filter({ !$0.isEmpty })
         appliedDiscounts = appliedDiscounts.filter({ $0 != code })
-        print("discount is applied \(appliedDiscounts)")
         
         self.isLoading = true
         
@@ -134,6 +139,21 @@ import MobileBuySDK
                 }
             }
         }
+    }
+    
+    private func collectUnAppliableDiscounts(_ currentDiscounts: [DiscountApplication]) -> [String] {
+        guard !currentDiscounts.isEmpty else { return [] }
+        let previousDiscounts = self.discountApplication
+        let currentDiscounts = Set(currentDiscounts.map { $0.name })
+        let unAppliableDiscounts = previousDiscounts.compactMap { discount in
+            if let discountViewModel = discount as? DiscountCodeViewModel {
+                if !currentDiscounts.contains(discountViewModel.name) {
+                    return discountViewModel
+                }
+            }
+            return nil
+        }
+        return Array(unAppliableDiscounts.map() { $0.name })
     }
     
     private func isDiscountAppliable(_ code: String) -> Bool {

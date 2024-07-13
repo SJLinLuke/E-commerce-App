@@ -36,7 +36,7 @@ struct AVPlayerView: View {
     
     private func addObserver(for player: AVPlayer) {
         NotificationCenter.default.addObserver(forName: AVPlayerItem.didPlayToEndTimeNotification, object: player.currentItem, queue: .main) { _ in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.isShowIntoVideo = false
                 NotificationCenter.default.removeObserver(self, name: AVPlayerItem.didPlayToEndTimeNotification, object: player.currentItem)
                 if isShowedTurorial == nil {

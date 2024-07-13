@@ -71,4 +71,14 @@ struct AlertContext {
     
     static let clearCart           = AlertItem(title: "Notice",
                                                message: Text("Are you sure to clear all items in cart?"))
+    
+    //MARK: - multiple discount Alerts
+    
+    static let discountApplied     = AlertItem(title: "Notice",
+                                               message: Text("Coupon applied."))
+    
+    static func discountDisApplied(_ codes: [String]) -> AlertItem {
+        let codesString: String = codes.map() { $0 }.joined(separator: ",")
+        return AlertItem(title: "Notice", message: Text(codesString + "\n" + "This discount code cannot be applied in this order."))
+    }
 }

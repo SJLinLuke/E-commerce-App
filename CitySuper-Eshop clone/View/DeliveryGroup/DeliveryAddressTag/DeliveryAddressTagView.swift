@@ -43,7 +43,7 @@ struct DeliveryAddressTagView: View {
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color(hex: "D2D2D2") ,lineWidth: 1)
+                    .stroke(Color(hex: "E2E2E2") ,lineWidth: 1)
             }
             .background(Color(hex: "F2F2F2"))
         }
