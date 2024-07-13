@@ -10,7 +10,10 @@ import AVKit
 
 struct AVPlayerView: View {
     
-    @Binding var isShowingIntoVideo: Bool
+    @AppStorage("isShowedTurorial") private var isShowedTurorial: Bool?
+    
+    @Binding var isShowIntoVideo: Bool
+    @Binding var isShowTutorial : Bool
     
     private var player: AVPlayer {
         let player = AVPlayer(url: Bundle.main.url(forResource: "CS_SplashVideo", withExtension: "mp4")!)
@@ -34,8 +37,11 @@ struct AVPlayerView: View {
     private func addObserver(for player: AVPlayer) {
         NotificationCenter.default.addObserver(forName: AVPlayerItem.didPlayToEndTimeNotification, object: player.currentItem, queue: .main) { _ in
             DispatchQueue.main.async {
-                self.isShowingIntoVideo = false
+                self.isShowIntoVideo = false
                 NotificationCenter.default.removeObserver(self, name: AVPlayerItem.didPlayToEndTimeNotification, object: player.currentItem)
+                if isShowedTurorial == nil {
+                    self.isShowTutorial = true
+                }
             }
         }
     }
@@ -43,5 +49,5 @@ struct AVPlayerView: View {
 
 
 #Preview {
-    AVPlayerView(isShowingIntoVideo: .constant(true))
+    AVPlayerView(isShowIntoVideo: .constant(true), isShowTutorial: .constant(false))
 }

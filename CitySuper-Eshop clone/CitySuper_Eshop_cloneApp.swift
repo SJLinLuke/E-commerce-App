@@ -12,7 +12,8 @@ struct CitySuper_Eshop_cloneApp: App {
     
     @State private var userEnv = UserEnviroment()
     @State private var cartEnv = CartEnvironment()
-    @State private var isShowingIntroVideo: Bool = false
+    @State private var isShowIntroVideo: Bool = false
+    @State private var isShowTutorial  : Bool = false
     
     @StateObject private var FavVM        = FavouriteViewModel.shared
     @StateObject private var couponListVM = CouponListViewModel.shared
@@ -39,11 +40,14 @@ struct CitySuper_Eshop_cloneApp: App {
                     }
                     
                     DispatchQueue.main.async {
-                        self.isShowingIntroVideo = true
+                        self.isShowIntroVideo = true
                     }
                 }
-                .fullScreenCover(isPresented: $isShowingIntroVideo) {
-                    AVPlayerView(isShowingIntoVideo: $isShowingIntroVideo)
+                .fullScreenCover(isPresented: $isShowIntroVideo) {
+                    AVPlayerView(isShowIntoVideo: $isShowIntroVideo, isShowTutorial: $isShowTutorial)
+                }
+                .fullScreenCover(isPresented: $isShowTutorial) {
+                    TurorialView(isShow: $isShowTutorial)
                 }
                 .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
         }
