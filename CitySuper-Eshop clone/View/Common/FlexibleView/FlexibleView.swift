@@ -23,13 +23,14 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
         VStack(alignment: alignment, spacing: spacing) {
             ForEach(generateRows(), id: \.self) { rowElements in
                 HStack(spacing: spacing) {
-                    
                     ForEach(rowElements, id: \.self) { element in
                         content(element)
-                            .fixedSize()
-                            .measureSize(perform: { CGSize in
-                                elementsSize[element] = CGSize
+                            .background(GeometryReader { geometry in
+                                Color.clear.onAppear {
+                                    elementsSize[element] = geometry.size
+                                }
                             })
+                            .fixedSize()
                     }
                     
                     Spacer()
