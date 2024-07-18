@@ -117,6 +117,6 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(shopifyID: "")
+    ProductDetailView(shopifyID: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzU2NDQwOTg1MDI4MTM=")
         .environmentObject(CartEnvironment())
 }

@@ -57,6 +57,7 @@ struct CollectionNormalLayoutView_Normal: View {
                 }
                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 5))
             }
+            .frame(height: itemHeight + 10)
         }
     }
 }
