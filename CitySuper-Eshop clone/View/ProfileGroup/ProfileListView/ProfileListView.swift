@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Stripe
 
 struct ProfileListView: View {
+    
+    @ObservedObject var paymentContextDelegate: PaymentContextDelegate = PaymentContextDelegate.shared
     
     @EnvironmentObject var userEnv: UserEnviroment
     @EnvironmentObject var cartEnv: CartEnvironment
@@ -20,6 +23,8 @@ struct ProfileListView: View {
     @State var isShowingMoreList       : Bool = false
     @State var isShowingCouponList     : Bool = false
     
+    @State private var paymentContext: STPPaymentContext!
+    
     var body: some View {
         List(VM.getProfileData(), rowContent: { rowData in
             CustomListCell(rowData: rowData)
@@ -29,6 +34,7 @@ struct ProfileListView: View {
         })
         .onAppear{
             VM.userEnv = userEnv
+            self.paymentContextConfiguration()
         }
         .listStyle(.plain)
         .listSectionSeparator(.hidden, edges: .all)
@@ -61,7 +67,7 @@ struct ProfileListView: View {
             case "Delivery Address":
                 isShowingDeliveryAddress.toggle()
             case "Wallet":
-                print(rowData.title)
+                self.paymentContext.presentPaymentOptionsViewController()
             case "More":
                 isShowingMoreList.toggle()
             case "Login":
@@ -77,6 +83,25 @@ struct ProfileListView: View {
             }
             
         }
+    }
+    
+    func paymentContextConfiguration() {
+        let customerContext = STPCustomerContext(keyProvider: StripeManager())
+        self.paymentContext = STPPaymentContext(
+                                customerContext: customerContext,
+                                configuration: StripeManager.shared.config,
+                                theme: StripeManager.shared.theme
+                              )
+        self.paymentContext.delegate = self.paymentContextDelegate
+
+        let keyWindow = UIApplication.shared.connectedScenes
+                        .filter({$0.activationState == .foregroundActive})
+                        .map({$0 as? UIWindowScene})
+                        .compactMap({$0})
+                        .first?.windows
+                        .filter({$0.isKeyWindow}).first
+        
+        self.paymentContext.hostViewController = keyWindow?.rootViewController
     }
 }
 

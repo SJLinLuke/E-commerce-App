@@ -403,6 +403,21 @@ final class ClientQuery {
         }
     }
     
+    static func mutationForUpdateNoteofCheckout(by checkout_id: String, note:  String) -> Storefront.MutationQuery{
+        return Storefront.buildMutation{$0
+            .checkoutAttributesUpdateV2(checkoutId: GraphQL.ID(rawValue: checkout_id), input: Storefront.CheckoutAttributesUpdateV2Input.create(note: .init(orNull: note))){$0
+                .checkout{ $0
+                    .fragmentForCheckout()
+                }
+                .checkoutUserErrors{ $0
+                    .code()
+                    .field()
+                    .message()
+                }
+            }
+        }
+    }
+    
     static func mutationForUpdateAttributesofCheckout(by checkout_id: String, attributes:  [Storefront.AttributeInput]) -> Storefront.MutationQuery{
         return Storefront.buildMutation{ $0
             .checkoutAttributesUpdateV2(checkoutId: GraphQL.ID(rawValue: checkout_id), input: Storefront.CheckoutAttributesUpdateV2Input.create(customAttributes: .init(orNull: attributes))){ $0

@@ -333,8 +333,14 @@ enum CheckoutMethodsType: String {
     }
     
     // MARK: Init
-    func deleteLocalCheckout() {
+    func deleteLocalCheckout(mutate: Bool = false, complete: (() -> Void)? = nil) {
         self.checkout         = nil
         self.shoppingCartData = nil
+        
+        if mutate, let complete {
+            let carItem: [LineItemViewModel] = []
+            self.mutateItem(lineItems: carItem)
+            complete()
+        }
     }
 }

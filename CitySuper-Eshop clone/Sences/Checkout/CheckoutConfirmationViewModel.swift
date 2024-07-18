@@ -7,8 +7,11 @@
 
 import Foundation
 import MobileBuySDK
+import Stripe
 
 @MainActor final class CheckoutConfirmationViewModel: ObservableObject {
+    
+    typealias Task = _Concurrency.Task
     
     @Published var isLoading: Bool = false
     
@@ -17,8 +20,11 @@ import MobileBuySDK
     @Published var selectedStore   : Locations?
     @Published var address         : AddressViewModel?
     @Published var checkoutMethod  : CheckoutMethodsType?
+    @Published var checkoutRemark  : String = ""
+    @Published var orderNumber     : Int = 0
     
     var alertManager: AlertManager?
+    var userEnv     : UserEnviroment? = nil
     
     init(checkout: CheckoutViewModel?, checkedDate: String?, selectedStore: Locations?, address: AddressViewModel?, checkoutMethod: CheckoutMethodsType?) {
         if let checkout { self.checkout = checkout }
@@ -178,6 +184,53 @@ import MobileBuySDK
     func isDiscountUsed(_ code: String) -> Bool {
         let hash_discountApplication = Set(discountApplication.map(){ $0.name })
         return hash_discountApplication.contains(code)
+    }
+    
+    
+    // MARK: Checkout
+    func checkoutToOrder(complete: @escaping (String?, Int?) -> Void) {
+                
+        guard let userEnv = userEnv else { return }
+        
+        let apiVersion = self.totalPrice == 0 ? Constants.thirdVersion : Constants.secondVersion
+        Task {
+            do {
+                let data = try await NetworkManager.shared.checkoutToOrder(self.checkout?.id.shopifyIDEncode ?? "", versionNumber: apiVersion)
+                userEnv.currentOrderID = data.id
+                complete(data.financial_status, data.order_number) // go completeVC
+            } catch {
+                self.isLoading = false
+                if let error = error as? CSAlert {
+                    self.alertManager?.callErrorAlert(error)
+                }
+            }
+        }
+    }
+    
+    func tapOnPay(paymentContext: STPPaymentContext) {
+        
+        guard let userEnv = userEnv, !isLoading else { return }
+        
+        isLoading = true
+        
+        Client.shared.pollForReadyCheckout(self.checkout?.id ?? "") { checkout in
+            if let checkout {
+                self.checkout = checkout
+                Client.shared.updateNote(checkout.id, note: self.checkoutRemark){ checkout in
+                    if let checkout {
+                        self.checkout = checkout
+                        self.checkoutToOrder { status, orderNum in
+                            if status == "paid", let orderNum {
+                                userEnv.currentOrderID = 0
+                                self.orderNumber = orderNum
+                            } else {
+                                paymentContext.requestPayment()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
 }

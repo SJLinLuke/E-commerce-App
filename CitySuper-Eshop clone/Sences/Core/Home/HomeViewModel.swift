@@ -23,6 +23,8 @@ import Foundation
     @Published var collectionNormalLayout_Normal: CollectionNormalLayoutModel?
     @Published var collectionNormalLayout_Linear: CollectionNormalLayoutModel?
     
+    @Published var isShowDeliveryOrPickup    : Bool = false
+
     private var alertManager = AlertManager.shared
     
     func fetchHomepage() {

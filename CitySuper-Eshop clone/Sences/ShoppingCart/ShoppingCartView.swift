@@ -12,7 +12,7 @@ struct ShoppingCartView: View {
     @EnvironmentObject private var userEnv: UserEnviroment
     @EnvironmentObject private var cartEnv: CartEnvironment
     
-    @Binding var isShowingModal: Bool
+    @Binding var isShow: Bool
     
     var body: some View {
         NavigationStack {
@@ -63,7 +63,7 @@ struct ShoppingCartView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        isShowingModal = false
+                        isShow = false
                     } label: {
                         Image("back_icon")
                     }
@@ -77,7 +77,7 @@ struct ShoppingCartView: View {
 }
 
 #Preview {
-    ShoppingCartView(isShowingModal: .constant(true))
+    ShoppingCartView(isShow: .constant(true))
         .environmentObject(UserEnviroment())
         .environmentObject(CartEnvironment())
 }

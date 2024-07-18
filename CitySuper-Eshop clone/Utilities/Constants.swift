@@ -13,6 +13,8 @@ struct Constants {
     static let shopDomain = "citysuper-mobile-dev.myshopify.com"
     static let apiKey = "d8984700447109bdeddf144b5eabbe26"
     
+    static let stripe_apiKey = "pk_test_1GycPXPIyGOsTuIBsBPeZj06"
+    
     static let shopifyOrderIdHexFormat = "gid://shopify/Order/"
     
     static let client = Graph.Client(
@@ -21,10 +23,14 @@ struct Constants {
         locale: Locale.current
     )
     
+    static let secondVersion = "?version=2"
+    static let thirdVersion = "?version=3"
+    
     static let host               = "https://mobileapiuat.citysuper.com.hk/public/"
     
     static let homepage           = "api/eshop/homepage?version=2"
     static let login              = "api/members/login"
+    static let getCheckoutID      = "api/members/currentCheckout"
     static let notification       = "api/eshop/notifications?page="
     static let notificationDetail = "api/eshop/notifications/"
     static let favourites         = "api/members/favouritedProducts?page="
@@ -48,9 +54,12 @@ struct Constants {
     static let searchList         = "api/eshop/search/collection?keyword="
     static let searchCollections  = "api/eshop/search/product_collection?keyword="
     static let cloneToCheckout    = "api/eshop/order/cloneCheckout/"
+    static let checkoutToOrder     = "api/eshop/order/checkoutToOrder/"
     static let otp                = "api/members/otp"
     static let resetRandomPassword = "api/members/resetPassword"
-    static let updatePassword     = "api/members/password"
+    static let updatePassword      = "api/members/password"
+    static let stripeEphemeralKeys = "api/eshop/payment/stripe/ephemeralKeys"
+    static let stripePaymentIntent = "api/eshop/payment/stripe/paymentIntent/"
     
     static let productDetail_html_source = """
         <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>

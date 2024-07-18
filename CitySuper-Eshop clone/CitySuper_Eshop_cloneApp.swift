@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import Stripe
 
 @main
 struct CitySuper_Eshop_cloneApp: App {
+    
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore = false
     
     @State private var userEnv = UserEnviroment()
     @State private var cartEnv = CartEnvironment()
@@ -20,17 +25,19 @@ struct CitySuper_Eshop_cloneApp: App {
     @StateObject private var inboxVM      = InboxViewModel.shared
     @StateObject private var alertManager = AlertManager.shared
 
-    private var networkManager            = NetworkManager.shared
+    private var networkManager = NetworkManager.shared
+    private var stripeManager  = StripeManager.shared
     
     var body: some Scene {
         WindowGroup {
             MainTabbarView()
                 .environmentObject(userEnv)
                 .environmentObject(cartEnv)
-                .onAppear {
+                .task {
                     // init
                     networkManager.userEnv = userEnv
                     cartEnv.userEnv = userEnv
+                    stripeManager.userEnv = userEnv
                     
                     if userEnv.isLogin {
                         FavVM.fetchFavourite()
@@ -39,9 +46,13 @@ struct CitySuper_Eshop_cloneApp: App {
                         inboxVM.fetchUnreadNumber()
                     }
                     
-                    DispatchQueue.main.async {
-                        self.isShowIntroVideo = true
+                    if !hasLaunchedBefore {
+                        DispatchQueue.main.async {
+                            isShowIntroVideo = true
+                        }
                     }
+                    
+                    StripeAPI.defaultPublishableKey = Constants.stripe_apiKey
                 }
                 .fullScreenCover(isPresented: $isShowIntroVideo) {
                     AVPlayerView(isShowIntoVideo: $isShowIntroVideo, isShowTutorial: $isShowTutorial)
@@ -50,6 +61,13 @@ struct CitySuper_Eshop_cloneApp: App {
                     TurorialView(isShow: $isShowTutorial)
                 }
                 .modifier(AlertModifier(alertItem: alertManager.alertItem, isAlertShow: $alertManager.isShowAlert))
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active && !hasLaunchedBefore {
+                hasLaunchedBefore = true
+            } else {
+                hasLaunchedBefore = false
+            }
         }
     }
 }

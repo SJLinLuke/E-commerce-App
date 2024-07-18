@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class UserEnviroment: ObservableObject {
+@MainActor final class UserEnviroment: ObservableObject {
     
     @AppStorage("userData") private var storage_userData: Data?
     @AppStorage("qrcode") private var storage_qrcode    : Data?
@@ -19,9 +19,15 @@ final class UserEnviroment: ObservableObject {
     @Published private var profile     : ProfileData?
     @Published var shopify_access_token: String = ""
     
+    var currentOrderID: Int = 0
+    
     init() {
         if let storedUserData = storage_userData {
-            self.retriveUser(storedUserData)
+            retriveUser(storedUserData) { userData in
+                if let userData {
+                    self.setupUser(userData)
+                }
+            }
         }
     }
     
@@ -77,12 +83,41 @@ final class UserEnviroment: ObservableObject {
         }
     }
     
-    private func retriveUser(_ storedUserData: Data) {
+    private func retriveUser(_ storedUserData: Data, complete: @escaping (LoginData?) -> Void) {
         do {
             let userData = try JSONDecoder().decode(LoginData.self, from: storedUserData)
-            self.setupUser(userData)
+            complete(userData)
         } catch {
             print("something went wrong when decode user data.")
+            complete(nil)
+        }
+    }
+    
+    func updateCheckoutID(complete: @escaping () -> Void) {
+        
+        guard isLogin else {
+            complete()
+            return
+        }
+        
+        Task {
+            do {
+                let newCheckoutID = try await NetworkManager.shared.getNewCheckoutID()
+                if let storedUserData = storage_userData {
+                    self.retriveUser(storedUserData) { userData in
+                        if let userData {
+                            var tempUserData: LoginData = userData
+                            tempUserData.current_checkout_id = newCheckoutID
+                            self.checkoutID = newCheckoutID
+                            self.saveUser(tempUserData)
+                            complete()
+                        }
+                    }
+                }
+            } catch {
+                print(error)
+                complete()
+            }
         }
     }
 

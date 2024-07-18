@@ -449,6 +449,22 @@ final class Client {
     }
     
     @discardableResult
+    func updateNote(_ checkoutID: String, note: String, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
+        let mutation = ClientQuery.mutationForUpdateNoteofCheckout(by: checkoutID, note: note)
+        let task     = self.client.mutateGraphWith(mutation) { response, error in
+            error.debugPrint()
+            if let _response = response {
+                completion(_response.checkoutAttributesUpdateV2?.checkout?.viewModel)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+        return task
+    }
+    
+    @discardableResult
     func updateShippingLine(by checkout_id: String, shippingLineHandle: String, completion: @escaping (CheckoutViewModel?) -> Void) -> Task {
         let mutation = ClientQuery.mutationForUpdateShippingLine(by: checkout_id, shippingLineHandle: shippingLineHandle)
         let task     = self.client.mutateGraphWith(mutation) { response, error in

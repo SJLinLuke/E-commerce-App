@@ -13,3 +13,15 @@ struct CloneToCheckoutResponse: Decodable {
     let data         : String
 }
 
+struct CheckoutToOrderResponse: Decodable {
+    let success      : Bool
+    let error_message: String?
+    let data         : CheckoutToOrderData
+}
+
+struct CheckoutToOrderData: Decodable {
+    let id              : Int
+    let financial_status: String?
+    let order_number    : Int?
+}
+

@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import MobileBuySDK
 
-final class NetworkManager: ObservableObject {
+@MainActor final class NetworkManager: ObservableObject {
     
     static let shared = NetworkManager()
 
@@ -48,7 +48,7 @@ final class NetworkManager: ObservableObject {
         let postData = try encoder.encode(loginData)
         request.httpBody = postData
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await URLSession.shared.data(for: request)
         
         do {
             let loginResponse = try decoder.decode(LoginResponse.self, from: data) 
@@ -57,6 +57,43 @@ final class NetworkManager: ObservableObject {
                 return loginData
             } else {
                 throw CSAlert.customError(loginResponse.error_message ?? "")
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+    // MARK: Stripe
+    func createStripeCustomerKey() async throws -> [String : Any] {
+        let request = generateURLRequest(host + Constants.stripeEphemeralKeys, method: .post)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let stripeResponse = try decoder.decode(StripeResponse.self, from: data)
+            
+            if let errorMessage = stripeResponse.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return stripeResponse.data
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+    func createStripePaymentIntent(_ orderID: Int) async throws -> String {
+        let request = generateURLRequest(host + Constants.stripePaymentIntent + "\(orderID)", method: .post)
+        print(host + Constants.stripePaymentIntent + "\(orderID)")
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let stripeResponse = try decoder.decode(StripeResponse.self, from: data)
+            
+            if let errorMessage = stripeResponse.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return stripeResponse.data["client_secret"] as? String ?? ""
             }
         } catch {
             throw error
@@ -91,6 +128,25 @@ final class NetworkManager: ObservableObject {
             throw CSAlert.inValidData
         }
     }
+    
+    func getNewCheckoutID() async throws -> String {
+        
+        let request = generateURLRequest(host + Constants.getCheckoutID)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let getChckoutIDResponse = try decoder.decode(GetChckoutIDResponse.self, from: data)
+            if let errorMessage = getChckoutIDResponse.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return getChckoutIDResponse.data ?? ""
+            }
+        } catch {
+            throw error
+        }
+    }
+    
     
     // MARK: OrderHistoryInfo
     func fetchOrderHistoryInfo(_ params: [String: [String]]) async throws -> [OrderData] {
@@ -483,9 +539,9 @@ final class NetworkManager: ObservableObject {
     }
     
     // MARK: Checkout
-    func cloneToCheckout(_ checkoutId: String) async throws -> String {
+    func cloneToCheckout(_ checkoutID: String) async throws -> String {
 
-        let request = generateURLRequest(host + Constants.cloneToCheckout + checkoutId, method: .post)
+        let request = generateURLRequest(host + Constants.cloneToCheckout + checkoutID, method: .post)
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
@@ -494,6 +550,24 @@ final class NetworkManager: ObservableObject {
         } catch {
             print(error.localizedDescription)
             throw CSAlert.inValidData
+        }
+    }
+    
+    func checkoutToOrder(_ checkoutID: String, versionNumber: String) async throws -> CheckoutToOrderData {
+        let request = generateURLRequest(host + Constants.checkoutToOrder + checkoutID + versionNumber, method: .post)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let checkoutToOrderResponse = try decoder.decode(CheckoutToOrderResponse.self, from: data)
+            
+            if let errorMessage = checkoutToOrderResponse.error_message {
+                throw CSAlert.customError(errorMessage)
+            } else {
+                return checkoutToOrderResponse.data
+            }
+        } catch {
+            throw error
         }
     }
     

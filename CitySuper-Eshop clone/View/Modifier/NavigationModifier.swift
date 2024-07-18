@@ -77,7 +77,7 @@ struct NavigationModifier: ViewModifier {
                 MoreCollectionsListView()
             }
             .fullScreenCover(isPresented: $isShowingShoppingCart) {
-                ShoppingCartView(isShowingModal: $isShowingShoppingCart)
+                ShoppingCartView(isShow: $isShowingShoppingCart)
             }
             .fullScreenCover(isPresented: $isShowingLoginView) {
                 LoginView(isShow: $isShowingLoginView)

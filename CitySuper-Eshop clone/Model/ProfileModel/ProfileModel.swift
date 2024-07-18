@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct GetChckoutIDResponse: Decodable {
+    let success      : Bool
+    let error_message: String?
+    let data         : String?
+}
+
 struct MutipassTokenResponse: Decodable {
     let success      : Bool
     let error_message: String?
@@ -31,7 +37,7 @@ struct LoginResponse: Decodable {
 struct LoginData: Codable {
     let va_account         : String
     let token              : String
-    let current_checkout_id: String
+    var current_checkout_id: String
     let profile            : ProfileData
 }
 

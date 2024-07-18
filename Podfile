@@ -7,4 +7,6 @@ target 'CitySuper-Eshop clone' do
 
   # Pods for CitySuper-Eshop clone
   pod "Mobile-Buy-SDK", '= 12.0.0'
+  pod 'Stripe'
+  
 end
