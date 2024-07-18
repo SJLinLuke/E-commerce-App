@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct StripePaymentBody: Codable{
+    let payment_intent_id: String
+    let client_secret    : String
+}
+
 struct StripeResponse: Decodable {
     let success      : Bool
     let error_message: String?

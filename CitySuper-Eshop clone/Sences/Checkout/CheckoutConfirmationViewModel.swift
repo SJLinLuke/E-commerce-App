@@ -220,11 +220,15 @@ import Stripe
                     if let checkout {
                         self.checkout = checkout
                         self.checkoutToOrder { status, orderNum in
-                            if status == "paid", let orderNum {
-                                userEnv.currentOrderID = 0
+                            if let status, let orderNum {
+                                
                                 self.orderNumber = orderNum
-                            } else {
-                                paymentContext.requestPayment()
+                                
+                                if status == "paid" {
+                                    userEnv.currentOrderID = 0
+                                } else {
+                                    paymentContext.requestPayment()
+                                }
                             }
                         }
                     }

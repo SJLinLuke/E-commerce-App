@@ -53,6 +53,11 @@ struct InboxView: View {
                 VM.fetchInbox()
             }
         }
+        .refreshable {
+            if userEnv.isLogin {
+                VM.fetchInbox(refresh: true)
+            }
+        }
         .onAppear {
             DispatchQueue.main.async {
                 self.isShowingLoginModal = !userEnv.isLogin

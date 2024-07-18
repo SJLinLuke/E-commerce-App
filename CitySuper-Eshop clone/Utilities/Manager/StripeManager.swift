@@ -60,9 +60,28 @@ import SwiftUI
             }
         }
     }
+    
+    func submitPaymentIntent(paymentIntent: STPPaymentIntent, secret: String, completion: @escaping (Bool) -> Void){
+        
+        guard let userEnv = userEnv else { return }
+        
+        Task {
+            do {
+                let response = try await NetworkManager.shared.submitStripePaymentIntent(orderID: userEnv.currentOrderID, paymentIntent: paymentIntent, secret: secret)
+                switch response {
+                    case .success(_):
+                        completion(true)
+                    case .failure(_):
+                        completion(false)
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
-class PaymentContextDelegate: NSObject, @preconcurrency STPPaymentContextDelegate, ObservableObject {
+@MainActor class PaymentContextDelegate: NSObject, @preconcurrency STPPaymentContextDelegate, ObservableObject {
 
     static let shared = PaymentContextDelegate()
     
@@ -112,7 +131,7 @@ class PaymentContextDelegate: NSObject, @preconcurrency STPPaymentContextDelegat
     func paymentContext(_ paymentContext: Stripe.STPPaymentContext, didCreatePaymentResult paymentResult: Stripe.STPPaymentResult, completion: @escaping Stripe.STPPaymentStatusBlock) {
         self.isLoading = true
         Task {
-            await StripeManager.shared.createPaymentIntent { secert_key in
+            StripeManager.shared.createPaymentIntent { secert_key in
                 if let secert_key {
                     let paymentIntentParams = STPPaymentIntentParams(clientSecret: secert_key)
                     paymentIntentParams.paymentMethodId = paymentResult.paymentMethod?.stripeId
@@ -120,8 +139,11 @@ class PaymentContextDelegate: NSObject, @preconcurrency STPPaymentContextDelegat
                     STPPaymentHandler.shared().confirmPayment(paymentIntentParams, with: paymentContext) { status, paymentIntent, error in
                         switch status {
                         case .succeeded:
-                            print("SUCCESS!")
-                            completion(.success, nil)
+                            StripeManager.shared.submitPaymentIntent(paymentIntent: paymentIntent!, secret: secert_key) { success in
+                                if success {
+                                    completion(.success, nil)
+                                }
+                            }
                         case .failed:
                             self.isLoading = false
                             completion(.error, error) // Report error

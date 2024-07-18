@@ -55,11 +55,12 @@ struct Constants {
     static let searchCollections  = "api/eshop/search/product_collection?keyword="
     static let cloneToCheckout    = "api/eshop/order/cloneCheckout/"
     static let checkoutToOrder     = "api/eshop/order/checkoutToOrder/"
-    static let otp                = "api/members/otp"
+    static let otp                 = "api/members/otp"
     static let resetRandomPassword = "api/members/resetPassword"
     static let updatePassword      = "api/members/password"
     static let stripeEphemeralKeys = "api/eshop/payment/stripe/ephemeralKeys"
     static let stripePaymentIntent = "api/eshop/payment/stripe/paymentIntent/"
+    static let submitStripePaymentIntent = "api/eshop/order/submitStripePaymentIntent/"
     
     static let productDetail_html_source = """
         <header><meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'></header>

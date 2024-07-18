@@ -18,9 +18,14 @@ import Foundation
 
     private var currentPage: Int = 1
     
-    func fetchInbox() {
+    func fetchInbox(refresh: Bool = false) {
         
         guard !isLoading else { return }
+        
+        if refresh {
+            self.currentPage = 1
+            self.isHasMore   = true
+        }
         
         Task {
             do {
@@ -33,7 +38,11 @@ import Foundation
                     self.isHasMore = false
                 }
                 
-                self.inBoxMessages.append(contentsOf: inboxMessages.data)
+                if refresh {
+                    self.inBoxMessages = inboxMessages.data
+                } else {
+                    self.inBoxMessages.append(contentsOf: inboxMessages.data)
+                }
                 
                 self.isLoading = false
                 

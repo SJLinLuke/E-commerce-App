@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import MobileBuySDK
+import Stripe
 
 @MainActor final class NetworkManager: ObservableObject {
     
@@ -84,7 +85,7 @@ import MobileBuySDK
     
     func createStripePaymentIntent(_ orderID: Int) async throws -> String {
         let request = generateURLRequest(host + Constants.stripePaymentIntent + "\(orderID)", method: .post)
-        print(host + Constants.stripePaymentIntent + "\(orderID)")
+        
         let (data, _) = try await URLSession.shared.data(for: request)
         
         do {
@@ -97,6 +98,26 @@ import MobileBuySDK
             }
         } catch {
             throw error
+        }
+    }
+    
+    func submitStripePaymentIntent(orderID: Int, paymentIntent: STPPaymentIntent, secret: String) async throws -> Result<Bool, Error> {
+        var request = generateURLRequest(host + Constants.submitStripePaymentIntent + "\(orderID)" + Constants.secondVersion , method: .post)
+        
+        var postData = try encoder.encode(StripePaymentBody(payment_intent_id: paymentIntent.stripeId, client_secret: secret))
+        request.httpBody = postData
+                
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CSAlert.inValidResponse
+        }
+        
+        switch httpResponse.statusCode {
+        case 200...299:
+            return .success(true)
+        default:
+            return .failure(CSAlert.inValidData)
         }
     }
     
