@@ -115,6 +115,7 @@
 		40AAF1232C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1222C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift */; };
 		40AAF1272C2EE73700B17AF9 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AAF1262C2EE73700B17AF9 /* CalendarViewModel.swift */; };
 		40AB326B2C0B07D70091ECC4 /* StaticPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */; };
+		40AFB9502C4ACA6600E48715 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AFB94F2C4ACA6600E48715 /* Constants.swift */; };
 		40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65472C0C124600EA5067 /* CouponListView.swift */; };
 		40BC654A2C0C2D8D00EA5067 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */; };
 		40BC654D2C0C320A00EA5067 /* CouponModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC654C2C0C320A00EA5067 /* CouponModel.swift */; };
@@ -230,7 +231,6 @@
 		C5AFC09B2C2D5A320033934E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AFC09A2C2D5A320033934E /* CalendarView.swift */; };
 		C5EA797C2BF452680042FEF0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA797B2BF452680042FEF0 /* LoginViewModel.swift */; };
 		C5EA797F2BF452780042FEF0 /* UserEnviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA797D2BF452780042FEF0 /* UserEnviroment.swift */; };
-		C5EA79812BF452940042FEF0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA79802BF452940042FEF0 /* Constants.swift */; };
 		C5EA79842BF452B10042FEF0 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA79822BF452B10042FEF0 /* ProfileModel.swift */; };
 		C5EA79872BF452E30042FEF0 /* ThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA79852BF452E30042FEF0 /* ThemeButton.swift */; };
 		C5EA798A2BF4530B0042FEF0 /* LoadingIndicatiorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EA79882BF4530B0042FEF0 /* LoadingIndicatiorView.swift */; };
@@ -348,6 +348,7 @@
 		40AAF1222C29AA0800B17AF9 /* CheckoutMethodsParentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMethodsParentsView.swift; sourceTree = "<group>"; };
 		40AAF1262C2EE73700B17AF9 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		40AB326A2C0B07D70091ECC4 /* StaticPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticPageModel.swift; sourceTree = "<group>"; };
+		40AFB94F2C4ACA6600E48715 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		40BC65472C0C124600EA5067 /* CouponListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListView.swift; sourceTree = "<group>"; };
 		40BC65492C0C2D8D00EA5067 /* CouponListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponListViewModel.swift; sourceTree = "<group>"; };
 		40BC654C2C0C320A00EA5067 /* CouponModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponModel.swift; sourceTree = "<group>"; };
@@ -468,7 +469,6 @@
 		C5AFC09A2C2D5A320033934E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		C5EA797B2BF452680042FEF0 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		C5EA797D2BF452780042FEF0 /* UserEnviroment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEnviroment.swift; sourceTree = "<group>"; };
-		C5EA79802BF452940042FEF0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5EA79822BF452B10042FEF0 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		C5EA79852BF452E30042FEF0 /* ThemeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeButton.swift; sourceTree = "<group>"; };
 		C5EA79882BF4530B0042FEF0 /* LoadingIndicatiorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicatiorView.swift; sourceTree = "<group>"; };
@@ -1273,12 +1273,12 @@
 		40E522862BEE879F0046C3AA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				C5EA79802BF452940042FEF0 /* Constants.swift */,
 				400C043B2BF9E8B800493ACA /* StoreFront */,
 				C5EA797E2BF452780042FEF0 /* Environment */,
 				40E522B62BEF69610046C3AA /* Extension */,
 				40E522B12BEF475B0046C3AA /* Alert */,
 				40E522952BEF3E5D0046C3AA /* Manager */,
+				40AFB94F2C4ACA6600E48715 /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2095,7 +2095,6 @@
 				C593F1A92C06C4F400DBB028 /* AlertContext.swift in Sources */,
 				40BC65532C0C980200EA5067 /* CouponListRedeemView.swift in Sources */,
 				40BC65552C10C15500EA5067 /* OrderHistoryEmptyView.swift in Sources */,
-				C5EA79812BF452940042FEF0 /* Constants.swift in Sources */,
 				405D05222C44260A00A09D01 /* CheckoutCompleteView.swift in Sources */,
 				40E522702BED14650046C3AA /* OrderHistoryView.swift in Sources */,
 				406612D62BF837760037C4D8 /* FavouriteViewModel.swift in Sources */,
@@ -2239,6 +2238,7 @@
 				C58505C82C05A2120055B844 /* OrderHistoryDetailViewModel.swift in Sources */,
 				40BC65482C0C124600EA5067 /* CouponListView.swift in Sources */,
 				C588E5D82BFC995000E4C58D /* ProductDetailViewModel.swift in Sources */,
+				40AFB9502C4ACA6600E48715 /* Constants.swift in Sources */,
 				400C03A82BF86A5F00493ACA /* QRcodeModel.swift in Sources */,
 				4062BF202C06188300FF7184 /* DeliveryAddressViewModel.swift in Sources */,
 				40E62EF32C1F1DB30044ED44 /* SearchModifier.swift in Sources */,
