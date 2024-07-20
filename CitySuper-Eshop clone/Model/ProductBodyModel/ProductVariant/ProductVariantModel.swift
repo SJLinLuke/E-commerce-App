@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MobileBuySDK
 
 struct ProductVariant: Codable, Equatable, Hashable {
     
@@ -56,4 +57,39 @@ struct ProductVariant: Codable, Equatable, Hashable {
             return nil
         }
     }
+    
+    static func fromOrderVM(item: Storefront.ProductVariant) -> ProductVariant? {
+        // 确保ID值和title是字符串
+        guard let variantID = item.id.rawValue as? String,
+              let productID = item.product.id.rawValue as? String,
+              let title = item.title as? String else {
+            return nil
+        }
+        
+        let json: [String: Any] = [
+            "option1"                   : "",
+            "option2"                   : "",
+            "option3"                   : "",
+            "shopify_product_variant_id": variantID,
+            "title"                     : title,
+            "price"                     : "",
+            "compare_at_price"          : "",
+            "inventory_quantity"        : 0,
+            "shopify_product_id"        : productID
+        ]
+        
+        if let data = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed) {
+            let decoder = JSONDecoder()
+            
+            do {
+                let pv = try decoder.decode(ProductVariant.self, from: data)
+                return pv
+            } catch {
+                print("Decoding error: \(error)")
+                return nil
+            }
+        }
+        return nil
+    }
+
 }

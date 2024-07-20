@@ -27,8 +27,8 @@
 import Foundation
 
 class CartItemWrapper: NSObject {
-    let cartItem: CartItem
-    init(cartItem: CartItem) {
+    let cartItem: [CartItem]
+    init(cartItem: [CartItem]) {
         self.cartItem = cartItem
     }
 }

@@ -12,7 +12,9 @@ import Foundation
     @Published var isLoading: Bool = false
     @Published var orderHistory: OrderViewModel? = nil
     
-    let OrderHistoryVM = OrderHistoryViewModel.shared
+    private let OrderHistoryVM = OrderHistoryViewModel.shared
+    
+    var cartEnv: CartEnvironment? = nil
     
     func fetchOrder(orderID: String) {
         
@@ -63,5 +65,31 @@ import Foundation
             self.orderHistory = orderHistorys
             self.isLoading = false
         }
+    }
+    
+    func tapOnReOrder() {
+        
+        guard let historyLineItems = self.orderHistory?.lineItems, let cartEnv = self.cartEnv else { return }
+        
+        let tempLineItems = cartEnv.lineItems
+        var newLineItems: [CartItem] = []
+        
+        for historyLineItem in historyLineItems {
+            let historyLineItemAvailableQuantity = historyLineItem.variant?.quantityAvailable ?? 0
+            if let existingLineItem = tempLineItems.first(where: { $0.variantID == historyLineItem.variant?.id.rawValue }) {
+                existingLineItem.quantity += Int(historyLineItem.quantity)
+                if existingLineItem.quantity > historyLineItemAvailableQuantity {
+//                    alertItem = AlertContext.quantityUnavailable
+                    print("quantity unavailable")
+                    existingLineItem.quantity = Int(historyLineItemAvailableQuantity)
+                }
+            } else {
+                if let variants = historyLineItem.variant, let convertedVariant = ProductVariant.fromOrderVM(item: variants) {
+                    newLineItems.append(CartItem(variant: convertedVariant, quantity: Int(historyLineItem.quantity)))
+                }
+            }
+        }
+        
+        cartEnv.mutateItem(lineItems: tempLineItems, addCartItem: newLineItems)
     }
 }

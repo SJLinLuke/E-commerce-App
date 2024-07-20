@@ -186,11 +186,11 @@ enum CheckoutMethodsType: String {
     private var pendingMutations: [[LineItemViewModel]] = []
     private var debounceWorkItem: DispatchWorkItem?
     
-    func mutateItem(lineItems: [LineItemViewModel], addCartItem: CartItem? = nil) {
+    func mutateItem(lineItems: [LineItemViewModel], addCartItem: [CartItem]? = nil) {
         self.mutateItemToCheckout(lineItems: lineItems, addCartItem: addCartItem)
     }
 
-    private func mutateItemToCheckout(lineItems: [LineItemViewModel], addCartItem: CartItem? = nil) {
+    private func mutateItemToCheckout(lineItems: [LineItemViewModel], addCartItem: [CartItem]? = nil) {
         
         guard let _ = userEnv, !isLoading else { return }
         

@@ -53,6 +53,8 @@ import Foundation
         let variantID         = currentItem.variants?[0].shopify_product_variant_id
         let inventoryQuantity = currentItem.inventory_quantity ?? 0
         
+        var newItem: [CartItem] = []
+        
         if let existingLineItem = tempLineItems.first(where: { $0.variantID?.shopifyIDEncode == variantID }) {
             existingLineItem.quantity += quantity
             if existingLineItem.quantity > inventoryQuantity {
@@ -62,8 +64,8 @@ import Foundation
             cartEnv.mutateItem(lineItems: tempLineItems)
         } else {
             if let variants = currentItem.variants, variants.indices.contains(0) {
-                let newItem = CartItem(variant: variants[0], quantity: quantity)
-                if newItem.quantity > inventoryQuantity {
+                newItem.append(CartItem(variant: variants[0], quantity: quantity))
+                if quantity > inventoryQuantity {
                     alertItem = AlertContext.quantityUnavailable
                     return
                 }

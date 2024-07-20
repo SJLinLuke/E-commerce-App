@@ -10,6 +10,8 @@ import MobileBuySDK
 
 struct OrderHistoryDetailView: View {
     
+    @EnvironmentObject var cartEnv: CartEnvironment
+    
     @StateObject var VM = OrderHistoryDetailViewModel()
         
     var orderHistory: OrderViewModel?
@@ -99,7 +101,7 @@ struct OrderHistoryDetailView: View {
                         SeperateLineView()
                             
                         Button {
-                            
+                            VM.tapOnReOrder()
                         } label: {
                              ThemeButton(title: "Re-order")
                         }
@@ -122,6 +124,8 @@ struct OrderHistoryDetailView: View {
                 if let orderID = self.orderID {
                     VM.fetchOrder(orderID: orderID)
                 }
+                
+                VM.cartEnv = self.cartEnv
             }
         }
     }
