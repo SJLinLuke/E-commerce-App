@@ -22,7 +22,7 @@ An ecommerce app clone project
 
 ## Description
 
-Citysuper E-Shop clone practice with swiftUI
+Citysuper E-Shop clone practice with swiftUI (none UI Third-party)
 
 ## Three-party Libraries 
 
